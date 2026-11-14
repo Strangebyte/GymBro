@@ -10,7 +10,9 @@
   Chromium: abre sin errores, registra el service worker y arranca con catálogo y plan, sin sesiones.
 - **El historial personal no está en el repositorio.** Se carga en el teléfono restaurando
   `privado/gym-log-historial.json` (Ajustes → Restaurar desde una copia). Ver `docs/DEPLOY.md`.
-- **Todavía no se probó en un Android real.** Todo lo verificado es en Chromium simulando un móvil.
+- **Instalada en el Android del dueño (14-11-2026).** Probado ahí: vibración y sonido al terminar el descanso.
+  La pantalla se apaga durante la sesión (el bloqueo de pantalla encendida no funciona); al dueño no le molesta.
+  Con el teléfono en silencio no vibra: lo bloquea Android.
 
 ## Próximo paso
 
@@ -58,6 +60,6 @@ video, vibración, pantalla encendida durante la sesión, scroll táctil con una
 | Fecha | Qué se hizo |
 |---|---|
 | 10-11-2026 | Diseño (`docs/historico/`), catálogo de 96 ejercicios, primera versión solo de registro |
-| 14-11-2026 | Sonido al terminar el descanso (probado en el simulador; falta oírlo en el teléfono) |
+| 14-11-2026 | Sonido al terminar el descanso (confirmado por el dueño en el teléfono) |
 | 14-11-2026 | Revisión general; git; historial separado del repositorio; primer deploy en GitHub Pages |
 | 14-11-2026 | App completa rehecha; video/imagen; ronda de comentarios del dueño sobre la sesión, el historial y el selector; Progreso rehecho; proyecto pasado a esta carpeta |
