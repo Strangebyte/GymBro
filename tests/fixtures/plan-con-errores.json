@@ -1,0 +1,2 @@
+{"formato":"plan-gym/v1","plan":{"nombre":"Malo"},"dias":[{"nombre":"D1","bloques":[{"orden":1,"ejercicios":[
+ {"ejercicio":"Press plano","series":[{}, {"reps":8,"rir":2,"rpe":8}]},{"series":[{"reps":5}]}]}]}]}

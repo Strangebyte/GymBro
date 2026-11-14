@@ -1,0 +1,8 @@
+{"formato":"plan-gym/v1","plan":{"nombre":"Plan de prueba","objetivo":"Test"},
+ "dias":[{"nombre":"Día A","bloques":[
+   {"orden":1,"ejercicios":[{"ejercicio":"psoas dinamico","series":[{"reps":10},{"reps":10}]}]},
+   {"orden":2,"ejercicios":[
+     {"ejercicio":"Press banca inclinado smith","series":3,"reps":8,"peso_kg":60,"rpe":8},
+     {"ejercicio":"Dominadas pronas","series":[{"reps":7,"peso_kg":20,"rir":2},{"reps":6,"peso_kg":20,"rir":2}]},
+     {"ejercicio":"Hollow","series":[{"seg":45},{"seg":45}]}]}]},
+  {"nombre":"Día B","bloques":[{"orden":1,"ejercicios":[{"ejercicio":"Press plano","series":[{"reps":8,"peso_kg":82.5}]}]}]}]}

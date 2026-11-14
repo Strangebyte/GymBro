@@ -1,0 +1,1914 @@
+{
+  "formato": "plan-gym/v1",
+  "generado": "2026-11-10",
+  "fuente": "ejercicios-gimnasio-sep-nov-2026.md (30 sesiones, sep-nov 2026)",
+  "ejercicios": [
+    {
+      "slug": "flexo-extension-cadera-bd",
+      "nombre_coach": "Flexo-Extensión Cadera - BD",
+      "nombre_legible": null,
+      "grupo_primario": "movilidad_cadera",
+      "grupos_secundarios": [],
+      "equipamiento": "banda",
+      "patron": "movilidad",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": false,
+      "incremento_minimo_kg": null,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "psoas-dinamico",
+      "nombre_coach": "Psoas DINÁMICO",
+      "nombre_legible": null,
+      "grupo_primario": "movilidad_cadera",
+      "grupos_secundarios": [],
+      "equipamiento": "peso_corporal",
+      "patron": "movilidad",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": false,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "aductores-dinamico",
+      "nombre_coach": "Aductores DINÁMICO",
+      "nombre_legible": null,
+      "grupo_primario": "movilidad_aductores",
+      "grupos_secundarios": [],
+      "equipamiento": "peso_corporal",
+      "patron": "movilidad",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": false,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "isquiotibiales-rd",
+      "nombre_coach": "Isquiotibiales - RD",
+      "nombre_legible": "Liberación de isquiotibiales con rodillo (sentado)",
+      "grupo_primario": "movilidad_isquios",
+      "grupos_secundarios": [],
+      "equipamiento": "rodillo",
+      "patron": "movilidad",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "ambos",
+      "cuenta_volumen": false,
+      "incremento_minimo_kg": null,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "isquiotibiales-en-columna",
+      "nombre_coach": "Isquiotibiales en columna",
+      "nombre_legible": null,
+      "grupo_primario": "movilidad_isquios",
+      "grupos_secundarios": [],
+      "equipamiento": "peso_corporal",
+      "patron": "movilidad",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": false,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "spiderman-rotacion-dt",
+      "nombre_coach": "Spiderman ROTACIÓN DT",
+      "nombre_legible": "Spiderman con rotación dorsotorácica",
+      "grupo_primario": "movilidad_dorsal",
+      "grupos_secundarios": [],
+      "equipamiento": "peso_corporal",
+      "patron": "movilidad",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": false,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "spiderman-rotacion",
+      "nombre_coach": "Spiderman ROTACIÓN",
+      "nombre_legible": null,
+      "grupo_primario": "movilidad_dorsal",
+      "grupos_secundarios": [],
+      "equipamiento": "peso_corporal",
+      "patron": "movilidad",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": false,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "carpas-dinamico",
+      "nombre_coach": "Carpas DINÁMICO",
+      "nombre_legible": null,
+      "grupo_primario": "movilidad_posterior",
+      "grupos_secundarios": [],
+      "equipamiento": "peso_corporal",
+      "patron": "movilidad",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": false,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "carpa-2p",
+      "nombre_coach": "Carpa 2p",
+      "nombre_legible": null,
+      "grupo_primario": "movilidad_posterior",
+      "grupos_secundarios": [],
+      "equipamiento": "peso_corporal",
+      "patron": "movilidad",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": false,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "buda-asistido-dc",
+      "nombre_coach": "Buda ASISTIDO - DC",
+      "nombre_legible": "Movilidad buda asistida con disco",
+      "grupo_primario": "movilidad_cadera",
+      "grupos_secundarios": [],
+      "equipamiento": "disco",
+      "patron": "movilidad",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": false,
+      "incremento_minimo_kg": 5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "buda-rotacion-tronco-asistido",
+      "nombre_coach": "Buda ROTACIÓN TRONCO ASISTIDO",
+      "nombre_legible": null,
+      "grupo_primario": "movilidad_cadera",
+      "grupos_secundarios": [],
+      "equipamiento": "peso_corporal",
+      "patron": "movilidad",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": false,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "rotacion-tronco-pared-t",
+      "nombre_coach": "Rotación tronco PARED T",
+      "nombre_legible": null,
+      "grupo_primario": "movilidad_dorsal",
+      "grupos_secundarios": [],
+      "equipamiento": "peso_corporal",
+      "patron": "movilidad",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": false,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "bretzel",
+      "nombre_coach": "Bretzel",
+      "nombre_legible": null,
+      "grupo_primario": "movilidad_dorsal",
+      "grupos_secundarios": [],
+      "equipamiento": "peso_corporal",
+      "patron": "movilidad",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "ambos",
+      "cuenta_volumen": false,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "caderas-y-piramidal",
+      "nombre_coach": "Caderas y piramidal",
+      "nombre_legible": null,
+      "grupo_primario": "movilidad_cadera",
+      "grupos_secundarios": [],
+      "equipamiento": "peso_corporal",
+      "patron": "movilidad",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": false,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "cadera-con-glide-lateral-cuadrupedia",
+      "nombre_coach": "Cadera con glide lateral cuadrupedia",
+      "nombre_legible": null,
+      "grupo_primario": "movilidad_cadera",
+      "grupos_secundarios": [],
+      "equipamiento": "peso_corporal",
+      "patron": "movilidad",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": false,
+      "incremento_minimo_kg": 2.5,
+      "uso": "mesociclo_a",
+      "notas": null
+    },
+    {
+      "slug": "elevaciones-de-cadera-caminata-i-v",
+      "nombre_coach": "Elevaciones de cadera CAMINATA I/V",
+      "nombre_legible": "Puente de glúteo con marcha de piernas [I/V]",
+      "grupo_primario": "gluteo",
+      "grupos_secundarios": [
+        {
+          "grupo": "isquios",
+          "factor": 0.4
+        },
+        {
+          "grupo": "core",
+          "factor": 0.3
+        }
+      ],
+      "equipamiento": "peso_corporal",
+      "patron": "core_antiextension",
+      "unilateral": true,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": "Sigla I/V sin resolver. La app registra dos variantes de 6 reps"
+    },
+    {
+      "slug": "elevaciones-de-cadera-1p-mb",
+      "nombre_coach": "Elevaciones de Cadera 1P - MB",
+      "nombre_legible": null,
+      "grupo_primario": "gluteo",
+      "grupos_secundarios": [
+        {
+          "grupo": "isquios",
+          "factor": 0.4
+        }
+      ],
+      "equipamiento": "banda",
+      "patron": "core_antiextension",
+      "unilateral": true,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": null,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "puente-lateral-cambio",
+      "nombre_coach": "Puente lateral cambio",
+      "nombre_legible": null,
+      "grupo_primario": "core",
+      "grupos_secundarios": [],
+      "equipamiento": "peso_corporal",
+      "patron": "core_antiflexion_lateral",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "puente-lateral-inclinado-con-apertura",
+      "nombre_coach": "Puente lateral inclinado con apertura",
+      "nombre_legible": null,
+      "grupo_primario": "core",
+      "grupos_secundarios": [],
+      "equipamiento": "peso_corporal",
+      "patron": "core_antiflexion_lateral",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "puente-isquio-con-cambio",
+      "nombre_coach": "Puente isquio con cambio",
+      "nombre_legible": null,
+      "grupo_primario": "isquios",
+      "grupos_secundarios": [
+        {
+          "grupo": "gluteo",
+          "factor": 0.5
+        }
+      ],
+      "equipamiento": "peso_corporal",
+      "patron": "core_antiextension",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "puente-de-cadera-cambio",
+      "nombre_coach": "Puente de cadera CAMBIO",
+      "nombre_legible": null,
+      "grupo_primario": "gluteo",
+      "grupos_secundarios": [
+        {
+          "grupo": "isquios",
+          "factor": 0.4
+        }
+      ],
+      "equipamiento": "peso_corporal",
+      "patron": "core_antiextension",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "giros-oh-en-tandem",
+      "nombre_coach": "Giros OH en tandem",
+      "nombre_legible": "Giros overhead en posición tándem",
+      "grupo_primario": "core",
+      "grupos_secundarios": [
+        {
+          "grupo": "hombro_anterior",
+          "factor": 0.3
+        }
+      ],
+      "equipamiento": "kettlebell",
+      "patron": "core_rotacion",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "cuadrupedia-con-patada",
+      "nombre_coach": "Cuadrupedia con patada",
+      "nombre_legible": null,
+      "grupo_primario": "gluteo",
+      "grupos_secundarios": [
+        {
+          "grupo": "core",
+          "factor": 0.4
+        }
+      ],
+      "equipamiento": "peso_corporal",
+      "patron": "core_antirotacion",
+      "unilateral": true,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "antiflexion-lateral-con-barra",
+      "nombre_coach": "Antiflexión lateral con barra",
+      "nombre_legible": null,
+      "grupo_primario": "core",
+      "grupos_secundarios": [],
+      "equipamiento": "barra",
+      "patron": "core_antiflexion_lateral",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "anti-flexion-lateral-cambio-de-pie-bd",
+      "nombre_coach": "Anti-Flexión Lateral CAMBIO DE PIE - BD",
+      "nombre_legible": null,
+      "grupo_primario": "core",
+      "grupos_secundarios": [],
+      "equipamiento": "banda",
+      "patron": "core_antiflexion_lateral",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": null,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "plancha-construyo",
+      "nombre_coach": "Plancha CONSTRUYO",
+      "nombre_legible": null,
+      "grupo_primario": "core",
+      "grupos_secundarios": [],
+      "equipamiento": "disco",
+      "patron": "core_antiextension",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "ambos",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "plancha-copenhague-1-2-con",
+      "nombre_coach": "Plancha COPENHAGUE 1/2 CON",
+      "nombre_legible": null,
+      "grupo_primario": "aductores",
+      "grupos_secundarios": [
+        {
+          "grupo": "core",
+          "factor": 0.5
+        }
+      ],
+      "equipamiento": "peso_corporal",
+      "patron": "core_antiflexion_lateral",
+      "unilateral": true,
+      "admite_lastre": false,
+      "mide_en": "ambos",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "plancha-alta-carrera",
+      "nombre_coach": "Plancha alta CARRERA",
+      "nombre_legible": null,
+      "grupo_primario": "core",
+      "grupos_secundarios": [],
+      "equipamiento": "peso_corporal",
+      "patron": "core_antiextension",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "plancha-lateral-giro",
+      "nombre_coach": "Plancha lateral GIRO",
+      "nombre_legible": null,
+      "grupo_primario": "core",
+      "grupos_secundarios": [],
+      "equipamiento": "peso_corporal",
+      "patron": "core_antiflexion_lateral",
+      "unilateral": true,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "abdominal-con-aductores",
+      "nombre_coach": "Abdominal con aductores",
+      "nombre_legible": null,
+      "grupo_primario": "core",
+      "grupos_secundarios": [
+        {
+          "grupo": "aductores",
+          "factor": 0.4
+        }
+      ],
+      "equipamiento": "peso_corporal",
+      "patron": "core_antiextension",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "descenso-piernas-rectas-con-control-abdomen",
+      "nombre_coach": "Descenso piernas rectas con control abdomen",
+      "nombre_legible": null,
+      "grupo_primario": "core",
+      "grupos_secundarios": [],
+      "equipamiento": "peso_corporal",
+      "patron": "core_antiextension",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "caminata-de-camarera-1m-kb",
+      "nombre_coach": "Caminata de Camarera 1m - KB",
+      "nombre_legible": "Caminata del camarero a un brazo (waiter walk)",
+      "grupo_primario": "core",
+      "grupos_secundarios": [
+        {
+          "grupo": "hombro_lateral",
+          "factor": 0.4
+        },
+        {
+          "grupo": "trapecio",
+          "factor": 0.3
+        }
+      ],
+      "equipamiento": "kettlebell",
+      "patron": "locomocion",
+      "unilateral": true,
+      "admite_lastre": false,
+      "mide_en": "ambos",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "hollow",
+      "nombre_coach": "Hollow",
+      "nombre_legible": null,
+      "grupo_primario": "core",
+      "grupos_secundarios": [],
+      "equipamiento": "peso_corporal",
+      "patron": "core_antiextension",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "ambos",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "mesociclo_a",
+      "notas": null
+    },
+    {
+      "slug": "bear-crawl-dinamico",
+      "nombre_coach": "Bear Crawl DINÁMICO",
+      "nombre_legible": null,
+      "grupo_primario": "core",
+      "grupos_secundarios": [
+        {
+          "grupo": "hombro_anterior",
+          "factor": 0.3
+        }
+      ],
+      "equipamiento": "peso_corporal",
+      "patron": "locomocion",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "mesociclo_a",
+      "notas": null
+    },
+    {
+      "slug": "desliz-barra-en-puntas",
+      "nombre_coach": "Desliz barra en puntas",
+      "nombre_legible": null,
+      "grupo_primario": "core",
+      "grupos_secundarios": [],
+      "equipamiento": "barra",
+      "patron": "core_antiextension",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "mesociclo_a",
+      "notas": null
+    },
+    {
+      "slug": "thrusters-kb",
+      "nombre_coach": "Thrusters - KB",
+      "nombre_legible": null,
+      "grupo_primario": "cuadriceps",
+      "grupos_secundarios": [
+        {
+          "grupo": "hombro_anterior",
+          "factor": 0.6
+        },
+        {
+          "grupo": "gluteo",
+          "factor": 0.4
+        }
+      ],
+      "equipamiento": "kettlebell",
+      "patron": "sentadilla",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "swing-cadera-ra-kb",
+      "nombre_coach": "Swing cadera RA - KB",
+      "nombre_legible": "Swing de cadera con kettlebell + banda elástica (resistencia acomodada)",
+      "grupo_primario": "gluteo",
+      "grupos_secundarios": [
+        {
+          "grupo": "isquios",
+          "factor": 0.6
+        },
+        {
+          "grupo": "core",
+          "factor": 0.3
+        }
+      ],
+      "equipamiento": "kettlebell",
+      "patron": "bisagra",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "swing-thruster",
+      "nombre_coach": "Swing/Thruster",
+      "nombre_legible": "Complejo swing + thruster",
+      "grupo_primario": "gluteo",
+      "grupos_secundarios": [
+        {
+          "grupo": "cuadriceps",
+          "factor": 0.4
+        },
+        {
+          "grupo": "hombro_anterior",
+          "factor": 0.4
+        }
+      ],
+      "equipamiento": "kettlebell",
+      "patron": "bisagra",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "sentadilla-salto-kb",
+      "nombre_coach": "Sentadilla SALTO - KB",
+      "nombre_legible": null,
+      "grupo_primario": "cuadriceps",
+      "grupos_secundarios": [
+        {
+          "grupo": "gluteo",
+          "factor": 0.4
+        }
+      ],
+      "equipamiento": "kettlebell",
+      "patron": "pliometria",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "sentadilla-split-salto-cambio-kb",
+      "nombre_coach": "Sentadilla SPLIT SALTO CAMBIO - KB",
+      "nombre_legible": null,
+      "grupo_primario": "cuadriceps",
+      "grupos_secundarios": [
+        {
+          "grupo": "gluteo",
+          "factor": 0.4
+        }
+      ],
+      "equipamiento": "kettlebell",
+      "patron": "pliometria",
+      "unilateral": true,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "2do-tiempo-split-br",
+      "nombre_coach": "2do Tiempo SPLIT - BR",
+      "nombre_legible": "Segundo tiempo (jerk) en split con barra",
+      "grupo_primario": "hombro_anterior",
+      "grupos_secundarios": [
+        {
+          "grupo": "cuadriceps",
+          "factor": 0.4
+        },
+        {
+          "grupo": "triceps",
+          "factor": 0.3
+        }
+      ],
+      "equipamiento": "barra",
+      "patron": "empuje_vertical",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "burpee",
+      "nombre_coach": "Burpee",
+      "nombre_legible": null,
+      "grupo_primario": "full_body",
+      "grupos_secundarios": [],
+      "equipamiento": "peso_corporal",
+      "patron": "pliometria",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "1p-a-otro-cc-diagonal",
+      "nombre_coach": "1P A OTRO CC DIAGONAL",
+      "nombre_legible": "Salto de una pierna a la otra, en diagonal [CC]",
+      "grupo_primario": "cuadriceps",
+      "grupos_secundarios": [
+        {
+          "grupo": "gluteo",
+          "factor": 0.4
+        }
+      ],
+      "equipamiento": "peso_corporal",
+      "patron": "pliometria",
+      "unilateral": true,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": "Sigla CC sin resolver. No verificado por video"
+    },
+    {
+      "slug": "1p-ccm-vertical-al-cajon-cj",
+      "nombre_coach": "1P CCM Vertical AL CAJÓN - CJ",
+      "nombre_legible": "Salto vertical a una pierna al cajón, con contramovimiento",
+      "grupo_primario": "cuadriceps",
+      "grupos_secundarios": [
+        {
+          "grupo": "gluteo",
+          "factor": 0.4
+        }
+      ],
+      "equipamiento": "cajon",
+      "patron": "pliometria",
+      "unilateral": true,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": null,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "2p-ba-ccm-vertical",
+      "nombre_coach": "2P BA CCM Vertical",
+      "nombre_legible": "Salto vertical a dos piernas con contramovimiento [BA]",
+      "grupo_primario": "cuadriceps",
+      "grupos_secundarios": [
+        {
+          "grupo": "gluteo",
+          "factor": 0.4
+        }
+      ],
+      "equipamiento": "peso_corporal",
+      "patron": "pliometria",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "mesociclo_a",
+      "notas": "Sigla BA sin resolver"
+    },
+    {
+      "slug": "triple-extension-lm",
+      "nombre_coach": "Triple extensión LM",
+      "nombre_legible": "Triple extensión en landmine",
+      "grupo_primario": "gluteo",
+      "grupos_secundarios": [
+        {
+          "grupo": "cuadriceps",
+          "factor": 0.4
+        },
+        {
+          "grupo": "gemelo",
+          "factor": 0.3
+        }
+      ],
+      "equipamiento": "landmine",
+      "patron": "bisagra",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "caida-lm",
+      "nombre_coach": "Caída LM",
+      "nombre_legible": "Caída (drop) en landmine",
+      "grupo_primario": "full_body",
+      "grupos_secundarios": [],
+      "equipamiento": "landmine",
+      "patron": "pliometria",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "reactivos-verticales-laterales",
+      "nombre_coach": "Reactivos verticales+laterales",
+      "nombre_legible": null,
+      "grupo_primario": "cuadriceps",
+      "grupos_secundarios": [
+        {
+          "grupo": "gemelo",
+          "factor": 0.4
+        }
+      ],
+      "equipamiento": "peso_corporal",
+      "patron": "pliometria",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "reactivos-laterales",
+      "nombre_coach": "Reactivos laterales",
+      "nombre_legible": null,
+      "grupo_primario": "cuadriceps",
+      "grupos_secundarios": [
+        {
+          "grupo": "gemelo",
+          "factor": 0.4
+        }
+      ],
+      "equipamiento": "peso_corporal",
+      "patron": "pliometria",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "sentadilla-br",
+      "nombre_coach": "Sentadilla - BR",
+      "nombre_legible": null,
+      "grupo_primario": "cuadriceps",
+      "grupos_secundarios": [
+        {
+          "grupo": "gluteo",
+          "factor": 0.6
+        },
+        {
+          "grupo": "core",
+          "factor": 0.3
+        }
+      ],
+      "equipamiento": "barra",
+      "patron": "sentadilla",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "mesociclo_a",
+      "notas": null
+    },
+    {
+      "slug": "sentadilla-bulgara-ra-br",
+      "nombre_coach": "Sentadilla Búlgara RA - BR",
+      "nombre_legible": "Sentadilla búlgara con barra + resistencia acomodada",
+      "grupo_primario": "cuadriceps",
+      "grupos_secundarios": [
+        {
+          "grupo": "gluteo",
+          "factor": 0.7
+        }
+      ],
+      "equipamiento": "barra",
+      "patron": "zancada",
+      "unilateral": true,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "sentadilla-al-cajon-ra-br",
+      "nombre_coach": "Sentadilla AL CAJÓN RA - BR",
+      "nombre_legible": "Sentadilla al cajón con barra + resistencia acomodada",
+      "grupo_primario": "cuadriceps",
+      "grupos_secundarios": [
+        {
+          "grupo": "gluteo",
+          "factor": 0.6
+        }
+      ],
+      "equipamiento": "barra",
+      "patron": "sentadilla",
+      "unilateral": true,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "estocada-atras-br",
+      "nombre_coach": "Estocada atrás - BR",
+      "nombre_legible": null,
+      "grupo_primario": "cuadriceps",
+      "grupos_secundarios": [
+        {
+          "grupo": "gluteo",
+          "factor": 0.6
+        }
+      ],
+      "equipamiento": "barra",
+      "patron": "zancada",
+      "unilateral": true,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "mesociclo_a",
+      "notas": null
+    },
+    {
+      "slug": "empuje-de-cadera-br",
+      "nombre_coach": "Empuje de cadera - BR",
+      "nombre_legible": "Hip thrust con barra",
+      "grupo_primario": "gluteo",
+      "grupos_secundarios": [
+        {
+          "grupo": "isquios",
+          "factor": 0.5
+        }
+      ],
+      "equipamiento": "barra",
+      "patron": "bisagra",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "empuje-de-cadera-1p-br",
+      "nombre_coach": "Empuje de cadera 1p - BR",
+      "nombre_legible": "Hip thrust a una pierna con barra",
+      "grupo_primario": "gluteo",
+      "grupos_secundarios": [
+        {
+          "grupo": "isquios",
+          "factor": 0.5
+        }
+      ],
+      "equipamiento": "barra",
+      "patron": "bisagra",
+      "unilateral": true,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "peso-muerto-1p-kb",
+      "nombre_coach": "Peso muerto 1p - KB",
+      "nombre_legible": "Peso muerto a una pierna con kettlebell",
+      "grupo_primario": "isquios",
+      "grupos_secundarios": [
+        {
+          "grupo": "gluteo",
+          "factor": 0.6
+        },
+        {
+          "grupo": "core",
+          "factor": 0.3
+        }
+      ],
+      "equipamiento": "kettlebell",
+      "patron": "bisagra",
+      "unilateral": true,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "caminata-de-gemelo-mc",
+      "nombre_coach": "Caminata de gemelo - MC",
+      "nombre_legible": "Caminata de puntas con mancuernas",
+      "grupo_primario": "gemelo",
+      "grupos_secundarios": [],
+      "equipamiento": "mancuernas",
+      "patron": "locomocion",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "curl-nordico",
+      "nombre_coach": "CURL NÓRDICO",
+      "nombre_legible": null,
+      "grupo_primario": "isquios",
+      "grupos_secundarios": [
+        {
+          "grupo": "gluteo",
+          "factor": 0.3
+        }
+      ],
+      "equipamiento": "peso_corporal",
+      "patron": "bisagra",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "curl-isquio-1p-exc-mb",
+      "nombre_coach": "Curl ISQUIO 1p EXC - MB",
+      "nombre_legible": "Curl de isquios excéntrico a una pierna con banda",
+      "grupo_primario": "isquios",
+      "grupos_secundarios": [],
+      "equipamiento": "banda",
+      "patron": "bisagra",
+      "unilateral": true,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": null,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "curl-isquios-1p-exc-fb",
+      "nombre_coach": "Curl Isquios 1P EXC - FB",
+      "nombre_legible": "Curl de isquiotibiales excéntrico a una pierna en fitball",
+      "grupo_primario": "isquios",
+      "grupos_secundarios": [],
+      "equipamiento": "fitball",
+      "patron": "bisagra",
+      "unilateral": true,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": null,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "curl-isquios-fb",
+      "nombre_coach": "Curl Isquios - FB",
+      "nombre_legible": "Curl de isquiotibiales en fitball",
+      "grupo_primario": "isquios",
+      "grupos_secundarios": [],
+      "equipamiento": "fitball",
+      "patron": "bisagra",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": null,
+      "uso": "mesociclo_a",
+      "notas": null
+    },
+    {
+      "slug": "patadas-de-talon-fb",
+      "nombre_coach": "Patadas de Talón - FB",
+      "nombre_legible": "Patadas de talón en fitball",
+      "grupo_primario": "isquios",
+      "grupos_secundarios": [],
+      "equipamiento": "fitball",
+      "patron": "bisagra",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": null,
+      "uso": "mesociclo_a",
+      "notas": null
+    },
+    {
+      "slug": "isquiotibiales-en-polea",
+      "nombre_coach": "Isquiotibiales en polea",
+      "nombre_legible": null,
+      "grupo_primario": "isquios",
+      "grupos_secundarios": [],
+      "equipamiento": "polea",
+      "patron": "bisagra",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "excentrico-carrera-isquios-polea",
+      "nombre_coach": "Excéntrico carrera ISQUIOS polea",
+      "nombre_legible": "Excéntrico de isquios en gesto de carrera con polea",
+      "grupo_primario": "isquios",
+      "grupos_secundarios": [],
+      "equipamiento": "polea",
+      "patron": "bisagra",
+      "unilateral": true,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "gesto-sprint-isquios-con-slider",
+      "nombre_coach": "Gesto sprint isquios con slider",
+      "nombre_legible": null,
+      "grupo_primario": "isquios",
+      "grupos_secundarios": [],
+      "equipamiento": "slider",
+      "patron": "bisagra",
+      "unilateral": true,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": null,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "camilla-isquiosurales-1p-mq",
+      "nombre_coach": "Camilla isquiosurales 1P - MQ",
+      "nombre_legible": null,
+      "grupo_primario": "isquios",
+      "grupos_secundarios": [],
+      "equipamiento": "maquina",
+      "patron": "aislamiento",
+      "unilateral": true,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "press-plano",
+      "nombre_coach": "Press plano",
+      "nombre_legible": null,
+      "grupo_primario": "pecho",
+      "grupos_secundarios": [
+        {
+          "grupo": "triceps",
+          "factor": 0.5
+        },
+        {
+          "grupo": "hombro_anterior",
+          "factor": 0.3
+        }
+      ],
+      "equipamiento": "barra",
+      "patron": "empuje_horizontal",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "press-inclinado-con-mancuernas",
+      "nombre_coach": "Press inclinado con mancuernas",
+      "nombre_legible": null,
+      "grupo_primario": "pecho",
+      "grupos_secundarios": [
+        {
+          "grupo": "hombro_anterior",
+          "factor": 0.4
+        },
+        {
+          "grupo": "triceps",
+          "factor": 0.4
+        }
+      ],
+      "equipamiento": "mancuernas",
+      "patron": "empuje_horizontal",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "aperturas-mq",
+      "nombre_coach": "Aperturas - MQ",
+      "nombre_legible": null,
+      "grupo_primario": "pecho",
+      "grupos_secundarios": [],
+      "equipamiento": "maquina",
+      "patron": "aislamiento",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "push-up-dc",
+      "nombre_coach": "Push Up - DC",
+      "nombre_legible": "Flexiones de brazos con disco sobre la espalda",
+      "grupo_primario": "pecho",
+      "grupos_secundarios": [
+        {
+          "grupo": "triceps",
+          "factor": 0.5
+        },
+        {
+          "grupo": "core",
+          "factor": 0.3
+        }
+      ],
+      "equipamiento": "disco",
+      "patron": "empuje_horizontal",
+      "unilateral": false,
+      "admite_lastre": true,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "fondos",
+      "nombre_coach": "Fondos",
+      "nombre_legible": null,
+      "grupo_primario": "triceps",
+      "grupos_secundarios": [
+        {
+          "grupo": "pecho",
+          "factor": 0.6
+        },
+        {
+          "grupo": "hombro_anterior",
+          "factor": 0.3
+        }
+      ],
+      "equipamiento": "peso_corporal",
+      "patron": "empuje_vertical",
+      "unilateral": false,
+      "admite_lastre": true,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "fondos-asistidos-mq",
+      "nombre_coach": "Fondos ASISTIDOS - MQ",
+      "nombre_legible": null,
+      "grupo_primario": "triceps",
+      "grupos_secundarios": [
+        {
+          "grupo": "pecho",
+          "factor": 0.6
+        },
+        {
+          "grupo": "hombro_anterior",
+          "factor": 0.3
+        }
+      ],
+      "equipamiento": "maquina",
+      "patron": "empuje_vertical",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "press-militar-br",
+      "nombre_coach": "Press Militar - BR",
+      "nombre_legible": null,
+      "grupo_primario": "hombro_anterior",
+      "grupos_secundarios": [
+        {
+          "grupo": "triceps",
+          "factor": 0.5
+        },
+        {
+          "grupo": "core",
+          "factor": 0.3
+        }
+      ],
+      "equipamiento": "barra",
+      "patron": "empuje_vertical",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "press-hombro-mq",
+      "nombre_coach": "Press hombro - MQ",
+      "nombre_legible": null,
+      "grupo_primario": "hombro_anterior",
+      "grupos_secundarios": [
+        {
+          "grupo": "triceps",
+          "factor": 0.4
+        }
+      ],
+      "equipamiento": "maquina",
+      "patron": "empuje_vertical",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "press-hombro-ba-kb",
+      "nombre_coach": "Press hombro BA - KB",
+      "nombre_legible": "Press de hombro de pie con kettlebell [BA]",
+      "grupo_primario": "hombro_anterior",
+      "grupos_secundarios": [
+        {
+          "grupo": "triceps",
+          "factor": 0.4
+        }
+      ],
+      "equipamiento": "kettlebell",
+      "patron": "empuje_vertical",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2,
+      "uso": "ambos",
+      "notas": "Sigla BA sin resolver. Video: dos brazos, de pie, extensión completa"
+    },
+    {
+      "slug": "press-hombro-rr-kb",
+      "nombre_coach": "Press hombro RR - KB",
+      "nombre_legible": "Press de hombro con kettlebell desde el pecho [RR]",
+      "grupo_primario": "hombro_anterior",
+      "grupos_secundarios": [
+        {
+          "grupo": "triceps",
+          "factor": 0.4
+        },
+        {
+          "grupo": "core",
+          "factor": 0.3
+        }
+      ],
+      "equipamiento": "kettlebell",
+      "patron": "empuje_vertical",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2,
+      "uso": "ambos",
+      "notas": "Sigla RR sin resolver. Hay componente de rotación"
+    },
+    {
+      "slug": "press-hombro-1m-rr-kb",
+      "nombre_coach": "Press hombro 1m RR - KB",
+      "nombre_legible": "Press de hombro a un brazo con kettlebell [RR]",
+      "grupo_primario": "hombro_anterior",
+      "grupos_secundarios": [
+        {
+          "grupo": "triceps",
+          "factor": 0.4
+        },
+        {
+          "grupo": "core",
+          "factor": 0.3
+        }
+      ],
+      "equipamiento": "kettlebell",
+      "patron": "empuje_vertical",
+      "unilateral": true,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2,
+      "uso": "mesociclo_a",
+      "notas": "Sigla RR sin resolver"
+    },
+    {
+      "slug": "press-hombro-1m-pdb-kb",
+      "nombre_coach": "Press hombro 1m PDB - KB",
+      "nombre_legible": "Press de hombro a un brazo con kettlebell, desde rodilla [PDB]",
+      "grupo_primario": "hombro_anterior",
+      "grupos_secundarios": [
+        {
+          "grupo": "triceps",
+          "factor": 0.4
+        },
+        {
+          "grupo": "core",
+          "factor": 0.3
+        }
+      ],
+      "equipamiento": "kettlebell",
+      "patron": "empuje_vertical",
+      "unilateral": true,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2,
+      "uso": "ambos",
+      "notas": "Sigla PDB sin resolver. Aparente posición de rodilla al piso"
+    },
+    {
+      "slug": "press-en-landmine",
+      "nombre_coach": "Press en landmine",
+      "nombre_legible": null,
+      "grupo_primario": "hombro_anterior",
+      "grupos_secundarios": [
+        {
+          "grupo": "pecho",
+          "factor": 0.4
+        },
+        {
+          "grupo": "triceps",
+          "factor": 0.4
+        }
+      ],
+      "equipamiento": "landmine",
+      "patron": "empuje_vertical",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "dominadas-prona",
+      "nombre_coach": "Dominadas PRONA",
+      "nombre_legible": null,
+      "grupo_primario": "dorsal",
+      "grupos_secundarios": [
+        {
+          "grupo": "biceps",
+          "factor": 0.5
+        },
+        {
+          "grupo": "core",
+          "factor": 0.3
+        }
+      ],
+      "equipamiento": "peso_corporal",
+      "patron": "traccion_vertical",
+      "unilateral": false,
+      "admite_lastre": true,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "dominadas-palmar",
+      "nombre_coach": "Dominadas PALMAR",
+      "nombre_legible": null,
+      "grupo_primario": "dorsal",
+      "grupos_secundarios": [
+        {
+          "grupo": "biceps",
+          "factor": 0.6
+        }
+      ],
+      "equipamiento": "peso_corporal",
+      "patron": "traccion_vertical",
+      "unilateral": false,
+      "admite_lastre": true,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "dorsalera-palmar-mq",
+      "nombre_coach": "Dorsalera PALMAR - MQ",
+      "nombre_legible": "Jalón al pecho supino en máquina",
+      "grupo_primario": "dorsal",
+      "grupos_secundarios": [
+        {
+          "grupo": "biceps",
+          "factor": 0.5
+        }
+      ],
+      "equipamiento": "maquina",
+      "patron": "traccion_vertical",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "remo-neutro-mq",
+      "nombre_coach": "Remo NEUTRO - MQ",
+      "nombre_legible": null,
+      "grupo_primario": "dorsal",
+      "grupos_secundarios": [
+        {
+          "grupo": "biceps",
+          "factor": 0.4
+        },
+        {
+          "grupo": "trapecio",
+          "factor": 0.4
+        }
+      ],
+      "equipamiento": "maquina",
+      "patron": "traccion_horizontal",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "remo-1m-plancha-alta-kb",
+      "nombre_coach": "Remo 1m PLANCHA ALTA - KB",
+      "nombre_legible": "Remo a un brazo en plancha alta con kettlebell",
+      "grupo_primario": "dorsal",
+      "grupos_secundarios": [
+        {
+          "grupo": "core",
+          "factor": 0.5
+        },
+        {
+          "grupo": "biceps",
+          "factor": 0.3
+        }
+      ],
+      "equipamiento": "kettlebell",
+      "patron": "traccion_horizontal",
+      "unilateral": true,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "remo-1m-cd-kb",
+      "nombre_coach": "Remo 1m CD - KB",
+      "nombre_legible": "Remo a un brazo con kettlebell, de pie en bisagra [CD]",
+      "grupo_primario": "dorsal",
+      "grupos_secundarios": [
+        {
+          "grupo": "biceps",
+          "factor": 0.4
+        },
+        {
+          "grupo": "core",
+          "factor": 0.3
+        }
+      ],
+      "equipamiento": "kettlebell",
+      "patron": "traccion_horizontal",
+      "unilateral": true,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2,
+      "uso": "ambos",
+      "notas": "Sigla CD sin resolver. Sin apoyo de banco"
+    },
+    {
+      "slug": "remo-al-menton-br",
+      "nombre_coach": "Remo al mentón - BR",
+      "nombre_legible": null,
+      "grupo_primario": "trapecio",
+      "grupos_secundarios": [
+        {
+          "grupo": "hombro_lateral",
+          "factor": 0.6
+        }
+      ],
+      "equipamiento": "barra",
+      "patron": "traccion_vertical",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "remo-invertido-puente-br",
+      "nombre_coach": "Remo invertido PUENTE - BR",
+      "nombre_legible": null,
+      "grupo_primario": "dorsal",
+      "grupos_secundarios": [
+        {
+          "grupo": "biceps",
+          "factor": 0.4
+        },
+        {
+          "grupo": "core",
+          "factor": 0.3
+        }
+      ],
+      "equipamiento": "barra",
+      "patron": "traccion_horizontal",
+      "unilateral": false,
+      "admite_lastre": true,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "remo-tandem-en-puntas",
+      "nombre_coach": "Remo+ Tandem en puntas",
+      "nombre_legible": "Remo en posición tándem sobre puntas",
+      "grupo_primario": "dorsal",
+      "grupos_secundarios": [
+        {
+          "grupo": "core",
+          "factor": 0.5
+        }
+      ],
+      "equipamiento": "kettlebell",
+      "patron": "traccion_horizontal",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "y-bd",
+      "nombre_coach": "Y - BD",
+      "nombre_legible": "Elevación en Y con banda",
+      "grupo_primario": "hombro_posterior",
+      "grupos_secundarios": [
+        {
+          "grupo": "trapecio",
+          "factor": 0.5
+        }
+      ],
+      "equipamiento": "banda",
+      "patron": "traccion_horizontal",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": null,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "biceps-br",
+      "nombre_coach": "Biceps - BR",
+      "nombre_legible": null,
+      "grupo_primario": "biceps",
+      "grupos_secundarios": [],
+      "equipamiento": "barra",
+      "patron": "aislamiento",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2.5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "biceps-mc",
+      "nombre_coach": "Biceps - MC",
+      "nombre_legible": null,
+      "grupo_primario": "biceps",
+      "grupos_secundarios": [],
+      "equipamiento": "mancuernas",
+      "patron": "aislamiento",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "biceps-alterno-mc",
+      "nombre_coach": "Biceps alterno - MC",
+      "nombre_legible": null,
+      "grupo_primario": "biceps",
+      "grupos_secundarios": [],
+      "equipamiento": "mancuernas",
+      "patron": "aislamiento",
+      "unilateral": true,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "biceps-hombro-mc",
+      "nombre_coach": "Biceps/Hombro - MC",
+      "nombre_legible": "Curl de bíceps combinado con press de hombro",
+      "grupo_primario": "biceps",
+      "grupos_secundarios": [
+        {
+          "grupo": "hombro_anterior",
+          "factor": 0.5
+        }
+      ],
+      "equipamiento": "mancuernas",
+      "patron": "aislamiento",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "triceps-pl",
+      "nombre_coach": "Triceps - PL",
+      "nombre_legible": null,
+      "grupo_primario": "triceps",
+      "grupos_secundarios": [],
+      "equipamiento": "polea",
+      "patron": "aislamiento",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 5,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "vuelo-combinado-alterno",
+      "nombre_coach": "Vuelo combinado ALTERNO",
+      "nombre_legible": null,
+      "grupo_primario": "hombro_lateral",
+      "grupos_secundarios": [
+        {
+          "grupo": "hombro_anterior",
+          "factor": 0.4
+        }
+      ],
+      "equipamiento": "mancuernas",
+      "patron": "aislamiento",
+      "unilateral": true,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2,
+      "uso": "ambos",
+      "notas": null
+    },
+    {
+      "slug": "vuelo-frontal-lateral",
+      "nombre_coach": "Vuelo Frontal/Lateral",
+      "nombre_legible": null,
+      "grupo_primario": "hombro_lateral",
+      "grupos_secundarios": [
+        {
+          "grupo": "hombro_anterior",
+          "factor": 0.5
+        }
+      ],
+      "equipamiento": "mancuernas",
+      "patron": "aislamiento",
+      "unilateral": false,
+      "admite_lastre": false,
+      "mide_en": "reps",
+      "cuenta_volumen": true,
+      "incremento_minimo_kg": 2,
+      "uso": "ambos",
+      "notas": null
+    }
+  ]
+}

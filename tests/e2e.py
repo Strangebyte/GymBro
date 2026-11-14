@@ -1,0 +1,328 @@
+"""Prueba de punta a punta de Gym Log sobre la versión compilada.
+
+Requisitos (una vez):   pip install "playwright>=1.45"  &&  playwright install chromium
+Uso:                    npm run build  &&  python tests/e2e.py
+                        python tests/e2e.py --capturas    (guarda capturas en tests/capturas/)
+
+Levanta un servidor estático sobre dist/, abre la app en un móvil simulado (390x844) con la fecha
+fijada en el 14-11-2026 (el historial sembrado es relativo a esa fecha) y recorre cada flujo.
+Cada sección usa un navegador limpio, así que arranca con los datos iniciales.
+Termina con código 1 si falla algo.
+"""
+import json, os, socket, subprocess, sys, time
+from datetime import datetime
+from playwright.sync_api import sync_playwright
+
+RAIZ = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
+DIST = os.path.join(RAIZ, 'dist')
+FIX = os.path.join(RAIZ, 'tests', 'fixtures')
+CAP = os.path.join(RAIZ, 'tests', 'capturas')
+CAPTURAS = '--capturas' in sys.argv
+HOY = datetime(2026, 11, 14, 12, 0, 0)
+
+sys.stdout.reconfigure(encoding='utf-8')  # la consola de Windows no puede imprimir '→' en cp1252
+resultados, errores = [], []
+
+def ok(nombre, cond, extra=''):
+    resultados.append((nombre, bool(cond)))
+    print(('  ok   ' if cond else '  FALLA') + ' ' + nombre + (f'   [{extra}]' if extra and not cond else ''))
+
+def puerto_libre():
+    s = socket.socket(); s.bind(('127.0.0.1', 0)); p = s.getsockname()[1]; s.close(); return p
+
+def main():
+    if not os.path.isfile(os.path.join(DIST, 'index.html')):
+        sys.exit('No existe dist/. Corré primero: npm run build')
+    puerto = puerto_libre()
+    srv = subprocess.Popen([sys.executable, '-m', 'http.server', str(puerto), '--bind', '127.0.0.1', '-d', DIST],
+                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    time.sleep(1.2)
+    try:
+        with sync_playwright() as pw:
+            navegador = pw.chromium.launch()
+
+            def abrir():
+                ctx = navegador.new_context(viewport={'width': 390, 'height': 844}, device_scale_factor=2, accept_downloads=True)
+                pg = ctx.new_page()
+                pg.clock.set_fixed_time(HOY)
+                pg.on('console', lambda m: errores.append(m.text) if m.type == 'error' else None)
+                pg.on('pageerror', lambda e: errores.append('pageerror: ' + str(e)))
+                pg.goto(f'http://127.0.0.1:{puerto}/', wait_until='networkidle')
+                pg.wait_for_selector('.tabbar', timeout=20000)
+                pg.wait_for_timeout(500)
+                return ctx, pg
+
+            def captura(pg, nombre):
+                if CAPTURAS:
+                    os.makedirs(CAP, exist_ok=True)
+                    pg.screenshot(path=os.path.join(CAP, nombre + '.png'), full_page=True)
+
+            def texto(pg, sel='.main'):
+                return pg.inner_text(sel)
+
+            def tab(pg, nombre):
+                pg.click(f'.tabbar >> text={nombre}'); pg.wait_for_timeout(400)
+
+            def backup(pg):
+                """Exporta la copia de seguridad desde Ajustes y la devuelve como dict. Vuelve a Hoy."""
+                tab(pg, 'Hoy'); pg.click('[aria-label="Ajustes"]'); pg.wait_for_timeout(200)
+                with pg.expect_download() as d:
+                    pg.click('text=Exportar copia')
+                ruta = d.value.path()
+                data = json.load(open(ruta, encoding='utf-8'))
+                pg.click('[aria-label="Volver"]'); pg.wait_for_timeout(250)
+                return data, ruta
+
+            def empezar(pg):
+                pg.click('text=Empezar'); pg.wait_for_timeout(250)
+                pg.click('text=Saltear y empezar'); pg.wait_for_selector('.bloque'); pg.wait_for_timeout(350)
+
+            def abrir_bloque(pg, n):
+                pg.locator('.bloque-h button.row').nth(n - 1).click(); pg.wait_for_timeout(300)
+
+            # ------------------------------------------------------------ A
+            print('\nA. Datos iniciales, calendario y detalle de sesión')
+            ctx, pg = abrir()
+            t = texto(pg)
+            ok('Hoy sugiere el Día 1 del plan activo', 'Día 1 · Búlgara + press' in t and 'Mesociclo B' in t)
+            ok('Semana: 3 de 4 sesiones (lun, mar, mié importadas)', '3 de 4' in t)
+            captura(pg, 'A1-hoy')
+            tab(pg, 'Calendario')
+            ok('Noviembre: 7 días de gym marcados', pg.locator('.cal button.gym').count() == 7, str(pg.locator('.cal button.gym').count()))
+            pg.locator('.cal button', has_text='11').first.click(); pg.wait_for_timeout(300)
+            ok('Tocar un día muestra qué se hizo', 'Día 6 · Peso muerto + tracción' in texto(pg))
+            captura(pg, 'A2-calendario')
+            pg.click('text=Día 6 · Peso muerto + tracción'); pg.wait_for_timeout(400)
+            t = texto(pg)
+            ok('Detalle de sesión importada', 'Peso muerto - BR' in t and 'importada' in t and 'RPE 8' in t)
+            pg.click('[aria-label="Volver"]'); pg.wait_for_timeout(300)
+            pg.click('[aria-label="Mes anterior"]'); pg.wait_for_timeout(250)
+            ok('Octubre: 10 días de gym', pg.locator('.cal button.gym').count() == 10, str(pg.locator('.cal button.gym').count()))
+            ctx.close()
+
+            # ------------------------------------------------------------ B
+            print('\nB. Sesión con tilde por bloque')
+            ctx, pg = abrir()
+            antes, _ = backup(pg)
+            nombres = {e['id']: e['nombre'] for e in antes['exercises']}
+            dia1 = lambda d: [x for x in d['planDays'] if x['nombre'].startswith('Día 1 ·')][0]
+            pg.click('text=Empezar'); pg.wait_for_timeout(250)
+            ok('Wellness: primera pregunta', '¿Cómo dormiste anoche?' in texto(pg))
+            captura(pg, 'B1-wellness')
+            for r in ['Bien', 'Poco', 'Normal', 'Algo estresado', 'Alta']:
+                pg.click(f'.well >> text="{r}"'); pg.wait_for_timeout(220)
+            pg.wait_for_selector('.bloque'); pg.wait_for_timeout(350)
+            ok('6 bloques, todos colapsados', pg.locator('.bloque').count() == 6 and pg.locator('.ej').count() == 0)
+            ok('Un tilde por bloque', pg.locator('.tilde').count() == 6)
+            ok('Etiquetas del bloque en su encabezado', 'movilidad cadera' in pg.locator('.bloque').first.inner_text())
+            ok('37 series del plan', 'de 37 series' in texto(pg, '.topbar'))
+            captura(pg, 'B2-sesion')
+            abrir_bloque(pg, 4); abrir_bloque(pg, 5)
+            ok('Abrir un bloque cierra el anterior', pg.locator('.bloque-c').count() == 1 and 'Press plano' in pg.locator('.bloque-c').inner_text())
+            ej = pg.locator('.ej', has_text='Press plano')
+            ok('Series precargadas con el plan y editables a mano', ej.locator('input').nth(0).input_value() == '8' and ej.locator('input').nth(1).input_value() == '80')
+            ok('Sin controles de RIR/RPE/fallo en la sesión', pg.locator('.bloque-c .chip').count() == 0)
+            ok('Fecha en dd/mm/yyyy', '(10/11/2026)' in ej.inner_text())
+            campo = ej.locator('input').nth(1); campo.fill('82,5'); campo.blur(); pg.wait_for_timeout(250)
+            ej.locator('[aria-label="Historial de Press plano"]').click(); pg.wait_for_timeout(450)
+            ok('Historial en una hoja, sin enlaces', pg.locator('.sheet .item').count() >= 5 and pg.locator('.sheet button.item').count() == 0)
+            ok('Con la hoja abierta el fondo no se desplaza', pg.evaluate('getComputedStyle(document.body).overflow') == 'hidden')
+            captura(pg, 'B3-historial')
+            pg.click('[aria-label="Cerrar"]'); pg.wait_for_timeout(300)
+            ok('Al cerrar el historial sigue el mismo bloque abierto', pg.locator('.bloque-c').count() == 1 and 'Press plano' in pg.locator('.bloque-c').inner_text())
+            pg.locator('.ej', has_text='Caminata de gemelo').locator('text=Cambiar ejercicio').click(); pg.wait_for_timeout(300)
+            pg.fill('.sheet [aria-label="Buscar ejercicio"]', 'gesto sprint'); pg.wait_for_timeout(300)
+            pg.locator('.sheet .item').first.click(); pg.wait_for_timeout(400)
+            ok('Cambiar ejercicio en la sesión', 'Gesto sprint isquios con slider' in pg.locator('.bloque-c').inner_text())
+            pg.locator('.tilde').nth(4).click(); pg.wait_for_timeout(350)
+            ok('El tilde marca todo el bloque', pg.locator('.bloque.listo').count() == 1 and '6 de 37 series' in texto(pg, '.topbar'))
+            ok('Sin cronómetro en modo por bloque', pg.locator('.timer').count() == 0)
+            pg.click('text=+ Agregar ejercicios adicionales'); pg.wait_for_timeout(400)
+            ok('Selector: "Listo" en la cabecera', pg.locator('.sheet-h >> text=Listo').count() == 1)
+            ok('Selector agrupado por categoría', pg.locator('.sheet h2.cat').count() >= 10)
+            pg.click('.sheet [aria-label="Filtrar ejercicios"]'); pg.wait_for_timeout(200)
+            pg.locator('.sheet .chip', has_text='Isquios').click(); pg.wait_for_timeout(300)
+            ok('Filtro por categoría', pg.locator('.sheet h2.cat').count() == 1 and pg.locator('.sheet .item').count() == 9, str(pg.locator('.sheet .item').count()))
+            captura(pg, 'B4-selector')
+            pg.locator('.sheet .item', has_text='CURL NÓRDICO').click(); pg.wait_for_timeout(200)
+            pg.click('.sheet-h >> text=Listo'); pg.wait_for_timeout(400)
+            ok('Bloque de ejercicios adicionales', 'Ejercicios adicionales' in texto(pg) and pg.locator('.bloque').count() == 7)
+            campo = pg.locator('.ej', has_text='CURL NÓRDICO').locator('input').first
+            campo.fill(''); campo.blur(); pg.wait_for_timeout(200)
+            pg.locator('.tilde').nth(6).click(); pg.wait_for_timeout(300)
+            ok('No se puede tildar con una serie sin datos', pg.locator('.toast').count() == 1 and pg.locator('.bloque.listo').count() == 1)
+            campo.fill('6'); campo.blur(); pg.wait_for_timeout(200)
+            pg.locator('.tilde').nth(6).click(); pg.wait_for_timeout(300)
+            pg.click('.topbar >> text=Terminar'); pg.wait_for_timeout(300)
+            pg.click('[aria-label="Volver"]'); pg.wait_for_timeout(400)
+            ok('Volver de otra pantalla conserva el bloque abierto', pg.locator('.bloque-c').count() == 1 and 'CURL NÓRDICO' in pg.locator('.bloque-c').inner_text())
+            pg.click('.topbar >> text=Terminar'); pg.wait_for_timeout(300)
+            ok('Cierre avisa las series sin marcar', 'sin marcar' in texto(pg))
+            ok('"Actualizar el plan" viene desmarcado', pg.locator('.card.row').get_attribute('aria-pressed') == 'false')
+            pg.click('.card.row'); pg.wait_for_timeout(150)          # caso exigente: actualizar el plan
+            pg.locator('.chips .chip', has_text='7').first.click()
+            captura(pg, 'B5-cierre')
+            pg.click('text=Guardar sesión'); pg.wait_for_timeout(700)
+            t = texto(pg)
+            ok('Hoy: sesión hecha y la rotación avanza al Día 2', 'HECHO HOY' in t.upper() and 'Día 2 · Tracción + brazos' in t and '4 de 4' in t)
+            desp, _ = backup(pg)
+            ses = [s for s in desp['sessions'] if s['origen'] == 'app'][0]
+            logs = [l for l in desp['setLogs'] if l['session_id'] == ses['id']]
+            ok('Se guardan solo las series tildadas (7)', len(logs) == 7 and all(l['hecha'] for l in logs), str(len(logs)))
+            ok('Wellness y esfuerzo guardados', ses['wellness'] == {'sueno': 4, 'dolor': 4, 'cansancio': 3, 'estres': 4, 'energia': 4} and ses['srpe'] == 7)
+            ok('La sesión guardó el ejercicio cambiado', {nombres[l['exercise_id']] for l in logs} == {'Press plano', 'Gesto sprint isquios con slider', 'CURL NÓRDICO'})
+            b5a, b5d = dia1(antes)['bloques'][4]['ejercicios'], dia1(desp)['bloques'][4]['ejercicios']
+            ok('El plan conserva sus ejercicios y bloques', [e['exercise_id'] for e in b5a] == [e['exercise_id'] for e in b5d] and len(dia1(desp)['bloques']) == 6)
+            ok('"Actualizar el plan" solo cambió el peso editado (80 → 82,5)', b5d[0]['series'][0]['peso_g'] == 82500 and b5d[1]['series'] == b5a[1]['series'])
+            ctx.close()
+
+            # ------------------------------------------------------------ C
+            print('\nC. Sesión con tilde por ejercicio y sesión libre')
+            ctx, pg = abrir()
+            pg.click('[aria-label="Ajustes"]'); pg.click('text=Por ejercicio'); pg.wait_for_timeout(200)
+            pg.click('[aria-label="Volver"]'); pg.wait_for_timeout(250)
+            empezar(pg)
+            ok('Sin tilde en los bloques', pg.locator('.bloque-h .tilde').count() == 0)
+            abrir_bloque(pg, 3)
+            ok('Un tilde por ejercicio', pg.locator('.ej .tilde').count() == 2)
+            pg.locator('.ej .tilde').first.click(); pg.wait_for_timeout(400)
+            ok('Tildar un ejercicio arranca el descanso', pg.locator('.timer').count() == 1 and '3 de 37' in texto(pg, '.topbar'))
+            captura(pg, 'C1-por-ejercicio')
+            pg.click('[aria-label="Cerrar descanso"]'); pg.click('.topbar >> text=Terminar'); pg.wait_for_timeout(300)
+            pg.click('text=Descartar sesión'); pg.wait_for_timeout(300)
+            ok('Diálogo propio de confirmación', pg.locator('.dialog').count() == 1)
+            pg.click('.dialog button.danger'); pg.wait_for_timeout(500)
+            ok('Sesión descartada: la rotación no avanza', 'Día 1 · Búlgara + press' in texto(pg))
+            pg.click('text=Elegir otro día'); pg.wait_for_timeout(300)
+            ok('Elegir día: lista los 6 del plan', pg.locator('.sheet .item').count() == 6)
+            pg.click('text=Sesión libre, sin plan'); pg.wait_for_timeout(300); pg.click('text=Saltear y empezar'); pg.wait_for_timeout(600)
+            ok('Sesión libre arranca vacía', 'Sesión vacía' in texto(pg))
+            pg.go_back(); pg.wait_for_timeout(400)
+            ok('Botón atrás del navegador vuelve a Hoy', 'Sesión en curso' in texto(pg))
+            ctx.close()
+
+            # ------------------------------------------------------------ D
+            print('\nD. Otras actividades')
+            ctx, pg = abrir()
+            pg.click('text=+ Registrar otra actividad'); pg.wait_for_timeout(300)
+            pg.click('.chip >> text=Pádel'); pg.locator('.chips .chip', has_text='6').first.click()
+            captura(pg, 'D1-actividad')
+            pg.click('text="Guardar"'); pg.wait_for_timeout(400)
+            ok('Hoy lista la actividad', 'Pádel' in texto(pg))
+            tab(pg, 'Calendario')
+            ok('Calendario marca el día como actividad', pg.locator('.cal button.act').count() == 1)
+            ok('Panel del día', 'Pádel' in texto(pg) and '60 min' in texto(pg))
+            ctx.close()
+
+            # ------------------------------------------------------------ E
+            print('\nE. Planes: importar, mapear, editar')
+            ctx, pg = abrir()
+            tab(pg, 'Planes'); pg.click('text=Importar plan'); pg.wait_for_timeout(300)
+            pg.set_input_files('input[type=file]', os.path.join(FIX, 'plan-con-errores.json')); pg.wait_for_timeout(400)
+            t = texto(pg)
+            ok('Archivo con errores: no se importa y dice por qué', 'no se puede importar' in t and 'RIR y RPE a la vez' in t and 'falta el nombre' in t and 'necesita al menos' in t)
+            pg.click('text=Elegir otro archivo'); pg.wait_for_timeout(200)
+            pg.set_input_files('input[type=file]', os.path.join(FIX, 'plan-ok.json')); pg.wait_for_timeout(500)
+            t = texto(pg)
+            ok('Detecta 2 ejercicios desconocidos', 'NO ESTÁN EN LA APP · 2' in t.upper())
+            ok('Reconoce nombres sin acentos ni mayúsculas', '3 reconocidos' in t)
+            ok('Sugiere el parecido', '¿Es «Dominadas PRONA»? Vincular' in t)
+            pg.click('text=¿Es «Dominadas PRONA»? Vincular'); pg.wait_for_timeout(200)
+            c = pg.locator('.card', has_text='Press banca inclinado smith').first
+            c.locator('[aria-label="Nombre del ejercicio nuevo"]').fill('Press inclinado en Smith')
+            c.locator('select').select_option('pecho')
+            captura(pg, 'E1-mapeo')
+            pg.click('text="Importar plan"'); pg.wait_for_timeout(700)
+            ok('Plan importado', 'Día A' in texto(pg) and 'Día B' in texto(pg))
+            pg.click('text=Día A'); pg.wait_for_timeout(400)
+            t = texto(pg)
+            ok('El plan usa los nombres del catálogo', 'Press inclinado en Smith' in t and 'Dominadas PRONA' in t and 'Dominadas pronas' not in t)
+            card = pg.locator('.card', has_text='Press inclinado en Smith')
+            card.locator('[aria-label="Serie 1: RIR"]').fill('2'); card.locator('[aria-label="Serie 1: RIR"]').blur(); pg.wait_for_timeout(300)
+            ok('Editor: cargar RIR borra el RPE de esa serie', card.locator('[aria-label="Serie 1: RPE"]').input_value() == '' and card.locator('[aria-label="Serie 2: RPE"]').input_value() == '8')
+            card.locator('text=+ Serie').click(); pg.wait_for_timeout(300)
+            ok('Editor: agregar serie', card.locator('[aria-label="Serie 4: reps"]').count() == 1)
+            captura(pg, 'E2-editor')
+            pg.click('text="Listo"'); pg.wait_for_timeout(300); pg.click('[aria-label="Volver"]'); pg.wait_for_timeout(300)
+            ok('Dos planes; el importado quedó activo', pg.locator('.main .card').count() == 2 and 'activo' in pg.locator('.main .card').first.inner_text())
+            tab(pg, 'Ejercicios')
+            ok('El ejercicio creado al importar está en el catálogo', '101 en el catálogo' in texto(pg, '.topbar'))
+            ctx.close()
+
+            # ------------------------------------------------------------ F
+            print('\nF. Ejercicios: alta, imagen, agrupado')
+            ctx, pg = abrir()
+            tab(pg, 'Ejercicios')
+            ok('Catálogo agrupado y con filtro', pg.locator('h2.cat').count() >= 10 and pg.locator('[aria-label="Filtrar ejercicios"]').count() == 1)
+            captura(pg, 'F1-ejercicios')
+            pg.click('text=+ Nuevo'); pg.wait_for_timeout(300)
+            pg.fill('#en', 'Sentadilla goblet'); pg.select_option('#s-grupo', 'cuadriceps'); pg.select_option('#s-equipo', 'kettlebell')
+            pg.set_input_files('#em', os.path.join(FIX, 'imagen.png')); pg.wait_for_timeout(400)
+            ok('Vista previa de la imagen al crear', pg.locator('.media img').count() == 1)
+            pg.fill('#eu', 'youtube.com/watch?v=abc')
+            pg.click('text="Guardar"'); pg.wait_for_timeout(600)
+            ok('Ficha con imagen y enlace', 'Sentadilla goblet' in texto(pg) and pg.locator('.media img').count() == 1
+               and pg.locator('.media a').get_attribute('href') == 'https://youtube.com/watch?v=abc')
+            ok('La imagen carga', pg.evaluate("document.querySelector('.media img').naturalWidth") == 640)
+            pg.reload(wait_until='networkidle'); pg.wait_for_selector('.tabbar'); pg.wait_for_timeout(400)
+            tab(pg, 'Ejercicios'); pg.fill('[aria-label="Buscar ejercicio"]', 'press plano'); pg.wait_for_timeout(300)
+            pg.click('.item >> text=Press plano'); pg.wait_for_timeout(500)
+            ok('Ficha: gráfico de peso máximo e historial sin enlaces', pg.locator('.chart').count() == 1 and pg.locator('.main button.item').count() == 0 and '/2026' in texto(pg))
+            ok('Ficha: recuadro para agregar video o imagen', pg.locator('.media-vacio').count() == 1)
+            captura(pg, 'F2-ficha')
+            ctx.close()
+
+            # ------------------------------------------------------------ G
+            print('\nG. Progreso')
+            ctx, pg = abrir()
+            tab(pg, 'Progreso')
+            ok('6 ejercicios seguidos por defecto', pg.locator('.pm').count() == 6, str(pg.locator('.pm').count()))
+            captura(pg, 'G1-progreso')
+            pg.locator('.pm', has_text='Press plano').click(); pg.wait_for_timeout(300)
+            ok('Gráfico al tocar un ejercicio', pg.locator('.chart').count() == 1)
+            antes_t = texto(pg, '.pm-d [role=status]')
+            pg.locator('.chart g[style]').first.click(); pg.wait_for_timeout(200)
+            ok('Tocar un punto muestra esa sesión', texto(pg, '.pm-d [role=status]') != antes_t)
+            pg.click('text=Elegir ejercicios'); pg.wait_for_timeout(300)
+            pg.fill('.sheet [aria-label="Buscar ejercicio"]', 'triceps'); pg.wait_for_timeout(300)
+            pg.locator('.sheet .item').first.click(); pg.wait_for_timeout(300)
+            pg.click('.sheet-h >> text=Listo'); pg.wait_for_timeout(300)
+            ok('Agregar un ejercicio al seguimiento', pg.locator('.pm').count() == 7 and 'Triceps - PL' in texto(pg))
+            pg.locator('button', has_text='Series por grupo muscular').click(); pg.wait_for_timeout(200)
+            ok('Series por grupo muscular desplegable', pg.locator('.hbar').count() >= 6)
+            ctx.close()
+
+            # ------------------------------------------------------------ H
+            print('\nH. Ajustes: tema y copia de seguridad')
+            ctx, pg = abrir()
+            pg.click('[aria-label="Ajustes"]'); pg.click('text=Oscuro'); pg.wait_for_timeout(300)
+            ok('Tema oscuro', pg.evaluate('document.documentElement.dataset.theme') == 'oscuro')
+            pg.click('[aria-label="Volver"]'); pg.wait_for_timeout(200)
+            data, ruta = backup(pg)
+            ok('Copia: formato y contenido', data['formato'] == 'gym-log-backup/v2' and len(data['sessions']) == 29 and len(data['exercises']) == 100 and len(data['plans']) == 1)
+            pg.click('[aria-label="Ajustes"]'); pg.click('text=Empezar de cero'); pg.wait_for_timeout(250)
+            pg.click('.dialog button.danger'); pg.wait_for_timeout(500)
+            ok('Empezar de cero borra sesiones y planes', '0' in pg.locator('.kv', has_text='Sesiones').inner_text())
+            pg.set_input_files('input[type=file]', ruta); pg.wait_for_timeout(300)
+            pg.click('.dialog button.danger'); pg.wait_for_timeout(700)
+            ok('Restaurar la copia recupera las 29 sesiones', '29' in pg.locator('.kv', has_text='Sesiones').inner_text() and 'Copia restaurada' in texto(pg))
+            pg.reload(wait_until='networkidle'); pg.wait_for_selector('.tabbar'); pg.wait_for_timeout(400)
+            ok('Tras recargar persisten datos y tema', pg.evaluate('document.documentElement.dataset.theme') == 'oscuro' and 'Día 1 · Búlgara + press' in texto(pg))
+            ancho = pg.evaluate('document.documentElement.scrollWidth - document.documentElement.clientWidth')
+            ok('Sin desborde horizontal', ancho == 0, str(ancho))
+            captura(pg, 'H1-oscuro')
+            ctx.close()
+            navegador.close()
+    finally:
+        srv.terminate()
+
+    fallas = [n for n, c in resultados if not c]
+    print(f'\n{len(resultados) - len(fallas)} de {len(resultados)} verificaciones correctas · {len(errores)} errores de consola')
+    for e in errores[:10]:
+        print('  consola:', e[:300])
+    if fallas or errores:
+        print('FALLARON:', *fallas, sep='\n  - ')
+        sys.exit(1)
+
+if __name__ == '__main__':
+    main()

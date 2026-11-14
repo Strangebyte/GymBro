@@ -1,0 +1,195 @@
+import { db, kgToG, type Exercise, type PSet } from './db'
+import { norm, setValido } from './lib'
+import { crearEjercicio } from './actions'
+
+export const PLAN_FORMAT = 'plan-gym/v1'
+
+export interface ImpEj { original: string; clave: string; notas: string | null; series: PSet[] }
+export interface ImpDia { nombre: string; bloques: { orden: number; ejercicios: ImpEj[] }[] }
+export interface ImpPlan {
+  nombre: string
+  objetivo: string | null
+  dias: ImpDia[]
+  /** clave normalizada -> id del ejercicio del catálogo, o null si no se reconoce */
+  resueltos: Map<string, number | null>
+  desconocidos: { clave: string; original: string; sugerencia: Exercise | null }[]
+  errores: string[]
+}
+
+export type Resolucion =
+  | { tipo: 'crear'; nombre: string; grupo: string }
+  | { tipo: 'vincular'; id: number }
+
+const num = (v: unknown): number | null => {
+  if (v == null || v === '') return null
+  const n = typeof v === 'string' ? Number(v.replace(',', '.')) : Number(v)
+  return Number.isFinite(n) ? n : null
+}
+
+function leerSerie(o: Record<string, unknown>): PSet {
+  const s: PSet = {}
+  const reps = num(o.reps ?? o.repeticiones)
+  const seg = num(o.seg ?? o.segundos ?? o.tiempo_s ?? o.tiempo ?? o.duracion_s)
+  const peso = num(o.peso_kg ?? o.peso ?? o.lastre_kg)
+  const rir = num(o.rir)
+  const rpe = num(o.rpe ?? o.intensidad)
+  if (reps != null) s.reps = reps
+  if (seg != null) s.seg = seg
+  if (peso != null && peso !== 0) s.peso_g = kgToG(peso)
+  if (rir != null) s.rir = rir
+  if (rpe != null) s.rpe = rpe
+  if (o.al_fallo === true || o.fallo === true) s.fallo = true
+  return s
+}
+
+/** Coeficiente de Dice sobre bigramas: tolera plurales, acentos y errores de tipeo. */
+function similitud(a: string, b: string): number {
+  const bg = (t: string) => { const x = t.replace(/ /g, ''); const m = new Map<string, number>(); for (let i = 0; i < x.length - 1; i++) { const k = x.slice(i, i + 2); m.set(k, (m.get(k) ?? 0) + 1) } return m }
+  const A = bg(a), B = bg(b)
+  let inter = 0, na = 0, nb = 0
+  for (const [k, v] of A) { na += v; inter += Math.min(v, B.get(k) ?? 0) }
+  for (const v of B.values()) nb += v
+  return na + nb ? (2 * inter) / (na + nb) : 0
+}
+
+/** Lee y valida un archivo de plan. No escribe nada. */
+export function leerPlan(texto: string, catalogo: Exercise[]): ImpPlan {
+  const out: ImpPlan = { nombre: 'Plan importado', objetivo: null, dias: [], resueltos: new Map(), desconocidos: [], errores: [] }
+  let data: Record<string, unknown>
+  try { data = JSON.parse(texto) } catch {
+    out.errores.push('El archivo no es un JSON válido.')
+    return out
+  }
+  if (data.formato !== PLAN_FORMAT) out.errores.push(`Formato no reconocido: "${String(data.formato ?? '')}". Se esperaba "${PLAN_FORMAT}".`)
+  const cab = (data.plan ?? data.programa ?? {}) as Record<string, unknown>
+  if (typeof cab.nombre === 'string' && cab.nombre.trim()) out.nombre = cab.nombre.trim()
+  if (typeof cab.objetivo === 'string' && cab.objetivo.trim()) out.objetivo = cab.objetivo.trim()
+
+  const indice = new Map<string, number>()
+  for (const e of catalogo) {
+    for (const n of [e.nombre, e.slug, e.legible ?? '', ...(e.alias ?? [])]) if (n) indice.set(norm(n), e.id!)
+  }
+
+  const dias = Array.isArray(data.dias) ? (data.dias as Record<string, unknown>[]) : []
+  if (!dias.length) out.errores.push('El archivo no tiene ningún día ("dias").')
+  dias.forEach((d, di) => {
+    const nombreDia = typeof d.nombre === 'string' && d.nombre.trim() ? d.nombre.trim()
+      : typeof d.etiqueta === 'string' && d.etiqueta.trim() ? d.etiqueta.trim() : `Día ${di + 1}`
+    const dia: ImpDia = { nombre: nombreDia, bloques: [] }
+    const bloques = Array.isArray(d.bloques) ? (d.bloques as Record<string, unknown>[]) : []
+    if (!bloques.length) out.errores.push(`${nombreDia}: no tiene bloques.`)
+    bloques.forEach((b, bi) => {
+      const orden = num(b.orden) ?? bi + 1
+      const ejercicios = Array.isArray(b.ejercicios) ? (b.ejercicios as Record<string, unknown>[]) : []
+      const bloque = { orden, ejercicios: [] as ImpEj[] }
+      ejercicios.forEach((e, ei) => {
+        const donde = `${nombreDia}, bloque ${orden}, ejercicio ${ei + 1}`
+        const original = String(e.ejercicio ?? e.nombre ?? e.slug ?? '').trim()
+        if (!original) { out.errores.push(`${donde}: falta el nombre ("ejercicio").`); return }
+        let series: PSet[] = []
+        if (Array.isArray(e.series)) series = (e.series as Record<string, unknown>[]).map(leerSerie)
+        else if (num(e.series) != null) series = Array.from({ length: num(e.series)! }, () => leerSerie(e))
+        if (!series.length) out.errores.push(`${donde} (${original}): no tiene series.`)
+        series.forEach((s, si) => {
+          if (!setValido(s)) out.errores.push(`${donde} (${original}), serie ${si + 1}: necesita al menos reps, peso, RIR, RPE o tiempo.`)
+          if (s.rir != null && s.rpe != null) out.errores.push(`${donde} (${original}), serie ${si + 1}: tiene RIR y RPE a la vez; va uno solo.`)
+        })
+        const clave = norm(original)
+        if (!out.resueltos.has(clave)) {
+          const id = indice.get(clave) ?? null
+          out.resueltos.set(clave, id)
+          if (id == null) {
+            let mejor: Exercise | null = null, punt = 0
+            for (const c of catalogo) { const p = similitud(clave, norm(c.nombre)); if (p > punt) { punt = p; mejor = c } }
+            out.desconocidos.push({ clave, original, sugerencia: punt >= 0.62 ? mejor : null })
+          }
+        }
+        bloque.ejercicios.push({ original, clave, notas: typeof e.notas === 'string' && e.notas.trim() ? e.notas.trim() : null, series })
+      })
+      dia.bloques.push(bloque)
+    })
+    out.dias.push(dia)
+  })
+  return out
+}
+
+/** Guarda el plan leído. Crea o vincula los ejercicios desconocidos según lo resuelto por el usuario. */
+export async function guardarPlan(imp: ImpPlan, resoluciones: Map<string, Resolucion>, activar: boolean): Promise<number> {
+  const ids = new Map<string, number>()
+  for (const [clave, id] of imp.resueltos) if (id != null) ids.set(clave, id)
+  for (const d of imp.desconocidos) {
+    const r = resoluciones.get(d.clave)
+    if (!r) throw new Error(`Falta resolver el ejercicio "${d.original}".`)
+    if (r.tipo === 'crear') {
+      ids.set(d.clave, await crearEjercicio({ nombre: r.nombre.trim() || d.original, grupo: r.grupo, alias: r.nombre.trim() && norm(r.nombre) !== d.clave ? [d.original] : [] }))
+    } else {
+      const ex = await db.exercises.get(r.id)
+      if (!ex) throw new Error(`El ejercicio vinculado a "${d.original}" ya no existe.`)
+      if (!(ex.alias ?? []).some((a) => norm(a) === d.clave)) await db.exercises.update(r.id, { alias: [...(ex.alias ?? []), d.original] })
+      ids.set(d.clave, r.id)
+    }
+  }
+  return db.transaction('rw', db.plans, db.planDays, async () => {
+    if (activar) for (const p of await db.plans.toArray()) await db.plans.update(p.id!, { activo: false })
+    const planId = await db.plans.add({ nombre: imp.nombre, objetivo: imp.objetivo, activo: activar, cursor: 0, creado: Date.now() })
+    await db.planDays.bulkAdd(imp.dias.map((d, i) => ({
+      plan_id: planId, orden: i, nombre: d.nombre,
+      bloques: d.bloques.map((b) => ({
+        orden: b.orden,
+        ejercicios: b.ejercicios.map((e) => ({ exercise_id: ids.get(e.clave)!, notas: e.notas, series: e.series })),
+      })),
+    })))
+    return planId
+  })
+}
+
+/** Exporta un plan en el mismo formato que acepta el importador. */
+export async function exportarPlan(planId: number): Promise<string> {
+  const plan = await db.plans.get(planId)
+  if (!plan) throw new Error('Plan inexistente')
+  const dias = (await db.planDays.where('plan_id').equals(planId).toArray()).sort((a, b) => a.orden - b.orden)
+  const nombres = new Map((await db.exercises.toArray()).map((e) => [e.id!, e.nombre]))
+  const serie = (s: PSet) => {
+    const o: Record<string, unknown> = {}
+    if (s.reps != null) o.reps = s.reps
+    if (s.seg != null) o.seg = s.seg
+    if (s.peso_g) o.peso_kg = s.peso_g / 1000
+    if (s.rir != null) o.rir = s.rir
+    if (s.rpe != null) o.rpe = s.rpe
+    if (s.fallo) o.al_fallo = true
+    return o
+  }
+  return JSON.stringify({
+    formato: PLAN_FORMAT,
+    plan: { nombre: plan.nombre, objetivo: plan.objetivo ?? undefined },
+    dias: dias.map((d) => ({
+      nombre: d.nombre,
+      bloques: d.bloques.map((b) => ({
+        orden: b.orden,
+        ejercicios: b.ejercicios.map((e) => ({
+          ejercicio: nombres.get(e.exercise_id) ?? `id ${e.exercise_id}`,
+          ...(e.notas ? { notas: e.notas } : {}),
+          series: e.series.map(serie),
+        })),
+      })),
+    })),
+  }, null, 1)
+}
+
+export const EJEMPLO_PLAN = `{
+ "formato": "plan-gym/v1",
+ "plan": { "nombre": "Mi plan", "objetivo": "Fuerza" },
+ "dias": [
+  { "nombre": "Día 1",
+    "bloques": [
+     { "orden": 1, "ejercicios": [
+        { "ejercicio": "Psoas DINÁMICO", "series": [ {"reps": 10}, {"reps": 10} ] } ] },
+     { "orden": 2, "ejercicios": [
+        { "ejercicio": "Press plano", "notas": "Subir si sale fácil",
+          "series": [ {"reps": 8, "peso_kg": 80, "rpe": 8},
+                      {"reps": 6, "peso_kg": 82.5, "rpe": 9} ] },
+        { "ejercicio": "Dominadas PRONA", "series": 3, "reps": 7, "peso_kg": 20, "rir": 2 },
+        { "ejercicio": "Hollow", "series": [ {"seg": 45}, {"seg": 45} ] } ] }
+    ] }
+ ]
+}`

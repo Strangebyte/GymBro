@@ -1,0 +1,1590 @@
+{
+ "formato": "plan-gym/v1",
+ "plan": {
+  "nombre": "Mesociclo B",
+  "objetivo": "Plan actual del profe (desde el 26-10-2026). Cargas tomadas del último registro de cada día."
+ },
+ "dias": [
+  {
+   "nombre": "Día 1 · Búlgara + press",
+   "bloques": [
+    {
+     "orden": 1,
+     "ejercicios": [
+      {
+       "ejercicio": "Flexo-Extensión Cadera - BD",
+       "series": [
+        {
+         "reps": 10
+        }
+       ]
+      },
+      {
+       "ejercicio": "Psoas DINÁMICO",
+       "series": [
+        {
+         "reps": 10
+        }
+       ]
+      },
+      {
+       "ejercicio": "Aductores DINÁMICO",
+       "series": [
+        {
+         "reps": 10
+        }
+       ]
+      },
+      {
+       "ejercicio": "Isquiotibiales - RD",
+       "series": [
+        {
+         "reps": 10
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "orden": 2,
+     "ejercicios": [
+      {
+       "ejercicio": "Elevaciones de cadera CAMINATA I/V",
+       "series": [
+        {
+         "reps": 6
+        },
+        {
+         "reps": 6
+        }
+       ]
+      },
+      {
+       "ejercicio": "Puente lateral cambio",
+       "series": [
+        {
+         "reps": 6
+        },
+        {
+         "reps": 6
+        }
+       ]
+      },
+      {
+       "ejercicio": "Giros OH en tandem",
+       "series": [
+        {
+         "reps": 6,
+         "peso_kg": 20
+        },
+        {
+         "reps": 6,
+         "peso_kg": 20
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "orden": 3,
+     "ejercicios": [
+      {
+       "ejercicio": "Thrusters - KB",
+       "series": [
+        {
+         "reps": 8,
+         "peso_kg": 20
+        },
+        {
+         "reps": 8,
+         "peso_kg": 20
+        },
+        {
+         "reps": 8,
+         "peso_kg": 20
+        }
+       ]
+      },
+      {
+       "ejercicio": "Swing cadera RA - KB",
+       "series": [
+        {
+         "reps": 8,
+         "peso_kg": 24
+        },
+        {
+         "reps": 8,
+         "peso_kg": 24
+        },
+        {
+         "reps": 8,
+         "peso_kg": 24
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "orden": 4,
+     "ejercicios": [
+      {
+       "ejercicio": "Sentadilla Búlgara RA - BR",
+       "series": [
+        {
+         "reps": 4,
+         "peso_kg": 40,
+         "rpe": 5
+        },
+        {
+         "reps": 4,
+         "peso_kg": 40,
+         "rpe": 5
+        },
+        {
+         "reps": 4,
+         "peso_kg": 40,
+         "rpe": 5
+        }
+       ]
+      },
+      {
+       "ejercicio": "Press hombro - MQ",
+       "series": [
+        {
+         "reps": 6,
+         "peso_kg": 40,
+         "rpe": 8
+        },
+        {
+         "reps": 5,
+         "peso_kg": 50,
+         "rpe": 8
+        },
+        {
+         "reps": 4,
+         "peso_kg": 50,
+         "rpe": 9
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "orden": 5,
+     "ejercicios": [
+      {
+       "ejercicio": "Press plano",
+       "series": [
+        {
+         "reps": 8,
+         "peso_kg": 80
+        },
+        {
+         "reps": 6,
+         "peso_kg": 82
+        },
+        {
+         "reps": 4,
+         "peso_kg": 85
+        }
+       ]
+      },
+      {
+       "ejercicio": "Caminata de gemelo - MC",
+       "series": [
+        {
+         "reps": 12,
+         "peso_kg": 56
+        },
+        {
+         "reps": 12,
+         "peso_kg": 56
+        },
+        {
+         "reps": 12,
+         "peso_kg": 56
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "orden": 6,
+     "ejercicios": [
+      {
+       "ejercicio": "Triceps - PL",
+       "series": [
+        {
+         "reps": 12,
+         "peso_kg": 65
+        },
+        {
+         "reps": 10,
+         "peso_kg": 70
+        },
+        {
+         "reps": 8,
+         "peso_kg": 75
+        }
+       ]
+      },
+      {
+       "ejercicio": "Vuelo combinado ALTERNO",
+       "series": [
+        {
+         "reps": 8,
+         "peso_kg": 20
+        },
+        {
+         "reps": 8,
+         "peso_kg": 20
+        },
+        {
+         "reps": 8,
+         "peso_kg": 20
+        }
+       ]
+      },
+      {
+       "ejercicio": "Press hombro RR - KB",
+       "series": [
+        {
+         "reps": 12,
+         "peso_kg": 14
+        },
+        {
+         "reps": 12,
+         "peso_kg": 14
+        },
+        {
+         "reps": 12,
+         "peso_kg": 14
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 2 · Tracción + brazos",
+   "bloques": [
+    {
+     "orden": 1,
+     "ejercicios": [
+      {
+       "ejercicio": "Spiderman ROTACIÓN DT",
+       "series": [
+        {
+         "reps": 10
+        }
+       ]
+      },
+      {
+       "ejercicio": "Carpas DINÁMICO",
+       "series": [
+        {
+         "reps": 10
+        }
+       ]
+      },
+      {
+       "ejercicio": "Psoas DINÁMICO",
+       "series": [
+        {
+         "reps": 8
+        },
+        {
+         "reps": 8
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "orden": 2,
+     "ejercicios": [
+      {
+       "ejercicio": "Puente isquio con cambio",
+       "series": [
+        {
+         "reps": 8
+        },
+        {
+         "reps": 8
+        }
+       ]
+      },
+      {
+       "ejercicio": "Cuadrupedia con patada",
+       "series": [
+        {
+         "reps": 8
+        },
+        {
+         "reps": 8
+        }
+       ]
+      },
+      {
+       "ejercicio": "Antiflexión lateral con barra",
+       "series": [
+        {
+         "reps": 8
+        },
+        {
+         "reps": 8
+        }
+       ]
+      },
+      {
+       "ejercicio": "Elevaciones de Cadera 1P - MB",
+       "series": [
+        {
+         "reps": 8
+        },
+        {
+         "reps": 8
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "orden": 3,
+     "ejercicios": [
+      {
+       "ejercicio": "1P A OTRO CC DIAGONAL",
+       "series": [
+        {
+         "reps": 6
+        },
+        {
+         "reps": 6
+        }
+       ]
+      },
+      {
+       "ejercicio": "Sentadilla SALTO - KB",
+       "series": [
+        {
+         "reps": 4,
+         "peso_kg": 40
+        },
+        {
+         "reps": 4,
+         "peso_kg": 40
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "orden": 4,
+     "ejercicios": [
+      {
+       "ejercicio": "Remo 1m PLANCHA ALTA - KB",
+       "series": [
+        {
+         "reps": 12,
+         "peso_kg": 20
+        },
+        {
+         "reps": 10,
+         "peso_kg": 20
+        },
+        {
+         "reps": 8,
+         "peso_kg": 20
+        }
+       ]
+      },
+      {
+       "ejercicio": "Remo al mentón - BR",
+       "series": [
+        {
+         "reps": 12,
+         "peso_kg": 30
+        },
+        {
+         "reps": 12,
+         "peso_kg": 30
+        },
+        {
+         "reps": 12,
+         "peso_kg": 30
+        }
+       ]
+      },
+      {
+       "ejercicio": "Y - BD",
+       "series": [
+        {
+         "reps": 12,
+         "peso_kg": 35
+        },
+        {
+         "reps": 12,
+         "peso_kg": 35
+        },
+        {
+         "reps": 12,
+         "peso_kg": 35
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "orden": 5,
+     "ejercicios": [
+      {
+       "ejercicio": "Dominadas PALMAR",
+       "series": [
+        {
+         "reps": 8
+        },
+        {
+         "reps": 8
+        },
+        {
+         "reps": 8
+        }
+       ]
+      },
+      {
+       "ejercicio": "Biceps alterno - MC",
+       "series": [
+        {
+         "reps": 12
+        },
+        {
+         "reps": 12
+        },
+        {
+         "reps": 12
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "orden": 6,
+     "ejercicios": [
+      {
+       "ejercicio": "Biceps/Hombro - MC",
+       "series": [
+        {
+         "reps": 12
+        },
+        {
+         "reps": 12
+        },
+        {
+         "reps": 12
+        }
+       ]
+      },
+      {
+       "ejercicio": "Vuelo Frontal/Lateral",
+       "series": [
+        {
+         "reps": 12
+        },
+        {
+         "reps": 12
+        },
+        {
+         "reps": 12
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 3 · Cadera 1p + empuje",
+   "bloques": [
+    {
+     "orden": 1,
+     "ejercicios": [
+      {
+       "ejercicio": "Buda ASISTIDO - DC",
+       "series": [
+        {
+         "reps": 10
+        },
+        {
+         "reps": 10
+        }
+       ]
+      },
+      {
+       "ejercicio": "Psoas DINÁMICO",
+       "series": [
+        {
+         "reps": 10
+        },
+        {
+         "reps": 10
+        }
+       ]
+      },
+      {
+       "ejercicio": "Rotación tronco PARED T",
+       "series": [
+        {
+         "reps": 10
+        },
+        {
+         "reps": 10
+        }
+       ]
+      },
+      {
+       "ejercicio": "Bretzel",
+       "series": [
+        {
+         "reps": 10
+        },
+        {
+         "reps": 10
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "orden": 2,
+     "ejercicios": [
+      {
+       "ejercicio": "Plancha CONSTRUYO",
+       "series": [
+        {
+         "reps": 12,
+         "peso_kg": 10
+        },
+        {
+         "reps": 12,
+         "peso_kg": 10
+        }
+       ]
+      },
+      {
+       "ejercicio": "Plancha COPENHAGUE 1/2 CON",
+       "series": [
+        {
+         "reps": 4
+        },
+        {
+         "reps": 4
+        }
+       ]
+      },
+      {
+       "ejercicio": "Curl ISQUIO 1p EXC - MB",
+       "series": [
+        {
+         "reps": 6
+        },
+        {
+         "reps": 6
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "orden": 3,
+     "ejercicios": [
+      {
+       "ejercicio": "Triple extensión LM",
+       "series": [
+        {
+         "reps": 4,
+         "peso_kg": 20
+        },
+        {
+         "reps": 4,
+         "peso_kg": 20
+        },
+        {
+         "reps": 4,
+         "peso_kg": 20
+        }
+       ]
+      },
+      {
+       "ejercicio": "Reactivos verticales+laterales",
+       "series": [
+        {
+         "reps": 8
+        },
+        {
+         "reps": 8
+        },
+        {
+         "reps": 8
+        }
+       ]
+      },
+      {
+       "ejercicio": "Sentadilla SALTO - KB",
+       "series": [
+        {
+         "reps": 4,
+         "peso_kg": 40
+        },
+        {
+         "reps": 4,
+         "peso_kg": 40
+        },
+        {
+         "reps": 4,
+         "peso_kg": 40
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "orden": 4,
+     "ejercicios": [
+      {
+       "ejercicio": "Empuje de cadera 1p - BR",
+       "notas": "Pesos a tu discreción",
+       "series": [
+        {
+         "reps": 5,
+         "peso_kg": 50,
+         "rir": 7
+        },
+        {
+         "reps": 5,
+         "peso_kg": 50,
+         "rir": 7
+        },
+        {
+         "reps": 5,
+         "peso_kg": 50,
+         "rir": 7
+        }
+       ]
+      },
+      {
+       "ejercicio": "Push Up - DC",
+       "series": [
+        {
+         "reps": 12,
+         "peso_kg": 15,
+         "rir": 2
+        },
+        {
+         "reps": 12,
+         "peso_kg": 15,
+         "rir": 2
+        },
+        {
+         "reps": 12,
+         "peso_kg": 15,
+         "rir": 2
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "orden": 5,
+     "ejercicios": [
+      {
+       "ejercicio": "CURL NÓRDICO",
+       "series": [
+        {
+         "reps": 5
+        },
+        {
+         "reps": 5
+        },
+        {
+         "reps": 5
+        }
+       ]
+      },
+      {
+       "ejercicio": "Aperturas - MQ",
+       "series": [
+        {
+         "reps": 12,
+         "peso_kg": 55,
+         "rpe": 8
+        },
+        {
+         "reps": 10,
+         "peso_kg": 60,
+         "rpe": 9
+        },
+        {
+         "reps": 8,
+         "peso_kg": 60,
+         "rpe": 10
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "orden": 6,
+     "ejercicios": [
+      {
+       "ejercicio": "Fondos ASISTIDOS - MQ",
+       "series": [
+        {
+         "reps": 16,
+         "rir": 2
+        },
+        {
+         "reps": 14,
+         "rir": 2
+        },
+        {
+         "reps": 12,
+         "rir": 2
+        }
+       ]
+      },
+      {
+       "ejercicio": "Press Militar - BR",
+       "series": [
+        {
+         "reps": 12,
+         "peso_kg": 32,
+         "rpe": 8
+        },
+        {
+         "reps": 12,
+         "peso_kg": 33,
+         "rpe": 8
+        },
+        {
+         "reps": 12,
+         "peso_kg": 32,
+         "rpe": 8
+        }
+       ]
+      },
+      {
+       "ejercicio": "Peso muerto 1p - KB",
+       "series": [
+        {
+         "reps": 6,
+         "peso_kg": 33,
+         "rpe": 8
+        },
+        {
+         "reps": 6,
+         "peso_kg": 32,
+         "rpe": 8
+        },
+        {
+         "reps": 6,
+         "peso_kg": 32,
+         "rpe": 8
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 4 · Empuje de cadera + dominadas",
+   "bloques": [
+    {
+     "orden": 1,
+     "ejercicios": [
+      {
+       "ejercicio": "Flexo-Extensión Cadera - BD",
+       "series": [
+        {
+         "reps": 10
+        },
+        {
+         "reps": 10
+        }
+       ]
+      },
+      {
+       "ejercicio": "Isquiotibiales en columna",
+       "series": [
+        {
+         "reps": 10
+        },
+        {
+         "reps": 10
+        }
+       ]
+      },
+      {
+       "ejercicio": "Carpa 2p",
+       "series": [
+        {
+         "reps": 10
+        },
+        {
+         "reps": 10
+        }
+       ]
+      },
+      {
+       "ejercicio": "Isquiotibiales - RD",
+       "series": [
+        {
+         "seg": 60
+        },
+        {
+         "seg": 60
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "orden": 2,
+     "ejercicios": [
+      {
+       "ejercicio": "Plancha alta CARRERA",
+       "series": [
+        {
+         "reps": 20
+        },
+        {
+         "reps": 20
+        }
+       ]
+      },
+      {
+       "ejercicio": "Giros OH en tandem",
+       "series": [
+        {
+         "reps": 6,
+         "peso_kg": 20
+        },
+        {
+         "reps": 6,
+         "peso_kg": 20
+        }
+       ]
+      },
+      {
+       "ejercicio": "Plancha lateral GIRO",
+       "series": [
+        {
+         "reps": 6
+        },
+        {
+         "reps": 6
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "orden": 3,
+     "ejercicios": [
+      {
+       "ejercicio": "Caída LM",
+       "series": [
+        {
+         "reps": 4,
+         "peso_kg": 20
+        },
+        {
+         "reps": 4,
+         "peso_kg": 20
+        }
+       ]
+      },
+      {
+       "ejercicio": "1P CCM Vertical AL CAJÓN - CJ",
+       "series": [
+        {
+         "reps": 4
+        },
+        {
+         "reps": 4
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "orden": 4,
+     "ejercicios": [
+      {
+       "ejercicio": "Empuje de cadera - BR",
+       "series": [
+        {
+         "reps": 4,
+         "peso_kg": 150,
+         "rpe": 8
+        },
+        {
+         "reps": 4,
+         "peso_kg": 150,
+         "rpe": 8
+        },
+        {
+         "reps": 4,
+         "peso_kg": 150,
+         "rpe": 8
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "orden": 5,
+     "ejercicios": [
+      {
+       "ejercicio": "Dominadas PRONA",
+       "series": [
+        {
+         "reps": 7,
+         "peso_kg": 20
+        },
+        {
+         "reps": 6,
+         "peso_kg": 20
+        },
+        {
+         "reps": 10
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "orden": 6,
+     "ejercicios": [
+      {
+       "ejercicio": "Sentadilla AL CAJÓN RA - BR",
+       "series": [
+        {
+         "reps": 5,
+         "peso_kg": 70,
+         "rpe": 7
+        },
+        {
+         "reps": 5,
+         "peso_kg": 70,
+         "rpe": 7
+        },
+        {
+         "reps": 5,
+         "peso_kg": 70,
+         "rpe": 7
+        }
+       ]
+      },
+      {
+       "ejercicio": "Remo NEUTRO - MQ",
+       "notas": "La última al fallo",
+       "series": [
+        {
+         "reps": 12,
+         "rpe": 6
+        },
+        {
+         "reps": 12,
+         "rpe": 8
+        },
+        {
+         "al_fallo": true,
+         "rpe": 10
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "orden": 7,
+     "ejercicios": [
+      {
+       "ejercicio": "Press Militar - BR",
+       "series": [
+        {
+         "reps": 6
+        },
+        {
+         "reps": 6
+        },
+        {
+         "reps": 6
+        }
+       ]
+      },
+      {
+       "ejercicio": "Biceps - BR",
+       "series": [
+        {
+         "reps": 12
+        },
+        {
+         "reps": 10
+        },
+        {
+         "reps": 8
+        }
+       ]
+      },
+      {
+       "ejercicio": "Excéntrico carrera ISQUIOS polea",
+       "series": [
+        {
+         "reps": 5,
+         "peso_kg": 50
+        },
+        {
+         "reps": 5,
+         "peso_kg": 50
+        },
+        {
+         "reps": 5,
+         "peso_kg": 50
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 5 · Empuje + remo",
+   "bloques": [
+    {
+     "orden": 1,
+     "ejercicios": [
+      {
+       "ejercicio": "Spiderman ROTACIÓN DT",
+       "series": [
+        {
+         "reps": 10
+        }
+       ]
+      },
+      {
+       "ejercicio": "Carpas DINÁMICO",
+       "series": [
+        {
+         "reps": 10
+        }
+       ]
+      },
+      {
+       "ejercicio": "Psoas DINÁMICO",
+       "series": [
+        {
+         "reps": 8
+        },
+        {
+         "reps": 8
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "orden": 2,
+     "ejercicios": [
+      {
+       "ejercicio": "Abdominal con aductores",
+       "series": [
+        {
+         "reps": 20
+        },
+        {
+         "reps": 20
+        }
+       ]
+      },
+      {
+       "ejercicio": "Cuadrupedia con patada",
+       "series": [
+        {
+         "reps": 8
+        },
+        {
+         "reps": 8
+        }
+       ]
+      },
+      {
+       "ejercicio": "Puente lateral inclinado con apertura",
+       "series": [
+        {
+         "reps": 8
+        },
+        {
+         "reps": 8
+        }
+       ]
+      },
+      {
+       "ejercicio": "Elevaciones de Cadera 1P - MB",
+       "series": [
+        {
+         "reps": 8
+        },
+        {
+         "reps": 8
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "orden": 3,
+     "ejercicios": [
+      {
+       "ejercicio": "Push Up - DC",
+       "series": [
+        {
+         "reps": 8,
+         "peso_kg": 20
+        },
+        {
+         "reps": 8,
+         "peso_kg": 20
+        },
+        {
+         "reps": 8,
+         "peso_kg": 20
+        }
+       ]
+      },
+      {
+       "ejercicio": "Press hombro BA - KB",
+       "series": [
+        {
+         "reps": 8,
+         "peso_kg": 20
+        },
+        {
+         "reps": 8,
+         "peso_kg": 20
+        },
+        {
+         "reps": 8,
+         "peso_kg": 20
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "orden": 4,
+     "ejercicios": [
+      {
+       "ejercicio": "Remo 1m CD - KB",
+       "series": [
+        {
+         "reps": 8,
+         "peso_kg": 36
+        },
+        {
+         "reps": 8,
+         "peso_kg": 36
+        },
+        {
+         "reps": 8,
+         "peso_kg": 36
+        }
+       ]
+      },
+      {
+       "ejercicio": "Fondos",
+       "series": [
+        {
+         "reps": 12
+        },
+        {
+         "reps": 12
+        },
+        {
+         "reps": 12
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "orden": 5,
+     "ejercicios": [
+      {
+       "ejercicio": "Press en landmine",
+       "series": [
+        {
+         "reps": 10,
+         "peso_kg": 15,
+         "rpe": 8
+        },
+        {
+         "reps": 8,
+         "peso_kg": 20,
+         "rpe": 9
+        },
+        {
+         "reps": 6,
+         "peso_kg": 22.5,
+         "rpe": 10
+        }
+       ]
+      },
+      {
+       "ejercicio": "Press inclinado con mancuernas",
+       "series": [
+        {
+         "reps": 12,
+         "peso_kg": 28
+        },
+        {
+         "reps": 10,
+         "peso_kg": 28
+        },
+        {
+         "reps": 8,
+         "peso_kg": 28
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "orden": 6,
+     "ejercicios": [
+      {
+       "ejercicio": "Biceps - BR",
+       "series": [
+        {
+         "reps": 12,
+         "peso_kg": 25
+        },
+        {
+         "reps": 12,
+         "peso_kg": 25
+        },
+        {
+         "reps": 12,
+         "peso_kg": 25
+        }
+       ]
+      },
+      {
+       "ejercicio": "Vuelo combinado ALTERNO",
+       "series": [
+        {
+         "reps": 12,
+         "peso_kg": 10,
+         "rpe": 6
+        },
+        {
+         "reps": 10,
+         "peso_kg": 12,
+         "rpe": 7
+        },
+        {
+         "reps": 8,
+         "peso_kg": 14,
+         "rpe": 8
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nombre": "Día 6 · Peso muerto + tracción",
+   "bloques": [
+    {
+     "orden": 1,
+     "ejercicios": [
+      {
+       "ejercicio": "Buda ASISTIDO - DC",
+       "series": [
+        {
+         "reps": 10
+        },
+        {
+         "reps": 10
+        }
+       ]
+      },
+      {
+       "ejercicio": "Psoas DINÁMICO",
+       "series": [
+        {
+         "reps": 10
+        },
+        {
+         "reps": 10
+        }
+       ]
+      },
+      {
+       "ejercicio": "Rotación tronco PARED T",
+       "series": [
+        {
+         "reps": 10
+        },
+        {
+         "reps": 10
+        }
+       ]
+      },
+      {
+       "ejercicio": "Bretzel",
+       "series": [
+        {
+         "reps": 10
+        },
+        {
+         "reps": 10
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "orden": 2,
+     "ejercicios": [
+      {
+       "ejercicio": "Plancha CONSTRUYO",
+       "series": [
+        {
+         "reps": 12,
+         "peso_kg": 10
+        },
+        {
+         "reps": 12,
+         "peso_kg": 10
+        }
+       ]
+      },
+      {
+       "ejercicio": "Plancha COPENHAGUE 1/2 CON",
+       "series": [
+        {
+         "reps": 6
+        },
+        {
+         "reps": 6
+        }
+       ]
+      },
+      {
+       "ejercicio": "Curl ISQUIO 1p EXC - MB",
+       "series": [
+        {
+         "reps": 6
+        },
+        {
+         "reps": 6
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "orden": 3,
+     "ejercicios": [
+      {
+       "ejercicio": "Rebote y freno",
+       "series": [
+        {
+         "reps": 4
+        },
+        {
+         "reps": 4
+        },
+        {
+         "reps": 4
+        }
+       ]
+      },
+      {
+       "ejercicio": "Reactivos verticales+laterales",
+       "series": [
+        {
+         "reps": 6
+        },
+        {
+         "reps": 6
+        },
+        {
+         "reps": 6
+        }
+       ]
+      },
+      {
+       "ejercicio": "Laterales con banda",
+       "series": [
+        {
+         "reps": 4
+        },
+        {
+         "reps": 4
+        },
+        {
+         "reps": 4
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "orden": 4,
+     "ejercicios": [
+      {
+       "ejercicio": "Empuje de cadera 1p - BR",
+       "notas": "Pesos a tu discreción",
+       "series": [
+        {
+         "reps": 5,
+         "peso_kg": 50,
+         "rir": 7
+        },
+        {
+         "reps": 5,
+         "peso_kg": 50,
+         "rir": 7
+        },
+        {
+         "reps": 5,
+         "peso_kg": 50,
+         "rir": 7
+        }
+       ]
+      },
+      {
+       "ejercicio": "Dominadas PALMAR",
+       "series": [
+        {
+         "reps": 10,
+         "peso_kg": 4,
+         "rir": 2
+        },
+        {
+         "reps": 8,
+         "peso_kg": 6,
+         "rir": 2
+        },
+        {
+         "reps": 6,
+         "peso_kg": 15,
+         "rir": 2
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "orden": 5,
+     "ejercicios": [
+      {
+       "ejercicio": "Peso muerto - BR",
+       "series": [
+        {
+         "reps": 6,
+         "peso_kg": 70,
+         "rpe": 8
+        },
+        {
+         "reps": 6,
+         "peso_kg": 70,
+         "rpe": 8
+        },
+        {
+         "reps": 6,
+         "peso_kg": 70,
+         "rpe": 8
+        }
+       ]
+      },
+      {
+       "ejercicio": "Remo PENDLEY PRONO",
+       "series": [
+        {
+         "reps": 12,
+         "rpe": 8
+        },
+        {
+         "reps": 10,
+         "rpe": 9
+        },
+        {
+         "reps": 8,
+         "rpe": 10
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "orden": 6,
+     "ejercicios": [
+      {
+       "ejercicio": "Triceps - PL",
+       "series": [
+        {
+         "reps": 16,
+         "rir": 2
+        },
+        {
+         "reps": 14,
+         "rir": 2
+        },
+        {
+         "reps": 12,
+         "rir": 2
+        }
+       ]
+      },
+      {
+       "ejercicio": "Remo invertido PUENTE - BR",
+       "series": [
+        {
+         "reps": 12,
+         "rpe": 8
+        },
+        {
+         "reps": 12,
+         "rpe": 8
+        },
+        {
+         "reps": 12,
+         "rpe": 8
+        }
+       ]
+      },
+      {
+       "ejercicio": "CURL NÓRDICO",
+       "series": [
+        {
+         "reps": 5
+        },
+        {
+         "reps": 5
+        },
+        {
+         "reps": 5
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
