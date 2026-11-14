@@ -15,6 +15,8 @@ Registro de qué se decidió y por qué. Lo más nuevo, arriba.
 | Una sesión pasada avanza la rotación solo si es la más nueva | Cargar una sesión vieja no debe mover el "te toca" |
 | Si una sesión queda abierta más de 4 horas, al cerrar se pide la duración | Una sesión olvidada quedaba con 20 horas |
 | Recordatorio de copia cada 4 sesiones propias, con "Más tarde" | Todo vive en un solo dispositivo y nada avisaba. Cuatro es más o menos una semana de entrenamiento |
+| La copia se sigue descargando al teléfono; sin botón de compartir ni subida automática a Drive | El dueño lo descartó. Lo automático exigiría cuenta de Google y registrar la app |
+| Importar plan: botón que copia el pedido para Claude, con el catálogo de quien usa la app | El dueño compartió la app con otras personas que no tienen los archivos del proyecto para pedirle un plan a Claude |
 
 ## 14-11-2026 — Ronda de comentarios del dueño sobre la app completa
 
