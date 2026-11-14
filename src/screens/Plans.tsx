@@ -4,7 +4,7 @@ import { db, kgToG, type Exercise, type PBlock, type PSet } from '../db'
 import { Picker, TopBar, useDialogos, useNav } from '../ui'
 import { etiqueta, plural, GRUPOS, guardarArchivo, numES, resumenSets, setValido, slugify } from '../lib'
 import { activarPlan, borrarPlan, duplicarDia, reordenarDias } from '../actions'
-import { EJEMPLO_PLAN, exportarPlan, guardarPlan, leerPlan, type ImpPlan, type Resolucion } from '../plan'
+import { EJEMPLO_PLAN, exportarPlan, guardarPlan, leerPlan, pedidoParaIA, type ImpPlan, type Resolucion } from '../plan'
 
 export function PlansScreen() {
   const nav = useNav()
@@ -244,6 +244,7 @@ export function ImportScreen() {
   const [vincular, setVincular] = useState<string | null>(null)
   const [activar, setActivar] = useState(true)
   const [ocupado, setOcupado] = useState(false)
+  const [pedido, setPedido] = useState<string | null>(null)
   const file = useRef<HTMLInputElement>(null)
   const mapa = useMemo(() => new Map((ejercicios ?? []).map((e) => [e.id!, e])), [ejercicios])
 
@@ -252,6 +253,11 @@ export function ImportScreen() {
     const m = new Map<string, Resolucion>()
     for (const d of r.desconocidos) m.set(d.clave, { tipo: 'crear', nombre: d.original, grupo: 'full_body' })
     setRes(m); setImp(r)
+  }
+  // Copia el pedido para el asistente. Si el navegador no deja copiar, lo muestra para copiarlo a mano.
+  const copiarPedido = async () => {
+    const t = pedidoParaIA(ejercicios ?? [])
+    try { await navigator.clipboard.writeText(t); setPedido(null); avisar('Pedido copiado. Pegalo en Claude.') } catch { setPedido(t) }
   }
   const poner = (clave: string, r: Resolucion) => setRes((m) => new Map(m).set(clave, r))
   const importar = async () => {
@@ -272,17 +278,33 @@ export function ImportScreen() {
       <TopBar titulo="Importar plan" atras />
       <div className="main sin-tabs">
         <div className="card">
-          <div className="small muted">Subí un archivo de plan (<b>.json</b>). Antes de guardar vas a ver qué trae y vas a poder resolver los ejercicios que la app no conozca.</div>
-          <button className="btn primary block lg" style={{ marginTop: 12 }} onClick={() => file.current?.click()}>Elegir archivo</button>
-          <input ref={file} type="file" accept=".json,application/json,text/plain" style={{ display: 'none' }}
-            onChange={async (e) => { const f = e.target.files?.[0]; if (f) leer(await f.text()); e.target.value = '' }} />
-          <button className="btn ghost block" style={{ marginTop: 6 }} onClick={() => setPegar((p) => !p)}>O pegar el contenido</button>
+          <b>¿No tenés un plan? Pedíselo a Claude</b>
+          <ol className="small muted" style={{ margin: '8px 0 12px', paddingLeft: 20 }}>
+            <li>Tocá <b>Copiar pedido</b>: lleva el formato y tu lista de ejercicios.</li>
+            <li>Pegalo en Claude (o en otro asistente) y contale qué querés entrenar.</li>
+            <li>Copiá el plan que te devuelve y pegalo acá abajo.</li>
+          </ol>
+          <button className="btn soft block" onClick={() => void copiarPedido()}>Copiar pedido para Claude</button>
+          {pedido != null && (
+            <>
+              <div className="xsmall muted" style={{ margin: '8px 0 4px' }}>No se pudo copiar solo. Mantené apretado el texto, elegí «Seleccionar todo» y copialo.</div>
+              <textarea rows={6} readOnly value={pedido} aria-label="Pedido para el asistente" style={{ fontSize: 12 }} onFocus={(e) => e.target.select()} />
+            </>
+          )}
+          <button className="btn block" style={{ marginTop: 8 }} onClick={() => setPegar(true)}>Pegar el plan</button>
           {pegar && (
             <>
-              <textarea rows={7} placeholder='{ "formato": "plan-gym/v1", … }' value={texto} onChange={(e) => setTexto(e.target.value)} aria-label="Contenido del plan" style={{ fontFamily: 'monospace', fontSize: 12 }} />
+              <label className="f" htmlFor="pp">Pegá acá el plan</label>
+              <textarea id="pp" rows={7} autoFocus placeholder='{ "formato": "plan-gym/v1", … }' value={texto} onChange={(e) => setTexto(e.target.value)} aria-label="Contenido del plan" style={{ fontFamily: 'monospace', fontSize: 12 }} />
               <button className="btn block" style={{ marginTop: 8 }} disabled={!texto.trim()} onClick={() => leer(texto)}>Leer</button>
             </>
           )}
+        </div>
+        <div className="card">
+          <div className="small muted">Si ya tenés un archivo de plan (<b>.json</b>), subilo. Antes de guardar vas a ver qué trae y vas a poder resolver los ejercicios que la app no conozca.</div>
+          <button className="btn primary block lg" style={{ marginTop: 12 }} onClick={() => file.current?.click()}>Elegir archivo</button>
+          <input ref={file} type="file" accept=".json,application/json,text/plain" style={{ display: 'none' }}
+            onChange={async (e) => { const f = e.target.files?.[0]; if (f) leer(await f.text()); e.target.value = '' }} />
         </div>
         <button className="card tight" onClick={() => setAyuda((a) => !a)} aria-expanded={ayuda}>
           <div className="row spread"><b className="small">¿Cómo es el archivo?</b><span className="muted">{ayuda ? '▾' : '▸'}</span></div>
@@ -290,7 +312,7 @@ export function ImportScreen() {
             <>
               <div className="xsmall muted" style={{ marginTop: 6 }}>
                 Días → bloques → ejercicios → series. Cada serie lleva al menos uno de: <b>reps</b>, <b>seg</b>, <b>peso_kg</b>, <b>rir</b>, <b>rpe</b>. RIR y RPE no van juntos.
-                Si todas las series son iguales se puede abreviar con <b>"series": 3</b> y los valores al lado. Pedile a Claude un plan «en formato plan-gym/v1» y te devuelve este archivo.
+                Si todas las series son iguales se puede abreviar con <b>"series": 3</b> y los valores al lado.
               </div>
               <pre className="code">{EJEMPLO_PLAN}</pre>
             </>

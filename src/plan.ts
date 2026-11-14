@@ -1,5 +1,5 @@
 import { db, kgToG, type Exercise, type PSet } from './db'
-import { norm, setValido } from './lib'
+import { agruparPorCategoria, norm, setValido } from './lib'
 import { crearEjercicio } from './actions'
 
 export const PLAN_FORMAT = 'plan-gym/v1'
@@ -56,8 +56,11 @@ function similitud(a: string, b: string): number {
 export function leerPlan(texto: string, catalogo: Exercise[]): ImpPlan {
   const out: ImpPlan = { nombre: 'Plan importado', objetivo: null, dias: [], resueltos: new Map(), desconocidos: [], errores: [] }
   let data: Record<string, unknown>
+  // Si viene pegado desde un chat puede traer texto alrededor: se toma lo que está entre la primera y la última llave.
+  const desde = texto.indexOf('{'), hasta = texto.lastIndexOf('}')
+  if (desde >= 0 && hasta > desde) texto = texto.slice(desde, hasta + 1)
   try { data = JSON.parse(texto) } catch {
-    out.errores.push('El archivo no es un JSON válido.')
+    out.errores.push('El contenido no es un JSON válido. Si lo copiaste de un chat, copiá el bloque de código completo.')
     return out
   }
   if (data.formato !== PLAN_FORMAT) out.errores.push(`Formato no reconocido: "${String(data.formato ?? '')}". Se esperaba "${PLAN_FORMAT}".`)
@@ -193,3 +196,36 @@ export const EJEMPLO_PLAN = `{
     ] }
  ]
 }`
+
+/**
+ * Texto listo para pegar en Claude (u otro asistente) y que devuelva un plan importable.
+ * Lleva el formato, las reglas y los ejercicios que esta persona tiene en su catálogo.
+ */
+export function pedidoParaIA(catalogo: Exercise[]): string {
+  const lista = agruparPorCategoria(catalogo.filter((e) => !e.archivo))
+    .map((g) => `${g.cat}:\n${g.items.map((e) => `- "${e.nombre}"${e.legible ? ` (${e.legible})` : ''}`).join('\n')}`)
+    .join('\n\n')
+  return `Necesito que me armes un plan de entrenamiento para importar en mi app de gimnasio (Gym Log).
+
+Antes de armarlo, preguntame lo que te falte saber: mi objetivo, cuántos días por semana entreno, cuánto dura cada sesión, qué equipamiento tengo, mi nivel y si tengo lesiones o ejercicios que quiera evitar. Si ya te lo conté, no vuelvas a preguntar.
+
+Cuando tengas todo, respondé con UN SOLO bloque de código JSON, completo, con exactamente este formato ("${PLAN_FORMAT}"):
+
+${EJEMPLO_PLAN}
+
+Reglas del formato:
+- Jerarquía: plan → dias → bloques → ejercicios → series. Un bloque agrupa los ejercicios que se hacen juntos (por ejemplo: movilidad, fuerza principal, accesorios).
+- Cada serie lleva al menos uno de: "reps", "seg" (tiempo en segundos), "peso_kg", "rir", "rpe" o "al_fallo": true.
+- "rir" y "rpe" nunca van juntos en la misma serie. RIR son las repeticiones en reserva (0 = al fallo). RPE es el esfuerzo de 1 a 10 (10 = al fallo).
+- Si todas las series de un ejercicio son iguales se puede abreviar con "series": 3 y los valores al lado. Si cambian (series ascendentes, por ejemplo), escribilas una por una.
+- En ejercicios con lastre (dominadas, fondos), "peso_kg" es el peso agregado.
+- "peso_kg" es opcional: si no sabés qué carga uso, no lo pongas. No inventes pesos.
+- "notas" es opcional, para una indicación corta por ejercicio.
+- Los días rotan en el orden del archivo: no llevan fechas ni días de la semana.
+- Tiene que ser JSON válido: sin comentarios y sin comas finales.
+
+Ejercicios: siempre que puedas usá estos, que son los que ya tiene mi app. En "ejercicio" va solo el texto que está entre comillas, tal cual; lo que sigue entre paréntesis es una aclaración para vos. Si necesitás uno que no está en la lista, ponele un nombre claro en español: la app me va a preguntar si lo creo.
+
+${lista}
+`
+}

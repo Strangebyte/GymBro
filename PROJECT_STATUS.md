@@ -4,7 +4,7 @@
 
 ## Dónde está
 
-- La app está completa y funcionando en las pruebas automáticas (85 de 85, sin errores de consola).
+- La app está completa y funcionando en las pruebas automáticas (87 de 87, sin errores de consola).
 - **Publicada en GitHub Pages:** https://<usuario>.github.io/GymBro/ (repositorio público
   `<usuario>/GymBro`). Cada push a `main` la vuelve a publicar sola. Verificado el 14-11-2026 en
   Chromium: abre sin errores, registra el service worker y arranca con catálogo y plan, sin sesiones.
@@ -64,6 +64,7 @@ video y scroll táctil con una hoja abierta.
 | Fecha | Qué se hizo |
 |---|---|
 | 10-11-2026 | Diseño (`docs/historico/`), catálogo de 96 ejercicios, primera versión solo de registro |
+| 14-11-2026 | Importar plan: botón que copia el pedido para Claude y pegado tolerante (probado solo en el simulador) |
 | 14-11-2026 | Botón atrás, edición de sesiones, sesiones pasadas y recordatorio de copia (probado solo en el simulador) |
 | 14-11-2026 | Sonido al terminar el descanso (confirmado por el dueño en el teléfono) |
 | 14-11-2026 | Revisión general; git; historial separado del repositorio; primer deploy en GitHub Pages |

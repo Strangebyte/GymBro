@@ -17,7 +17,7 @@ npm run seed         # regenera src/seed.json, src/seed-historial.json y data/*.
 npm run test:e2e     # requiere dist/ y: pip install playwright && playwright install chromium
 ```
 
-Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 85 verificaciones tienen que pasar
+Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 87 verificaciones tienen que pasar
 y no puede haber errores de consola. Si cambiás un flujo, actualizá `tests/e2e.py` en el mismo cambio.
 
 ## Cómo trabajar con el dueño
@@ -104,6 +104,9 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
 - Video/imagen: se cargan solo al crear o editar un ejercicio. En la sesión solo se ven (botón ▶).
 - Recordatorio de copia en Hoy cuando hay 4 o más sesiones propias posteriores a la última copia
   (`settings.copia_hasta`). "Más tarde" lo oculta hasta volver a abrir la app.
+- Importar plan: el camino principal para quien no tiene archivo es "Copiar pedido para Claude" (`pedidoParaIA`
+  en plan.ts: formato + reglas + catálogo de esa persona) y pegar la respuesta. Si cambia el formato, actualizar
+  ese texto, `EJEMPLO_PLAN` y `docs/formato-plan-gym.md` juntos.
 - Fechas `dd/mm/yyyy`. Decimales con coma.
 
 ## Trampas técnicas
