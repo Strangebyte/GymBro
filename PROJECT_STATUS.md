@@ -5,16 +5,17 @@
 ## Dónde está
 
 - La app está completa y funcionando en las pruebas automáticas (73 de 73, sin errores de consola).
-- Está publicada como artifact privado de Claude ("Gym Log"), que sirve de vista previa. **No es su hogar
-  definitivo**: ahí no es instalable, no funciona sin conexión y el almacenamiento no está garantizado.
+- **Publicada en GitHub Pages:** https://<usuario>.github.io/GymBro/ (repositorio público
+  `<usuario>/GymBro`). Cada push a `main` la vuelve a publicar sola. Verificado el 14-11-2026 en
+  Chromium: abre sin errores, registra el service worker y arranca con catálogo y plan, sin sesiones.
+- **El historial personal no está en el repositorio.** Se carga en el teléfono restaurando
+  `privado/gym-log-historial.json` (Ajustes → Restaurar desde una copia). Ver `docs/DEPLOY.md`.
 - **Todavía no se probó en un Android real.** Todo lo verificado es en Chromium simulando un móvil.
 
 ## Próximo paso
 
-**Publicarla en un hosting propio** para que sea instalable, funcione sin conexión y guarde los datos de
-forma confiable. Instrucciones en `docs/DEPLOY.md`. Se eligió GitHub Pages. El flujo está en
-`.github/workflows/deploy.yml` (sin probar hasta el primer push) y la carpeta ya es un repositorio git.
-Falta: crear el repositorio en GitHub, subirlo y activar Pages (Settings → Pages → Source: GitHub Actions).
+Instalarla en el Android desde Chrome, restaurar el historial y probar ahí lo que el simulador no cubre:
+video, vibración, pantalla encendida durante la sesión, scroll táctil con una hoja abierta, botón atrás.
 
 ## Hecho
 
@@ -57,4 +58,5 @@ Falta: crear el repositorio en GitHub, subirlo y activar Pages (Settings → Pag
 | Fecha | Qué se hizo |
 |---|---|
 | 10-11-2026 | Diseño (`docs/historico/`), catálogo de 96 ejercicios, primera versión solo de registro |
+| 14-11-2026 | Revisión general; git; historial separado del repositorio; primer deploy en GitHub Pages |
 | 14-11-2026 | App completa rehecha; video/imagen; ronda de comentarios del dueño sobre la sesión, el historial y el selector; Progreso rehecho; proyecto pasado a esta carpeta |
