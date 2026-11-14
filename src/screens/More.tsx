@@ -58,6 +58,9 @@ export function SettingsScreen({ settings }: { settings: Settings }) {
           </div>
           <div className="row spread"><span className="small bold">Vibrar al terminar el descanso</span>
             <button className={`chip${settings.vibrar ? ' on' : ''}`} aria-pressed={settings.vibrar} onClick={() => void setSettings({ vibrar: !settings.vibrar })}>{settings.vibrar ? 'Sí' : 'No'}</button></div>
+          <div className="row spread"><span className="small bold">Sonar al terminar el descanso</span>
+            <button className={`chip${settings.sonido ? ' on' : ''}`} aria-pressed={settings.sonido} onClick={() => void setSettings({ sonido: !settings.sonido })}>{settings.sonido ? 'Sí' : 'No'}</button></div>
+          <div className="xsmall muted">El sonido usa el volumen de multimedia. Con el teléfono en silencio no vibra, pero puede sonar.</div>
         </div>
 
         <h2>Tipos de actividad</h2>

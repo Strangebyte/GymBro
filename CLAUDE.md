@@ -17,7 +17,7 @@ npm run seed         # regenera src/seed.json, src/seed-historial.json y data/*.
 npm run test:e2e     # requiere dist/ y: pip install playwright && playwright install chromium
 ```
 
-Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 73 verificaciones tienen que pasar
+Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 74 verificaciones tienen que pasar
 y no puede haber errores de consola. Si cambiás un flujo, actualizá `tests/e2e.py` en el mismo cambio.
 
 ## Cómo trabajar con el dueño
@@ -90,7 +90,8 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
 - Sesión: bloques colapsados al entrar; abrir uno cierra el anterior. El bloque abierto y el scroll se
   conservan al ir y volver de otra pantalla.
 - Tilde de "hecho" por bloque (por defecto) o por ejercicio (ajuste `tilde`). Solo en modo por ejercicio
-  arranca el cronómetro de descanso.
+  arranca el cronómetro de descanso. Al terminar vibra y suena (ajustes `vibrar` y `sonido`). El dueño no quiere
+  notificaciones para el descanso.
 - En la sesión, reps y peso se escriben a mano en una tabla compacta. RIR, RPE, fallo y calentamiento
   **no** se editan ahí: se configuran en el plan y se ven como "objetivo".
 - Las etiquetas de grupo y equipo van en el encabezado del bloque, no en cada ejercicio.

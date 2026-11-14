@@ -123,6 +123,8 @@ export interface Settings {
   objetivo_semanal: number
   descanso_s: number
   vibrar: boolean
+  /** Sonido al terminar el descanso. */
+  sonido: boolean
   tipos_actividad: string[]
   /** Dónde va el tilde de "hecho" durante la sesión. */
   tilde: 'bloque' | 'ejercicio'
@@ -134,6 +136,7 @@ export const SETTINGS_DEFAULT: Settings = {
   objetivo_semanal: 4,
   descanso_s: 120,
   vibrar: true,
+  sonido: true,
   tilde: 'bloque',
   tipos_actividad: ['Correr', 'Pádel', 'Fútbol', 'Squash', 'Tenis', 'Bici', 'Natación', 'Caminata', 'Senderismo', 'Yoga'],
 }

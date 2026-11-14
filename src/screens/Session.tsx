@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, kgToG, type Exercise, type Session, type SetLog, type Settings } from '../db'
 import { Chips, HistorialLista, Ico, MediaView, Picker, Sheet, TopBar, useDialogos, useNav, useTieneMedia } from '../ui'
-import { etiqueta, fmtDur, fmtFecha, mmss, numES, plural, resumenSets, setValido, ultimaVez, vibrar } from '../lib'
+import { etiqueta, fmtDur, fmtFecha, mmss, numES, plural, prepararSonido, resumenSets, setValido, sonar, ultimaVez, vibrar } from '../lib'
 import { agregarEjercicio, agregarSerie, descartarSesion, sesionEnCurso, terminarSesion } from '../actions'
 
 type Item = { key: string; bloque: number; orden: number; ex: Exercise; sets: SetLog[] }
@@ -34,8 +34,8 @@ export function SessionScreen({ settings }: { settings: Settings }) {
   }, [finEn])
   const restante = finEn == null ? 0 : (finEn - ahora) / 1000
   useEffect(() => {
-    if (finEn != null && restante <= 0 && !vibrado) { if (settings.vibrar) vibrar([200, 100, 200]); setVibrado(true) }
-  }, [restante, finEn, vibrado, settings.vibrar])
+    if (finEn != null && restante <= 0 && !vibrado) { if (settings.vibrar) vibrar([200, 100, 200]); if (settings.sonido) sonar(); setVibrado(true) }
+  }, [restante, finEn, vibrado, settings.vibrar, settings.sonido])
 
   const items = useMemo<Item[]>(() => {
     if (!sets || !ejercicios) return []
@@ -114,7 +114,7 @@ export function SessionScreen({ settings }: { settings: Settings }) {
                 <div className="bloque-c">
                   {its.map((it) => (
                     <Tarjeta key={`${it.key}-${it.ex.id}`} item={it} sesion={sesion} porEjercicio={porEjercicio}
-                      onMarcar={async () => { if (await marcar(it.sets, it.ex.nombre)) descanso(it.ex.descanso_s ?? settings.descanso_s) }} />
+                      onMarcar={async () => { if (settings.sonido) prepararSonido(); if (await marcar(it.sets, it.ex.nombre)) descanso(it.ex.descanso_s ?? settings.descanso_s) }} />
                   ))}
                   {esExtra && <button className="btn xs block" onClick={() => setPicker(b)}>+ Otro ejercicio</button>}
                 </div>

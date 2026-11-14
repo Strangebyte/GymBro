@@ -4,7 +4,7 @@
 
 ## Dónde está
 
-- La app está completa y funcionando en las pruebas automáticas (73 de 73, sin errores de consola).
+- La app está completa y funcionando en las pruebas automáticas (74 de 74, sin errores de consola).
 - **Publicada en GitHub Pages:** https://<usuario>.github.io/GymBro/ (repositorio público
   `<usuario>/GymBro`). Cada push a `main` la vuelve a publicar sola. Verificado el 14-11-2026 en
   Chromium: abre sin errores, registra el service worker y arranca con catálogo y plan, sin sesiones.
@@ -58,5 +58,6 @@ video, vibración, pantalla encendida durante la sesión, scroll táctil con una
 | Fecha | Qué se hizo |
 |---|---|
 | 10-11-2026 | Diseño (`docs/historico/`), catálogo de 96 ejercicios, primera versión solo de registro |
+| 14-11-2026 | Sonido al terminar el descanso (probado en el simulador; falta oírlo en el teléfono) |
 | 14-11-2026 | Revisión general; git; historial separado del repositorio; primer deploy en GitHub Pages |
 | 14-11-2026 | App completa rehecha; video/imagen; ronda de comentarios del dueño sobre la sesión, el historial y el selector; Progreso rehecho; proyecto pasado a esta carpeta |
