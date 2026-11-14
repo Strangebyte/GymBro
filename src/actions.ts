@@ -20,15 +20,19 @@ function borrador(session_id: number, exercise_id: number, bloque: number, orden
   }
 }
 
-/** Crea la sesión. Con un día de plan, deja todas las series prescriptas como pendientes. */
-export async function iniciarSesion(dia: PlanDay | null, wellness: Wellness | null): Promise<number> {
+/**
+ * Crea la sesión. Con un día de plan, deja todas las series prescriptas como pendientes.
+ * Con `fechaRetro` es una sesión de un día pasado que se carga después: sin reloj en vivo.
+ */
+export async function iniciarSesion(dia: PlanDay | null, wellness: Wellness | null, fechaRetro?: string): Promise<number> {
   const existente = await sesionEnCurso()
   if (existente) return existente.id!
   return db.transaction('rw', db.sessions, db.setLogs, async () => {
     const sid = await db.sessions.add({
-      fecha: hoyISO(), inicio: Date.now(), fin: null, estado: 'en_curso',
+      fecha: fechaRetro ?? hoyISO(), inicio: fechaRetro ? new Date(`${fechaRetro}T12:00:00`).getTime() : Date.now(), fin: null, estado: 'en_curso',
       plan_id: dia?.plan_id ?? null, plan_day_id: dia?.id ?? null, nombre: dia?.nombre ?? 'Sesión libre',
       wellness, wellness_prom: promedioWellness(wellness), srpe: null, notas: null, origen: 'app', dur_min: null,
+      ...(fechaRetro ? { retro: true } : {}),
     })
     if (dia) {
       const filas: SetLog[] = []
@@ -41,8 +45,8 @@ export async function iniciarSesion(dia: PlanDay | null, wellness: Wellness | nu
   })
 }
 
-/** Agrega un ejercicio fuera de plan, prellenado con la última vez que se hizo. */
-export async function agregarEjercicio(sesion: Session, ex: Exercise, bloque: number): Promise<void> {
+/** Agrega un ejercicio fuera de plan, prellenado con la última vez que se hizo. `hecha`: al editar una sesión ya guardada. */
+export async function agregarEjercicio(sesion: Session, ex: Exercise, bloque: number, hecha = false): Promise<void> {
   const todos = await db.setLogs.where('session_id').equals(sesion.id!).toArray()
   const delBloque = todos.filter((s) => s.bloque === bloque)
   const orden = delBloque.length ? Math.max(...delBloque.map((s) => s.orden)) + 1 : 1
@@ -52,16 +56,16 @@ export async function agregarEjercicio(sesion: Session, ex: Exercise, bloque: nu
   const base: PSet | null = ult
     ? { reps: ult.reps, seg: ult.seg, peso_g: ult.peso_g, rir: ult.rir, rpe: ult.rpe }
     : ex.mide === 'seg' ? { seg: 30 } : null
-  await db.setLogs.add({ ...borrador(sesion.id!, ex.id!, bloque, orden, 1, base), plan: null })
+  await db.setLogs.add({ ...borrador(sesion.id!, ex.id!, bloque, orden, 1, base), plan: null, hecha })
 }
 
-export async function agregarSerie(sets: SetLog[]): Promise<void> {
+export async function agregarSerie(sets: SetLog[], hecha = false): Promise<void> {
   const ult = sets[sets.length - 1]
-  await db.setLogs.add({ ...ult, id: undefined, serie: ult.serie + 1, hecha: false, fallo: false, ts: Date.now(), plan: null })
+  await db.setLogs.add({ ...ult, id: undefined, serie: ult.serie + 1, hecha, fallo: false, ts: Date.now(), plan: null })
 }
 
 export async function terminarSesion(
-  sesion: Session, srpe: number | null, notas: string | null, actualizarPlan: boolean,
+  sesion: Session, srpe: number | null, notas: string | null, actualizarPlan: boolean, durMin: number | null = null,
 ): Promise<void> {
   await db.transaction('rw', db.sessions, db.setLogs, db.plans, db.planDays, async () => {
     const todos = await db.setLogs.where('session_id').equals(sesion.id!).toArray()
@@ -69,7 +73,13 @@ export async function terminarSesion(
     if (pendientes.length) await db.setLogs.bulkDelete(pendientes.map((s) => s.id!))
     const hechas = todos.filter((s) => s.hecha)
     if (!hechas.length) { await db.sessions.delete(sesion.id!); return }
-    await db.sessions.update(sesion.id!, { estado: 'completada', fin: Date.now(), srpe, notas })
+    const fin = sesion.retro ? (durMin ? sesion.inicio + durMin * 60000 : null) : Date.now()
+    await db.sessions.update(sesion.id!, { estado: 'completada', fin, srpe, notas, dur_min: durMin })
+    // Una sesión cargada después no es "lo último que hiciste": sus series llevan la hora de aquel día.
+    if (sesion.retro) {
+      const orden = [...hechas].sort((a, b) => a.bloque - b.bloque || a.orden - b.orden || a.serie - b.serie)
+      await db.setLogs.bulkUpdate(orden.map((s, i) => ({ key: s.id!, changes: { ts: sesion.inicio + i } })))
+    }
 
     if (sesion.plan_day_id != null) {
       const dia = await db.planDays.get(sesion.plan_day_id)
@@ -92,9 +102,14 @@ export async function terminarSesion(
           }))
           await db.planDays.update(dia.id!, { bloques })
         }
-        const dias = (await db.planDays.where('plan_id').equals(dia.plan_id).toArray()).sort((a, b) => a.orden - b.orden)
-        const idx = dias.findIndex((d) => d.id === dia.id)
-        await db.plans.update(dia.plan_id, { cursor: (idx + 1) % Math.max(1, dias.length) })
+        // La rotación avanza salvo que sea una sesión vieja cargada después de otras más nuevas.
+        const hayPosteriores = sesion.retro
+          && (await db.sessions.where('fecha').above(sesion.fecha).filter((s) => s.estado === 'completada').count()) > 0
+        if (!hayPosteriores) {
+          const dias = (await db.planDays.where('plan_id').equals(dia.plan_id).toArray()).sort((a, b) => a.orden - b.orden)
+          const idx = dias.findIndex((d) => d.id === dia.id)
+          await db.plans.update(dia.plan_id, { cursor: (idx + 1) % Math.max(1, dias.length) })
+        }
       }
     }
   })

@@ -85,6 +85,8 @@ export interface Session {
   notas: string | null
   origen: 'app' | 'importado'
   dur_min: number | null
+  /** Sesión de un día pasado cargada después desde el calendario: sin reloj en vivo. */
+  retro?: boolean
 }
 
 export interface SetLog {
@@ -130,6 +132,9 @@ export interface Settings {
   tilde: 'bloque' | 'ejercicio'
   /** Ejercicios elegidos para seguir en Progreso. Sin definir: los más frecuentes. */
   seguimiento?: number[]
+  /** Momento de la última copia de seguridad y hasta qué sesión (id) llegó. */
+  ultima_copia?: number
+  copia_hasta?: number
 }
 export const SETTINGS_DEFAULT: Settings = {
   tema: 'claro',
@@ -174,6 +179,12 @@ export async function getSettings(): Promise<Settings> {
 export async function setSettings(s: Partial<Settings>): Promise<void> {
   const cur = await getSettings()
   await db.meta.put({ key: 'settings', value: { ...cur, ...s } })
+}
+
+/** Anota que los datos actuales ya están en un archivo de copia. */
+export async function marcarCopia(): Promise<void> {
+  const ult = await db.sessions.orderBy(':id').last()
+  await setSettings({ ultima_copia: Date.now(), copia_hasta: ult?.id ?? 0 })
 }
 
 export const kgToG = (kg: number): number => Math.round(kg * 1000)
@@ -295,6 +306,7 @@ export async function importarTodo(texto: string): Promise<{ sesiones: number; s
       if (filas.length) await db.table(t).bulkAdd(filas)
     }
   })
+  await marcarCopia()
   return { sesiones: (data.sessions as unknown[]).length, series: (data.setLogs as unknown[]).length }
 }
 

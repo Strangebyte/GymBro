@@ -4,7 +4,7 @@
 
 ## Dónde está
 
-- La app está completa y funcionando en las pruebas automáticas (74 de 74, sin errores de consola).
+- La app está completa y funcionando en las pruebas automáticas (85 de 85, sin errores de consola).
 - **Publicada en GitHub Pages:** https://<usuario>.github.io/GymBro/ (repositorio público
   `<usuario>/GymBro`). Cada push a `main` la vuelve a publicar sola. Verificado el 14-11-2026 en
   Chromium: abre sin errores, registra el service worker y arranca con catálogo y plan, sin sesiones.
@@ -16,8 +16,9 @@
 
 ## Próximo paso
 
-Instalarla en el Android desde Chrome, restaurar el historial y probar ahí lo que el simulador no cubre:
-video, vibración, pantalla encendida durante la sesión, scroll táctil con una hoja abierta, botón atrás.
+Probar en el teléfono lo último que se agregó y solo se verificó en el simulador: botón atrás con hojas y
+diálogos abiertos, editar una sesión, cargar una sesión pasada y el recordatorio de copia. Sigue sin probar:
+video y scroll táctil con una hoja abierta.
 
 ## Hecho
 
@@ -26,6 +27,9 @@ video, vibración, pantalla encendida durante la sesión, scroll táctil con una
 - Importador con validación y pantalla de mapeo (crear con nombre editable o vincular a existente)
 - Elegir qué entrenar: día sugerido por la rotación, otro día, o sesión libre
 - Wellness: 5 preguntas con 5 respuestas antes de cada sesión (se pueden saltear)
+- Botón atrás de Android: cierra hojas y diálogos antes que la pantalla; sin pasos muertos después de guardar
+- Editar una sesión guardada (fecha, duración, esfuerzo, notas, series) y cargar sesiones de días pasados
+- Recordatorio de copia de seguridad cada 4 sesiones; fecha de la última copia en Ajustes
 - Sesión: bloques colapsables, tilde por bloque o por ejercicio, carga a mano, historial por ejercicio,
   cambiar/quitar/agregar ejercicios sin tocar el plan, ejercicios adicionales, cierre con esfuerzo y notas
 - Otras actividades: tipos precargados y propios, duración, esfuerzo, notas
@@ -60,6 +64,7 @@ video, vibración, pantalla encendida durante la sesión, scroll táctil con una
 | Fecha | Qué se hizo |
 |---|---|
 | 10-11-2026 | Diseño (`docs/historico/`), catálogo de 96 ejercicios, primera versión solo de registro |
+| 14-11-2026 | Botón atrás, edición de sesiones, sesiones pasadas y recordatorio de copia (probado solo en el simulador) |
 | 14-11-2026 | Sonido al terminar el descanso (confirmado por el dueño en el teléfono) |
 | 14-11-2026 | Revisión general; git; historial separado del repositorio; primer deploy en GitHub Pages |
 | 14-11-2026 | App completa rehecha; video/imagen; ronda de comentarios del dueño sobre la sesión, el historial y el selector; Progreso rehecho; proyecto pasado a esta carpeta |

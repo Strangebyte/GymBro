@@ -1,13 +1,16 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, setSettings, type Activity, type Settings } from '../db'
-import { Chips, Stepper, TopBar, useDialogos, useNav } from '../ui'
-import { agruparPorDia, duracionSesion, plural, fechaDe, fmtFechaLarga, hoyISO, isoDe, MESES, resumenSets } from '../lib'
-import { descartarSesion } from '../actions'
-import { PREGUNTAS } from './Today'
+import { Chips, Picker, Stepper, TopBar, useDialogos, useNav } from '../ui'
+import { agruparPorDia, duracionSesion, plural, fechaDe, fmtFechaLarga, hoyISO, isoDe, MESES, resumenSets, setValido } from '../lib'
+import { agregarEjercicio, descartarSesion, iniciarSesion, sesionEnCurso } from '../actions'
+import { ElegirDia, PREGUNTAS } from './Today'
+import { armarItems, Tarjeta } from './Session'
 
 export function CalendarScreen() {
   const nav = useNav()
+  const { avisar } = useDialogos()
+  const [elegir, setElegir] = useState(false)
   const sesiones = useLiveQuery(() => db.sessions.toArray(), [])
   const actividades = useLiveQuery(() => db.activities.toArray(), [])
   const hoy = hoyISO()
@@ -25,6 +28,16 @@ export function CalendarScreen() {
   const nActivos = delMes.filter((f) => porDia.has(f)).length
   const mover = (d: number) => setMes(({ y, m }) => { const n = new Date(y, m + d, 1); return { y: n.getFullYear(), m: n.getMonth() } })
   const r = porDia.get(sel)
+  const cargarGym = async () => {
+    if (await sesionEnCurso()) { avisar('Tenés una sesión en curso. Terminala o descartala antes de cargar otra.'); return }
+    setElegir(true)
+  }
+  const empezarRetro = async (diaId: number | null) => {
+    setElegir(false)
+    const dia = diaId != null ? (await db.planDays.get(diaId)) ?? null : null
+    await iniciarSesion(dia, null, sel)
+    nav.ir({ v: 'sesion' })
+  }
 
   return (
     <>
@@ -81,7 +94,9 @@ export function CalendarScreen() {
           </button>
         ))}
         <button className="btn act block" onClick={() => nav.ir({ v: 'actividad', id: null, fecha: sel })}>+ Actividad este día</button>
+        {sel <= hoy && <button className="btn block" style={{ marginTop: 8 }} onClick={() => void cargarGym()}>+ Sesión de gym este día</button>}
       </div>
+      {elegir && <ElegirDia titulo={`¿Qué entrenaste el ${fechaDe(sel).getDate()}/${fechaDe(sel).getMonth() + 1}?`} onCerrar={() => setElegir(false)} onElegir={(d) => void empezarRetro(d)} />}
     </>
   )
 }
@@ -149,7 +164,52 @@ export function SessionDetailScreen({ id }: { id: number }) {
   const sesion = useLiveQuery(() => db.sessions.get(id), [id])
   const sets = useLiveQuery(() => db.setLogs.where('session_id').equals(id).toArray(), [id])
   const ejercicios = useLiveQuery(() => db.exercises.toArray(), [])
+  const [editando, setEditando] = useState(false)
+  const [picker, setPicker] = useState<number | null>(null)
   if (!sesion || !sets || !ejercicios) return <><TopBar titulo="Sesión" atras /><div className="main sin-tabs"><div className="empty">Cargando…</div></div></>
+
+  if (editando) {
+    const items = armarItems(sets, ejercicios)
+    const bloquesEd = [...new Set(items.map((i) => i.bloque))].sort((a, b) => a - b)
+    // Al terminar se descartan las series que quedaron sin ningún dato. Se relee la base por si el último campo recién se guardó.
+    const listo = async () => {
+      const vacias = (await db.setLogs.where('session_id').equals(id).toArray()).filter((s) => !setValido(s))
+      if (vacias.length) await db.setLogs.bulkDelete(vacias.map((s) => s.id!))
+      setEditando(false)
+    }
+    return (
+      <>
+        <TopBar titulo="Editar sesión" sub={sesion.nombre} atras der={<button className="btn primary sm" onClick={() => void listo()}>Listo</button>} />
+        <div className="main sin-tabs">
+          <div className="card">
+            <label className="f" style={{ marginTop: 0 }} htmlFor="sf">Fecha</label>
+            <input id="sf" type="date" defaultValue={sesion.fecha} max={hoyISO()} onChange={(e) => { if (e.target.value) void db.sessions.update(id, { fecha: e.target.value }) }} />
+            <label className="f">Duración</label>
+            <Stepper value={duracionSesion(sesion)} step={5} min={0} max={600} unit="minutos" onChange={(v) => void db.sessions.update(id, { dur_min: v })} />
+            <label className="f">Esfuerzo (opcional)</label>
+            <Chips opciones={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => ({ v: n as number | null, t: String(n) }))} valor={sesion.srpe}
+              onPick={(v) => void db.sessions.update(id, { srpe: sesion.srpe === v ? null : v })} />
+            <label className="f" htmlFor="sn">Notas</label>
+            <textarea id="sn" rows={2} defaultValue={sesion.notas ?? ''} onBlur={(e) => void db.sessions.update(id, { notas: e.target.value.trim() || null })} />
+          </div>
+          {bloquesEd.map((b) => (
+            <div key={b}>
+              <h2>Bloque {b}</h2>
+              {items.filter((i) => i.bloque === b).map((it) => (
+                <Tarjeta key={`${it.key}-${it.ex.id}`} item={it} sesion={sesion} porEjercicio={false} onMarcar={() => {}} editando />
+              ))}
+            </div>
+          ))}
+          <button className="btn block" style={{ marginTop: 14 }} onClick={() => setPicker(bloquesEd.length ? Math.max(...bloquesEd) + 1 : 1)}>+ Agregar ejercicio</button>
+          <div className="xsmall muted center" style={{ marginTop: 8 }}>Los cambios se guardan solos. El plan no se modifica.</div>
+        </div>
+        {picker != null && (
+          <Picker multi titulo="Agregar ejercicio" onCerrar={() => setPicker(null)} onElegir={(e) => void agregarEjercicio(sesion, e, picker, true)} />
+        )}
+      </>
+    )
+  }
+
   const mapa = new Map(ejercicios.map((e) => [e.id!, e]))
   const hechas = sets.filter((s) => s.hecha)
   const grupos = new Map<string, typeof hechas>()
@@ -158,7 +218,7 @@ export function SessionDetailScreen({ id }: { id: number }) {
   const bloques = [...new Set(hechas.map((s) => s.bloque))].sort((a, b) => a - b)
   return (
     <>
-      <TopBar titulo={sesion.nombre} sub={fmtFechaLarga(sesion.fecha)} atras />
+      <TopBar titulo={sesion.nombre} sub={fmtFechaLarga(sesion.fecha)} atras der={<button className="btn sm" onClick={() => setEditando(true)}>Editar</button>} />
       <div className="main sin-tabs">
         {sesion.origen === 'importado' && <div className="banner">Sesión importada del historial anterior. Los pesos tienen confianza media: se leyeron de capturas de pantalla.</div>}
         <div className="row" style={{ marginBottom: 10 }}>

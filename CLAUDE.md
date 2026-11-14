@@ -17,7 +17,7 @@ npm run seed         # regenera src/seed.json, src/seed-historial.json y data/*.
 npm run test:e2e     # requiere dist/ y: pip install playwright && playwright install chromium
 ```
 
-Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 74 verificaciones tienen que pasar
+Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 85 verificaciones tienen que pasar
 y no puede haber errores de consola. Si cambiás un flujo, actualizá `tests/e2e.py` en el mismo cambio.
 
 ## Cómo trabajar con el dueño
@@ -81,6 +81,10 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
 - **Solo se guardan las series tildadas.** Al cerrar, las no tildadas se descartan.
 - **Rotación sin fechas.** La app sugiere `plan.cursor`; el usuario puede elegir otro día. El cursor avanza al
   guardar una sesión. No hay calendario de sesiones futuras.
+- **Sesiones cargadas después** (`retro: true`, desde el calendario): usan la misma pantalla de sesión, sin reloj;
+  la duración se carga a mano al cerrar. La rotación solo avanza si no hay sesiones completadas con fecha posterior.
+- **Editar una sesión guardada** (detalle → Editar) cambia fecha, duración, esfuerzo, notas y series. Nunca toca
+  el plan ni la rotación. Al salir se descartan las series sin datos.
 - **Datos importados** (`origen: 'importado'`, `confianza: 'media'`): pesos leídos de capturas. Avisarlo donde
   se muestren.
 - **Al entrenar solo se ven nombres del catálogo.** El importador obliga a crear o vincular lo desconocido.
@@ -98,6 +102,8 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
 - Historial de un ejercicio: lista informativa, sin enlaces.
 - Catálogo agrupado por categoría (`categoria()` en lib.ts), con filtro detrás de un ícono junto al buscador.
 - Video/imagen: se cargan solo al crear o editar un ejercicio. En la sesión solo se ven (botón ▶).
+- Recordatorio de copia en Hoy cuando hay 4 o más sesiones propias posteriores a la última copia
+  (`settings.copia_hasta`). "Más tarde" lo oculta hasta volver a abrir la app.
 - Fechas `dd/mm/yyyy`. Decimales con coma.
 
 ## Trampas técnicas
@@ -110,11 +116,15 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
   una descarga normal.
 - **La app también corre como artifact de Claude** (iframe aislado): ahí no hay service worker, ni historial
   del navegador, ni garantía de almacenamiento, y no se cargan recursos remotos. Por eso: nada de CDNs ni
-  fuentes externas, y el historial (`pushState`) solo se usa fuera de un iframe (`CON_HISTORIAL` en App.tsx).
+  fuentes externas, y el historial (`pushState`) solo se usa fuera de un iframe (`CON_HISTORIAL` en ui.tsx).
 - **Cambios de esquema:** agregar `this.version(N+1).stores(...)` en db.ts, con `.upgrade()` si hay que
   transformar datos. Nunca editar una versión ya publicada: el usuario tiene datos reales.
 - **Hooks antes de cualquier `return`** condicional (las pantallas devuelven "Cargando…" temprano).
-- **Hojas y diálogos** fijan el fondo (`useFondoFijo`). Si se agrega otro overlay, usarlo.
+- **Hojas y diálogos** fijan el fondo (`useFondoFijo`) y se registran para el botón atrás (`useCapa`). Si se
+  agrega otro overlay, usar los dos.
+- **Botón atrás** (`atras` en ui.tsx): cada pantalla apilada y cada overlay abierto es una entrada del historial
+  del navegador. Lo que la app cierra por su cuenta se descuenta con `atras.quitar()`, y ese `popstate` se
+  ignora. No llamar a `history.back()` ni `pushState` directamente desde las pantallas.
 - **El historial personal no está en el repositorio** (que es público): `src/seed-historial.json`,
   `tools/seed/gen.py`, `docs/fuentes/*.md` y `privado/` están en `.gitignore` y existen solo en la PC del dueño.
   `db.ts` carga el historial con `import.meta.glob`, así que compila con o sin el archivo. La versión publicada

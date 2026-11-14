@@ -19,6 +19,61 @@ export interface Nav { ir: (v: Vista) => void; volver: () => void; reemplazar: (
 export const NavCtx = createContext<Nav>({ ir: () => {}, volver: () => {}, reemplazar: () => {}, raiz: () => {} })
 export const useNav = () => useContext(NavCtx)
 
+// ------------------------------------------------------------------ botón atrás
+// Cada pantalla apilada y cada hoja o diálogo abierto suma una entrada al historial del navegador: así el botón
+// atrás de Android cierra lo último que se abrió. Cuando la app cierra algo por su cuenta, quita esa entrada.
+// Dentro de un marco (la vista previa en Claude) no se toca el historial.
+const CON_HISTORIAL = typeof window !== 'undefined' && window.self === window.top
+let prof = 0      // entradas propias por encima de la inicial
+let ignorar = 0   // retrocesos provocados por la app: su popstate no es un "atrás" del usuario
+const abiertas: (() => void)[] = []   // hojas y diálogos abiertos, el de arriba al final
+const profActual = (): number => { try { const g = (history.state as { gl?: unknown } | null)?.gl; return typeof g === 'number' ? g : 0 } catch { return 0 } }
+const retroceder = (n: number): void => { ignorar++; try { history.go(-n) } catch { ignorar-- } }
+// Tras recargar, el navegador conserva entradas de la visita anterior: se descartan.
+if (CON_HISTORIAL && profActual() > 0) retroceder(profActual())
+
+export const atras = {
+  /** Se abrió una pantalla, hoja o diálogo. */
+  sumar(): void {
+    if (!CON_HISTORIAL) return
+    try { history.pushState({ gl: prof + 1 }, ''); prof++ } catch { /* sin historial */ }
+  },
+  /** La app cerró n cosas por su cuenta (botón, tocar afuera, guardar). */
+  quitar(n = 1): void {
+    if (!CON_HISTORIAL) return
+    const k = Math.min(n, prof)
+    if (k <= 0) return
+    prof -= k
+    retroceder(k)
+  },
+  /** Atiende el botón atrás del sistema. `sacar` cierra la pantalla de arriba. */
+  escuchar(sacar: () => void): () => void {
+    const onPop = () => {
+      if (ignorar > 0) { ignorar--; return }
+      const g = profActual()
+      if (g > prof) { retroceder(1); return }   // "adelante" del navegador: se deshace
+      const n = prof - g
+      prof = g
+      for (let i = 0; i < n; i++) { const cerrar = abiertas.pop(); if (cerrar) cerrar(); else sacar() }
+    }
+    window.addEventListener('popstate', onPop)
+    return () => window.removeEventListener('popstate', onPop)
+  },
+}
+
+/** Registra una hoja o diálogo abierto para que el botón atrás lo cierre. */
+function useCapa(cerrar: () => void): void {
+  const ref = useRef(cerrar)
+  ref.current = cerrar
+  useEffect(() => {
+    const fn = () => ref.current()
+    abiertas.push(fn)
+    atras.sumar()
+    return () => { const i = abiertas.indexOf(fn); if (i >= 0) { abiertas.splice(i, 1); atras.quitar(1) } }
+  }, [])
+}
+function Capa({ cerrar }: { cerrar: () => void }) { useCapa(cerrar); return null }
+
 // ------------------------------------------------------------------ diálogos y avisos
 interface Pregunta { titulo: string; texto?: string; ok?: string; peligro?: boolean }
 type Confirmar = (p: Pregunta) => Promise<boolean>
@@ -42,7 +97,7 @@ export function Dialogos({ children }: { children: ReactNode }) {
       {children}
       {preg && (
         <div className="overlay" style={{ alignItems: 'center' }} onClick={() => cerrar(false)}>
-          <FondoFijo />
+          <FondoFijo /><Capa cerrar={() => cerrar(false)} />
           <div className="dialog" role="dialog" aria-modal="true" onClick={(e) => e.stopPropagation()}>
             <h3>{preg.titulo}</h3>
             {preg.texto && <p className="small muted" style={{ margin: '8px 0 0' }}>{preg.texto}</p>}
@@ -86,6 +141,7 @@ function FondoFijo() { useFondoFijo(); return null }
 
 export function Sheet(props: { titulo: string; onCerrar: () => void; children: ReactNode; full?: boolean; accion?: ReactNode }) {
   useFondoFijo()
+  useCapa(props.onCerrar)
   return (
     <div className="overlay" onClick={props.onCerrar}>
       <div className={`sheet${props.full ? ' full' : ''}`} role="dialog" aria-modal="true" onClick={(e) => e.stopPropagation()}>

@@ -1,4 +1,4 @@
-import { db, type Exercise, type PSet, type SetLog, type Session, type Activity } from './db'
+import { db, exportarTodo, marcarCopia, type Exercise, type PSet, type SetLog, type Session, type Activity } from './db'
 
 export const gToKg = (g: number): number => g / 1000
 export { kgToG } from './db'
@@ -185,6 +185,13 @@ export async function guardarArchivo(nombre: string, contenido: string): Promise
     setTimeout(() => URL.revokeObjectURL(url), 3000)
     return 'ok'
   } catch { return 'error' }
+}
+
+/** Exporta la copia de seguridad y, si salió bien, lo deja anotado para el recordatorio. */
+export async function hacerCopia(): Promise<'ok' | 'cancelado' | 'error'> {
+  const r = await guardarArchivo(`gym-log-${hoyISO()}.json`, await exportarTodo())
+  if (r === 'ok') await marcarCopia()
+  return r
 }
 
 export const GRUPOS = ['pecho', 'dorsal', 'trapecio', 'hombro_anterior', 'hombro_lateral', 'hombro_posterior', 'biceps', 'triceps',

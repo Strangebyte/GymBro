@@ -95,6 +95,11 @@ def main():
             pg.click('text=Día 6 · Peso muerto + tracción'); pg.wait_for_timeout(400)
             t = texto(pg)
             ok('Detalle de sesión importada', 'Peso muerto - BR' in t and 'importada' in t and 'RPE 8' in t)
+            pg.click('.topbar >> text=Editar'); pg.wait_for_timeout(400)
+            campo = pg.locator('.ej', has_text='Peso muerto - BR').first.locator('input').nth(1)
+            campo.fill('123,5'); campo.blur(); pg.wait_for_timeout(250)
+            pg.click('.topbar >> text=Listo'); pg.wait_for_timeout(400)
+            ok('Editar una sesión guardada corrige un peso', '123,5 kg' in texto(pg) and pg.locator('.ej').count() == 0)
             pg.click('[aria-label="Volver"]'); pg.wait_for_timeout(300)
             pg.click('[aria-label="Mes anterior"]'); pg.wait_for_timeout(250)
             ok('Octubre: 10 días de gym', pg.locator('.cal button.gym').count() == 10, str(pg.locator('.cal button.gym').count()))
@@ -128,7 +133,8 @@ def main():
             ok('Historial en una hoja, sin enlaces', pg.locator('.sheet .item').count() >= 5 and pg.locator('.sheet button.item').count() == 0)
             ok('Con la hoja abierta el fondo no se desplaza', pg.evaluate('getComputedStyle(document.body).overflow') == 'hidden')
             captura(pg, 'B3-historial')
-            pg.click('[aria-label="Cerrar"]'); pg.wait_for_timeout(300)
+            pg.go_back(); pg.wait_for_timeout(400)
+            ok('El botón atrás cierra la hoja, no la sesión', pg.locator('.sheet').count() == 0 and 'de 37 series' in texto(pg, '.topbar'))
             ok('Al cerrar el historial sigue el mismo bloque abierto', pg.locator('.bloque-c').count() == 1 and 'Press plano' in pg.locator('.bloque-c').inner_text())
             pg.locator('.ej', has_text='Caminata de gemelo').locator('text=Cambiar ejercicio').click(); pg.wait_for_timeout(300)
             pg.fill('.sheet [aria-label="Buscar ejercicio"]', 'gesto sprint'); pg.wait_for_timeout(300)
@@ -165,6 +171,7 @@ def main():
             pg.click('text=Guardar sesión'); pg.wait_for_timeout(700)
             t = texto(pg)
             ok('Hoy: sesión hecha y la rotación avanza al Día 2', 'HECHO HOY' in t.upper() and 'Día 2 · Tracción + brazos' in t and '4 de 4' in t)
+            ok('Tras guardar no quedan pasos viejos para el botón atrás', pg.evaluate('history.state') is None, str(pg.evaluate('history.state')))
             desp, _ = backup(pg)
             ses = [s for s in desp['sessions'] if s['origen'] == 'app'][0]
             logs = [l for l in desp['setLogs'] if l['session_id'] == ses['id']]
@@ -217,6 +224,18 @@ def main():
             tab(pg, 'Calendario')
             ok('Calendario marca el día como actividad', pg.locator('.cal button.act').count() == 1)
             ok('Panel del día', 'Pádel' in texto(pg) and '60 min' in texto(pg))
+            pg.locator('.cal button', has_text='12').first.click(); pg.wait_for_timeout(300)
+            pg.click('text=+ Sesión de gym este día'); pg.wait_for_timeout(400)
+            ok('Sesión pasada: ofrece los días del plan', pg.locator('.sheet .item').count() == 6)
+            pg.locator('.sheet .item').nth(1).click(); pg.wait_for_selector('.bloque'); pg.wait_for_timeout(400)
+            ok('Sesión pasada: muestra la fecha en vez del reloj', '12/11/2026' in texto(pg, '.topbar'))
+            pg.locator('.tilde').nth(1).click(); pg.wait_for_timeout(350)
+            pg.click('.topbar >> text=Terminar'); pg.wait_for_timeout(300)
+            ok('Sesión pasada: pide la duración', '¿Cuánto duró?' in texto(pg))
+            pg.click('text=Guardar sesión'); pg.wait_for_timeout(700)
+            ok('Sesión pasada: como es la más nueva, la rotación avanza al Día 3', 'Día 3 · Cadera 1p + empuje' in texto(pg))
+            tab(pg, 'Calendario'); pg.locator('.cal button', has_text='12').first.click(); pg.wait_for_timeout(300)
+            ok('Sesión pasada: queda en su día con la duración cargada', 'Día 2 · Tracción + brazos' in texto(pg) and '60 min' in texto(pg))
             ctx.close()
 
             # ------------------------------------------------------------ E
@@ -316,6 +335,26 @@ def main():
             ancho = pg.evaluate('document.documentElement.scrollWidth - document.documentElement.clientWidth')
             ok('Sin desborde horizontal', ancho == 0, str(ancho))
             captura(pg, 'H1-oscuro')
+            pg.evaluate("""() => new Promise((res, rej) => {
+              const r = indexedDB.open('gym-log-v2')
+              r.onerror = () => rej(r.error)
+              r.onsuccess = () => {
+                const d = r.result, tx = d.transaction('sessions', 'readwrite')
+                for (let i = 0; i < 4; i++) tx.objectStore('sessions').add({ fecha: '2026-11-1' + i, inicio: 0, fin: 1, estado: 'completada', plan_id: null,
+                  plan_day_id: null, nombre: 'Prueba', wellness: null, wellness_prom: null, srpe: null, notas: null, origen: 'app', dur_min: 30 })
+                tx.oncomplete = () => { d.close(); res(true) }
+                tx.onerror = () => rej(tx.error)
+              }
+            })""")
+            pg.reload(wait_until='networkidle'); pg.wait_for_selector('.tabbar'); pg.wait_for_timeout(400)
+            ok('Recordatorio tras 4 sesiones sin copia', 'Hace 4 sesiones que no hacés una copia' in texto(pg))
+            captura(pg, 'H2-recordatorio')
+            with pg.expect_download():
+                pg.click('text=Hacer copia ahora')
+            pg.wait_for_timeout(500)
+            ok('Hacer la copia apaga el recordatorio', pg.locator('.banner').count() == 0)
+            pg.click('[aria-label="Ajustes"]'); pg.wait_for_timeout(300)
+            ok('Ajustes muestra la fecha de la última copia', '14/11/2026' in pg.locator('.kv', has_text='Última copia').inner_text())
             ctx.close()
             navegador.close()
     finally:

@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
-import { borrarTodo, db, estadoPersistencia, exportarTodo, importarTodo, pedirPersistencia, setSettings, type Settings } from '../db'
+import { borrarTodo, db, estadoPersistencia, importarTodo, pedirPersistencia, setSettings, type Settings } from '../db'
 import { Stepper, TopBar, useDialogos } from '../ui'
-import { guardarArchivo, hoyISO } from '../lib'
+import { fmtFecha, hacerCopia, isoDe } from '../lib'
 
 // ------------------------------------------------------------------ ajustes
 export function SettingsScreen({ settings }: { settings: Settings }) {
@@ -18,7 +18,7 @@ export function SettingsScreen({ settings }: { settings: Settings }) {
   const enClaude = typeof window !== 'undefined' && window.self !== window.top
 
   const exportar = async () => {
-    const r = await guardarArchivo(`gym-log-${hoyISO()}.json`, await exportarTodo())
+    const r = await hacerCopia()
     setMsg(r === 'ok' ? { ok: true, t: 'Copia generada. Guardala en Drive o donde la tengas a salvo.' }
       : r === 'cancelado' ? { ok: false, t: 'Exportación cancelada.' } : { ok: false, t: 'No se pudo generar el archivo en este entorno.' })
   }
@@ -76,6 +76,7 @@ export function SettingsScreen({ settings }: { settings: Settings }) {
         <h2>Copia de seguridad</h2>
         <div className="card">
           <div className="small muted" style={{ marginBottom: 10 }}>Todo vive en este dispositivo. La copia incluye ejercicios, planes, sesiones y actividades.</div>
+          <div className="kv" style={{ marginBottom: 10 }}><span className="muted">Última copia</span><b>{settings.ultima_copia ? fmtFecha(isoDe(new Date(settings.ultima_copia))) : 'todavía ninguna'}</b></div>
           <button className="btn primary block" onClick={() => void exportar()}>Exportar copia</button>
           <button className="btn block" style={{ marginTop: 8 }} onClick={() => file.current?.click()}>Restaurar desde una copia</button>
           <input ref={file} type="file" accept=".json,application/json" style={{ display: 'none' }}

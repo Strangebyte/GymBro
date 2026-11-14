@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, ensureSeed, getSettings, pedirPersistencia, SETTINGS_DEFAULT, type Settings } from './db'
-import { Dialogos, Ico, NavCtx, type Nav, type Vista } from './ui'
+import { atras, Dialogos, Ico, NavCtx, type Nav, type Vista } from './ui'
 import { mantenerPantalla } from './lib'
 import { TodayScreen, WellnessScreen } from './screens/Today'
 import { CerrarScreen, SessionScreen } from './screens/Session'
@@ -18,8 +18,6 @@ const TABS: { v: Vista['v']; t: string; i: JSX.Element }[] = [
   { v: 'ejercicios', t: 'Ejercicios', i: Ico.ej },
   { v: 'progreso', t: 'Progreso', i: Ico.prog },
 ]
-// Dentro de un marco (la vista previa en Claude) no se toca el historial del navegador.
-const CON_HISTORIAL = typeof window !== 'undefined' && window.self === window.top
 const esTab = (v: Vista['v']) => TABS.some((t) => t.v === v)
 
 export default function App() {
@@ -60,23 +58,14 @@ export default function App() {
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', settings.tema === 'oscuro' ? '#0e1412' : '#f3f5f4')
   }, [settings.tema])
 
-  // Botón "atrás" de Android: cada pantalla apilada suma una entrada al historial.
-  useEffect(() => {
-    const onPop = () => sacar()
-    window.addEventListener('popstate', onPop)
-    return () => window.removeEventListener('popstate', onPop)
-  }, [sacar])
+  // Botón "atrás" de Android: cierra la hoja o el diálogo abierto y, si no hay, la pantalla de arriba (ver ui.tsx).
+  useEffect(() => atras.escuchar(sacar), [sacar])
 
   const nav = useMemo<Nav>(() => ({
-    ir: (v) => { if (CON_HISTORIAL) { try { history.pushState({ n: pilaRef.current.length }, '') } catch { /* sin historial */ } } scrolls.current[pilaRef.current.length - 1] = window.scrollY; setPila((p) => [...p, v]); window.scrollTo(0, 0) },
-    volver: () => {
-      if (pilaRef.current.length <= 1) return
-      let viaHistorial = false
-      if (CON_HISTORIAL) { try { if (history.state && typeof history.state.n === 'number') { history.back(); viaHistorial = true } } catch { /* sin historial */ } }
-      if (!viaHistorial) sacar()
-    },
+    ir: (v) => { atras.sumar(); scrolls.current[pilaRef.current.length - 1] = window.scrollY; setPila((p) => [...p, v]); window.scrollTo(0, 0) },
+    volver: () => { if (pilaRef.current.length <= 1) return; sacar(); atras.quitar(1) },
     reemplazar: (v) => { setPila((p) => [...p.slice(0, -1), v]); window.scrollTo(0, 0) },
-    raiz: (v) => { scrolls.current = []; setPila([v]); window.scrollTo(0, 0) },
+    raiz: (v) => { atras.quitar(pilaRef.current.length - 1); scrolls.current = []; setPila([v]); window.scrollTo(0, 0) },
   }), [sacar])
 
   const vista = pila[pila.length - 1]

@@ -1,11 +1,28 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, kgToG, type Exercise, type Session, type SetLog, type Settings } from '../db'
-import { Chips, HistorialLista, Ico, MediaView, Picker, Sheet, TopBar, useDialogos, useNav, useTieneMedia } from '../ui'
+import { Chips, HistorialLista, Ico, MediaView, Picker, Sheet, Stepper, TopBar, useDialogos, useNav, useTieneMedia } from '../ui'
 import { etiqueta, fmtDur, fmtFecha, mmss, numES, plural, prepararSonido, resumenSets, setValido, sonar, ultimaVez, vibrar } from '../lib'
 import { agregarEjercicio, agregarSerie, descartarSesion, sesionEnCurso, terminarSesion } from '../actions'
 
-type Item = { key: string; bloque: number; orden: number; ex: Exercise; sets: SetLog[] }
+export type Item = { key: string; bloque: number; orden: number; ex: Exercise; sets: SetLog[] }
+
+/** Agrupa las series de una sesión por ejercicio, en el orden en que se hacen. */
+export function armarItems(sets: SetLog[], ejercicios: Exercise[]): Item[] {
+  const mapa = new Map(ejercicios.map((e) => [e.id!, e]))
+  const g = new Map<string, Item>()
+  for (const s of sets) {
+    const ex = mapa.get(s.exercise_id)
+    if (!ex) continue
+    const key = `${s.bloque}-${s.orden}`
+    const it = g.get(key) ?? { key, bloque: s.bloque, orden: s.orden, ex, sets: [] }
+    it.sets.push(s)
+    g.set(key, it)
+  }
+  const arr = [...g.values()]
+  arr.forEach((i) => i.sets.sort((a, b) => a.serie - b.serie))
+  return arr.sort((a, b) => a.bloque - b.bloque || a.orden - b.orden)
+}
 
 // El bloque abierto sobrevive a ir y volver de otra pantalla durante la misma sesión.
 const memoria: { sesion: number | null; abierto: number | null } = { sesion: null, abierto: null }
@@ -37,22 +54,7 @@ export function SessionScreen({ settings }: { settings: Settings }) {
     if (finEn != null && restante <= 0 && !vibrado) { if (settings.vibrar) vibrar([200, 100, 200]); if (settings.sonido) sonar(); setVibrado(true) }
   }, [restante, finEn, vibrado, settings.vibrar, settings.sonido])
 
-  const items = useMemo<Item[]>(() => {
-    if (!sets || !ejercicios) return []
-    const mapa = new Map(ejercicios.map((e) => [e.id!, e]))
-    const g = new Map<string, Item>()
-    for (const s of sets) {
-      const ex = mapa.get(s.exercise_id)
-      if (!ex) continue
-      const key = `${s.bloque}-${s.orden}`
-      const it = g.get(key) ?? { key, bloque: s.bloque, orden: s.orden, ex, sets: [] }
-      it.sets.push(s)
-      g.set(key, it)
-    }
-    const arr = [...g.values()]
-    arr.forEach((i) => i.sets.sort((a, b) => a.serie - b.serie))
-    return arr.sort((a, b) => a.bloque - b.bloque || a.orden - b.orden)
-  }, [sets, ejercicios])
+  const items = useMemo<Item[]>(() => (sets && ejercicios ? armarItems(sets, ejercicios) : []), [sets, ejercicios])
   const bloques = useMemo(() => [...new Set(items.map((i) => i.bloque))].sort((a, b) => a - b), [items])
 
   if (sesion === undefined || !sets || !ejercicios) return <><TopBar titulo="Sesión" atras /><div className="main sin-tabs"><div className="empty">Cargando…</div></div></>
@@ -79,7 +81,7 @@ export function SessionScreen({ settings }: { settings: Settings }) {
 
   return (
     <>
-      <TopBar titulo={sesion.nombre} sub={`${fmtDur(ahora - sesion.inicio)} · ${hechas} de ${total} series`} atras
+      <TopBar titulo={sesion.nombre} sub={`${sesion.retro ? fmtFecha(sesion.fecha) : fmtDur(ahora - sesion.inicio)} · ${hechas} de ${total} series`} atras
         der={<button className="btn primary sm" onClick={() => nav.ir({ v: 'cerrar' })}>Terminar</button>} />
       <div className="main sin-tabs" style={{ paddingBottom: finEn != null ? 110 : undefined }}>
         <div className="bar" style={{ marginBottom: 10 }}><i style={{ width: `${total ? (hechas / total) * 100 : 0}%` }} /></div>
@@ -149,8 +151,9 @@ export function SessionScreen({ settings }: { settings: Settings }) {
 // ------------------------------------------------------------------ tarjeta de ejercicio
 const aNum = (v: string): number | null => { const n = Number(v.replace(',', '.')); return v.trim() === '' || !Number.isFinite(n) ? null : n }
 
-function Tarjeta(props: { item: Item; sesion: Session; porEjercicio: boolean; onMarcar: () => void }) {
-  const { item, sesion, porEjercicio, onMarcar } = props
+/** Tarjeta de un ejercicio con sus series. `editando`: corrige una sesión ya guardada (las series nuevas nacen hechas). */
+export function Tarjeta(props: { item: Item; sesion: Session; porEjercicio: boolean; onMarcar: () => void; editando?: boolean }) {
+  const { item, sesion, porEjercicio, onMarcar, editando = false } = props
   const { ex, sets } = item
   const { confirmar } = useDialogos()
   const [previo, setPrevio] = useState<{ fecha: string; txt: string } | null>(null)
@@ -172,7 +175,7 @@ function Tarjeta(props: { item: Item; sesion: Session; porEjercicio: boolean; on
   const listo = sets.every((s) => s.hecha)
   const enSeg = sets.some((s) => s.seg != null) || (ex.mide === 'seg' && !sets.some((s) => s.reps != null))
   const quitar = async () => {
-    if (!(await confirmar({ titulo: `¿Quitar ${ex.nombre}?`, texto: 'Solo se quita de la sesión de hoy. El plan no cambia.', ok: 'Quitar', peligro: true }))) return
+    if (!(await confirmar({ titulo: `¿Quitar ${ex.nombre}?`, texto: 'Solo se quita de esta sesión. El plan no cambia.', ok: 'Quitar', peligro: true }))) return
     await db.setLogs.bulkDelete(sets.map((s) => s.id!))
   }
   const objetivo = (s: SetLog) => [s.tipo === 'calentamiento' ? 'calent.' : '', s.rir != null ? `RIR ${s.rir}` : '', s.rpe != null ? `RPE ${s.rpe}` : '', s.fallo ? 'fallo' : ''].filter(Boolean).join(' · ')
@@ -186,9 +189,11 @@ function Tarjeta(props: { item: Item; sesion: Session; porEjercicio: boolean; on
         {porEjercicio && <button className={`tilde ch${listo ? ' on' : ''}`} aria-pressed={listo} aria-label={`${listo ? 'Desmarcar' : 'Marcar hecho'} ${ex.nombre}`} onClick={onMarcar}>✓</button>}
       </div>
       {nota && <div className="xsmall nota">Nota: {nota}</div>}
-      <div className="xsmall muted truncate" style={{ marginTop: 2 }}>
-        {previo ? <>Última vez ({fmtFecha(previo.fecha)}): <span className="mono">{previo.txt}</span></> : 'Primera vez que lo registrás'}
-      </div>
+      {!editando && (
+        <div className="xsmall muted truncate" style={{ marginTop: 2 }}>
+          {previo ? <>Última vez ({fmtFecha(previo.fecha)}): <span className="mono">{previo.txt}</span></> : 'Primera vez que lo registrás'}
+        </div>
+      )}
 
       <div className="ss h">
         <span /><span>{enSeg ? 'seg' : 'reps'}{ex.unilateral ? ' c/lado' : ''}</span><span>{ex.lastre ? 'lastre kg' : 'kg'}</span><span>objetivo</span><span />
@@ -207,7 +212,7 @@ function Tarjeta(props: { item: Item; sesion: Session; porEjercicio: boolean; on
         </div>
       ))}
       <div className="acc">
-        <button onClick={() => void agregarSerie(sets)}>+ Serie</button>
+        <button onClick={() => void agregarSerie(sets, editando)}>+ Serie</button>
         <button onClick={() => setHoja('cambiar')}>Cambiar ejercicio</button>
         <button className="q" onClick={() => void quitar()}>Quitar</button>
       </div>
@@ -231,17 +236,28 @@ export function CerrarScreen() {
   const [srpe, setSrpe] = useState<number | null>(null)
   const [notas, setNotas] = useState('')
   const [actualizar, setActualizar] = useState(false)
+  const [dur, setDur] = useState<number | null>(60)
   if (!sesion || !sets) return <><TopBar titulo="Terminar sesión" atras /><div className="main sin-tabs"><div className="empty">No hay sesión en curso.</div></div></>
   const hechas = sets.filter((s) => s.hecha).length
   const pend = sets.length - hechas
+  const minutos = Math.round((Date.now() - sesion.inicio) / 60000)
+  // Sin reloj confiable (sesión de otro día, o quedó abierta por horas): la duración se carga a mano.
+  const durManual = !!sesion.retro || minutos > 240
   return (
     <>
       <TopBar titulo="Terminar sesión" sub={sesion.nombre} atras />
       <div className="main sin-tabs">
         <div className="row" style={{ marginBottom: 10 }}>
           <div className="stat"><b>{hechas}</b><span>series hechas</span></div>
-          <div className="stat"><b>{fmtDur(Date.now() - sesion.inicio)}</b><span>duración</span></div>
+          {!durManual && <div className="stat"><b>{fmtDur(Date.now() - sesion.inicio)}</b><span>duración</span></div>}
         </div>
+        {durManual && (
+          <div className="card">
+            <div className="bold small">¿Cuánto duró?</div>
+            <div className="xsmall muted" style={{ margin: '2px 0 9px' }}>{sesion.retro ? `Sesión del ${fmtFecha(sesion.fecha)}, cargada después.` : 'La sesión quedó abierta muchas horas. Poné la duración real.'}</div>
+            <Stepper value={dur} step={5} min={0} max={600} unit="minutos" onChange={setDur} />
+          </div>
+        )}
         {pend > 0 && <div className="banner">Quedan {plural(pend, 'serie sin marcar', 'series sin marcar')}. Al terminar se descartan: solo se guarda lo que tildaste.</div>}
         <div className="card">
           <div className="bold small">¿Qué tan dura fue la sesión?</div>
@@ -258,7 +274,7 @@ export function CerrarScreen() {
           </button>
         )}
         <button className="btn primary block lg" disabled={hechas === 0} onClick={async () => {
-          await terminarSesion(sesion, srpe, notas.trim() || null, actualizar)
+          await terminarSesion(sesion, srpe, notas.trim() || null, actualizar, durManual ? dur : null)
           nav.raiz({ v: 'hoy' })
         }}>Guardar sesión</button>
         <button className="btn ghost block danger" style={{ marginTop: 8 }} onClick={async () => {

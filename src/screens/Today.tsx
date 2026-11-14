@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, type PlanDay, type Settings, type Wellness } from '../db'
-import { Sheet, TopBar, useNav } from '../ui'
-import { agruparPorDia, plural, duracionSesion, fmtDur, fmtFechaLarga, hoyISO, lunesDe, sumarDias } from '../lib'
+import { Sheet, TopBar, useDialogos, useNav } from '../ui'
+import { agruparPorDia, plural, duracionSesion, fmtDur, fmtFecha, fmtFechaLarga, hacerCopia, hoyISO, lunesDe, sumarDias } from '../lib'
 import { iniciarSesion, sesionEnCurso } from '../actions'
 
 const cuenta = (d: PlanDay) => ({
@@ -10,8 +10,44 @@ const cuenta = (d: PlanDay) => ({
   series: d.bloques.reduce((n, b) => n + b.ejercicios.reduce((m, e) => m + e.series.length, 0), 0),
 })
 
+/** Hoja para elegir qué día de qué plan entrenar, o una sesión libre. */
+export function ElegirDia(props: { titulo: string; sugeridoId?: number; onElegir: (diaId: number | null) => void; onCerrar: () => void }) {
+  const planes = useLiveQuery(() => db.plans.toArray(), [])
+  const dias = useLiveQuery(() => db.planDays.toArray(), [])
+  return (
+    <Sheet titulo={props.titulo} onCerrar={props.onCerrar}>
+      {[...(planes ?? [])].sort((a, b) => Number(b.activo) - Number(a.activo)).map((p) => {
+        const ds = (dias ?? []).filter((d) => d.plan_id === p.id).sort((a, b) => a.orden - b.orden)
+        if (!ds.length) return null
+        return (
+          <div key={p.id}>
+            <h2>{p.nombre}{p.activo ? ' · activo' : ''}</h2>
+            <div className="list">
+              {ds.map((d) => (
+                <button key={d.id} className="item" onClick={() => props.onElegir(d.id!)}>
+                  <div className="grow">
+                    <div className="bold small">{d.nombre}</div>
+                    <div className="xsmall muted">{plural(d.bloques.length, 'bloque', 'bloques')} · {plural(cuenta(d).ej, 'ejercicio', 'ejercicios')}</div>
+                  </div>
+                  {props.sugeridoId === d.id && <span className="pill pri">te toca</span>}
+                </button>
+              ))}
+            </div>
+          </div>
+        )
+      })}
+      <button className="btn block" style={{ marginTop: 14 }} onClick={() => props.onElegir(null)}>Sesión libre, sin plan</button>
+    </Sheet>
+  )
+}
+
+// El recordatorio de copia se puede posponer hasta la próxima vez que se abra la app.
+let copiaPospuesta = false
+
 export function TodayScreen({ settings }: { settings: Settings }) {
   const nav = useNav()
+  const { avisar } = useDialogos()
+  const [sinRecordatorio, setSinRecordatorio] = useState(copiaPospuesta)
   const sesiones = useLiveQuery(() => db.sessions.toArray(), [])
   const actividades = useLiveQuery(() => db.activities.toArray(), [])
   const planes = useLiveQuery(() => db.plans.toArray(), [])
@@ -32,12 +68,26 @@ export function TodayScreen({ settings }: { settings: Settings }) {
   const diasActivo = (dias ?? []).filter((d) => d.plan_id === activo?.id).sort((a, b) => a.orden - b.orden)
   const sugerido = diasActivo.length ? diasActivo[(activo?.cursor ?? 0) % diasActivo.length] : null
   const hechoHoy = porDia.get(hoy)
+  const sinCopia = (sesiones ?? []).filter((s) => s.origen === 'app' && s.estado === 'completada' && s.id! > (settings.copia_hasta ?? 0)).length
+  const copiar = async () => {
+    const r = await hacerCopia()
+    avisar(r === 'ok' ? 'Copia generada. Guardala en Drive o donde la tengas a salvo.' : r === 'cancelado' ? 'Exportación cancelada.' : 'No se pudo generar el archivo acá.')
+  }
 
   return (
     <>
       <TopBar titulo="Hoy" sub={fmtFechaLarga(hoy)}
         der={<button className="icon-btn" onClick={() => nav.ir({ v: 'ajustes' })} aria-label="Ajustes">⚙</button>} />
       <div className="main">
+        {sinCopia >= 4 && !sinRecordatorio && (
+          <div className="banner">
+            <b>Hace {sinCopia} sesiones que no hacés una copia de seguridad.</b> Todo está guardado solo en este dispositivo.
+            <div className="row" style={{ marginTop: 8 }}>
+              <button className="btn sm primary grow" onClick={() => void copiar()}>Hacer copia ahora</button>
+              <button className="btn sm grow" onClick={() => { copiaPospuesta = true; setSinRecordatorio(true) }}>Más tarde</button>
+            </div>
+          </div>
+        )}
         <div className="card">
           <div className="semana">
             {semana.map((f, i) => {
@@ -66,7 +116,7 @@ export function TodayScreen({ settings }: { settings: Settings }) {
         <h2>Entrenamiento</h2>
         {enCurso ? (
           <div className="card pri">
-            <div className="small" style={{ color: 'var(--pri-text)' }}>Sesión en curso · {fmtDur(Date.now() - enCurso.inicio)}</div>
+            <div className="small" style={{ color: 'var(--pri-text)' }}>{enCurso.retro ? `Cargando la sesión del ${fmtFecha(enCurso.fecha)}` : `Sesión en curso · ${fmtDur(Date.now() - enCurso.inicio)}`}</div>
             <h3 style={{ margin: '4px 0 12px' }}>{enCurso.nombre}</h3>
             <button className="btn primary block lg" onClick={() => nav.ir({ v: 'sesion' })}>Continuar</button>
           </div>
@@ -112,31 +162,8 @@ export function TodayScreen({ settings }: { settings: Settings }) {
       </div>
 
       {elegir && (
-        <Sheet titulo="¿Qué entrenás hoy?" onCerrar={() => setElegir(false)}>
-          {(planes ?? []).sort((a, b) => Number(b.activo) - Number(a.activo)).map((p) => {
-            const ds = (dias ?? []).filter((d) => d.plan_id === p.id).sort((a, b) => a.orden - b.orden)
-            if (!ds.length) return null
-            return (
-              <div key={p.id}>
-                <h2>{p.nombre}{p.activo ? ' · activo' : ''}</h2>
-                <div className="list">
-                  {ds.map((d) => (
-                    <button key={d.id} className="item" onClick={() => { setElegir(false); nav.ir({ v: 'wellness', diaId: d.id! }) }}>
-                      <div className="grow">
-                        <div className="bold small">{d.nombre}</div>
-                        <div className="xsmall muted">{plural(d.bloques.length, 'bloque', 'bloques')} · {plural(cuenta(d).ej, 'ejercicio', 'ejercicios')}</div>
-                      </div>
-                      {sugerido?.id === d.id && <span className="pill pri">te toca</span>}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )
-          })}
-          <button className="btn block" style={{ marginTop: 14 }} onClick={() => { setElegir(false); nav.ir({ v: 'wellness', diaId: null }) }}>
-            Sesión libre, sin plan
-          </button>
-        </Sheet>
+        <ElegirDia titulo="¿Qué entrenás hoy?" sugeridoId={sugerido?.id} onCerrar={() => setElegir(false)}
+          onElegir={(diaId) => { setElegir(false); nav.ir({ v: 'wellness', diaId }) }} />
       )}
     </>
   )

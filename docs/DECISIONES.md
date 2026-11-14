@@ -2,6 +2,20 @@
 
 Registro de qué se decidió y por qué. Lo más nuevo, arriba.
 
+## 14-11-2026 — Primera prueba en el teléfono y pendientes de la revisión
+
+| Decisión | Razón |
+|---|---|
+| Repositorio público en GitHub Pages, sin el historial personal | Pages gratis exige repo público. El dueño no quiso su historial ni su mail a la vista; el historial se carga restaurando una copia |
+| Al terminar el descanso suena además de vibrar; sin notificaciones | Pedido del dueño. Con el teléfono en silencio Android bloquea la vibración; el sonido usa el volumen de multimedia. Rechazó la notificación para el segundo plano |
+| La pantalla se apaga durante la sesión y queda así | El bloqueo de pantalla encendida no funcionó en su teléfono; dijo que no le molesta |
+| El botón atrás cierra primero hojas y diálogos | Con una hoja abierta, atrás sacaba de la sesión. También quedaban pasos "muertos" después de guardar |
+| Editar una sesión guardada reusa la tarjeta de la sesión | Un peso mal tipeado arruinaba el gráfico y solo se podía borrar la sesión entera. Reusar la tarjeta evita una segunda interfaz |
+| Las sesiones de días pasados se cargan desde el calendario con la pantalla de sesión normal | Mismo flujo que ya conoce; solo cambia que no hay reloj y la duración se carga a mano |
+| Una sesión pasada avanza la rotación solo si es la más nueva | Cargar una sesión vieja no debe mover el "te toca" |
+| Si una sesión queda abierta más de 4 horas, al cerrar se pide la duración | Una sesión olvidada quedaba con 20 horas |
+| Recordatorio de copia cada 4 sesiones propias, con "Más tarde" | Todo vive en un solo dispositivo y nada avisaba. Cuatro es más o menos una semana de entrenamiento |
+
 ## 14-11-2026 — Ronda de comentarios del dueño sobre la app completa
 
 | Decisión | Razón |
