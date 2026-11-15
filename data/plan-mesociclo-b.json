@@ -12,7 +12,7 @@
      "orden": 1,
      "ejercicios": [
       {
-       "ejercicio": "Flexo-Extensión Cadera - BD",
+       "ejercicio": "Flexo-extensión de cadera con banda",
        "series": [
         {
          "reps": 10
@@ -20,7 +20,7 @@
        ]
       },
       {
-       "ejercicio": "Psoas DINÁMICO",
+       "ejercicio": "Estiramiento dinámico de psoas",
        "series": [
         {
          "reps": 10
@@ -28,7 +28,7 @@
        ]
       },
       {
-       "ejercicio": "Aductores DINÁMICO",
+       "ejercicio": "Estiramiento dinámico de aductores",
        "series": [
         {
          "reps": 10
@@ -36,7 +36,7 @@
        ]
       },
       {
-       "ejercicio": "Isquiotibiales - RD",
+       "ejercicio": "Liberación de isquiotibiales con rodillo",
        "series": [
         {
          "reps": 10
@@ -49,7 +49,7 @@
      "orden": 2,
      "ejercicios": [
       {
-       "ejercicio": "Elevaciones de cadera CAMINATA I/V",
+       "ejercicio": "Elevación de cadera con caminata",
        "series": [
         {
          "reps": 6
@@ -60,7 +60,7 @@
        ]
       },
       {
-       "ejercicio": "Puente lateral cambio",
+       "ejercicio": "Puente lateral inclinado con técnica de carrera con cambio de pie de apoyo",
        "series": [
         {
          "reps": 6
@@ -71,7 +71,7 @@
        ]
       },
       {
-       "ejercicio": "Giros OH en tandem",
+       "ejercicio": "Giros con disco sobre la cabeza en posición tándem",
        "series": [
         {
          "reps": 6,
@@ -89,7 +89,7 @@
      "orden": 3,
      "ejercicios": [
       {
-       "ejercicio": "Thrusters - KB",
+       "ejercicio": "Thruster con kettlebell (sentadilla + press)",
        "series": [
         {
          "reps": 8,
@@ -106,7 +106,7 @@
        ]
       },
       {
-       "ejercicio": "Swing cadera RA - KB",
+       "ejercicio": "Swing con kettlebell y banda elástica",
        "series": [
         {
          "reps": 8,
@@ -128,7 +128,7 @@
      "orden": 4,
      "ejercicios": [
       {
-       "ejercicio": "Sentadilla Búlgara RA - BR",
+       "ejercicio": "Sentadilla búlgara",
        "series": [
         {
          "reps": 4,
@@ -148,7 +148,7 @@
        ]
       },
       {
-       "ejercicio": "Press hombro - MQ",
+       "ejercicio": "Press de hombros en máquina",
        "series": [
         {
          "reps": 6,
@@ -173,7 +173,7 @@
      "orden": 5,
      "ejercicios": [
       {
-       "ejercicio": "Press plano",
+       "ejercicio": "Press de banca con barra",
        "series": [
         {
          "reps": 8,
@@ -190,7 +190,7 @@
        ]
       },
       {
-       "ejercicio": "Caminata de gemelo - MC",
+       "ejercicio": "Caminata en puntas de pie con mancuernas",
        "series": [
         {
          "reps": 12,
@@ -212,7 +212,7 @@
      "orden": 6,
      "ejercicios": [
       {
-       "ejercicio": "Triceps - PL",
+       "ejercicio": "Extensión de tríceps en polea",
        "series": [
         {
          "reps": 12,
@@ -229,7 +229,7 @@
        ]
       },
       {
-       "ejercicio": "Vuelo combinado ALTERNO",
+       "ejercicio": "Vuelos frontal y lateral alternados con mancuernas",
        "series": [
         {
          "reps": 8,
@@ -246,7 +246,7 @@
        ]
       },
       {
-       "ejercicio": "Press hombro RR - KB",
+       "ejercicio": "Press de hombro arrodillado con KB",
        "series": [
         {
          "reps": 12,
@@ -273,7 +273,7 @@
      "orden": 1,
      "ejercicios": [
       {
-       "ejercicio": "Spiderman ROTACIÓN DT",
+       "ejercicio": "Zancada Spiderman con rotación torácica",
        "series": [
         {
          "reps": 10
@@ -281,7 +281,7 @@
        ]
       },
       {
-       "ejercicio": "Carpas DINÁMICO",
+       "ejercicio": "Carpa a dos piernas (estiramiento de cadena posterior)",
        "series": [
         {
          "reps": 10
@@ -289,7 +289,7 @@
        ]
       },
       {
-       "ejercicio": "Psoas DINÁMICO",
+       "ejercicio": "Estiramiento dinámico de psoas",
        "series": [
         {
          "reps": 8
@@ -305,7 +305,7 @@
      "orden": 2,
      "ejercicios": [
       {
-       "ejercicio": "Puente isquio con cambio",
+       "ejercicio": "Puente de isquiotibiales alternando piernas",
        "series": [
         {
          "reps": 8
@@ -316,7 +316,7 @@
        ]
       },
       {
-       "ejercicio": "Cuadrupedia con patada",
+       "ejercicio": "Patada de glúteo en cuadrupedia",
        "series": [
         {
          "reps": 8
@@ -327,7 +327,7 @@
        ]
       },
       {
-       "ejercicio": "Antiflexión lateral con barra",
+       "ejercicio": "Deslizamiento de barra en puntas de pie",
        "series": [
         {
          "reps": 8
@@ -338,7 +338,7 @@
        ]
       },
       {
-       "ejercicio": "Elevaciones de Cadera 1P - MB",
+       "ejercicio": "Elevación de cadera a un pie sobre pelota",
        "series": [
         {
          "reps": 8
@@ -354,7 +354,7 @@
      "orden": 3,
      "ejercicios": [
       {
-       "ejercicio": "1P A OTRO CC DIAGONAL",
+       "ejercicio": "Salto en diagonal hacia delante de una pierna a la otra",
        "series": [
         {
          "reps": 6
@@ -365,7 +365,7 @@
        ]
       },
       {
-       "ejercicio": "Sentadilla SALTO - KB",
+       "ejercicio": "Sentadilla con salto con KB",
        "series": [
         {
          "reps": 4,
@@ -383,7 +383,7 @@
      "orden": 4,
      "ejercicios": [
       {
-       "ejercicio": "Remo 1m PLANCHA ALTA - KB",
+       "ejercicio": "Remo a un brazo en plancha alta con KB",
        "series": [
         {
          "reps": 12,
@@ -400,7 +400,7 @@
        ]
       },
       {
-       "ejercicio": "Remo al mentón - BR",
+       "ejercicio": "Remo al mentón con barra",
        "series": [
         {
          "reps": 12,
@@ -417,7 +417,7 @@
        ]
       },
       {
-       "ejercicio": "Y - BD",
+       "ejercicio": "Elevación en Y con banda",
        "series": [
         {
          "reps": 12,
@@ -439,7 +439,7 @@
      "orden": 5,
      "ejercicios": [
       {
-       "ejercicio": "Dominadas PALMAR",
+       "ejercicio": "Dominadas con agarre supino",
        "series": [
         {
          "reps": 8
@@ -453,7 +453,7 @@
        ]
       },
       {
-       "ejercicio": "Biceps alterno - MC",
+       "ejercicio": "Bíceps alterno con manc.",
        "series": [
         {
          "reps": 12
@@ -472,7 +472,7 @@
      "orden": 6,
      "ejercicios": [
       {
-       "ejercicio": "Biceps/Hombro - MC",
+       "ejercicio": "Bíceps + press hombro con manc.",
        "series": [
         {
          "reps": 12
@@ -486,7 +486,7 @@
        ]
       },
       {
-       "ejercicio": "Vuelo Frontal/Lateral",
+       "ejercicio": "Vuelos frontales + laterales con mancuernas",
        "series": [
         {
          "reps": 12
@@ -510,7 +510,7 @@
      "orden": 1,
      "ejercicios": [
       {
-       "ejercicio": "Buda ASISTIDO - DC",
+       "ejercicio": "Sentadilla profunda sostenida con disco",
        "series": [
         {
          "reps": 10
@@ -521,7 +521,7 @@
        ]
       },
       {
-       "ejercicio": "Psoas DINÁMICO",
+       "ejercicio": "Estiramiento dinámico de psoas",
        "series": [
         {
          "reps": 10
@@ -532,7 +532,7 @@
        ]
       },
       {
-       "ejercicio": "Rotación tronco PARED T",
+       "ejercicio": "Rotación torácica en pared",
        "series": [
         {
          "reps": 10
@@ -543,7 +543,7 @@
        ]
       },
       {
-       "ejercicio": "Bretzel",
+       "ejercicio": "Estiramiento Bretzel",
        "series": [
         {
          "reps": 10
@@ -559,7 +559,7 @@
      "orden": 2,
      "ejercicios": [
       {
-       "ejercicio": "Plancha CONSTRUYO",
+       "ejercicio": "Plancha sube y baja con disco",
        "series": [
         {
          "reps": 12,
@@ -572,7 +572,7 @@
        ]
       },
       {
-       "ejercicio": "Plancha COPENHAGUE 1/2 CON",
+       "ejercicio": "Plancha Copenhague",
        "series": [
         {
          "reps": 4
@@ -583,7 +583,7 @@
        ]
       },
       {
-       "ejercicio": "Curl ISQUIO 1p EXC - MB",
+       "ejercicio": "Curl de isquiotibiales excéntrico a una pierna sobre pelota",
        "series": [
         {
          "reps": 6
@@ -599,7 +599,7 @@
      "orden": 3,
      "ejercicios": [
       {
-       "ejercicio": "Triple extensión LM",
+       "ejercicio": "Triple extensión en landmine",
        "series": [
         {
          "reps": 4,
@@ -616,7 +616,7 @@
        ]
       },
       {
-       "ejercicio": "Reactivos verticales+laterales",
+       "ejercicio": "Saltos reactivos verticales y laterales",
        "series": [
         {
          "reps": 8
@@ -630,7 +630,7 @@
        ]
       },
       {
-       "ejercicio": "Sentadilla SALTO - KB",
+       "ejercicio": "Sentadilla con salto con KB",
        "series": [
         {
          "reps": 4,
@@ -652,7 +652,7 @@
      "orden": 4,
      "ejercicios": [
       {
-       "ejercicio": "Empuje de cadera 1p - BR",
+       "ejercicio": "Hip thrust a una pierna con barra",
        "notas": "Pesos a tu discreción",
        "series": [
         {
@@ -673,7 +673,7 @@
        ]
       },
       {
-       "ejercicio": "Push Up - DC",
+       "ejercicio": "Flexiones de brazos con disco en la espalda",
        "series": [
         {
          "reps": 12,
@@ -698,7 +698,7 @@
      "orden": 5,
      "ejercicios": [
       {
-       "ejercicio": "CURL NÓRDICO",
+       "ejercicio": "Curl nórdico de isquiotibiales",
        "series": [
         {
          "reps": 5
@@ -712,7 +712,7 @@
        ]
       },
       {
-       "ejercicio": "Aperturas - MQ",
+       "ejercicio": "Aperturas de pecho en máquina",
        "series": [
         {
          "reps": 12,
@@ -737,7 +737,7 @@
      "orden": 6,
      "ejercicios": [
       {
-       "ejercicio": "Fondos ASISTIDOS - MQ",
+       "ejercicio": "Fondos en paralelas asistidos, en máquina",
        "series": [
         {
          "reps": 16,
@@ -754,7 +754,7 @@
        ]
       },
       {
-       "ejercicio": "Press Militar - BR",
+       "ejercicio": "Press militar con barra, de pie",
        "series": [
         {
          "reps": 12,
@@ -774,7 +774,7 @@
        ]
       },
       {
-       "ejercicio": "Peso muerto 1p - KB",
+       "ejercicio": "Peso muerto a una pierna con kettlebell",
        "series": [
         {
          "reps": 6,
@@ -804,7 +804,7 @@
      "orden": 1,
      "ejercicios": [
       {
-       "ejercicio": "Flexo-Extensión Cadera - BD",
+       "ejercicio": "Flexo-extensión de cadera con banda",
        "series": [
         {
          "reps": 10
@@ -815,7 +815,7 @@
        ]
       },
       {
-       "ejercicio": "Isquiotibiales en columna",
+       "ejercicio": "Estiramiento de isquiotibiales con la pierna apoyada en una columna",
        "series": [
         {
          "reps": 10
@@ -826,7 +826,7 @@
        ]
       },
       {
-       "ejercicio": "Carpa 2p",
+       "ejercicio": "Carpa a dos piernas (estiramiento de cadena posterior)",
        "series": [
         {
          "reps": 10
@@ -837,7 +837,7 @@
        ]
       },
       {
-       "ejercicio": "Isquiotibiales - RD",
+       "ejercicio": "Liberación de isquiotibiales con rodillo",
        "series": [
         {
          "seg": 60
@@ -853,7 +853,7 @@
      "orden": 2,
      "ejercicios": [
       {
-       "ejercicio": "Plancha alta CARRERA",
+       "ejercicio": "Escaladores (plancha alta llevando rodillas al pecho)",
        "series": [
         {
          "reps": 20
@@ -864,7 +864,7 @@
        ]
       },
       {
-       "ejercicio": "Giros OH en tandem",
+       "ejercicio": "Giros con disco sobre la cabeza en posición tándem",
        "series": [
         {
          "reps": 6,
@@ -877,7 +877,7 @@
        ]
       },
       {
-       "ejercicio": "Plancha lateral GIRO",
+       "ejercicio": "Plancha lateral con giro de tronco",
        "series": [
         {
          "reps": 6
@@ -893,7 +893,7 @@
      "orden": 3,
      "ejercicios": [
       {
-       "ejercicio": "Caída LM",
+       "ejercicio": "Caída a estocadas con landmine",
        "series": [
         {
          "reps": 4,
@@ -906,7 +906,7 @@
        ]
       },
       {
-       "ejercicio": "1P CCM Vertical AL CAJÓN - CJ",
+       "ejercicio": "Salto al cajón a una pierna",
        "series": [
         {
          "reps": 4
@@ -922,7 +922,7 @@
      "orden": 4,
      "ejercicios": [
       {
-       "ejercicio": "Empuje de cadera - BR",
+       "ejercicio": "Hip thrust con barra",
        "series": [
         {
          "reps": 4,
@@ -947,7 +947,7 @@
      "orden": 5,
      "ejercicios": [
       {
-       "ejercicio": "Dominadas PRONA",
+       "ejercicio": "Dominadas con agarre prono",
        "series": [
         {
          "reps": 7,
@@ -968,7 +968,7 @@
      "orden": 6,
      "ejercicios": [
       {
-       "ejercicio": "Sentadilla AL CAJÓN RA - BR",
+       "ejercicio": "Sentadilla al cajón con barra y banda elástica",
        "series": [
         {
          "reps": 5,
@@ -988,7 +988,7 @@
        ]
       },
       {
-       "ejercicio": "Remo NEUTRO - MQ",
+       "ejercicio": "Remo en máquina con agarre neutro",
        "notas": "La última al fallo",
        "series": [
         {
@@ -1011,7 +1011,7 @@
      "orden": 7,
      "ejercicios": [
       {
-       "ejercicio": "Press Militar - BR",
+       "ejercicio": "Press militar con barra, de pie",
        "series": [
         {
          "reps": 6
@@ -1025,7 +1025,7 @@
        ]
       },
       {
-       "ejercicio": "Biceps - BR",
+       "ejercicio": "Bíceps con barra",
        "series": [
         {
          "reps": 12
@@ -1039,7 +1039,7 @@
        ]
       },
       {
-       "ejercicio": "Excéntrico carrera ISQUIOS polea",
+       "ejercicio": "Excéntrico de isquiotibiales en gesto de carrera, con polea",
        "series": [
         {
          "reps": 5,
@@ -1066,7 +1066,7 @@
      "orden": 1,
      "ejercicios": [
       {
-       "ejercicio": "Spiderman ROTACIÓN DT",
+       "ejercicio": "Zancada Spiderman con rotación torácica",
        "series": [
         {
          "reps": 10
@@ -1074,7 +1074,7 @@
        ]
       },
       {
-       "ejercicio": "Carpas DINÁMICO",
+       "ejercicio": "Carpa a dos piernas (estiramiento de cadena posterior)",
        "series": [
         {
          "reps": 10
@@ -1082,7 +1082,7 @@
        ]
       },
       {
-       "ejercicio": "Psoas DINÁMICO",
+       "ejercicio": "Estiramiento dinámico de psoas",
        "series": [
         {
          "reps": 8
@@ -1098,7 +1098,7 @@
      "orden": 2,
      "ejercicios": [
       {
-       "ejercicio": "Abdominal con aductores",
+       "ejercicio": "Abdominal apretando pelota con los aductores",
        "series": [
         {
          "reps": 20
@@ -1109,7 +1109,7 @@
        ]
       },
       {
-       "ejercicio": "Cuadrupedia con patada",
+       "ejercicio": "Patada de glúteo en cuadrupedia",
        "series": [
         {
          "reps": 8
@@ -1120,7 +1120,7 @@
        ]
       },
       {
-       "ejercicio": "Puente lateral inclinado con apertura",
+       "ejercicio": "Plancha lateral inclinada con apertura de pierna",
        "series": [
         {
          "reps": 8
@@ -1131,7 +1131,7 @@
        ]
       },
       {
-       "ejercicio": "Elevaciones de Cadera 1P - MB",
+       "ejercicio": "Elevación de cadera a un pie sobre pelota",
        "series": [
         {
          "reps": 8
@@ -1147,7 +1147,7 @@
      "orden": 3,
      "ejercicios": [
       {
-       "ejercicio": "Push Up - DC",
+       "ejercicio": "Flexiones de brazos con disco en la espalda",
        "series": [
         {
          "reps": 8,
@@ -1164,7 +1164,7 @@
        ]
       },
       {
-       "ejercicio": "Press hombro BA - KB",
+       "ejercicio": "Press hombro con KB",
        "series": [
         {
          "reps": 8,
@@ -1186,7 +1186,7 @@
      "orden": 4,
      "ejercicios": [
       {
-       "ejercicio": "Remo 1m CD - KB",
+       "ejercicio": "Remo a un brazo con apoyo en banco",
        "series": [
         {
          "reps": 8,
@@ -1203,7 +1203,7 @@
        ]
       },
       {
-       "ejercicio": "Fondos",
+       "ejercicio": "Fondos en paralelas",
        "series": [
         {
          "reps": 12
@@ -1222,7 +1222,7 @@
      "orden": 5,
      "ejercicios": [
       {
-       "ejercicio": "Press en landmine",
+       "ejercicio": "Press hombro en landmine",
        "series": [
         {
          "reps": 10,
@@ -1264,7 +1264,7 @@
      "orden": 6,
      "ejercicios": [
       {
-       "ejercicio": "Biceps - BR",
+       "ejercicio": "Bíceps con barra",
        "series": [
         {
          "reps": 12,
@@ -1281,7 +1281,7 @@
        ]
       },
       {
-       "ejercicio": "Vuelo combinado ALTERNO",
+       "ejercicio": "Vuelos frontal y lateral alternados con mancuernas",
        "series": [
         {
          "reps": 12,
@@ -1311,7 +1311,7 @@
      "orden": 1,
      "ejercicios": [
       {
-       "ejercicio": "Buda ASISTIDO - DC",
+       "ejercicio": "Sentadilla profunda sostenida con disco",
        "series": [
         {
          "reps": 10
@@ -1322,7 +1322,7 @@
        ]
       },
       {
-       "ejercicio": "Psoas DINÁMICO",
+       "ejercicio": "Estiramiento dinámico de psoas",
        "series": [
         {
          "reps": 10
@@ -1333,7 +1333,7 @@
        ]
       },
       {
-       "ejercicio": "Rotación tronco PARED T",
+       "ejercicio": "Rotación torácica en pared",
        "series": [
         {
          "reps": 10
@@ -1344,7 +1344,7 @@
        ]
       },
       {
-       "ejercicio": "Bretzel",
+       "ejercicio": "Estiramiento Bretzel",
        "series": [
         {
          "reps": 10
@@ -1360,7 +1360,7 @@
      "orden": 2,
      "ejercicios": [
       {
-       "ejercicio": "Plancha CONSTRUYO",
+       "ejercicio": "Plancha sube y baja con disco",
        "series": [
         {
          "reps": 12,
@@ -1373,7 +1373,7 @@
        ]
       },
       {
-       "ejercicio": "Plancha COPENHAGUE 1/2 CON",
+       "ejercicio": "Plancha Copenhague",
        "series": [
         {
          "reps": 6
@@ -1384,7 +1384,7 @@
        ]
       },
       {
-       "ejercicio": "Curl ISQUIO 1p EXC - MB",
+       "ejercicio": "Curl de isquiotibiales excéntrico a una pierna sobre pelota",
        "series": [
         {
          "reps": 6
@@ -1400,7 +1400,7 @@
      "orden": 3,
      "ejercicios": [
       {
-       "ejercicio": "Rebote y freno",
+       "ejercicio": "Rebote y frenado (salto con aterrizaje controlado)",
        "series": [
         {
          "reps": 4
@@ -1414,7 +1414,7 @@
        ]
       },
       {
-       "ejercicio": "Reactivos verticales+laterales",
+       "ejercicio": "Saltos reactivos verticales y laterales",
        "series": [
         {
          "reps": 6
@@ -1428,7 +1428,7 @@
        ]
       },
       {
-       "ejercicio": "Laterales con banda",
+       "ejercicio": "Saltos laterales con una mano agarrando banda elástica",
        "series": [
         {
          "reps": 4
@@ -1447,7 +1447,7 @@
      "orden": 4,
      "ejercicios": [
       {
-       "ejercicio": "Empuje de cadera 1p - BR",
+       "ejercicio": "Hip thrust a una pierna con barra",
        "notas": "Pesos a tu discreción",
        "series": [
         {
@@ -1468,7 +1468,7 @@
        ]
       },
       {
-       "ejercicio": "Dominadas PALMAR",
+       "ejercicio": "Dominadas con agarre supino",
        "series": [
         {
          "reps": 10,
@@ -1493,7 +1493,7 @@
      "orden": 5,
      "ejercicios": [
       {
-       "ejercicio": "Peso muerto - BR",
+       "ejercicio": "Peso muerto con barra",
        "series": [
         {
          "reps": 6,
@@ -1513,7 +1513,7 @@
        ]
       },
       {
-       "ejercicio": "Remo PENDLEY PRONO",
+       "ejercicio": "Remo Pendlay con barra, agarre prono",
        "series": [
         {
          "reps": 12,
@@ -1535,7 +1535,7 @@
      "orden": 6,
      "ejercicios": [
       {
-       "ejercicio": "Triceps - PL",
+       "ejercicio": "Extensión de tríceps en polea",
        "series": [
         {
          "reps": 16,
@@ -1552,7 +1552,7 @@
        ]
       },
       {
-       "ejercicio": "Remo invertido PUENTE - BR",
+       "ejercicio": "Remo invertido en barra, con la cadera en puente",
        "series": [
         {
          "reps": 12,
@@ -1569,7 +1569,7 @@
        ]
       },
       {
-       "ejercicio": "CURL NÓRDICO",
+       "ejercicio": "Curl nórdico de isquiotibiales",
        "series": [
         {
          "reps": 5

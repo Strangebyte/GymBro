@@ -198,10 +198,12 @@ type SeedEx = {
   slug: string; nombre: string; legible: string | null; grupo: string
   sec: { grupo: string; factor: number }[]; equipo: string; patron: string
   unilateral: boolean; lastre: boolean; mide: string; vol: boolean; inc: number | null
-  archivo: boolean; notas: string | null
+  archivo: boolean; notas: string | null; alias?: string[]
 }
 type SeedData = {
   exercises: SeedEx[]
+  /** Revisión del catálogo: qué ejercicios se fusionaron o se borraron respecto de la anterior. */
+  catalogo?: { rev: number; fusiones: Record<string, string>; borrar: string[] }
   plan: { nombre: string; objetivo: string; dias: { nombre: string; bloques: { orden: number; ejercicios: { slug: string; notas: string | null; series: SeedSet[] }[] }[] }[] }
 }
 type SeedHist = { fecha: string; nombre: string; dur: number | null; wellness: number | null; notas: string | null; sets: (string | number | null)[][] }
@@ -224,10 +226,74 @@ export function pset(s: SeedSet): PSet {
   return o
 }
 
+function deSemilla(e: SeedEx): Exercise {
+  return {
+    slug: e.slug, nombre: e.nombre, legible: e.legible, grupo: e.grupo, sec: e.sec, equipo: e.equipo,
+    patron: e.patron, unilateral: e.unilateral, lastre: e.lastre, mide: e.mide as Mide, vol: e.vol,
+    inc: e.inc, archivo: e.archivo, notas: e.notas, alias: e.alias ?? [], custom: false, descanso_s: descansoDefault(e),
+  }
+}
+
+/**
+ * Pone al día el catálogo de una app ya instalada cuando sale una revisión nueva (nombres, otros nombres,
+ * ejercicios fusionados, borrados o agregados). Corre una vez por revisión y también al restaurar una copia vieja.
+ * Los ejercicios se reconocen por `slug`, que nunca cambia; el historial y los planes apuntan al id, así que no se pierden.
+ */
+export async function actualizarCatalogo(): Promise<void> {
+  const data = seed as unknown as SeedData
+  const rev = data.catalogo?.rev ?? 1
+  const actual = ((await db.meta.get('catalogo'))?.value as number | undefined) ?? 1
+  if (actual >= rev || !data.catalogo) return
+  const { fusiones, borrar } = data.catalogo
+  await db.transaction('rw', [db.exercises, db.planDays, db.setLogs, db.media, db.meta], async () => {
+    const porSlug = new Map((await db.exercises.toArray()).map((e) => [e.slug, e]))
+    const dias = await db.planDays.toArray()
+    const enPlanes = (id: number) => dias.some((d) => d.bloques.some((b) => b.ejercicios.some((x) => x.exercise_id === id)))
+
+    // 1. Ejercicios que eran el mismo: el historial y los planes del que desaparece pasan al que queda.
+    for (const [de, a] of Object.entries(fusiones)) {
+      const viejo = porSlug.get(de), destino = porSlug.get(a)
+      if (!viejo) continue
+      if (!destino) { await db.exercises.update(viejo.id!, { slug: a }); porSlug.set(a, { ...viejo, slug: a }); porSlug.delete(de); continue }
+      await db.setLogs.where('exercise_id').equals(viejo.id!).modify({ exercise_id: destino.id! })
+      for (const d of dias) {
+        if (!d.bloques.some((b) => b.ejercicios.some((x) => x.exercise_id === viejo.id))) continue
+        d.bloques = d.bloques.map((b) => ({ ...b, ejercicios: b.ejercicios.map((x) => (x.exercise_id === viejo.id ? { ...x, exercise_id: destino.id! } : x)) }))
+        await db.planDays.update(d.id!, { bloques: d.bloques })
+      }
+      const ajustes = (await db.meta.get('settings'))?.value as Partial<Settings> | undefined
+      if (ajustes?.seguimiento?.includes(viejo.id!)) {
+        await db.meta.put({ key: 'settings', value: { ...ajustes, seguimiento: [...new Set(ajustes.seguimiento.map((x) => (x === viejo.id ? destino.id! : x)))] } })
+      }
+      await db.media.delete(viejo.id!)
+      await db.exercises.delete(viejo.id!)
+      porSlug.delete(de)
+    }
+    // 2. Ejercicios retirados: se borran solo si nunca se usaron; si no, quedan archivados.
+    for (const s of borrar) {
+      const e = porSlug.get(s)
+      if (!e) continue
+      if ((await db.setLogs.where('exercise_id').equals(e.id!).count()) > 0 || enPlanes(e.id!)) await db.exercises.update(e.id!, { archivo: true })
+      else { await db.media.delete(e.id!); await db.exercises.delete(e.id!) }
+      porSlug.delete(s)
+    }
+    // 3. Nombres, otros nombres y equipamiento de los que quedan; alta de los que faltan.
+    for (const s of data.exercises) {
+      const e = porSlug.get(s.slug)
+      if (!e) { await db.exercises.add(deSemilla(s)); continue }
+      const alias = [...(e.alias ?? [])]
+      for (const a of s.alias ?? []) if (!alias.includes(a)) alias.push(a)
+      if (e.custom) await db.exercises.update(e.id!, { alias })   // lo creó el usuario con el mismo nombre: no se pisa
+      else await db.exercises.update(e.id!, { nombre: s.nombre, legible: s.legible, equipo: s.equipo, patron: s.patron, archivo: s.archivo, alias })
+    }
+    await db.meta.put({ key: 'catalogo', value: rev })
+  })
+}
+
 let seeding: Promise<void> | null = null
 /** Carga inicial: catálogo, plan actual e historial importado (si está el archivo). Corre una sola vez. */
 export function ensureSeed(conHistorial = true): Promise<void> {
-  if (!seeding) seeding = doSeed(conHistorial).finally(() => { seeding = null })
+  if (!seeding) seeding = doSeed(conHistorial).then(actualizarCatalogo).finally(() => { seeding = null })
   return seeding
 }
 
@@ -236,11 +302,7 @@ async function doSeed(conHistorial: boolean): Promise<void> {
   const data = seed as unknown as SeedData
   await db.transaction('rw', [db.exercises, db.plans, db.planDays, db.sessions, db.setLogs, db.meta], async () => {
     const existentes = new Set((await db.exercises.toArray()).map((e) => e.slug))
-    const nuevos: Exercise[] = data.exercises.filter((e) => !existentes.has(e.slug)).map((e) => ({
-      slug: e.slug, nombre: e.nombre, legible: e.legible, grupo: e.grupo, sec: e.sec, equipo: e.equipo,
-      patron: e.patron, unilateral: e.unilateral, lastre: e.lastre, mide: e.mide as Mide, vol: e.vol,
-      inc: e.inc, archivo: e.archivo, notas: e.notas, alias: [], custom: false, descanso_s: descansoDefault(e),
-    }))
+    const nuevos: Exercise[] = data.exercises.filter((e) => !existentes.has(e.slug)).map(deSemilla)
     if (nuevos.length) await db.exercises.bulkAdd(nuevos)
     const idDe = new Map((await db.exercises.toArray()).map((e) => [e.slug, e.id!]))
 
@@ -269,6 +331,7 @@ async function doSeed(conHistorial: boolean): Promise<void> {
       }
     }
     await db.meta.put({ key: 'seeded', value: Date.now() })
+    if (!(await db.meta.get('catalogo'))) await db.meta.put({ key: 'catalogo', value: data.catalogo?.rev ?? 1 })
   })
 }
 
@@ -309,6 +372,7 @@ export async function importarTodo(texto: string): Promise<{ sesiones: number; s
       if (filas.length) await db.table(t).bulkAdd(filas)
     }
   })
+  await actualizarCatalogo()   // una copia vieja trae el catálogo anterior
   await marcarCopia()
   return { sesiones: (data.sessions as unknown[]).length, series: (data.setLogs as unknown[]).length }
 }

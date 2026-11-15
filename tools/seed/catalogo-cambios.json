@@ -1,0 +1,2446 @@
+{
+ "rev": 2,
+ "ejercicios": {
+  "cadera-con-glide-lateral-cuadrupedia": {
+   "nombre": "Movilidad de cadera en cuadrupedia con glide lateral",
+   "alias": [
+    "Cadera con glide lateral",
+    "Quadruped hip lateral glide",
+    "Rock back lateral en cuadrupedia",
+    "Movilidad de cadera en cuadrupedia con deslizamiento lateral",
+    "Cadera con glide lateral cuadrupedia"
+   ]
+  },
+  "desliz-barra-en-puntas": {
+   "nombre": "Deslizamiento de barra en puntas de pie",
+   "alias": [
+    "Desliz de barra",
+    "Deslizamiento de barra",
+    "Desliz barra en puntas",
+    "Antiflexión lateral con barra"
+   ]
+  },
+  "press-hombro-1m-rr-kb": {
+   "nombre": "Press hombro a un brazo con KB",
+   "alias": [
+    "Press unilateral con kettlebell",
+    "Press a un brazo con pesa rusa",
+    "Single arm kettlebell press",
+    "One arm kettlebell press",
+    "Press de hombro a un brazo con kettlebell, con rotación",
+    "Press hombro 1m RR - KB"
+   ]
+  },
+  "puente-isquio-con-cambio": {
+   "nombre": "Puente de isquiotibiales alternando piernas",
+   "alias": [
+    "Puente isquio con cambio",
+    "Puente de isquios alternado",
+    "Alternating hamstring bridge",
+    "Hamstring bridge"
+   ]
+  },
+  "1p-a-otro-cc-diagonal": {
+   "nombre": "Salto en diagonal hacia delante de una pierna a la otra",
+   "alias": [
+    "Saltos de patinador en diagonal",
+    "Skater jump",
+    "Diagonal bounds",
+    "Saltos alternados en diagonal",
+    "Salto en diagonal de una pierna a la otra",
+    "1P A OTRO CC DIAGONAL"
+   ]
+  },
+  "remo-1m-plancha-alta-kb": {
+   "nombre": "Remo a un brazo en plancha alta con KB",
+   "alias": [
+    "Remo renegado",
+    "Renegade row",
+    "Remo en plancha",
+    "Plank row",
+    "Remo renegado con pesa rusa",
+    "Remo a un brazo en plancha alta con kettlebell",
+    "Remo 1m PLANCHA ALTA - KB"
+   ]
+  },
+  "remo-al-menton-br": {
+   "nombre": "Remo al mentón con barra",
+   "alias": [
+    "Remo al mentón",
+    "Remo vertical",
+    "Remo al cuello",
+    "Upright row",
+    "Barbell upright row",
+    "Remo al mentón - BR"
+   ]
+  },
+  "y-bd": {
+   "nombre": "Elevación en Y con banda",
+   "alias": [
+    "Y con banda",
+    "Elevaciones en Y",
+    "Y raise",
+    "Band Y raise",
+    "Y - BD"
+   ]
+  },
+  "biceps-alterno-mc": {
+   "nombre": "Bíceps alterno con manc.",
+   "alias": [
+    "Bíceps alterno",
+    "Curl alterno",
+    "Curl alternado",
+    "Alternating dumbbell curl",
+    "Alternate bicep curl",
+    "Curl de bíceps alternado con mancuernas",
+    "Biceps alterno - MC"
+   ]
+  },
+  "biceps-hombro-mc": {
+   "nombre": "Bíceps + press hombro con manc.",
+   "alias": [
+    "Bíceps y hombro",
+    "Curl y press",
+    "Curl con press",
+    "Curl to press",
+    "Bicep curl to shoulder press",
+    "Curl de bíceps + press de hombros con mancuernas",
+    "Biceps/Hombro - MC"
+   ]
+  },
+  "vuelo-frontal-lateral": {
+   "nombre": "Vuelos frontales + laterales con mancuernas",
+   "alias": [
+    "Vuelo frontal y lateral",
+    "Elevaciones frontales y laterales",
+    "Front raise to lateral raise",
+    "Lateral to front raise",
+    "Vuelo Frontal/Lateral"
+   ]
+  },
+  "sentadilla-salto-kb": {
+   "nombre": "Sentadilla con salto con KB",
+   "alias": [
+    "Sentadilla salto",
+    "Salto con carga",
+    "Jump squat",
+    "Squat jump",
+    "Weighted jump squat",
+    "Sentadilla con salto",
+    "Sentadilla con salto con kettlebell",
+    "Sentadilla SALTO - KB"
+   ]
+  },
+  "rotacion-tronco-pared-t": {
+   "nombre": "Rotación torácica en pared",
+   "alias": [
+    "Movilidad torácica en pared",
+    "Wall thoracic rotation",
+    "Rotación de tronco pared T",
+    "Rotación de tronco contra la pared",
+    "Rotación tronco PARED T"
+   ]
+  },
+  "bretzel": {
+   "nombre": "Estiramiento Bretzel",
+   "alias": [
+    "Brettzel",
+    "Brettzel stretch",
+    "Pretzel stretch",
+    "Estiramiento pretzel",
+    "Bretzel"
+   ]
+  },
+  "plancha-construyo": {
+   "nombre": "Plancha sube y baja con disco",
+   "alias": [
+    "Plancha construyo con disco",
+    "Plancha construyo",
+    "Plancha de codos a manos",
+    "Plancha comando",
+    "Plank up down",
+    "Up down plank",
+    "Commando plank"
+   ]
+  },
+  "triple-extension-lm": {
+   "nombre": "Triple extensión en landmine",
+   "alias": [
+    "Landmine triple extension",
+    "Extensión explosiva en landmine",
+    "Triple extensión con barra anclada",
+    "Triple extensión LM"
+   ]
+  },
+  "aperturas-mq": {
+   "nombre": "Aperturas de pecho en máquina",
+   "alias": [
+    "Aperturas en máquina",
+    "Mariposa",
+    "Contractora de pecho",
+    "Pec deck",
+    "Peck deck",
+    "Butterfly",
+    "Machine fly",
+    "Chest fly",
+    "Aperturas - MQ"
+   ]
+  },
+  "peso-muerto-1p-kb": {
+   "nombre": "Peso muerto a una pierna con kettlebell",
+   "alias": [
+    "Peso muerto a una pierna",
+    "Peso muerto unilateral",
+    "Single leg deadlift",
+    "Single leg RDL",
+    "Peso muerto rumano a una pierna",
+    "Peso muerto 1p - KB"
+   ]
+  },
+  "fondos-asistidos-mq": {
+   "nombre": "Fondos en paralelas asistidos, en máquina",
+   "alias": [
+    "Fondos asistidos",
+    "Dips asistidos",
+    "Assisted dips",
+    "Machine assisted dip",
+    "Fondos ASISTIDOS - MQ"
+   ]
+  },
+  "reactivos-laterales": {
+   "nombre": "Saltos reactivos laterales",
+   "alias": [
+    "Reactivos laterales",
+    "Pogo jumps laterales",
+    "Lateral pogo hops",
+    "Rebotes laterales"
+   ]
+  },
+  "press-militar-br": {
+   "nombre": "Press militar con barra, de pie",
+   "alias": [
+    "Press militar",
+    "Press de hombros con barra",
+    "Press sobre la cabeza",
+    "Overhead press",
+    "OHP",
+    "Military press",
+    "Standing barbell press",
+    "Press Militar - BR"
+   ]
+  },
+  "isquiotibiales-en-columna": {
+   "nombre": "Estiramiento de isquiotibiales con la pierna apoyada en una columna",
+   "alias": [
+    "Estiramiento de isquiotibiales en pared",
+    "Estiramiento de isquios acostado",
+    "Hamstring wall stretch",
+    "Supine hamstring stretch",
+    "Isquiotibiales en columna"
+   ]
+  },
+  "carpa-2p": {
+   "nombre": "Carpa a dos piernas (estiramiento de cadena posterior)",
+   "alias": [
+    "Carpa",
+    "Pike stretch",
+    "Flexión de tronco al frente",
+    "Estiramiento de cadena posterior",
+    "Forward fold",
+    "Carpa 2p",
+    "Carpas DINÁMICO",
+    "Carpa dinámica"
+   ]
+  },
+  "plancha-alta-carrera": {
+   "nombre": "Escaladores (plancha alta llevando rodillas al pecho)",
+   "alias": [
+    "Plancha alta con carrera",
+    "Escalador",
+    "Mountain climbers",
+    "Mountain climber",
+    "Plancha con rodillas al pecho",
+    "Plancha alta CARRERA"
+   ]
+  },
+  "plancha-lateral-giro": {
+   "nombre": "Plancha lateral con giro de tronco",
+   "alias": [
+    "Plancha lateral con rotación",
+    "Side plank con rotación",
+    "Side plank rotation",
+    "Thread the needle",
+    "Plancha lateral GIRO"
+   ]
+  },
+  "1p-ccm-vertical-al-cajon-cj": {
+   "nombre": "Salto al cajón a una pierna",
+   "alias": [
+    "Salto vertical a una pierna al cajón",
+    "Box jump a una pierna",
+    "Single leg box jump",
+    "Salto al cajón unilateral",
+    "1P CCM Vertical AL CAJÓN - CJ"
+   ]
+  },
+  "caida-lm": {
+   "nombre": "Caída a estocadas con landmine",
+   "alias": [
+    "Caída en landmine",
+    "Landmine drop lunge",
+    "Caída LM"
+   ]
+  },
+  "empuje-de-cadera-br": {
+   "nombre": "Hip thrust con barra",
+   "alias": [
+    "Empuje de cadera",
+    "Empuje de cadera con barra",
+    "Hip thrust",
+    "Barbell hip thrust",
+    "Elevación de cadera con barra",
+    "Empuje de cadera - BR"
+   ]
+  },
+  "dominadas-prona": {
+   "nombre": "Dominadas con agarre prono",
+   "alias": [
+    "Dominadas",
+    "Dominadas pronas",
+    "Dominadas prona",
+    "Pull up",
+    "Pull ups",
+    "Pullups",
+    "Barra fija"
+   ]
+  },
+  "sentadilla-al-cajon-ra-br": {
+   "nombre": "Sentadilla al cajón con barra y banda elástica",
+   "alias": [
+    "Sentadilla al cajón",
+    "Sentadilla a banco",
+    "Box squat",
+    "Box squat con bandas",
+    "Sentadilla AL CAJÓN RA - BR"
+   ]
+  },
+  "remo-neutro-mq": {
+   "nombre": "Remo en máquina con agarre neutro",
+   "alias": [
+    "Remo neutro",
+    "Remo sentado en máquina",
+    "Machine row",
+    "Seated row machine",
+    "Remo bajo con agarre neutro",
+    "Remo NEUTRO - MQ"
+   ]
+  },
+  "excentrico-carrera-isquios-polea": {
+   "nombre": "Excéntrico de isquiotibiales en gesto de carrera, con polea",
+   "alias": [
+    "Excéntrico de isquios en polea",
+    "Isquios en gesto de sprint con polea",
+    "Cable hamstring sprint eccentric",
+    "Excéntrico carrera ISQUIOS polea"
+   ]
+  },
+  "gesto-sprint-isquios-con-slider": {
+   "nombre": "Curl de isquiotibiales con deslizadores, en gesto de sprint",
+   "alias": [
+    "Gesto de sprint con slider",
+    "Curl de isquios con deslizadores",
+    "Slider hamstring curl",
+    "Slider leg curl",
+    "Hamstring slides",
+    "Gesto sprint isquios con slider"
+   ]
+  },
+  "dorsalera-palmar-mq": {
+   "nombre": "Polea al pecho con agarre supino",
+   "alias": [
+    "Dorsalera supina",
+    "Dorsalera palmar",
+    "Lat pulldown supino",
+    "Underhand lat pulldown",
+    "Reverse grip pulldown",
+    "Jalón al pecho con agarre supino",
+    "Dorsalera PALMAR - MQ"
+   ]
+  },
+  "spiderman-rotacion-dt": {
+   "nombre": "Zancada Spiderman con rotación torácica",
+   "alias": [
+    "Spiderman con rotación",
+    "Estiramiento del mundo",
+    "World's greatest stretch",
+    "Spiderman lunge with rotation",
+    "Zancada con rotación de tronco",
+    "Spiderman ROTACIÓN DT"
+   ]
+  },
+  "elevaciones-de-cadera-1p-mb": {
+   "nombre": "Elevación de cadera a un pie sobre pelota",
+   "alias": [
+    "Puente de glúteo a una pierna sobre pelota",
+    "Elevación de cadera a una pierna en fitball",
+    "Puente a una pierna en fitball",
+    "Single leg glute bridge on ball",
+    "Elevaciones de Cadera 1P - MB"
+   ],
+   "equipo": "fitball"
+  },
+  "cuadrupedia-con-patada": {
+   "nombre": "Patada de glúteo en cuadrupedia",
+   "alias": [
+    "Cuadrupedia con patada",
+    "Patada de burro",
+    "Donkey kick",
+    "Glute kickback",
+    "Extensión de cadera en cuadrupedia"
+   ]
+  },
+  "push-up-dc": {
+   "nombre": "Flexiones de brazos con disco en la espalda",
+   "alias": [
+    "Flexiones con lastre",
+    "Lagartijas con disco",
+    "Push up con disco",
+    "Weighted push up",
+    "Flexiones lastradas",
+    "Push Up - DC"
+   ]
+  },
+  "biceps-br": {
+   "nombre": "Bíceps con barra",
+   "alias": [
+    "Curl con barra",
+    "Curl de bíceps",
+    "Barbell curl",
+    "Barbell biceps curl",
+    "Curl de bíceps con barra",
+    "Biceps - BR"
+   ]
+  },
+  "puente-lateral-inclinado-con-apertura": {
+   "nombre": "Plancha lateral inclinada con apertura de pierna",
+   "alias": [
+    "Puente lateral inclinado con apertura",
+    "Side plank inclinado con elevación de pierna",
+    "Incline side plank with hip abduction"
+   ]
+  },
+  "abdominal-con-aductores": {
+   "nombre": "Abdominal apretando pelota con los aductores",
+   "alias": [
+    "Abdominal con aductores",
+    "Crunch con aductores",
+    "Crunch apretando pelota entre las rodillas",
+    "Adductor squeeze crunch",
+    "Abdominal apretando con los aductores"
+   ]
+  },
+  "press-hombro-ba-kb": {
+   "nombre": "Press hombro con KB",
+   "alias": [
+    "Press de hombros con pesas rusas",
+    "Double kettlebell press",
+    "Kettlebell overhead press",
+    "Two arm kettlebell military press",
+    "Press de hombros con dos kettlebells, de pie",
+    "Press hombro BA - KB"
+   ]
+  },
+  "fondos": {
+   "nombre": "Fondos en paralelas",
+   "alias": [
+    "Fondos",
+    "Dips",
+    "Fondos de tríceps",
+    "Fondos de pecho",
+    "Parallel bar dips",
+    "Chest dips"
+   ]
+  },
+  "remo-1m-cd-kb": {
+   "nombre": "Remo a un brazo con apoyo en banco",
+   "alias": [
+    "Remo a un brazo con mancuerna",
+    "Remo con mancuerna",
+    "Remo unilateral con mancuerna",
+    "Remo a un brazo con kettlebell",
+    "Remo a una mano",
+    "One arm dumbbell row",
+    "Single arm dumbbell row",
+    "Dumbbell row",
+    "Remo 1m CD - KB"
+   ],
+   "equipo": "mancuernas"
+  },
+  "press-inclinado-con-mancuernas": {
+   "nombre": "Press inclinado con mancuernas",
+   "alias": [
+    "Press de banca inclinado con mancuernas",
+    "Press superior con mancuernas",
+    "Incline dumbbell press",
+    "Incline dumbbell bench press"
+   ]
+  },
+  "press-en-landmine": {
+   "nombre": "Press hombro en landmine",
+   "alias": [
+    "Landmine press",
+    "Press con barra anclada",
+    "Press en mina",
+    "Single arm landmine press",
+    "Press en landmine"
+   ]
+  },
+  "aductores-dinamico": {
+   "nombre": "Estiramiento dinámico de aductores",
+   "alias": [
+    "Aductores dinámico",
+    "Movilidad de aductores",
+    "Dynamic adductor stretch",
+    "Estiramiento de aductores"
+   ]
+  },
+  "flexo-extension-cadera-bd": {
+   "nombre": "Flexo-extensión de cadera con banda",
+   "alias": [
+    "Movilidad de cadera con banda",
+    "Flexión y extensión de cadera con banda",
+    "Banded hip flexion extension",
+    "Flexo-Extensión Cadera - BD"
+   ]
+  },
+  "isquiotibiales-rd": {
+   "nombre": "Liberación de isquiotibiales con rodillo",
+   "alias": [
+    "Rodillo en isquiotibiales",
+    "Foam roller isquiotibiales",
+    "Masaje de isquios con rodillo",
+    "Hamstring foam roll",
+    "Hamstring SMR",
+    "Isquiotibiales - RD"
+   ]
+  },
+  "elevaciones-de-cadera-caminata-i-v": {
+   "nombre": "Elevación de cadera con caminata",
+   "alias": [
+    "Elevaciones de cadera con caminata",
+    "Puente de glúteo con marcha de piernas",
+    "Glute bridge march",
+    "Marching glute bridge",
+    "Puente de glúteo con marcha",
+    "Elevaciones de cadera CAMINATA I/V"
+   ]
+  },
+  "puente-lateral-cambio": {
+   "nombre": "Puente lateral inclinado con técnica de carrera con cambio de pie de apoyo",
+   "alias": [
+    "Puente lateral con cambio",
+    "Plancha lateral inclinada con técnica de carrera",
+    "Puente lateral cambio"
+   ]
+  },
+  "giros-oh-en-tandem": {
+   "nombre": "Giros con disco sobre la cabeza en posición tándem",
+   "alias": [
+    "Giros overhead en tándem",
+    "Giros OH",
+    "Giros con disco sobre la cabeza",
+    "Giros OH en tandem"
+   ],
+   "equipo": "disco"
+  },
+  "thrusters-kb": {
+   "nombre": "Thruster con kettlebell (sentadilla + press)",
+   "alias": [
+    "Thrusters",
+    "Thruster con pesa rusa",
+    "Kettlebell thruster",
+    "Sentadilla con press de hombros",
+    "Squat to press",
+    "Thrusters - KB"
+   ]
+  },
+  "swing-cadera-ra-kb": {
+   "nombre": "Swing con kettlebell y banda elástica",
+   "alias": [
+    "Swing con banda elástica",
+    "Swing de cadera con banda",
+    "Banded kettlebell swing",
+    "Swing cadera RA - KB"
+   ]
+  },
+  "sentadilla-bulgara-ra-br": {
+   "nombre": "Sentadilla búlgara",
+   "alias": [
+    "Búlgara",
+    "Zancada búlgara",
+    "Bulgarian split squat",
+    "Rear foot elevated split squat",
+    "Split squat con pie elevado",
+    "Sentadilla búlgara con barra y banda elástica",
+    "Sentadilla Búlgara RA - BR"
+   ]
+  },
+  "press-hombro-mq": {
+   "nombre": "Press de hombros en máquina",
+   "alias": [
+    "Press hombro en máquina",
+    "Press militar en máquina",
+    "Machine shoulder press",
+    "Shoulder press machine",
+    "Press hombro - MQ"
+   ]
+  },
+  "caminata-de-gemelo-mc": {
+   "nombre": "Caminata en puntas de pie con mancuernas",
+   "alias": [
+    "Caminata de gemelo",
+    "Caminata de gemelos",
+    "Caminata de puntillas con carga",
+    "Tiptoe walk",
+    "Farmer walk en puntas",
+    "Caminata de gemelo - MC"
+   ]
+  },
+  "press-plano": {
+   "nombre": "Press de banca con barra",
+   "alias": [
+    "Press plano",
+    "Press de banca",
+    "Press banca",
+    "Press de banco",
+    "Press de pecho",
+    "Bench press",
+    "Barbell bench press",
+    "Chest press"
+   ]
+  },
+  "press-hombro-rr-kb": {
+   "nombre": "Press de hombro arrodillado con KB",
+   "alias": [
+    "Press de hombro de rodillas con kettlebell",
+    "Press arrodillado con pesa rusa",
+    "Kneeling kettlebell press",
+    "Tall kneeling kettlebell press",
+    "Press hombro RR - KB"
+   ]
+  },
+  "vuelo-combinado-alterno": {
+   "nombre": "Vuelos frontal y lateral alternados con mancuernas",
+   "alias": [
+    "Vuelo combinado alterno",
+    "Vuelos combinados",
+    "Elevaciones frontales y laterales alternadas"
+   ]
+  },
+  "psoas-dinamico": {
+   "nombre": "Estiramiento dinámico de psoas",
+   "alias": [
+    "Psoas dinámico",
+    "Estiramiento dinámico de flexores de cadera",
+    "Dynamic hip flexor stretch",
+    "Estiramiento de psoas"
+   ]
+  },
+  "triceps-pl": {
+   "nombre": "Extensión de tríceps en polea",
+   "alias": [
+    "Tríceps en polea",
+    "Jalón de tríceps",
+    "Tríceps con soga",
+    "Triceps pushdown",
+    "Pushdown",
+    "Cable pushdown",
+    "Triceps - PL"
+   ]
+  },
+  "dominadas-palmar": {
+   "nombre": "Dominadas con agarre supino",
+   "alias": [
+    "Dominadas supinas",
+    "Dominadas palmar",
+    "Dominadas con palmas hacia uno",
+    "Chin up",
+    "Chin ups"
+   ]
+  },
+  "buda-asistido-dc": {
+   "nombre": "Sentadilla profunda sostenida con disco",
+   "alias": [
+    "Buda asistido con disco",
+    "Sentadilla profunda asistida",
+    "Deep squat hold",
+    "Goblet squat hold",
+    "Movilidad en sentadilla profunda",
+    "Buda ASISTIDO - DC"
+   ]
+  },
+  "plancha-copenhague-1-2-con": {
+   "nombre": "Plancha Copenhague",
+   "alias": [
+    "Copenhague",
+    "Plancha de aductores",
+    "Copenhagen plank",
+    "Copenhagen adductor plank",
+    "Plancha COPENHAGUE 1/2 CON"
+   ]
+  },
+  "curl-isquio-1p-exc-mb": {
+   "nombre": "Curl de isquiotibiales excéntrico a una pierna sobre pelota",
+   "alias": [
+    "Curl de isquiotibiales en fitball",
+    "Curl de isquios en pelota",
+    "Curl femoral en pelota suiza",
+    "Curl femoral en pelota a una pierna",
+    "Swiss ball leg curl",
+    "Stability ball hamstring curl",
+    "Ball leg curl",
+    "Single leg swiss ball leg curl",
+    "Curl ISQUIO 1p EXC - MB",
+    "Curl Isquios 1P EXC - FB",
+    "Curl de isquiotibiales excéntrico a una pierna en fitball",
+    "Curl Isquios - FB"
+   ],
+   "equipo": "fitball"
+  },
+  "reactivos-verticales-laterales": {
+   "nombre": "Saltos reactivos verticales y laterales",
+   "alias": [
+    "Reactivos verticales y laterales",
+    "Pogo jumps",
+    "Pogos",
+    "Rebotes de tobillo",
+    "Reactive hops",
+    "Reactivos verticales+laterales"
+   ]
+  },
+  "empuje-de-cadera-1p-br": {
+   "nombre": "Hip thrust a una pierna con barra",
+   "alias": [
+    "Empuje de cadera a una pierna",
+    "Hip thrust unilateral",
+    "Single leg hip thrust",
+    "Empuje de cadera unilateral",
+    "Empuje de cadera 1p - BR"
+   ]
+  },
+  "curl-nordico": {
+   "nombre": "Curl nórdico de isquiotibiales",
+   "alias": [
+    "Curl nórdico",
+    "Nórdicos",
+    "Nordic curl",
+    "Nordic hamstring curl",
+    "Nordic hamstring"
+   ]
+  },
+  "rebote-y-freno": {
+   "nombre": "Rebote y frenado (salto con aterrizaje controlado)",
+   "alias": [
+    "Rebote y freno",
+    "Salto con recepción",
+    "Aterrizaje y freno",
+    "Drop and stick",
+    "Snap down"
+   ]
+  },
+  "laterales-con-banda": {
+   "nombre": "Saltos laterales con una mano agarrando banda elástica",
+   "alias": [
+    "Saltos laterales con banda",
+    "Saltos laterales con banda elástica",
+    "Laterales con banda"
+   ]
+  },
+  "peso-muerto-br": {
+   "nombre": "Peso muerto con barra",
+   "alias": [
+    "Peso muerto",
+    "Peso muerto convencional",
+    "Deadlift",
+    "Barbell deadlift",
+    "Conventional deadlift",
+    "Despegue",
+    "Peso muerto - BR"
+   ]
+  },
+  "remo-pendley-prono": {
+   "nombre": "Remo Pendlay con barra, agarre prono",
+   "alias": [
+    "Remo Pendlay",
+    "Remo Pendley",
+    "Pendlay row",
+    "Remo con barra desde el piso",
+    "Remo PENDLEY PRONO"
+   ]
+  },
+  "remo-invertido-puente-br": {
+   "nombre": "Remo invertido en barra, con la cadera en puente",
+   "alias": [
+    "Remo invertido",
+    "Remo australiano",
+    "Dominada australiana",
+    "Inverted row",
+    "Australian pull up",
+    "Body row",
+    "Remo invertido PUENTE - BR"
+   ]
+  },
+  "spiderman-rotacion": {
+   "nombre": "Zancada Spiderman con rotación",
+   "alias": [
+    "Spiderman rotación",
+    "Zancada con rotación"
+   ]
+  },
+  "buda-rotacion-tronco-asistido": {
+   "nombre": "Sentadilla profunda con rotación de tronco",
+   "alias": [
+    "Buda con rotación de tronco",
+    "Deep squat con rotación torácica",
+    "Squat to thoracic rotation",
+    "Buda ROTACIÓN TRONCO ASISTIDO"
+   ]
+  },
+  "caderas-y-piramidal": {
+   "nombre": "Estiramiento de cadera y piramidal",
+   "alias": [
+    "Estiramiento de piramidal",
+    "Piriformis stretch",
+    "Figura 4",
+    "Figure four stretch",
+    "Estiramiento de glúteo",
+    "Caderas y piramidal"
+   ]
+  },
+  "descenso-piernas-rectas-con-control-abdomen": {
+   "nombre": "Descenso de piernas rectas, acostado",
+   "alias": [
+    "Bajada de piernas rectas",
+    "Elevación de piernas acostado",
+    "Leg lowering",
+    "Lying leg raise",
+    "Leg raises",
+    "Descenso piernas rectas con control abdomen"
+   ]
+  },
+  "caminata-de-camarera-1m-kb": {
+   "nombre": "Caminata del camarero con kettlebell (un brazo arriba)",
+   "alias": [
+    "Caminata de camarera",
+    "Caminata de mozo",
+    "Waiter walk",
+    "Waiter carry",
+    "Caminata con kettlebell sobre la cabeza",
+    "Overhead carry a un brazo",
+    "Caminata de Camarera 1m - KB"
+   ]
+  },
+  "swing-thruster": {
+   "nombre": "Swing + thruster con kettlebell",
+   "alias": [
+    "Swing y thruster",
+    "Complejo swing thruster",
+    "Kettlebell swing to thruster",
+    "Swing/Thruster"
+   ]
+  },
+  "sentadilla-split-salto-cambio-kb": {
+   "nombre": "Zancada con salto alternado con kettlebell",
+   "alias": [
+    "Estocada con salto y cambio",
+    "Tijeras con salto",
+    "Split jump",
+    "Jumping lunge",
+    "Split squat jump",
+    "Scissor jump",
+    "Sentadilla SPLIT SALTO CAMBIO - KB"
+   ]
+  },
+  "2do-tiempo-split-br": {
+   "nombre": "2do tiempo split con barra",
+   "alias": [
+    "Segundo tiempo en split",
+    "Segundo tiempo",
+    "Split jerk",
+    "Jerk en tijera",
+    "Envión",
+    "Envión en tijera con barra (split jerk)",
+    "2do Tiempo SPLIT - BR"
+   ]
+  },
+  "burpee": {
+   "nombre": "Burpee",
+   "alias": [
+    "Burpees",
+    "Burpi"
+   ]
+  },
+  "sentadilla-br": {
+   "nombre": "Sentadilla con barra",
+   "alias": [
+    "Sentadilla",
+    "Sentadilla trasera",
+    "Sentadilla libre",
+    "Back squat",
+    "Barbell squat",
+    "Squat",
+    "Sentadilla - BR"
+   ]
+  },
+  "press-hombro-1m-pdb-kb": {
+   "nombre": "Press de hombro a un brazo con kettlebell, con una rodilla en el piso",
+   "alias": [
+    "Press semiarrodillado con kettlebell",
+    "Half kneeling kettlebell press",
+    "Press unilateral de rodillas",
+    "Press hombro 1m PDB - KB"
+   ]
+  },
+  "2p-ba-ccm-vertical": {
+   "nombre": "Salto en vertical desde media estocada a media estocada",
+   "alias": [
+    "Salto vertical en media estocada",
+    "Salto en estocada vertical",
+    "2P BA CCM Vertical"
+   ]
+  },
+  "biceps-mc": {
+   "nombre": "Curl de bíceps con mancuernas",
+   "alias": [
+    "Bíceps con mancuernas",
+    "Curl con mancuernas",
+    "Dumbbell curl",
+    "Dumbbell bicep curl",
+    "Biceps - MC"
+   ]
+  },
+  "hollow": {
+   "nombre": "Hollow",
+   "alias": [
+    "Hollow hold",
+    "Hollow body",
+    "Hollow body hold",
+    "Posición hueca",
+    "Banana",
+    "Hollow (posición hueca sostenida)"
+   ]
+  },
+  "bear-crawl-dinamico": {
+   "nombre": "Cuadrupedia toco hombro con brazo contrario",
+   "alias": [
+    "Toques de hombro en cuadrupedia",
+    "Cuadrupedia con toque de hombro",
+    "Shoulder taps en cuadrupedia",
+    "Bear shoulder taps",
+    "Bear Crawl DINÁMICO"
+   ],
+   "patron": "core_antirotacion"
+  },
+  "estocada-atras-br": {
+   "nombre": "Estocada hacia atrás con barra",
+   "alias": [
+    "Estocada atrás",
+    "Zancada atrás",
+    "Zancada inversa",
+    "Reverse lunge",
+    "Barbell reverse lunge",
+    "Estocada inversa",
+    "Estocada atrás - BR"
+   ]
+  },
+  "patadas-de-talon-fb": {
+   "nombre": "Patadas de talón en fitball",
+   "alias": [
+    "Taloneo en fitball",
+    "Patadas de talón en pelota",
+    "Heel kicks en fitball",
+    "Patadas de Talón - FB"
+   ]
+  },
+  "anti-flexion-lateral-cambio-de-pie-bd": {
+   "nombre": "Antiflexión lateral con banda, cambiando de pie",
+   "alias": [
+    "Antiflexión lateral con banda",
+    "Banded lateral anti-flexion",
+    "Anti flexión lateral cambio de pie",
+    "Anti-Flexión Lateral CAMBIO DE PIE - BD"
+   ]
+  },
+  "puente-de-cadera-cambio": {
+   "nombre": "Puente de glúteo alternando piernas",
+   "alias": [
+    "Puente de cadera con cambio",
+    "Puente de glúteo alternado",
+    "Alternating single leg glute bridge",
+    "Puente de cadera CAMBIO"
+   ]
+  },
+  "camilla-isquiosurales-1p-mq": {
+   "nombre": "Camilla isquiotibiales a una pierna",
+   "alias": [
+    "Camilla de isquiotibiales a una pierna",
+    "Camilla de isquiosurales a una pierna",
+    "Camilla femoral a una pierna",
+    "Curl femoral acostado a una pierna",
+    "Single leg lying leg curl",
+    "Camilla isquiosurales 1P - MQ"
+   ]
+  },
+  "isquiotibiales-en-polea": {
+   "nombre": "Curl de isquiotibiales en polea",
+   "alias": [
+    "Isquiotibiales en polea",
+    "Curl femoral en polea",
+    "Cable hamstring curl",
+    "Standing cable leg curl"
+   ]
+  }
+ },
+ "fusiones": {
+  "antiflexion-lateral-con-barra": "desliz-barra-en-puntas",
+  "carpas-dinamico": "carpa-2p",
+  "curl-isquios-1p-exc-fb": "curl-isquio-1p-exc-mb",
+  "curl-isquios-fb": "curl-isquio-1p-exc-mb"
+ },
+ "archivar": [
+  "rebote-y-freno"
+ ],
+ "borrar": [
+  "remo-tandem-en-puntas"
+ ],
+ "nuevos": [
+  {
+   "slug": "press-de-banca-inclinado-con-barra",
+   "nombre": "Press de banca inclinado con barra",
+   "legible": null,
+   "grupo": "pecho",
+   "sec": [],
+   "equipo": "barra",
+   "patron": "empuje_horizontal",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Press inclinado con barra",
+    "Press banca inclinado",
+    "Press superior con barra",
+    "Incline bench press",
+    "Incline barbell press"
+   ],
+   "imagen": "Barbell_Incline_Bench_Press_-_Medium_Grip"
+  },
+  {
+   "slug": "press-de-banca-declinado-con-barra",
+   "nombre": "Press de banca declinado con barra",
+   "legible": null,
+   "grupo": "pecho",
+   "sec": [],
+   "equipo": "barra",
+   "patron": "empuje_horizontal",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Press declinado con barra",
+    "Press declinado",
+    "Press banca declinado",
+    "Decline bench press",
+    "Decline barbell press"
+   ],
+   "imagen": "Decline_Barbell_Bench_Press"
+  },
+  {
+   "slug": "press-de-banca-con-mancuernas",
+   "nombre": "Press de banca con mancuernas",
+   "legible": null,
+   "grupo": "pecho",
+   "sec": [],
+   "equipo": "mancuernas",
+   "patron": "empuje_horizontal",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Press plano con mancuernas",
+    "Press de pecho con mancuernas",
+    "Dumbbell bench press",
+    "Dumbbell press"
+   ],
+   "imagen": "Dumbbell_Bench_Press"
+  },
+  {
+   "slug": "press-declinado-con-mancuernas",
+   "nombre": "Press declinado con mancuernas",
+   "legible": null,
+   "grupo": "pecho",
+   "sec": [],
+   "equipo": "mancuernas",
+   "patron": "empuje_horizontal",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Press de pecho declinado con mancuernas",
+    "Press de banca declinado con mancuernas",
+    "Decline dumbbell press",
+    "Decline dumbbell bench press"
+   ],
+   "imagen": "Decline_Dumbbell_Bench_Press"
+  },
+  {
+   "slug": "press-de-pecho-en-maquina",
+   "nombre": "Press de pecho en máquina",
+   "legible": null,
+   "grupo": "pecho",
+   "sec": [],
+   "equipo": "maquina",
+   "patron": "empuje_horizontal",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Press en máquina",
+    "Press de pecho sentado",
+    "Machine chest press",
+    "Chest press machine",
+    "Machine bench press"
+   ],
+   "imagen": "Leverage_Chest_Press"
+  },
+  {
+   "slug": "aperturas-con-mancuernas",
+   "nombre": "Aperturas con mancuernas",
+   "legible": null,
+   "grupo": "pecho",
+   "sec": [],
+   "equipo": "mancuernas",
+   "patron": "aislamiento",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Aperturas en banco plano",
+    "Vuelos de pecho",
+    "Dumbbell fly",
+    "Dumbbell flyes",
+    "Flyes"
+   ],
+   "imagen": "Dumbbell_Flyes"
+  },
+  {
+   "slug": "cruce-de-poleas",
+   "nombre": "Cruce de poleas",
+   "legible": null,
+   "grupo": "pecho",
+   "sec": [],
+   "equipo": "polea",
+   "patron": "aislamiento",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Cruces en polea",
+    "Aperturas en polea",
+    "Crossover",
+    "Cable crossover",
+    "Cable fly"
+   ],
+   "imagen": "Cable_Crossover"
+  },
+  {
+   "slug": "flexiones-de-brazos",
+   "nombre": "Flexiones de brazos",
+   "legible": null,
+   "grupo": "pecho",
+   "sec": [],
+   "equipo": "peso_corporal",
+   "patron": "empuje_horizontal",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Flexiones",
+    "Lagartijas",
+    "Push up",
+    "Push ups",
+    "Pushups"
+   ],
+   "imagen": "Pushups"
+  },
+  {
+   "slug": "pullover-con-mancuerna",
+   "nombre": "Pullover con mancuerna",
+   "legible": null,
+   "grupo": "pecho",
+   "sec": [],
+   "equipo": "mancuernas",
+   "patron": "aislamiento",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Pullover",
+    "Pull over",
+    "Dumbbell pullover"
+   ],
+   "imagen": "Bent-Arm_Dumbbell_Pullover"
+  },
+  {
+   "slug": "jalon-al-pecho-con-agarre-prono",
+   "nombre": "Jalón al pecho con agarre prono",
+   "legible": null,
+   "grupo": "dorsal",
+   "sec": [],
+   "equipo": "polea",
+   "patron": "traccion_vertical",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Jalón al pecho",
+    "Polea al pecho",
+    "Polea alta al pecho",
+    "Dorsalera",
+    "Lat pulldown",
+    "Wide grip lat pulldown"
+   ],
+   "imagen": "Wide-Grip_Lat_Pulldown"
+  },
+  {
+   "slug": "remo-con-barra-inclinado",
+   "nombre": "Remo con barra inclinado",
+   "legible": null,
+   "grupo": "dorsal",
+   "sec": [],
+   "equipo": "barra",
+   "patron": "traccion_horizontal",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Remo con barra",
+    "Remo inclinado con barra",
+    "Bent over row",
+    "Bent over barbell row",
+    "Barbell row"
+   ],
+   "imagen": "Bent_Over_Barbell_Row"
+  },
+  {
+   "slug": "remo-sentado-en-polea",
+   "nombre": "Remo sentado en polea",
+   "legible": null,
+   "grupo": "dorsal",
+   "sec": [],
+   "equipo": "polea",
+   "patron": "traccion_horizontal",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Remo bajo",
+    "Remo en polea baja",
+    "Remo sentado",
+    "Seated cable row",
+    "Seated row",
+    "Low row"
+   ],
+   "imagen": "Seated_Cable_Rows"
+  },
+  {
+   "slug": "remo-en-barra-t",
+   "nombre": "Remo en barra T",
+   "legible": null,
+   "grupo": "dorsal",
+   "sec": [],
+   "equipo": "barra",
+   "patron": "traccion_horizontal",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Remo T",
+    "Remo en punta",
+    "T-bar row"
+   ],
+   "imagen": "T-Bar_Row_with_Handle"
+  },
+  {
+   "slug": "face-pull",
+   "nombre": "Face pull",
+   "legible": null,
+   "grupo": "hombro_posterior",
+   "sec": [],
+   "equipo": "polea",
+   "patron": "traccion_horizontal",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Face pulls",
+    "Jalón a la cara",
+    "Tirón a la cara"
+   ],
+   "imagen": "Face_Pull"
+  },
+  {
+   "slug": "encogimientos-de-hombros-con-mancuernas",
+   "nombre": "Encogimientos de hombros con mancuernas",
+   "legible": null,
+   "grupo": "trapecio",
+   "sec": [],
+   "equipo": "mancuernas",
+   "patron": "aislamiento",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Encogimientos",
+    "Encogimiento de trapecio",
+    "Trapecio con mancuernas",
+    "Shrugs",
+    "Dumbbell shrug"
+   ],
+   "imagen": "Dumbbell_Shrug"
+  },
+  {
+   "slug": "hiperextensiones-lumbares",
+   "nombre": "Hiperextensiones lumbares",
+   "legible": null,
+   "grupo": "core",
+   "sec": [],
+   "equipo": "maquina",
+   "patron": "bisagra",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Hiperextensiones",
+    "Extensiones lumbares",
+    "Lumbares en banco",
+    "Back extension",
+    "Hyperextension",
+    "Banco romano"
+   ],
+   "imagen": "Hyperextensions_Back_Extensions"
+  },
+  {
+   "slug": "dominadas-asistidas",
+   "nombre": "Dominadas asistidas",
+   "legible": null,
+   "grupo": "dorsal",
+   "sec": [],
+   "equipo": "maquina",
+   "patron": "traccion_vertical",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Dominadas asistidas en máquina",
+    "Dominadas con asistencia",
+    "Assisted pull up",
+    "Assisted pull ups"
+   ],
+   "imagen": null
+  },
+  {
+   "slug": "press-de-hombros-con-mancuernas",
+   "nombre": "Press de hombros con mancuernas",
+   "legible": null,
+   "grupo": "hombro_anterior",
+   "sec": [],
+   "equipo": "mancuernas",
+   "patron": "empuje_vertical",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Press militar con mancuernas",
+    "Press de hombro sentado con mancuernas",
+    "Dumbbell shoulder press",
+    "Shoulder press"
+   ],
+   "imagen": "Dumbbell_Shoulder_Press"
+  },
+  {
+   "slug": "press-arnold",
+   "nombre": "Press Arnold",
+   "legible": null,
+   "grupo": "hombro_anterior",
+   "sec": [],
+   "equipo": "mancuernas",
+   "patron": "empuje_vertical",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Press Arnold con mancuernas",
+    "Arnold press"
+   ],
+   "imagen": "Arnold_Dumbbell_Press"
+  },
+  {
+   "slug": "vuelos-laterales-con-mancuernas",
+   "nombre": "Vuelos laterales con mancuernas",
+   "legible": null,
+   "grupo": "hombro_lateral",
+   "sec": [],
+   "equipo": "mancuernas",
+   "patron": "aislamiento",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Vuelos laterales",
+    "Elevaciones laterales",
+    "Laterales con mancuernas",
+    "Lateral raise",
+    "Side lateral raise"
+   ],
+   "imagen": "Side_Lateral_Raise"
+  },
+  {
+   "slug": "vuelos-frontales-con-mancuernas",
+   "nombre": "Vuelos frontales con mancuernas",
+   "legible": null,
+   "grupo": "hombro_anterior",
+   "sec": [],
+   "equipo": "mancuernas",
+   "patron": "aislamiento",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Vuelos frontales",
+    "Vuelo frontal",
+    "Elevaciones frontales",
+    "Front raise",
+    "Front dumbbell raise"
+   ],
+   "imagen": "Front_Dumbbell_Raise"
+  },
+  {
+   "slug": "vuelos-posteriores-con-mancuernas",
+   "nombre": "Vuelos posteriores con mancuernas",
+   "legible": null,
+   "grupo": "hombro_posterior",
+   "sec": [],
+   "equipo": "mancuernas",
+   "patron": "aislamiento",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Vuelos posteriores",
+    "Pájaros",
+    "Posteriores con mancuernas",
+    "Reverse fly",
+    "Rear delt fly",
+    "Bent over lateral raise"
+   ],
+   "imagen": "Seated_Bent-Over_Rear_Delt_Raise"
+  },
+  {
+   "slug": "posteriores-en-maquina",
+   "nombre": "Posteriores en máquina",
+   "legible": null,
+   "grupo": "hombro_posterior",
+   "sec": [],
+   "equipo": "maquina",
+   "patron": "aislamiento",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Pájaros en máquina",
+    "Contractora invertida",
+    "Reverse pec deck",
+    "Reverse machine fly"
+   ],
+   "imagen": "Reverse_Machine_Flyes"
+  },
+  {
+   "slug": "curl-martillo-con-mancuernas",
+   "nombre": "Curl martillo con mancuernas",
+   "legible": null,
+   "grupo": "biceps",
+   "sec": [],
+   "equipo": "mancuernas",
+   "patron": "aislamiento",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Curl martillo",
+    "Martillo",
+    "Hammer curl",
+    "Hammer curls"
+   ],
+   "imagen": "Hammer_Curls"
+  },
+  {
+   "slug": "curl-de-biceps-en-banco-scott",
+   "nombre": "Curl de bíceps en banco Scott",
+   "legible": null,
+   "grupo": "biceps",
+   "sec": [],
+   "equipo": "barra",
+   "patron": "aislamiento",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Curl Scott",
+    "Banco Scott",
+    "Curl predicador",
+    "Preacher curl"
+   ],
+   "imagen": "Preacher_Curl"
+  },
+  {
+   "slug": "curl-de-biceps-en-polea",
+   "nombre": "Curl de bíceps en polea",
+   "legible": null,
+   "grupo": "biceps",
+   "sec": [],
+   "equipo": "polea",
+   "patron": "aislamiento",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Bíceps en polea",
+    "Curl en polea baja",
+    "Cable curl",
+    "Cable biceps curl"
+   ],
+   "imagen": "Standing_Biceps_Cable_Curl"
+  },
+  {
+   "slug": "press-frances-con-barra",
+   "nombre": "Press francés con barra",
+   "legible": null,
+   "grupo": "triceps",
+   "sec": [],
+   "equipo": "barra",
+   "patron": "aislamiento",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Press francés",
+    "Rompecráneos",
+    "Extensión de tríceps acostado",
+    "Skull crusher",
+    "Skullcrusher",
+    "Lying triceps extension"
+   ],
+   "imagen": "EZ-Bar_Skullcrusher"
+  },
+  {
+   "slug": "extension-de-triceps-sobre-la-cabeza-con-mancuerna",
+   "nombre": "Extensión de tríceps sobre la cabeza con mancuerna",
+   "legible": null,
+   "grupo": "triceps",
+   "sec": [],
+   "equipo": "mancuernas",
+   "patron": "aislamiento",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Tríceps trasnuca",
+    "Extensión trasnuca",
+    "Copa de tríceps",
+    "Overhead triceps extension",
+    "Overhead dumbbell extension"
+   ],
+   "imagen": "Standing_Dumbbell_Triceps_Extension"
+  },
+  {
+   "slug": "patada-de-triceps-con-mancuerna",
+   "nombre": "Patada de tríceps con mancuerna",
+   "legible": null,
+   "grupo": "triceps",
+   "sec": [],
+   "equipo": "mancuernas",
+   "patron": "aislamiento",
+   "unilateral": true,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Patada de tríceps",
+    "Kickback de tríceps",
+    "Triceps kickback",
+    "Tricep kickback"
+   ],
+   "imagen": "Tricep_Dumbbell_Kickback"
+  },
+  {
+   "slug": "press-de-banca-con-agarre-cerrado",
+   "nombre": "Press de banca con agarre cerrado",
+   "legible": null,
+   "grupo": "triceps",
+   "sec": [],
+   "equipo": "barra",
+   "patron": "empuje_horizontal",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Press cerrado",
+    "Press de banca agarre estrecho",
+    "Close grip bench press"
+   ],
+   "imagen": "Close-Grip_Barbell_Bench_Press"
+  },
+  {
+   "slug": "fondos-en-banco",
+   "nombre": "Fondos en banco",
+   "legible": null,
+   "grupo": "triceps",
+   "sec": [],
+   "equipo": "peso_corporal",
+   "patron": "empuje_vertical",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Fondos entre bancos",
+    "Fondos de tríceps en banco",
+    "Bench dips",
+    "Bench dip"
+   ],
+   "imagen": "Bench_Dips"
+  },
+  {
+   "slug": "camilla-de-cuadriceps",
+   "nombre": "Camilla de cuádriceps",
+   "legible": null,
+   "grupo": "cuadriceps",
+   "sec": [],
+   "equipo": "maquina",
+   "patron": "aislamiento",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Extensión de cuádriceps",
+    "Extensiones de piernas",
+    "Sillón de cuádriceps",
+    "Leg extension",
+    "Leg extensions"
+   ],
+   "imagen": "Leg_Extensions"
+  },
+  {
+   "slug": "prensa-de-piernas",
+   "nombre": "Prensa de piernas",
+   "legible": null,
+   "grupo": "cuadriceps",
+   "sec": [],
+   "equipo": "maquina",
+   "patron": "sentadilla",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Prensa",
+    "Prensa 45",
+    "Prensa inclinada",
+    "Leg press"
+   ],
+   "imagen": "Leg_Press"
+  },
+  {
+   "slug": "sentadilla-frontal-con-barra",
+   "nombre": "Sentadilla frontal con barra",
+   "legible": null,
+   "grupo": "cuadriceps",
+   "sec": [],
+   "equipo": "barra",
+   "patron": "sentadilla",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Sentadilla frontal",
+    "Sentadilla delantera",
+    "Front squat"
+   ],
+   "imagen": "Front_Barbell_Squat"
+  },
+  {
+   "slug": "sentadilla-goblet",
+   "nombre": "Sentadilla goblet",
+   "legible": null,
+   "grupo": "cuadriceps",
+   "sec": [],
+   "equipo": "kettlebell",
+   "patron": "sentadilla",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Sentadilla copa",
+    "Sentadilla con mancuerna al pecho",
+    "Sentadilla goblet con kettlebell",
+    "Goblet squat"
+   ],
+   "imagen": "Goblet_Squat"
+  },
+  {
+   "slug": "sentadilla-hack",
+   "nombre": "Sentadilla hack",
+   "legible": null,
+   "grupo": "cuadriceps",
+   "sec": [],
+   "equipo": "maquina",
+   "patron": "sentadilla",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Sentadilla hack en máquina",
+    "Hack squat"
+   ],
+   "imagen": "Hack_Squat"
+  },
+  {
+   "slug": "sentadilla-con-peso-corporal",
+   "nombre": "Sentadilla con peso corporal",
+   "legible": null,
+   "grupo": "cuadriceps",
+   "sec": [],
+   "equipo": "peso_corporal",
+   "patron": "sentadilla",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Sentadilla sin peso",
+    "Sentadilla al aire",
+    "Air squat",
+    "Bodyweight squat"
+   ],
+   "imagen": "Bodyweight_Squat"
+  },
+  {
+   "slug": "estocadas-con-mancuernas",
+   "nombre": "Estocadas con mancuernas",
+   "legible": null,
+   "grupo": "cuadriceps",
+   "sec": [],
+   "equipo": "mancuernas",
+   "patron": "zancada",
+   "unilateral": true,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Estocadas",
+    "Zancadas",
+    "Zancadas con mancuernas",
+    "Estocada adelante",
+    "Lunges",
+    "Dumbbell lunge"
+   ],
+   "imagen": "Dumbbell_Lunges"
+  },
+  {
+   "slug": "estocadas-caminando",
+   "nombre": "Estocadas caminando",
+   "legible": null,
+   "grupo": "cuadriceps",
+   "sec": [],
+   "equipo": "peso_corporal",
+   "patron": "zancada",
+   "unilateral": true,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Zancadas caminando",
+    "Estocadas en caminata",
+    "Walking lunge",
+    "Walking lunges"
+   ],
+   "imagen": "Bodyweight_Walking_Lunge"
+  },
+  {
+   "slug": "subida-al-cajon-con-mancuernas",
+   "nombre": "Subida al cajón con mancuernas",
+   "legible": null,
+   "grupo": "cuadriceps",
+   "sec": [],
+   "equipo": "cajon",
+   "patron": "zancada",
+   "unilateral": true,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Subida al cajón",
+    "Subidas al cajón",
+    "Subida al banco",
+    "Step up",
+    "Step ups"
+   ],
+   "imagen": "Dumbbell_Step_Ups"
+  },
+  {
+   "slug": "peso-muerto-rumano-con-barra",
+   "nombre": "Peso muerto rumano con barra",
+   "legible": null,
+   "grupo": "isquios",
+   "sec": [],
+   "equipo": "barra",
+   "patron": "bisagra",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Peso muerto rumano",
+    "Rumano",
+    "Peso muerto piernas semirrígidas",
+    "Romanian deadlift",
+    "RDL"
+   ],
+   "imagen": "Romanian_Deadlift"
+  },
+  {
+   "slug": "peso-muerto-sumo-con-barra",
+   "nombre": "Peso muerto sumo con barra",
+   "legible": null,
+   "grupo": "gluteo",
+   "sec": [],
+   "equipo": "barra",
+   "patron": "bisagra",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Peso muerto sumo",
+    "Sumo deadlift"
+   ],
+   "imagen": "Sumo_Deadlift"
+  },
+  {
+   "slug": "buenos-dias-con-barra",
+   "nombre": "Buenos días con barra",
+   "legible": null,
+   "grupo": "isquios",
+   "sec": [],
+   "equipo": "barra",
+   "patron": "bisagra",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Buenos días",
+    "Good morning",
+    "Good mornings"
+   ],
+   "imagen": "Good_Morning"
+  },
+  {
+   "slug": "camilla-de-isquiotibiales-acostado",
+   "nombre": "Camilla de isquiotibiales acostado",
+   "legible": null,
+   "grupo": "isquios",
+   "sec": [],
+   "equipo": "maquina",
+   "patron": "aislamiento",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Camilla de isquiotibiales",
+    "Camilla femoral",
+    "Curl femoral acostado",
+    "Curl femoral tumbado",
+    "Lying leg curl",
+    "Leg curl"
+   ],
+   "imagen": "Lying_Leg_Curls"
+  },
+  {
+   "slug": "camilla-de-isquiotibiales-sentado",
+   "nombre": "Camilla de isquiotibiales sentado",
+   "legible": null,
+   "grupo": "isquios",
+   "sec": [],
+   "equipo": "maquina",
+   "patron": "aislamiento",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Curl femoral sentado",
+    "Sillón de isquiotibiales",
+    "Isquios sentado en máquina",
+    "Seated leg curl"
+   ],
+   "imagen": "Seated_Leg_Curl"
+  },
+  {
+   "slug": "puente-de-gluteo",
+   "nombre": "Puente de glúteo",
+   "legible": null,
+   "grupo": "gluteo",
+   "sec": [],
+   "equipo": "peso_corporal",
+   "patron": "bisagra",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Puente de glúteos",
+    "Elevación de cadera",
+    "Glute bridge",
+    "Hip bridge"
+   ],
+   "imagen": "Butt_Lift_Bridge"
+  },
+  {
+   "slug": "swing-con-kettlebell",
+   "nombre": "Swing con kettlebell",
+   "legible": null,
+   "grupo": "gluteo",
+   "sec": [],
+   "equipo": "kettlebell",
+   "patron": "bisagra",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Swing con pesa rusa",
+    "Swing de cadera con kettlebell",
+    "Balanceo con kettlebell",
+    "Swing ruso",
+    "Kettlebell swing",
+    "Swing"
+   ],
+   "imagen": null
+  },
+  {
+   "slug": "patada-de-gluteo-en-polea",
+   "nombre": "Patada de glúteo en polea",
+   "legible": null,
+   "grupo": "gluteo",
+   "sec": [],
+   "equipo": "polea",
+   "patron": "aislamiento",
+   "unilateral": true,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Patada trasera en polea",
+    "Glute kickback en polea",
+    "Cable kickback",
+    "Cable glute kickback"
+   ],
+   "imagen": "One-Legged_Cable_Kickback"
+  },
+  {
+   "slug": "abductores-en-maquina",
+   "nombre": "Abductores en máquina",
+   "legible": null,
+   "grupo": "aductores",
+   "sec": [],
+   "equipo": "maquina",
+   "patron": "aislamiento",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Abducción de cadera en máquina",
+    "Máquina de abductores",
+    "Abducción",
+    "Hip abduction",
+    "Abductor machine"
+   ],
+   "imagen": "Thigh_Abductor"
+  },
+  {
+   "slug": "aductores-en-maquina",
+   "nombre": "Aductores en máquina",
+   "legible": null,
+   "grupo": "aductores",
+   "sec": [],
+   "equipo": "maquina",
+   "patron": "aislamiento",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Aducción de cadera en máquina",
+    "Máquina de aductores",
+    "Aducción",
+    "Hip adduction",
+    "Adductor machine"
+   ],
+   "imagen": "Thigh_Adductor"
+  },
+  {
+   "slug": "gemelos-de-pie-en-maquina",
+   "nombre": "Gemelos de pie en máquina",
+   "legible": null,
+   "grupo": "gemelo",
+   "sec": [],
+   "equipo": "maquina",
+   "patron": "aislamiento",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Gemelos en máquina",
+    "Gemelos parado",
+    "Elevación de talones de pie",
+    "Pantorrillas de pie",
+    "Standing calf raise",
+    "Calf raise"
+   ],
+   "imagen": "Standing_Calf_Raises"
+  },
+  {
+   "slug": "gemelos-sentado-en-maquina",
+   "nombre": "Gemelos sentado en máquina",
+   "legible": null,
+   "grupo": "gemelo",
+   "sec": [],
+   "equipo": "maquina",
+   "patron": "aislamiento",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Gemelos sentado",
+    "Sóleo en máquina",
+    "Elevación de talones sentado",
+    "Seated calf raise"
+   ],
+   "imagen": "Seated_Calf_Raise"
+  },
+  {
+   "slug": "gemelos-en-prensa",
+   "nombre": "Gemelos en prensa",
+   "legible": null,
+   "grupo": "gemelo",
+   "sec": [],
+   "equipo": "maquina",
+   "patron": "aislamiento",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Gemelos en prensa de piernas",
+    "Calf press",
+    "Leg press calf raise"
+   ],
+   "imagen": "Calf_Press_On_The_Leg_Press_Machine"
+  },
+  {
+   "slug": "plancha-frontal",
+   "nombre": "Plancha frontal",
+   "legible": null,
+   "grupo": "core",
+   "sec": [],
+   "equipo": "peso_corporal",
+   "patron": "core_antiextension",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "seg",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Plancha",
+    "Plancha abdominal",
+    "Plancha de antebrazos",
+    "Plank",
+    "Front plank"
+   ],
+   "imagen": "Plank"
+  },
+  {
+   "slug": "plancha-lateral",
+   "nombre": "Plancha lateral",
+   "legible": null,
+   "grupo": "core",
+   "sec": [],
+   "equipo": "peso_corporal",
+   "patron": "core_antiflexion_lateral",
+   "unilateral": true,
+   "lastre": false,
+   "mide": "seg",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Puente lateral",
+    "Plancha de costado",
+    "Side plank",
+    "Side bridge"
+   ],
+   "imagen": "Side_Bridge"
+  },
+  {
+   "slug": "abdominales-crunch",
+   "nombre": "Abdominales crunch",
+   "legible": null,
+   "grupo": "core",
+   "sec": [],
+   "equipo": "peso_corporal",
+   "patron": "core_antiextension",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Abdominales",
+    "Abdominales cortos",
+    "Crunch",
+    "Crunches"
+   ],
+   "imagen": "Crunches"
+  },
+  {
+   "slug": "elevacion-de-piernas-colgado",
+   "nombre": "Elevación de piernas colgado",
+   "legible": null,
+   "grupo": "core",
+   "sec": [],
+   "equipo": "peso_corporal",
+   "patron": "core_antiextension",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Elevación de piernas en barra",
+    "Elevaciones de piernas colgado",
+    "Rodillas al pecho colgado",
+    "Hanging leg raise",
+    "Hanging knee raise"
+   ],
+   "imagen": "Hanging_Leg_Raise"
+  },
+  {
+   "slug": "rueda-abdominal",
+   "nombre": "Rueda abdominal",
+   "legible": null,
+   "grupo": "core",
+   "sec": [],
+   "equipo": "otro",
+   "patron": "core_antiextension",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Rueda",
+    "Ab wheel",
+    "Ab roller",
+    "Ab wheel rollout",
+    "Rollout"
+   ],
+   "imagen": "Ab_Roller"
+  },
+  {
+   "slug": "giros-rusos",
+   "nombre": "Giros rusos",
+   "legible": null,
+   "grupo": "core",
+   "sec": [],
+   "equipo": "peso_corporal",
+   "patron": "core_rotacion",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Giro ruso",
+    "Twist ruso",
+    "Russian twist",
+    "Russian twists"
+   ],
+   "imagen": "Russian_Twist"
+  },
+  {
+   "slug": "salto-al-cajon",
+   "nombre": "Salto al cajón",
+   "legible": null,
+   "grupo": "cuadriceps",
+   "sec": [],
+   "equipo": "cajon",
+   "patron": "pliometria",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Saltos al cajón",
+    "Salto al cajón a dos piernas",
+    "Box jump",
+    "Box jumps"
+   ],
+   "imagen": "Front_Box_Jump"
+  },
+  {
+   "slug": "caminata-del-granjero",
+   "nombre": "Caminata del granjero",
+   "legible": null,
+   "grupo": "full_body",
+   "sec": [],
+   "equipo": "mancuernas",
+   "patron": "locomocion",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Paseo del granjero",
+    "Caminata de granjero",
+    "Farmer walk",
+    "Farmer carry",
+    "Farmer's walk"
+   ],
+   "imagen": "Farmers_Walk"
+  }
+ ]
+}

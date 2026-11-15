@@ -1,0 +1,402 @@
+[
+{
+"slug": "flexo-extension-cadera-bd",
+"nombre": "Flexo-Extensión Cadera - BD"
+},
+{
+"slug": "psoas-dinamico",
+"nombre": "Psoas DINÁMICO"
+},
+{
+"slug": "aductores-dinamico",
+"nombre": "Aductores DINÁMICO"
+},
+{
+"slug": "isquiotibiales-rd",
+"nombre": "Isquiotibiales - RD"
+},
+{
+"slug": "isquiotibiales-en-columna",
+"nombre": "Isquiotibiales en columna"
+},
+{
+"slug": "spiderman-rotacion-dt",
+"nombre": "Spiderman ROTACIÓN DT"
+},
+{
+"slug": "spiderman-rotacion",
+"nombre": "Spiderman ROTACIÓN"
+},
+{
+"slug": "carpas-dinamico",
+"nombre": "Carpas DINÁMICO"
+},
+{
+"slug": "carpa-2p",
+"nombre": "Carpa 2p"
+},
+{
+"slug": "buda-asistido-dc",
+"nombre": "Buda ASISTIDO - DC"
+},
+{
+"slug": "buda-rotacion-tronco-asistido",
+"nombre": "Buda ROTACIÓN TRONCO ASISTIDO"
+},
+{
+"slug": "rotacion-tronco-pared-t",
+"nombre": "Rotación tronco PARED T"
+},
+{
+"slug": "bretzel",
+"nombre": "Bretzel"
+},
+{
+"slug": "caderas-y-piramidal",
+"nombre": "Caderas y piramidal"
+},
+{
+"slug": "cadera-con-glide-lateral-cuadrupedia",
+"nombre": "Cadera con glide lateral cuadrupedia"
+},
+{
+"slug": "elevaciones-de-cadera-caminata-i-v",
+"nombre": "Elevaciones de cadera CAMINATA I/V"
+},
+{
+"slug": "elevaciones-de-cadera-1p-mb",
+"nombre": "Elevaciones de Cadera 1P - MB"
+},
+{
+"slug": "puente-lateral-cambio",
+"nombre": "Puente lateral cambio"
+},
+{
+"slug": "puente-lateral-inclinado-con-apertura",
+"nombre": "Puente lateral inclinado con apertura"
+},
+{
+"slug": "puente-isquio-con-cambio",
+"nombre": "Puente isquio con cambio"
+},
+{
+"slug": "puente-de-cadera-cambio",
+"nombre": "Puente de cadera CAMBIO"
+},
+{
+"slug": "giros-oh-en-tandem",
+"nombre": "Giros OH en tandem"
+},
+{
+"slug": "cuadrupedia-con-patada",
+"nombre": "Cuadrupedia con patada"
+},
+{
+"slug": "antiflexion-lateral-con-barra",
+"nombre": "Antiflexión lateral con barra"
+},
+{
+"slug": "anti-flexion-lateral-cambio-de-pie-bd",
+"nombre": "Anti-Flexión Lateral CAMBIO DE PIE - BD"
+},
+{
+"slug": "plancha-construyo",
+"nombre": "Plancha CONSTRUYO"
+},
+{
+"slug": "plancha-copenhague-1-2-con",
+"nombre": "Plancha COPENHAGUE 1/2 CON"
+},
+{
+"slug": "plancha-alta-carrera",
+"nombre": "Plancha alta CARRERA"
+},
+{
+"slug": "plancha-lateral-giro",
+"nombre": "Plancha lateral GIRO"
+},
+{
+"slug": "abdominal-con-aductores",
+"nombre": "Abdominal con aductores"
+},
+{
+"slug": "descenso-piernas-rectas-con-control-abdomen",
+"nombre": "Descenso piernas rectas con control abdomen"
+},
+{
+"slug": "caminata-de-camarera-1m-kb",
+"nombre": "Caminata de Camarera 1m - KB"
+},
+{
+"slug": "hollow",
+"nombre": "Hollow"
+},
+{
+"slug": "bear-crawl-dinamico",
+"nombre": "Bear Crawl DINÁMICO"
+},
+{
+"slug": "desliz-barra-en-puntas",
+"nombre": "Desliz barra en puntas"
+},
+{
+"slug": "thrusters-kb",
+"nombre": "Thrusters - KB"
+},
+{
+"slug": "swing-cadera-ra-kb",
+"nombre": "Swing cadera RA - KB"
+},
+{
+"slug": "swing-thruster",
+"nombre": "Swing/Thruster"
+},
+{
+"slug": "sentadilla-salto-kb",
+"nombre": "Sentadilla SALTO - KB"
+},
+{
+"slug": "sentadilla-split-salto-cambio-kb",
+"nombre": "Sentadilla SPLIT SALTO CAMBIO - KB"
+},
+{
+"slug": "2do-tiempo-split-br",
+"nombre": "2do Tiempo SPLIT - BR"
+},
+{
+"slug": "burpee",
+"nombre": "Burpee"
+},
+{
+"slug": "1p-a-otro-cc-diagonal",
+"nombre": "1P A OTRO CC DIAGONAL"
+},
+{
+"slug": "1p-ccm-vertical-al-cajon-cj",
+"nombre": "1P CCM Vertical AL CAJÓN - CJ"
+},
+{
+"slug": "2p-ba-ccm-vertical",
+"nombre": "2P BA CCM Vertical"
+},
+{
+"slug": "triple-extension-lm",
+"nombre": "Triple extensión LM"
+},
+{
+"slug": "caida-lm",
+"nombre": "Caída LM"
+},
+{
+"slug": "reactivos-verticales-laterales",
+"nombre": "Reactivos verticales+laterales"
+},
+{
+"slug": "reactivos-laterales",
+"nombre": "Reactivos laterales"
+},
+{
+"slug": "sentadilla-br",
+"nombre": "Sentadilla - BR"
+},
+{
+"slug": "sentadilla-bulgara-ra-br",
+"nombre": "Sentadilla Búlgara RA - BR"
+},
+{
+"slug": "sentadilla-al-cajon-ra-br",
+"nombre": "Sentadilla AL CAJÓN RA - BR"
+},
+{
+"slug": "estocada-atras-br",
+"nombre": "Estocada atrás - BR"
+},
+{
+"slug": "empuje-de-cadera-br",
+"nombre": "Empuje de cadera - BR"
+},
+{
+"slug": "empuje-de-cadera-1p-br",
+"nombre": "Empuje de cadera 1p - BR"
+},
+{
+"slug": "peso-muerto-1p-kb",
+"nombre": "Peso muerto 1p - KB"
+},
+{
+"slug": "caminata-de-gemelo-mc",
+"nombre": "Caminata de gemelo - MC"
+},
+{
+"slug": "curl-nordico",
+"nombre": "CURL NÓRDICO"
+},
+{
+"slug": "curl-isquio-1p-exc-mb",
+"nombre": "Curl ISQUIO 1p EXC - MB"
+},
+{
+"slug": "curl-isquios-1p-exc-fb",
+"nombre": "Curl Isquios 1P EXC - FB"
+},
+{
+"slug": "curl-isquios-fb",
+"nombre": "Curl Isquios - FB"
+},
+{
+"slug": "patadas-de-talon-fb",
+"nombre": "Patadas de Talón - FB"
+},
+{
+"slug": "isquiotibiales-en-polea",
+"nombre": "Isquiotibiales en polea"
+},
+{
+"slug": "excentrico-carrera-isquios-polea",
+"nombre": "Excéntrico carrera ISQUIOS polea"
+},
+{
+"slug": "gesto-sprint-isquios-con-slider",
+"nombre": "Gesto sprint isquios con slider"
+},
+{
+"slug": "camilla-isquiosurales-1p-mq",
+"nombre": "Camilla isquiosurales 1P - MQ"
+},
+{
+"slug": "press-plano",
+"nombre": "Press plano"
+},
+{
+"slug": "press-inclinado-con-mancuernas",
+"nombre": "Press inclinado con mancuernas"
+},
+{
+"slug": "aperturas-mq",
+"nombre": "Aperturas - MQ"
+},
+{
+"slug": "push-up-dc",
+"nombre": "Push Up - DC"
+},
+{
+"slug": "fondos",
+"nombre": "Fondos"
+},
+{
+"slug": "fondos-asistidos-mq",
+"nombre": "Fondos ASISTIDOS - MQ"
+},
+{
+"slug": "press-militar-br",
+"nombre": "Press Militar - BR"
+},
+{
+"slug": "press-hombro-mq",
+"nombre": "Press hombro - MQ"
+},
+{
+"slug": "press-hombro-ba-kb",
+"nombre": "Press hombro BA - KB"
+},
+{
+"slug": "press-hombro-rr-kb",
+"nombre": "Press hombro RR - KB"
+},
+{
+"slug": "press-hombro-1m-rr-kb",
+"nombre": "Press hombro 1m RR - KB"
+},
+{
+"slug": "press-hombro-1m-pdb-kb",
+"nombre": "Press hombro 1m PDB - KB"
+},
+{
+"slug": "press-en-landmine",
+"nombre": "Press en landmine"
+},
+{
+"slug": "dominadas-prona",
+"nombre": "Dominadas PRONA"
+},
+{
+"slug": "dominadas-palmar",
+"nombre": "Dominadas PALMAR"
+},
+{
+"slug": "dorsalera-palmar-mq",
+"nombre": "Dorsalera PALMAR - MQ"
+},
+{
+"slug": "remo-neutro-mq",
+"nombre": "Remo NEUTRO - MQ"
+},
+{
+"slug": "remo-1m-plancha-alta-kb",
+"nombre": "Remo 1m PLANCHA ALTA - KB"
+},
+{
+"slug": "remo-1m-cd-kb",
+"nombre": "Remo 1m CD - KB"
+},
+{
+"slug": "remo-al-menton-br",
+"nombre": "Remo al mentón - BR"
+},
+{
+"slug": "remo-invertido-puente-br",
+"nombre": "Remo invertido PUENTE - BR"
+},
+{
+"slug": "remo-tandem-en-puntas",
+"nombre": "Remo+ Tandem en puntas"
+},
+{
+"slug": "y-bd",
+"nombre": "Y - BD"
+},
+{
+"slug": "biceps-br",
+"nombre": "Biceps - BR"
+},
+{
+"slug": "biceps-mc",
+"nombre": "Biceps - MC"
+},
+{
+"slug": "biceps-alterno-mc",
+"nombre": "Biceps alterno - MC"
+},
+{
+"slug": "biceps-hombro-mc",
+"nombre": "Biceps/Hombro - MC"
+},
+{
+"slug": "triceps-pl",
+"nombre": "Triceps - PL"
+},
+{
+"slug": "vuelo-combinado-alterno",
+"nombre": "Vuelo combinado ALTERNO"
+},
+{
+"slug": "vuelo-frontal-lateral",
+"nombre": "Vuelo Frontal/Lateral"
+},
+{
+"slug": "rebote-y-freno",
+"nombre": "Rebote y freno"
+},
+{
+"slug": "laterales-con-banda",
+"nombre": "Laterales con banda"
+},
+{
+"slug": "peso-muerto-br",
+"nombre": "Peso muerto - BR"
+},
+{
+"slug": "remo-pendley-prono",
+"nombre": "Remo PENDLEY PRONO"
+}
+]

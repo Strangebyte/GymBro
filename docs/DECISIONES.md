@@ -2,6 +2,20 @@
 
 Registro de qué se decidió y por qué. Lo más nuevo, arriba.
 
+## 15-11-2026 — Revisión del catálogo
+
+| Decisión | Razón |
+|---|---|
+| Los ejercicios pasan a tener nombres claros; el nombre del entrenador queda como alias | Los nombres venían con la codificación de la otra app. El dueño revisó uno por uno en un Excel: donde puso "Nombre Final" va ese (con la ortografía corregida); donde no, el sugerido |
+| Cada ejercicio lleva una lista de otros nombres, en español y en inglés | Para que al importar un plan "bench press" o "press de banca" se reconozcan como el mismo ejercicio |
+| Cuatro ejercicios se fusionaron con otro que era el mismo | Lo indicó el dueño en el Excel. El historial y los planes del que desaparece pasan al que queda |
+| Un ejercicio que el dueño pidió eliminar pero tiene historial se archiva en vez de borrarse | Borrarlo sacaría series de sesiones ya guardadas, y eso no se puede deshacer. Queda pendiente su confirmación |
+| Se agregaron 61 ejercicios clásicos (camilla de cuádriceps, prensa, gemelos en máquina, press inclinado y declinado…) | Pedido del dueño: la app la usan otras personas y el catálogo solo tenía lo de su entrenador |
+| Ya no vienen ejercicios archivados de fábrica; archivar queda como opción del usuario | Pedido del dueño: para quien recién instala no tenía sentido |
+| Se quitó "Salto mínimo de carga" del formulario | No tenía efecto desde que se sacaron los botones +/− de peso |
+| El catálogo de las apps ya instaladas se actualiza solo, por revisión | La carga inicial corría una sola vez; sin esto los cambios no llegaban al teléfono del dueño ni a los de quienes ya la instalaron |
+| "Plancha CONSTRUYO" pasa a "Plancha sube y baja con disco" | El dueño explicó el movimiento (de manos a codos y de vuelta) y dejó el nombre a criterio; "construyo" queda como alias |
+
 ## 15-11-2026 — Paletas de color y ajustes tras usarla en el teléfono
 
 | Decisión | Razón |

@@ -4,7 +4,7 @@
 
 ## Dónde está
 
-- La app está completa y funcionando en las pruebas automáticas (103 de 103, sin errores de consola).
+- La app está completa y funcionando en las pruebas automáticas (109 de 109, sin errores de consola).
 - **Publicada en GitHub Pages:** https://<usuario>.github.io/GymBro/ (repositorio público
   `<usuario>/GymBro`). Cada push a `main` la vuelve a publicar sola. Verificado el 14-11-2026 en
   Chromium: abre sin errores, registra el service worker y arranca con catálogo y plan, sin sesiones.
@@ -25,14 +25,21 @@ video y scroll táctil con una hoja abierta.
 - **Probar en el teléfono** lo último publicado, que solo se verificó en el simulador: Progreso con reps
   (a igual peso muestra "+N reps"; ejercicios sin peso siguen reps o tiempo), series por grupo muscular siempre
   visible, que ya no se recargue al deslizar hacia abajo, adjuntar foto o video desde la ficha, acentos en categorías y etiquetas, las tres paletas de color (Ajustes → Color), y "Copiar pedido para Claude" en Importar plan con un Claude real.
-- **Renombrar ejercicios:** `privado/nombres-ejercicios.xlsx` (fuera del repo: lleva fechas del historial) tiene, para los 100 ejercicios, un nombre sugerido más
-  claro y una lista de otros nombres para reconocerlos al importar. El dueño lo tiene que revisar (28 filas con DUDA).
-  Cuando lo devuelva: aplicar los nombres y los alias al catálogo, también en las apps ya instaladas (hoy la
-  carga inicial corre una sola vez, así que hace falta una actualización del catálogo por `slug`).
-- **Imágenes de ejercicios:** 28 de 100 tienen imagen incluida (las de coincidencia segura). Quedan 12 candidatos
-  dudosos anotados en `tools/imagenes/gen.py` para confirmar con el dueño, y unos 60 sin equivalente en el banco
-  (movilidad, core, pliometría y variantes propias del entrenador): para esos haría falta que el dueño cargue su
-  propia foto o video.
+- **Grupos, patrones y equipamiento (aprobado por el dueño, sin hacer):** unificar la movilidad en un solo grupo;
+  unificar hombro anterior, lateral y posterior en "Hombros"; "Dorsal" pasa a "Espalda" e incluye trapecio; "Isquios" a
+  "Isquiotibiales"; "Gemelo" a "Gemelos"; "Full body" a "Cuerpo completo"; **aductores y abductores en un solo grupo**
+  (pedido del dueño); agregar "Antebrazos" y "Lumbares" (ahí van las hiperextensiones, hoy en core). Patrones: juntar los
+  cuatro de core en "Core", renombrar bisagra y locomoción, y esconder el patrón del formulario detrás de "más opciones".
+  Equipamiento: "Disco / lastre", "Deslizadores", "Pelota (fitball)", y agregar "Banco" y "TRX / anillas". Hay que
+  convertir los datos ya guardados (nueva revisión del catálogo) y cambia "Series por grupo muscular".
+- **"Rebote y frenado":** El dueño pidió eliminarlo, pero tiene historial y está en su plan (Día 6, bloque 3). Quedó
+  archivado (oculto). Falta que confirme si quiere borrarlo del todo, con sus series, y sacarlo del plan.
+- **Nombres a confirmar:** "Plancha sube y baja con disco" (era "Plancha CONSTRUYO"; el dueño dejó el nombre a criterio).
+  Los ejercicios con DUDA que no corrigió quedaron con el nombre sugerido.
+- **Imágenes de ejercicios:** 86 de 156 tienen imagen incluida. Quedan 12 candidatos dudosos anotados en
+  `tools/imagenes/gen.py` y unos 55 sin equivalente en el banco (movilidad, core, pliometría y variantes del
+  entrenador): para esos haría falta que el dueño cargue su propia foto o video. Los ejercicios nuevos no tienen
+  músculos secundarios cargados, así que en "Series por grupo muscular" solo suman a su grupo principal.
 - **Probar en iPhone** (otra persona): instalación desde Safari, sonido de descanso, copia de seguridad.
   No vibra en iPhone: es una limitación de iOS.
 - **Borrar un ejercicio no borra su video o imagen** (queda ocupando espacio). Sin arreglar.
@@ -40,7 +47,7 @@ video y scroll táctil con una hoja abierta.
 
 ## Hecho
 
-- Catálogo de 100 ejercicios precargados; alta, edición, archivado; video o imagen y enlace por ejercicio
+- Catálogo de 156 ejercicios precargados (los del entrenador con nombres claros y 61 clásicos), 86 con imagen; alta, edición, archivado; video o imagen y enlace por ejercicio
 - Planes: crear, editar por día/bloque/serie, duplicar y reordenar días, importar y exportar (`plan-gym/v1`)
 - Importador con validación y pantalla de mapeo (crear con nombre editable o vincular a existente)
 - Elegir qué entrenar: día sugerido por la rotación, otro día, o sesión libre
@@ -82,6 +89,7 @@ video y scroll táctil con una hoja abierta.
 | Fecha | Qué se hizo |
 |---|---|
 | 10-11-2026 | Diseño (`docs/historico/`), catálogo de 96 ejercicios, primera versión solo de registro |
+| 15-11-2026 | Catálogo revisado con el Excel del dueño: nombres claros, alias, 4 fusiones, 61 clásicos nuevos con foto, sin archivados de fábrica; actualización automática en apps ya instaladas; se quitó "salto mínimo de carga" |
 | 15-11-2026 | Importar plan en dos caminos (ya tengo un plan / que una IA lo arme), con un pedido distinto para cada uno; etiquetas con mayúscula inicial |
 | 15-11-2026 | Importador: arreglos en "Crear nuevo" / "Vincular"; Excel con propuesta de nombres y alias |
 | 15-11-2026 | Imágenes incluidas para 28 ejercicios (solo coincidencias seguras, revisadas una por una) |

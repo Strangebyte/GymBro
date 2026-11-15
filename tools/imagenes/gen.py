@@ -8,7 +8,7 @@ Uso:  python tools/imagenes/gen.py        (requiere Pillow y conexión)
 Escribe src/ejercicios-img/<slug>.webp. La app las reconoce por el nombre del archivo: tiene que ser el
 `slug` del ejercicio en el catálogo. Para sumar una, agregarla a MAPA y volver a correr.
 """
-import io, os, urllib.request
+import io, json, os, urllib.request
 from PIL import Image
 
 RAIZ = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
@@ -27,7 +27,6 @@ MAPA = {
     'sentadilla-bulgara-ra-br': 'One_Leg_Barbell_Squat',
     'peso-muerto-1p-kb': 'Kettlebell_One-Legged_Deadlift',
     'curl-nordico': 'Floor_Glute-Ham_Raise',
-    'curl-isquios-fb': 'Ball_Leg_Curl',
     'press-inclinado-con-mancuernas': 'Incline_Dumbbell_Press',
     'aperturas-mq': 'Butterfly',
     'press-militar-br': 'Standing_Military_Press',
@@ -36,7 +35,7 @@ MAPA = {
     'dominadas-palmar': 'Chin-Up',
     'dorsalera-palmar-mq': 'Underhand_Cable_Pulldowns',
     'remo-1m-plancha-alta-kb': 'Alternating_Renegade_Row',
-    'remo-1m-cd-kb': 'One-Arm_Kettlebell_Row',
+    'remo-1m-cd-kb': 'One-Arm_Dumbbell_Row',
     'remo-al-menton-br': 'Upright_Barbell_Row',
     'biceps-br': 'Barbell_Curl',
     'biceps-mc': 'Dumbbell_Bicep_Curl',
@@ -62,6 +61,10 @@ MAPA = {
 #   sentadilla-split-salto-cambio-kb  Split_Jump                 (sin kettlebell)
 #   remo-neutro-mq               Leverage_Iso_Row / Seated_Cable_Rows  (no se sabe qué máquina es)
 
+# Los ejercicios clásicos agregados después traen la carpeta de su foto en tools/seed/catalogo-cambios.json.
+for _n in json.load(open(os.path.join(RAIZ, 'tools', 'seed', 'catalogo-cambios.json'), encoding='utf-8'))['nuevos']:
+    if _n.get('imagen'): MAPA[_n['slug']] = _n['imagen']
+
 def foto(carpeta, n):
     with urllib.request.urlopen(f'{BASE}{carpeta}/{n}.jpg', timeout=30) as r:
         img = Image.open(io.BytesIO(r.read())).convert('RGB')
@@ -70,10 +73,13 @@ def foto(carpeta, n):
 if __name__ == '__main__':
     destino = os.path.join(RAIZ, 'src', 'ejercicios-img')
     os.makedirs(destino, exist_ok=True)
+    for viejo in os.listdir(destino):     # las de ejercicios que ya no existen se van
+        if viejo.endswith('.webp') and viejo[:-5] not in MAPA: os.remove(os.path.join(destino, viejo))
     for slug, carpeta in MAPA.items():
+        ruta = os.path.join(destino, f'{slug}.webp')
+        if os.path.exists(ruta): continue   # ya está: no volver a bajarla (borrar el archivo para rehacerla)
         a, b = foto(carpeta, 0), foto(carpeta, 1)
         junta = Image.new('RGB', (ANCHO, a.height + b.height + 6), 'white')
         junta.paste(a, (0, 0)); junta.paste(b, (0, a.height + 6))
-        ruta = os.path.join(destino, f'{slug}.webp')
         junta.save(ruta, 'WEBP', quality=72, method=6)
         print(f'{slug}: {junta.width}x{junta.height}, {os.path.getsize(ruta) // 1024} KB')

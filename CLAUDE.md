@@ -20,7 +20,7 @@ npm run seed         # regenera src/seed.json, src/seed-historial.json y data/*.
 npm run test:e2e     # requiere dist/ y: pip install playwright && playwright install chromium
 ```
 
-Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 103 verificaciones tienen que pasar
+Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 109 verificaciones tienen que pasar
 y no puede haber errores de consola. Si cambiás un flujo, actualizá `tests/e2e.py` en el mismo cambio.
 
 ## Cómo trabajar con el dueño
@@ -54,7 +54,8 @@ src/
     More.tsx       Ajustes
 tools/seed/    Generador de datos iniciales (Python) y catálogo base
 tools/imagenes/  gen.py baja y arma las imágenes incluidas de ejercicios (requiere Pillow y conexión)
-tools/nombres/  gen.py arma privado/nombres-ejercicios.xlsx (propuesta de nombres claros y alias; requiere openpyxl)
+tools/nombres/  gen.py arma privado/nombres-ejercicios.xlsx (propuesta de nombres y alias); aplicar.py convierte la revisión
+               del dueño en tools/seed/catalogo-cambios.json (requieren openpyxl)
 tools/logo/    gen.py dibuja el ícono (public/icon-*.png); requiere Pillow
 tests/         e2e.py (Playwright, Python) y fixtures
 data/          Catálogo y plan actual en JSON legible (generados)
@@ -110,8 +111,9 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
 - Historial de un ejercicio: lista informativa, sin enlaces.
 - Catálogo agrupado por categoría (`categoria()` en lib.ts), con filtro detrás de un ícono junto al buscador.
 - Imágenes incluidas: `src/ejercicios-img/<slug>.webp` (las arma `tools/imagenes/gen.py` desde Free Exercise DB,
-  dominio público). Se muestran si el usuario no cargó una propia; la propia siempre tiene prioridad. Hay 28
-  de 100; los candidatos dudosos están anotados en ese mismo archivo, sin incluir. No bajar imágenes de otras fuentes sin revisar la licencia.
+  dominio público). Se muestran si el usuario no cargó una propia; la propia siempre tiene prioridad. Hay 86 de
+  156; los candidatos dudosos están anotados en ese mismo archivo, sin incluir. No bajar imágenes de otras fuentes
+  sin revisar la licencia.
 - Estilo de formas redondas (pedido por el dueño): botones, chips y controles tipo píldora; tarjetas con
   `--radius: 22px`. Mantenerlo en lo nuevo.
 - Video/imagen: se cargan desde la ficha del ejercicio (tocando el recuadro vacío) o al crear o editarlo. En la
@@ -144,6 +146,11 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
 - **La app también corre como artifact de Claude** (iframe aislado): ahí no hay service worker, ni historial
   del navegador, ni garantía de almacenamiento, y no se cargan recursos remotos. Por eso: nada de CDNs ni
   fuentes externas, y el historial (`pushState`) solo se usa fuera de un iframe (`CON_HISTORIAL` en ui.tsx).
+- **Cambios en el catálogo de fábrica** (nombres, alias, ejercicios nuevos, fusionados o retirados): van en
+  `tools/seed/catalogo-cambios.json` subiendo `rev`, y después `npm run seed`. La app los aplica una vez por
+  revisión en los teléfonos ya instalados (`actualizarCatalogo` en db.ts), reconociendo cada ejercicio por su
+  `slug`, que **nunca se cambia** aunque cambie el nombre. El nombre viejo siempre queda como alias. Un ejercicio
+  retirado que tiene historial se archiva, no se borra. Los ejercicios que creó el usuario no se pisan.
 - **Cambios de esquema:** agregar `this.version(N+1).stores(...)` en db.ts, con `.upgrade()` si hay que
   transformar datos. Nunca editar una versión ya publicada: el usuario tiene datos reales.
 - **Hooks antes de cualquier `return`** condicional (las pantallas devuelven "Cargando…" temprano).

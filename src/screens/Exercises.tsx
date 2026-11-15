@@ -167,8 +167,6 @@ export function ExerciseFormScreen({ id }: { id: number | null }) {
           {sel('patron', PATRONES, 'Patrón de movimiento')}
           <label className="f">Se mide en</label>
           <Chips opciones={[{ v: 'reps' as Mide, t: 'repeticiones' }, { v: 'seg' as Mide, t: 'tiempo' }, { v: 'ambos' as Mide, t: 'cualquiera' }]} valor={(f.mide ?? 'reps') as Mide} onPick={(v) => setF({ ...f, mide: v })} />
-          <label className="f">Salto mínimo de carga</label>
-          <Stepper value={f.inc ?? null} step={0.25} unit="kg" onChange={(v) => setF({ ...f, inc: v })} />
           <label className="f">Descanso entre series</label>
           <Stepper value={f.descanso_s ?? null} step={15} unit="segundos" onChange={(v) => setF({ ...f, descanso_s: v })} />
         </div>
