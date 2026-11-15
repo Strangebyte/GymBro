@@ -293,6 +293,16 @@ export function HistorialLista({ exerciseId, lastre, excluir }: { exerciseId: nu
 
 export const MAX_MEDIA_MB = 40
 
+/** Por qué no se puede usar el archivo como video o imagen de un ejercicio, o null si sirve. */
+export function problemaMedia(file: File): string | null {
+  if (!file.type.startsWith('image/') && !file.type.startsWith('video/')) return 'Tiene que ser una imagen o un video.'
+  if (file.size > MAX_MEDIA_MB * 1048576) return `El archivo pesa ${Math.round(file.size / 1048576)} MB. El máximo es ${MAX_MEDIA_MB} MB.`
+  return null
+}
+export async function guardarMediaDe(exerciseId: number, file: File): Promise<void> {
+  await db.media.put({ exercise_id: exerciseId, tipo: file.type.startsWith('video/') ? 'video' : 'imagen', blob: file, nombre: file.name, size: file.size })
+}
+
 /** Muestra el video o la imagen guardados de un ejercicio, y el enlace externo si tiene. */
 export function MediaView({ exerciseId, url }: { exerciseId: number; url?: string | null }) {
   const m = useLiveQuery(() => db.media.get(exerciseId), [exerciseId])

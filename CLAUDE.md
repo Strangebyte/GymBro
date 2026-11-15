@@ -17,7 +17,7 @@ npm run seed         # regenera src/seed.json, src/seed-historial.json y data/*.
 npm run test:e2e     # requiere dist/ y: pip install playwright && playwright install chromium
 ```
 
-Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 91 verificaciones tienen que pasar
+Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 94 verificaciones tienen que pasar
 y no puede haber errores de consola. Si cambiás un flujo, actualizá `tests/e2e.py` en el mismo cambio.
 
 ## Cómo trabajar con el dueño
@@ -95,13 +95,14 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
   conservan al ir y volver de otra pantalla.
 - Tilde de "hecho" por bloque (por defecto) o por ejercicio (ajuste `tilde`). Solo en modo por ejercicio
   arranca el cronómetro de descanso. Al terminar vibra y suena (ajustes `vibrar` y `sonido`). El dueño no quiere
-  notificaciones para el descanso.
+  notificaciones para el descanso. El encabezado del bloque no lleva contador de series (lo pidió sacar).
 - En la sesión, reps y peso se escriben a mano en una tabla compacta. RIR, RPE, fallo y calentamiento
   **no** se editan ahí: se configuran en el plan y se ven como "objetivo".
 - Las etiquetas de grupo y equipo van en el encabezado del bloque, no en cada ejercicio.
 - Historial de un ejercicio: lista informativa, sin enlaces.
 - Catálogo agrupado por categoría (`categoria()` en lib.ts), con filtro detrás de un ícono junto al buscador.
-- Video/imagen: se cargan solo al crear o editar un ejercicio. En la sesión solo se ven (botón ▶).
+- Video/imagen: se cargan desde la ficha del ejercicio (tocando el recuadro vacío) o al crear o editarlo. En la
+  sesión solo se ven (botón ▶).
 - Recordatorio de copia en Hoy cuando hay 4 o más sesiones propias posteriores a la última copia
   (`settings.copia_hasta`). "Más tarde" lo oculta hasta volver a abrir la app.
 - Importar plan: el camino principal para quien no tiene archivo es "Copiar pedido para Claude" (`pedidoParaIA`
@@ -112,7 +113,8 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
   actividades" y el rojo para errores.
 - Progreso: "Series por grupo muscular" va siempre visible. El progreso por ejercicio usa `progresoDe` (lib.ts):
   peso más alto y sus reps; a igual peso compara reps; sin peso, reps o tiempo.
-- Fechas `dd/mm/yyyy`. Decimales con coma.
+- Fechas `dd/mm/yyyy`. Decimales con coma. Excepción pedida por el dueño: "Últ. vez (dd/mm)" en la tarjeta de la
+  sesión, que además no se corta: ocupa las líneas que necesite.
 
 ## Trampas técnicas
 

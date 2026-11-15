@@ -2,10 +2,15 @@
 
 Registro de qué se decidió y por qué. Lo más nuevo, arriba.
 
-## 15-11-2026 — Paletas de color
+## 15-11-2026 — Paletas de color y ajustes tras usarla en el teléfono
 
 | Decisión | Razón |
 |---|---|
+| Se desactivó "deslizar hacia abajo para recargar" | En el teléfono recargaba la app y lo devolvía a Hoy |
+| El recuadro "Sin video ni imagen" de la ficha abre el selector de archivos ahí mismo | Pedido del dueño: antes mandaba a la pantalla de edición |
+| El encabezado del bloque ya no muestra "0/6 series" | Pedido del dueño |
+| "Últ. vez (dd/mm)" y sin cortar el texto | Con RIR o RPE la línea no entraba en el móvil. El dueño propuso acortar el rótulo; además se dejó que ocupe más de una línea para que siempre se lea completa |
+| Flecha en las filas de "Progreso por ejercicio" | No se notaba que al tocarlas se abría el gráfico |
 | Tres paletas: verde (la original), azul y violeta, cada una con claro y oscuro | Pedido del dueño: la de ahora más dos. Se evitó naranja y rojo como color principal porque ya significan "otras actividades" y "error" |
 | El tema y la paleta se recuerdan también fuera de la base | Para pintar con los colores elegidos desde el primer instante al abrir, sin destello verde |
 

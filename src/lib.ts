@@ -73,6 +73,8 @@ export function fmtFecha(iso: string): string {
   const [y, m, d] = iso.split('-')
   return `${d}/${m}/${y}`
 }
+/** dd/mm, para lugares con poco espacio. */
+export const fmtFechaCorta = (iso: string): string => `${iso.slice(8, 10)}/${iso.slice(5, 7)}`
 export function fmtFechaLarga(iso: string): string {
   const d = fechaDe(iso)
   return `${DIAS[d.getDay()]} ${d.getDate()} de ${MESES[d.getMonth()]}`

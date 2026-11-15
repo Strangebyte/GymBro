@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, kgToG, type Exercise, type Session, type SetLog, type Settings } from '../db'
 import { Chips, HistorialLista, Ico, MediaView, Picker, Sheet, Stepper, TopBar, useDialogos, useNav, useTieneMedia } from '../ui'
-import { etiqueta, fmtDur, fmtFecha, mmss, numES, plural, prepararSonido, resumenSets, setValido, sonar, ultimaVez, vibrar } from '../lib'
+import { etiqueta, fmtDur, fmtFecha, fmtFechaCorta, mmss, numES, plural, prepararSonido, resumenSets, setValido, sonar, ultimaVez, vibrar } from '../lib'
 import { agregarEjercicio, agregarSerie, descartarSesion, sesionEnCurso, terminarSesion } from '../actions'
 
 export type Item = { key: string; bloque: number; orden: number; ex: Exercise; sets: SetLog[] }
@@ -101,7 +101,7 @@ export function SessionScreen({ settings }: { settings: Settings }) {
                   <span className="num">{esExtra ? '+' : b}</span>
                   <span className="grow">
                     <span className="bold">{nombre}</span>
-                    <span className="xsmall muted" style={{ display: 'block' }}>{plural(its.length, 'ejercicio', 'ejercicios')} · {delBloque.filter((s) => s.hecha).length}/{delBloque.length} series</span>
+                    <span className="xsmall muted" style={{ display: 'block' }}>{plural(its.length, 'ejercicio', 'ejercicios')}</span>
                     <span className="xsmall muted truncate" style={{ display: 'block' }}>{desc.slice(0, 5).join(' · ')}</span>
                   </span>
                   <span className="muted">{abierto === b ? '▾' : '▸'}</span>
@@ -190,8 +190,8 @@ export function Tarjeta(props: { item: Item; sesion: Session; porEjercicio: bool
       </div>
       {nota && <div className="xsmall nota">Nota: {nota}</div>}
       {!editando && (
-        <div className="xsmall muted truncate" style={{ marginTop: 2 }}>
-          {previo ? <>Última vez ({fmtFecha(previo.fecha)}): <span className="mono">{previo.txt}</span></> : 'Primera vez que lo registrás'}
+        <div className="xsmall muted" style={{ marginTop: 2 }}>
+          {previo ? <>Últ. vez ({fmtFechaCorta(previo.fecha)}): <span className="mono">{previo.txt}</span></> : 'Primera vez que lo registrás'}
         </div>
       )}
 

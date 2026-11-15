@@ -181,6 +181,7 @@ export function ProgressScreen({ settings }: { settings: Settings }) {
                   {f.delta}
                   {f.pct && <span className="xsmall" style={{ display: 'block', fontWeight: 600 }}>{f.pct}</span>}
                 </span>
+                <span className="muted" aria-hidden="true">{abierto === f.id ? '▾' : '▸'}</span>
               </button>
               {abierto === f.id && f.pts.length > 0 && <div className="pm-d"><GraficoPesos puntos={f.pts} unidad={unidadDe(f.medida, f.ex.lastre)} /></div>}
             </div>

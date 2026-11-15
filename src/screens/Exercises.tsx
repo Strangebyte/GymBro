@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, type Exercise, type Mide } from '../db'
-import { Catalogo, Chips, HistorialLista, MAX_MEDIA_MB, MediaView, Stepper, TopBar, useDialogos, useNav, useTieneMedia } from '../ui'
+import { Catalogo, Chips, guardarMediaDe, HistorialLista, MAX_MEDIA_MB, MediaView, problemaMedia, Stepper, TopBar, useDialogos, useNav, useTieneMedia } from '../ui'
 import { numES, EQUIPOS, etiqueta, GRUPOS, historicoEjercicio, PATRONES, progresoDe, unidadDe, type SesionDeEjercicio } from '../lib'
 import { crearEjercicio } from '../actions'
 import { GraficoPesos } from './Progress'
@@ -23,6 +23,14 @@ export function ExercisesScreen() {
 
 export function ExerciseScreen({ id }: { id: number }) {
   const nav = useNav()
+  const { avisar } = useDialogos()
+  // Adjunta el video o la imagen acá mismo, sin pasar por la pantalla de edición.
+  const adjuntar = async (file: File | undefined) => {
+    if (!file) return
+    const problema = problemaMedia(file)
+    if (problema) { avisar(problema); return }
+    try { await guardarMediaDe(id, file) } catch { avisar('No se pudo guardar. Probá con un archivo más liviano.') }
+  }
   const ex = useLiveQuery(() => db.exercises.get(id), [id])
   const [hist, setHist] = useState<SesionDeEjercicio[] | null>(null)
   useEffect(() => { let v = true; void historicoEjercicio(id, 40).then((h) => { if (v) setHist(h) }); return () => { v = false } }, [id])
@@ -59,7 +67,12 @@ export function ExerciseScreen({ id }: { id: number }) {
         <div style={{ marginBottom: 10 }}>
           {tieneMedia
             ? <MediaView exerciseId={id} url={ex.url} />
-            : <button className="media-vacio" onClick={() => nav.ir({ v: 'ejercicioForm', id })}>Sin video ni imagen.<br /><b>Tocá para agregar uno</b></button>}
+            : (
+              <>
+                <label className="media-vacio" style={{ display: 'block', cursor: 'pointer' }} htmlFor="fm">Sin video ni imagen.<br /><b>Tocá para agregar uno</b></label>
+                <input id="fm" type="file" accept="image/*,video/*" style={{ display: 'none' }} onChange={(e) => { void adjuntar(e.target.files?.[0]); e.target.value = '' }} />
+              </>
+            )}
         </div>
 
         <div className="row" style={{ marginBottom: 10 }}>
@@ -100,12 +113,12 @@ export function ExerciseFormScreen({ id }: { id: number | null }) {
   }, [archivoNuevo])
   const elegirArchivo = (file: File | undefined) => {
     if (!file) return
-    if (!file.type.startsWith('image/') && !file.type.startsWith('video/')) { avisar('Tiene que ser una imagen o un video.'); return }
-    if (file.size > MAX_MEDIA_MB * 1048576) { avisar(`El archivo pesa ${Math.round(file.size / 1048576)} MB. El máximo es ${MAX_MEDIA_MB} MB.`); return }
+    const problema = problemaMedia(file)
+    if (problema) { avisar(problema); return }
     setArchivoNuevo(file); setQuitarMedia(false)
   }
   const guardarMedia = async (exId: number) => {
-    if (archivoNuevo) await db.media.put({ exercise_id: exId, tipo: archivoNuevo.type.startsWith('video/') ? 'video' : 'imagen', blob: archivoNuevo, nombre: archivoNuevo.name, size: archivoNuevo.size })
+    if (archivoNuevo) await guardarMediaDe(exId, archivoNuevo)
     else if (quitarMedia) await db.media.delete(exId)
   }
   useEffect(() => {
