@@ -305,6 +305,7 @@ def main():
             tab(pg, 'Ejercicios'); pg.fill('[aria-label="Buscar ejercicio"]', 'press plano'); pg.wait_for_timeout(300)
             pg.click('.item >> text=Press plano'); pg.wait_for_timeout(500)
             ok('Ficha: gráfico de peso máximo e historial sin enlaces', pg.locator('.chart').count() == 1 and pg.locator('.main button.item').count() == 0 and '/2026' in texto(pg))
+            pg.wait_for_function("document.querySelector('.media img')?.naturalWidth > 0", timeout=5000)   # esperar a que cargue
             ok('Ficha: imagen que viene con la app', pg.locator('.media img').count() == 1 and pg.locator('.media-vacio').count() == 0
                and pg.evaluate("document.querySelector('.media img').naturalWidth") == 640 and '.webp' in pg.locator('.media img').get_attribute('src'))
             pg.set_input_files('#fm', os.path.join(FIX, 'imagen.png')); pg.wait_for_timeout(500)
