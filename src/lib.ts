@@ -231,8 +231,7 @@ export function categoria(e: Exercise): string {
   if (e.patron === 'pliometria') return 'Potencia y pliometría'
   if (e.grupo === 'core' || e.patron.startsWith('core')) return 'Core'
   if (e.grupo === 'full_body') return 'Cuerpo completo'
-  const t = etiqueta(e.grupo)
-  return t.charAt(0).toUpperCase() + t.slice(1)
+  return etiqueta(e.grupo)
 }
 const ORDEN_CAT = ['Pecho', 'Dorsal', 'Trapecio', 'Hombro anterior', 'Hombro lateral', 'Hombro posterior', 'Bíceps', 'Tríceps',
   'Glúteo', 'Cuádriceps', 'Isquios', 'Aductores', 'Gemelo', 'Cuerpo completo', 'Core', 'Potencia y pliometría', 'Movilidad']
@@ -249,5 +248,6 @@ const CON_ACENTO: Record<string, string> = {
   core_antiextension: 'core antiextensión', core_antiflexion_lateral: 'core antiflexión lateral', core_antirotacion: 'core antirrotación',
   core_rotacion: 'core rotación',
 }
-export function etiqueta(s: string): string { return CON_ACENTO[s] ?? s.replace(/_/g, ' ') }
+/** Nombre para mostrar de un grupo, equipo o patrón: con acento y con mayúscula inicial. */
+export function etiqueta(s: string): string { const t = CON_ACENTO[s] ?? s.replace(/_/g, ' '); return t.charAt(0).toUpperCase() + t.slice(1) }
 export const plural = (n: number, uno: string, varios: string): string => `${n} ${n === 1 ? uno : varios}`

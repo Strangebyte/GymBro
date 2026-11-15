@@ -4,7 +4,7 @@
 
 ## Dónde está
 
-- La app está completa y funcionando en las pruebas automáticas (101 de 101, sin errores de consola).
+- La app está completa y funcionando en las pruebas automáticas (103 de 103, sin errores de consola).
 - **Publicada en GitHub Pages:** https://<usuario>.github.io/GymBro/ (repositorio público
   `<usuario>/GymBro`). Cada push a `main` la vuelve a publicar sola. Verificado el 14-11-2026 en
   Chromium: abre sin errores, registra el service worker y arranca con catálogo y plan, sin sesiones.
@@ -82,6 +82,7 @@ video y scroll táctil con una hoja abierta.
 | Fecha | Qué se hizo |
 |---|---|
 | 10-11-2026 | Diseño (`docs/historico/`), catálogo de 96 ejercicios, primera versión solo de registro |
+| 15-11-2026 | Importar plan en dos caminos (ya tengo un plan / que una IA lo arme), con un pedido distinto para cada uno; etiquetas con mayúscula inicial |
 | 15-11-2026 | Importador: arreglos en "Crear nuevo" / "Vincular"; Excel con propuesta de nombres y alias |
 | 15-11-2026 | Imágenes incluidas para 28 ejercicios (solo coincidencias seguras, revisadas una por una) |
 | 15-11-2026 | Formas más redondas en toda la app; imágenes incluidas para 5 ejercicios, de prueba |

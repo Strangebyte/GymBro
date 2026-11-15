@@ -20,7 +20,7 @@ npm run seed         # regenera src/seed.json, src/seed-historial.json y data/*.
 npm run test:e2e     # requiere dist/ y: pip install playwright && playwright install chromium
 ```
 
-Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 101 verificaciones tienen que pasar
+Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 103 verificaciones tienen que pasar
 y no puede haber errores de consola. Si cambiás un flujo, actualizá `tests/e2e.py` en el mismo cambio.
 
 ## Cómo trabajar con el dueño
@@ -118,9 +118,11 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
   sesión solo se ven (botón ▶).
 - Recordatorio de copia en Hoy cuando hay 4 o más sesiones propias posteriores a la última copia
   (`settings.copia_hasta`). "Más tarde" lo oculta hasta volver a abrir la app.
-- Importar plan: el camino principal para quien no tiene archivo es "Copiar pedido para Claude" (`pedidoParaIA`
-  en plan.ts: formato + reglas + catálogo de esa persona) y pegar la respuesta. Si cambia el formato, actualizar
-  ese texto, `EJEMPLO_PLAN` y `docs/formato-plan-gym.md` juntos.
+- Importar plan: primero se elige "Ya tengo un plan" o "Quiero que una IA me arme un plan". En las dos se puede
+  subir el archivo .json o copiar un pedido para la IA y pegar la respuesta; cambia el pedido (`pedidoParaIA` en
+  plan.ts, modos `convertir` y `crear`: los dos llevan formato + reglas + catálogo de esa persona). Si cambia el
+  formato, actualizar ese texto, `EJEMPLO_PLAN` y `docs/formato-plan-gym.md` juntos.
+- Grupos, equipamiento y patrones se muestran con `etiqueta()` (lib.ts): con acento y mayúscula inicial.
 - Apariencia: tema claro/oscuro y paleta (`verde`, `azul`, `violeta`). Una paleta nueva son dos bloques en
   styles.css (`[data-paleta]` claro y oscuro) y una opción en Ajustes; el naranja queda reservado para "otras
   actividades" y el rojo para errores.

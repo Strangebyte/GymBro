@@ -245,6 +245,8 @@ export function ImportScreen() {
   const [activar, setActivar] = useState(true)
   const [ocupado, setOcupado] = useState(false)
   const [pedido, setPedido] = useState<string | null>(null)
+  // Primer paso: ¿ya tiene un plan o quiere que una IA se lo arme?
+  const [modo, setModo] = useState<'tengo' | 'crear' | null>(null)
   // Lo que se escribió en "Crear nuevo" para cada ejercicio, para no perderlo al pasar a "Vincular" y volver.
   const borradores = useRef(new Map<string, Resolucion>())
   const file = useRef<HTMLInputElement>(null)
@@ -258,9 +260,9 @@ export function ImportScreen() {
     setRes(m); setImp(r)
   }
   // Copia el pedido para el asistente. Si el navegador no deja copiar, lo muestra para copiarlo a mano.
-  const copiarPedido = async () => {
-    const t = pedidoParaIA(ejercicios ?? [])
-    try { await navigator.clipboard.writeText(t); setPedido(null); avisar('Pedido copiado. Pegalo en Claude.') } catch { setPedido(t) }
+  const copiarPedido = async (para: 'crear' | 'convertir') => {
+    const t = pedidoParaIA(ejercicios ?? [], para)
+    try { await navigator.clipboard.writeText(t); setPedido(null); avisar('Pedido copiado. Pegalo en la IA.') } catch { setPedido(t) }
   }
   const poner = (clave: string, r: Resolucion) => { if (r.tipo === 'crear') borradores.current.set(clave, r); setRes((m) => new Map(m).set(clave, r)) }
   const importar = async () => {
@@ -276,51 +278,106 @@ export function ImportScreen() {
     }
   }
 
+  const cajaPedido = pedido != null && (
+    <>
+      <div className="xsmall muted" style={{ margin: '8px 0 4px' }}>No se pudo copiar solo. Mantené apretado el texto, elegí «Seleccionar todo» y copialo.</div>
+      <textarea rows={6} readOnly value={pedido} aria-label="Pedido para la IA" style={{ fontSize: 12 }} onFocus={(e) => e.target.select()} />
+    </>
+  )
+  const cajaPegar = (
+    <>
+      <button className="btn block" style={{ marginTop: 8 }} onClick={() => setPegar(true)}>Pegar el plan</button>
+      {pegar && (
+        <>
+          <label className="f" htmlFor="pp">Pegá acá lo que te devolvió la IA</label>
+          <textarea id="pp" rows={7} autoFocus placeholder='{ "formato": "plan-gym/v1", … }' value={texto} onChange={(e) => setTexto(e.target.value)} aria-label="Contenido del plan" style={{ fontFamily: 'monospace', fontSize: 12 }} />
+          <button className="btn block" style={{ marginTop: 8 }} disabled={!texto.trim()} onClick={() => leer(texto)}>Leer</button>
+        </>
+      )}
+    </>
+  )
+  const botonArchivo = (principal: boolean) => (
+    <button className={`btn block${principal ? ' primary lg' : ''}`} style={{ marginTop: 12 }} onClick={() => file.current?.click()}>Elegir archivo</button>
+  )
+
   if (!imp) return (
     <>
       <TopBar titulo="Importar plan" atras />
       <div className="main sin-tabs">
-        <div className="card">
-          <b>¿No tenés un plan? Pedíselo a Claude</b>
-          <ol className="small muted" style={{ margin: '8px 0 12px', paddingLeft: 20 }}>
-            <li>Tocá <b>Copiar pedido</b>: lleva el formato y tu lista de ejercicios.</li>
-            <li>Pegalo en Claude (o en otro asistente) y contale qué querés entrenar.</li>
-            <li>Copiá el plan que te devuelve y pegalo acá abajo.</li>
-          </ol>
-          <button className="btn soft block" onClick={() => void copiarPedido()}>Copiar pedido para Claude</button>
-          {pedido != null && (
-            <>
-              <div className="xsmall muted" style={{ margin: '8px 0 4px' }}>No se pudo copiar solo. Mantené apretado el texto, elegí «Seleccionar todo» y copialo.</div>
-              <textarea rows={6} readOnly value={pedido} aria-label="Pedido para el asistente" style={{ fontSize: 12 }} onFocus={(e) => e.target.select()} />
-            </>
-          )}
-          <button className="btn block" style={{ marginTop: 8 }} onClick={() => setPegar(true)}>Pegar el plan</button>
-          {pegar && (
-            <>
-              <label className="f" htmlFor="pp">Pegá acá el plan</label>
-              <textarea id="pp" rows={7} autoFocus placeholder='{ "formato": "plan-gym/v1", … }' value={texto} onChange={(e) => setTexto(e.target.value)} aria-label="Contenido del plan" style={{ fontFamily: 'monospace', fontSize: 12 }} />
-              <button className="btn block" style={{ marginTop: 8 }} disabled={!texto.trim()} onClick={() => leer(texto)}>Leer</button>
-            </>
-          )}
-        </div>
-        <div className="card">
-          <div className="small muted">Si ya tenés un archivo de plan (<b>.json</b>), subilo. Antes de guardar vas a ver qué trae y vas a poder resolver los ejercicios que la app no conozca.</div>
-          <button className="btn primary block lg" style={{ marginTop: 12 }} onClick={() => file.current?.click()}>Elegir archivo</button>
-          <input ref={file} type="file" accept=".json,application/json,text/plain" style={{ display: 'none' }}
-            onChange={async (e) => { const f = e.target.files?.[0]; if (f) leer(await f.text()); e.target.value = '' }} />
-        </div>
-        <button className="card tight" onClick={() => setAyuda((a) => !a)} aria-expanded={ayuda}>
-          <div className="row"><Chevron abierto={ayuda} /><b className="small">¿Cómo es el archivo?</b></div>
-          {ayuda && (
-            <>
-              <div className="xsmall muted" style={{ marginTop: 6 }}>
-                Días → bloques → ejercicios → series. Cada serie lleva al menos uno de: <b>reps</b>, <b>seg</b>, <b>peso_kg</b>, <b>rir</b>, <b>rpe</b>. RIR y RPE no van juntos.
-                Si todas las series son iguales se puede abreviar con <b>"series": 3</b> y los valores al lado.
-              </div>
-              <pre className="code">{EJEMPLO_PLAN}</pre>
-            </>
-          )}
-        </button>
+        <input ref={file} type="file" accept=".json,application/json,text/plain" style={{ display: 'none' }}
+          onChange={async (e) => { const f = e.target.files?.[0]; if (f) leer(await f.text()); e.target.value = '' }} />
+
+        {modo == null && (
+          <>
+            <button className="card" onClick={() => setModo('tengo')}>
+              <h3>Ya tengo un plan</h3>
+              <div className="small muted" style={{ marginTop: 4 }}>Tengo el archivo, o lo tengo en una foto, un PDF, una planilla u otra app y quiero pasarlo.</div>
+            </button>
+            <button className="card" onClick={() => setModo('crear')}>
+              <h3>Quiero que una IA me arme un plan</h3>
+              <div className="small muted" style={{ marginTop: 4 }}>Le pedís el plan a Claude u otra IA con un texto ya preparado y lo traés a la app.</div>
+            </button>
+          </>
+        )}
+
+        {modo === 'tengo' && (
+          <>
+            <div className="card">
+              <b>Tengo el archivo (.json)</b>
+              <div className="small muted" style={{ marginTop: 4 }}>Antes de guardar vas a ver qué trae y vas a poder resolver los ejercicios que la app no conozca.</div>
+              {botonArchivo(true)}
+            </div>
+            <div className="card">
+              <b>Lo tengo en otro formato</b>
+              <ol className="small muted" style={{ margin: '8px 0 12px', paddingLeft: 20 }}>
+                <li>Tocá <b>Copiar pedido</b>: lleva el formato de la app y tu lista de ejercicios.</li>
+                <li>Pegalo en Claude u otra IA y pasale tu plan (texto, foto o archivo). Le pide que lo pase tal cual, sin cambiarlo.</li>
+                <li>Copiá lo que te devuelve y pegalo acá abajo.</li>
+              </ol>
+              <button className="btn soft block" onClick={() => void copiarPedido('convertir')}>Copiar pedido para la IA</button>
+              {cajaPedido}
+              {cajaPegar}
+            </div>
+          </>
+        )}
+
+        {modo === 'crear' && (
+          <>
+            <div className="card">
+              <b>Pedile el plan a una IA</b>
+              <ol className="small muted" style={{ margin: '8px 0 12px', paddingLeft: 20 }}>
+                <li>Tocá <b>Copiar pedido</b>: lleva el formato de la app y tu lista de ejercicios.</li>
+                <li>Pegalo en Claude u otra IA y contale qué querés entrenar.</li>
+                <li>Copiá el plan que te devuelve y pegalo acá abajo.</li>
+              </ol>
+              <button className="btn primary block" onClick={() => void copiarPedido('crear')}>Copiar pedido para la IA</button>
+              {cajaPedido}
+              {cajaPegar}
+            </div>
+            <div className="card">
+              <b>Si la IA te dio un archivo (.json)</b>
+              {botonArchivo(false)}
+            </div>
+          </>
+        )}
+
+        {modo != null && (
+          <>
+            <button className="card tight" onClick={() => setAyuda((a) => !a)} aria-expanded={ayuda}>
+              <div className="row"><Chevron abierto={ayuda} /><b className="small">¿Cómo es el archivo?</b></div>
+              {ayuda && (
+                <>
+                  <div className="xsmall muted" style={{ marginTop: 6 }}>
+                    Días → bloques → ejercicios → series. Cada serie lleva al menos uno de: <b>reps</b>, <b>seg</b>, <b>peso_kg</b>, <b>rir</b>, <b>rpe</b>. RIR y RPE no van juntos.
+                    Si todas las series son iguales se puede abreviar con <b>"series": 3</b> y los valores al lado.
+                  </div>
+                  <pre className="code">{EJEMPLO_PLAN}</pre>
+                </>
+              )}
+            </button>
+            <button className="btn ghost block" onClick={() => { setModo(null); setPedido(null); setPegar(false) }}>Elegir otra opción</button>
+          </>
+        )}
       </div>
     </>
   )

@@ -208,18 +208,29 @@ export const EJEMPLO_PLAN = `{
 }`
 
 /**
- * Texto listo para pegar en Claude (u otro asistente) y que devuelva un plan importable.
- * Lleva el formato, las reglas y los ejercicios que esta persona tiene en su catálogo.
+ * Texto listo para pegar en una IA (Claude u otra) y que devuelva un plan importable.
+ * `crear`: la IA arma un plan nuevo. `convertir`: la IA pasa al formato un plan que la persona ya tiene.
+ * Los dos llevan el formato, las reglas y los ejercicios del catálogo de esta persona.
  */
-export function pedidoParaIA(catalogo: Exercise[]): string {
+export function pedidoParaIA(catalogo: Exercise[], modo: 'crear' | 'convertir' = 'crear'): string {
   const lista = agruparPorCategoria(catalogo.filter((e) => !e.archivo))
     .map((g) => `${g.cat}:\n${g.items.map((e) => `- "${e.nombre}"${e.legible ? ` (${e.legible})` : ''}`).join('\n')}`)
     .join('\n\n')
-  return `Necesito que me armes un plan de entrenamiento para importar en mi app de gimnasio (GymBro).
+  const intro = modo === 'crear'
+    ? `Necesito que me armes un plan de entrenamiento para importar en mi app de gimnasio (GymBro).
 
 Antes de armarlo, preguntame lo que te falte saber: mi objetivo, cuántos días por semana entreno, cuánto dura cada sesión, qué equipamiento tengo, mi nivel y si tengo lesiones o ejercicios que quiera evitar. Si ya te lo conté, no vuelvas a preguntar.
 
-Cuando tengas todo, respondé con UN SOLO bloque de código JSON, completo, con exactamente este formato ("${PLAN_FORMAT}"):
+Cuando tengas todo, respondé`
+    : `Ya tengo un plan de entrenamiento y necesito pasarlo al formato de mi app de gimnasio (GymBro), sin cambiarlo. Te lo paso junto con este mensaje (como texto, foto o archivo). Si no lo ves, pedímelo antes de seguir.
+
+Pasalo tal cual está: los mismos días, en el mismo orden, con los mismos ejercicios, series, repeticiones y pesos. No agregues, quites ni "mejores" nada. Si algo no se lee o no queda claro, preguntame en vez de inventarlo. Si mi plan no agrupa los ejercicios, poné cada uno en su propio bloque; los que se hacen juntos (superserie, circuito) van en el mismo bloque.
+
+Respondé`
+  const ejercicios = modo === 'crear'
+    ? `Ejercicios: siempre que puedas usá estos, que son los que ya tiene mi app. En "ejercicio" va solo el texto que está entre comillas, tal cual; lo que sigue entre paréntesis es una aclaración para vos. Si necesitás uno que no está en la lista, ponele un nombre claro en español: la app me va a preguntar si lo creo.`
+    : `Ejercicios: estos son los que ya tiene mi app. Si un ejercicio de mi plan es el mismo que uno de esta lista, aunque esté escrito distinto o en otro idioma, usá el nombre de la lista: en "ejercicio" va solo el texto que está entre comillas, tal cual; lo que sigue entre paréntesis es una aclaración para vos. Si no está en la lista, dejá el nombre como figura en mi plan: la app me va a preguntar si lo creo.`
+  return `${intro} con UN SOLO bloque de código JSON, completo, con exactamente este formato ("${PLAN_FORMAT}"):
 
 ${EJEMPLO_PLAN}
 
@@ -235,7 +246,7 @@ Reglas del formato:
 - Los días rotan en el orden del archivo: no llevan fechas ni días de la semana.
 - Tiene que ser JSON válido: sin comentarios y sin comas finales.
 
-Ejercicios: siempre que puedas usá estos, que son los que ya tiene mi app. En "ejercicio" va solo el texto que está entre comillas, tal cual; lo que sigue entre paréntesis es una aclaración para vos. Si necesitás uno que no está en la lista, ponele un nombre claro en español: la app me va a preguntar si lo creo.
+${ejercicios}
 
 ${lista}
 `
