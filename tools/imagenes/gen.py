@@ -22,7 +22,45 @@ MAPA = {
     'peso-muerto-br': 'Barbell_Deadlift',
     'empuje-de-cadera-br': 'Barbell_Hip_Thrust',
     'fondos': 'Dips_-_Chest_Version',
+    'sentadilla-br': 'Barbell_Squat',
+    'sentadilla-al-cajon-ra-br': 'Box_Squat_with_Bands',
+    'sentadilla-bulgara-ra-br': 'One_Leg_Barbell_Squat',
+    'peso-muerto-1p-kb': 'Kettlebell_One-Legged_Deadlift',
+    'curl-nordico': 'Floor_Glute-Ham_Raise',
+    'curl-isquios-fb': 'Ball_Leg_Curl',
+    'press-inclinado-con-mancuernas': 'Incline_Dumbbell_Press',
+    'aperturas-mq': 'Butterfly',
+    'press-militar-br': 'Standing_Military_Press',
+    'press-hombro-mq': 'Machine_Shoulder_Military_Press',
+    'press-hombro-ba-kb': 'Two-Arm_Kettlebell_Military_Press',
+    'dominadas-palmar': 'Chin-Up',
+    'dorsalera-palmar-mq': 'Underhand_Cable_Pulldowns',
+    'remo-1m-plancha-alta-kb': 'Alternating_Renegade_Row',
+    'remo-1m-cd-kb': 'One-Arm_Kettlebell_Row',
+    'remo-al-menton-br': 'Upright_Barbell_Row',
+    'biceps-br': 'Barbell_Curl',
+    'biceps-mc': 'Dumbbell_Bicep_Curl',
+    'biceps-alterno-mc': 'Dumbbell_Alternate_Bicep_Curl',
+    'triceps-pl': 'Triceps_Pushdown',
+    'thrusters-kb': 'Kettlebell_Thruster',
+    'isquiotibiales-rd': 'Hamstring-SMR',
+    'cuadrupedia-con-patada': 'Glute_Kickback',
 }
+
+# Candidatos que NO se incluyeron porque la foto no coincide del todo o no se sabe cómo lo hace el dueño.
+# Para sumar uno, confirmarlo con él y pasarlo a MAPA.
+#   press-en-landmine            Single-Arm_Linear_Jammer        (la foto es la versión explosiva)
+#   remo-invertido-puente-br     Inverted_Row                    (la foto es con piernas estiradas, no en puente)
+#   remo-pendley-prono           Bent_Over_Barbell_Row           (remo inclinado común, no desde el piso)
+#   vuelo-frontal-lateral        Side_Laterals_to_Front_Raise
+#   2do-tiempo-split-br          Split_Jerk                      (las fotos no muestran el split)
+#   plancha-alta-carrera         Mountain_Climbers               (si "carrera" es escalador)
+#   swing-cadera-ra-kb           One-Arm_Kettlebell_Swings       (la foto es a una mano y sin banda)
+#   push-up-dc                   Pushups                         (sin disco)
+#   elevaciones-de-cadera-1p-mb  Single_Leg_Glute_Bridge         (sin banda)
+#   camilla-isquiosurales-1p-mq  Lying_Leg_Curls                 (a dos piernas)
+#   sentadilla-split-salto-cambio-kb  Split_Jump                 (sin kettlebell)
+#   remo-neutro-mq               Leverage_Iso_Row / Seated_Cable_Rows  (no se sabe qué máquina es)
 
 def foto(carpeta, n):
     with urllib.request.urlopen(f'{BASE}{carpeta}/{n}.jpg', timeout=30) as r:
