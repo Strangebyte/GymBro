@@ -1,4 +1,4 @@
-"""Prueba de punta a punta de Gym Log sobre la versión compilada.
+"""Prueba de punta a punta de GymBro sobre la versión compilada.
 
 Requisitos (una vez):   pip install "playwright>=1.45"  &&  playwright install chromium
 Uso:                    npm run build  &&  python tests/e2e.py

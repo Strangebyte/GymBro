@@ -205,7 +205,7 @@ export function pedidoParaIA(catalogo: Exercise[]): string {
   const lista = agruparPorCategoria(catalogo.filter((e) => !e.archivo))
     .map((g) => `${g.cat}:\n${g.items.map((e) => `- "${e.nombre}"${e.legible ? ` (${e.legible})` : ''}`).join('\n')}`)
     .join('\n\n')
-  return `Necesito que me armes un plan de entrenamiento para importar en mi app de gimnasio (Gym Log).
+  return `Necesito que me armes un plan de entrenamiento para importar en mi app de gimnasio (GymBro).
 
 Antes de armarlo, preguntame lo que te falte saber: mi objetivo, cuántos días por semana entreno, cuánto dura cada sesión, qué equipamiento tengo, mi nivel y si tengo lesiones o ejercicios que quiera evitar. Si ya te lo conté, no vuelvas a preguntar.
 

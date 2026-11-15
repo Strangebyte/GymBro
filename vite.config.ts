@@ -11,8 +11,8 @@ export default defineConfig({
       injectRegister: null,
       includeAssets: ['icon-192.png', 'icon-512.png'],
       manifest: {
-        name: 'Gym Log',
-        short_name: 'Gym Log',
+        name: 'GymBro',
+        short_name: 'GymBro',
         description: 'Registro de entrenamiento: series, pesos, reps, RIR e intensidad',
         // Android pinta con theme_color la barra de gestos de abajo y no se puede cambiar según el tema o la paleta
         // elegidos: va un neutro oscuro, que no desentona con ninguno. La barra de arriba sí sigue al tema (App.tsx).

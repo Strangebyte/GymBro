@@ -105,7 +105,7 @@ export function SettingsScreen({ settings }: { settings: Settings }) {
             }
           }}>Empezar de cero</button>
         </div>
-        <div className="xsmall muted center" style={{ marginTop: 14 }}>Gym Log 1.0</div>
+        <div className="xsmall muted center" style={{ marginTop: 14 }}>GymBro 1.0</div>
       </div>
     </>
   )

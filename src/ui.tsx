@@ -131,7 +131,7 @@ export function TopBar(props: { titulo: string; sub?: string; atras?: boolean; d
 /** Flecha de "esto se despliega". Va siempre a la izquierda; apunta a la derecha cerrado y hacia abajo abierto. */
 export function Chevron({ abierto }: { abierto: boolean }) {
   return (
-    <svg className={`chev${abierto ? ' abierto' : ''}`} viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor"
+    <svg className={`chev${abierto ? ' abierto' : ''}`} viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
       strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>
   )
 }

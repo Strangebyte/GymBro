@@ -300,7 +300,7 @@ export async function exportarTodo(): Promise<string> {
 export async function importarTodo(texto: string): Promise<{ sesiones: number; series: number }> {
   let data: Record<string, unknown>
   try { data = JSON.parse(texto) } catch { throw new Error('El archivo no es un JSON válido.') }
-  if (data.formato !== BACKUP_FORMAT) throw new Error(`Este archivo no es un backup de Gym Log (formato: ${String(data.formato ?? 'ninguno')}).`)
+  if (data.formato !== BACKUP_FORMAT) throw new Error(`Este archivo no es una copia de GymBro (formato: ${String(data.formato ?? 'ninguno')}).`)
   for (const t of TABLAS) if (!Array.isArray(data[t])) throw new Error(`Backup incompleto: falta la tabla ${t}.`)
   await db.transaction('rw', TABLAS.map((t) => db.table(t)), async () => {
     for (const t of TABLAS) {

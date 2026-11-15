@@ -99,7 +99,7 @@ export default function App() {
     }
   }, [vista, settings])
 
-  if (estado === 'cargando') return <div className="empty" style={{ paddingTop: 120 }}>Preparando Gym Log…</div>
+  if (estado === 'cargando') return <div className="empty" style={{ paddingTop: 120 }}>Preparando GymBro…</div>
   if (estado === 'error') return (
     <div className="empty" style={{ paddingTop: 100 }}>
       <b>No se pudo abrir el almacenamiento de este navegador.</b><br /><br />

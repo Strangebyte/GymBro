@@ -1,4 +1,4 @@
-# Gym Log
+# GymBro
 
 App de entrenamiento personal: planes por día, registro de series, wellness, otras actividades, calendario
 y progreso. Funciona en el navegador y se instala en Android como app. Los datos quedan en el dispositivo.

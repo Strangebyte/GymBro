@@ -74,6 +74,7 @@ video y scroll táctil con una hoja abierta.
 | Fecha | Qué se hizo |
 |---|---|
 | 10-11-2026 | Diseño (`docs/historico/`), catálogo de 96 ejercicios, primera versión solo de registro |
+| 15-11-2026 | La app pasa a llamarse GymBro, con ícono nuevo (mancuerna en degradé); chevrones más chicos |
 | 15-11-2026 | Chevrón a la izquierda en todo lo desplegable; color neutro para la barra inferior de Android (sin confirmar en el teléfono) |
 | 15-11-2026 | Flecha en las filas de Progreso, sin recarga al deslizar, adjuntar desde la ficha, bloque sin contador de series, "Últ. vez" corta y completa |
 | 15-11-2026 | Paletas de color: verde, azul y violeta, cada una en claro y oscuro (probado solo en el simulador) |

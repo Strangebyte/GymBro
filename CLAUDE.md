@@ -1,4 +1,7 @@
-# Gym Log
+# GymBro
+
+La app se llama **GymBro** (antes "Gym Log"). Por compatibilidad con datos ya guardados, siguen con el nombre
+viejo y **no se cambian**: la base `gym-log-v2`, el formato de copia `gym-log-backup/v2` y la clave `gl-aspecto`.
 
 App de entrenamiento personal del dueño: planes por día, registro de series, wellness, otras actividades,
 calendario y progreso. PWA en React que guarda todo en el dispositivo (IndexedDB). Sin backend ni cuentas.
@@ -50,6 +53,7 @@ src/
     Progress.tsx   Progreso + GraficoPesos
     More.tsx       Ajustes
 tools/seed/    Generador de datos iniciales (Python) y catálogo base
+tools/logo/    gen.py dibuja el ícono (public/icon-*.png); requiere Pillow
 tests/         e2e.py (Playwright, Python) y fixtures
 data/          Catálogo y plan actual en JSON legible (generados)
 docs/          Decisiones, formato de plan, deploy, fuentes, histórico

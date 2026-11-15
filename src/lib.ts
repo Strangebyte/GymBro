@@ -214,7 +214,7 @@ export async function guardarArchivo(nombre: string, contenido: string): Promise
 
 /** Exporta la copia de seguridad y, si salió bien, lo deja anotado para el recordatorio. */
 export async function hacerCopia(): Promise<'ok' | 'cancelado' | 'error'> {
-  const r = await guardarArchivo(`gym-log-${hoyISO()}.json`, await exportarTodo())
+  const r = await guardarArchivo(`gymbro-${hoyISO()}.json`, await exportarTodo())
   if (r === 'ok') await marcarCopia()
   return r
 }

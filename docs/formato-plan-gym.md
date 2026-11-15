@@ -1,6 +1,6 @@
 # Formato de plan importable — `plan-gym/v1`
 
-Es el archivo que acepta **Planes → Importar plan** en Gym Log, y el mismo que genera **Exportar a archivo**. Para pedirle un plan a Claude desde la app: **Planes → Importar plan → Copiar pedido para Claude**, que copia este formato y el catálogo de quien la usa. Desde la PC: «armame un plan en formato plan-gym/v1» y pasale este documento junto con `data/catalogo-ejercicios.json`.
+Es el archivo que acepta **Planes → Importar plan** en GymBro, y el mismo que genera **Exportar a archivo**. Para pedirle un plan a Claude desde la app: **Planes → Importar plan → Copiar pedido para Claude**, que copia este formato y el catálogo de quien la usa. Desde la PC: «armame un plan en formato plan-gym/v1» y pasale este documento junto con `data/catalogo-ejercicios.json`.
 
 ## Estructura
 
