@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, kgToG, type Exercise, type Session, type SetLog, type Settings } from '../db'
-import { Chips, HistorialLista, Ico, MediaView, Picker, Sheet, Stepper, TopBar, useDialogos, useNav, useTieneMedia } from '../ui'
+import { Chevron, Chips, HistorialLista, Ico, MediaView, Picker, Sheet, Stepper, TopBar, useDialogos, useNav, useTieneMedia } from '../ui'
 import { etiqueta, fmtDur, fmtFecha, fmtFechaCorta, mmss, numES, plural, prepararSonido, resumenSets, setValido, sonar, ultimaVez, vibrar } from '../lib'
 import { agregarEjercicio, agregarSerie, descartarSesion, sesionEnCurso, terminarSesion } from '../actions'
 
@@ -98,13 +98,13 @@ export function SessionScreen({ settings }: { settings: Settings }) {
             <div key={b} className={`bloque${listo ? ' listo' : ''}`}>
               <div className="bloque-h">
                 <button className="row grow" onClick={() => setAbierto(abierto === b ? null : b)} aria-expanded={abierto === b}>
+                  <Chevron abierto={abierto === b} />
                   <span className="num">{esExtra ? '+' : b}</span>
                   <span className="grow">
                     <span className="bold">{nombre}</span>
                     <span className="xsmall muted" style={{ display: 'block' }}>{plural(its.length, 'ejercicio', 'ejercicios')}</span>
                     <span className="xsmall muted truncate" style={{ display: 'block' }}>{desc.slice(0, 5).join(' · ')}</span>
                   </span>
-                  <span className="muted">{abierto === b ? '▾' : '▸'}</span>
                 </button>
                 {!porEjercicio && (
                   <button className={`tilde${listo ? ' on' : ''}`} aria-pressed={listo} aria-label={`${listo ? 'Desmarcar' : 'Marcar hecho'} ${nombre}`}

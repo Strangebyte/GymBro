@@ -17,7 +17,7 @@ npm run seed         # regenera src/seed.json, src/seed-historial.json y data/*.
 npm run test:e2e     # requiere dist/ y: pip install playwright && playwright install chromium
 ```
 
-Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 94 verificaciones tienen que pasar
+Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 95 verificaciones tienen que pasar
 y no puede haber errores de consola. Si cambiás un flujo, actualizá `tests/e2e.py` en el mismo cambio.
 
 ## Cómo trabajar con el dueño
@@ -113,6 +113,8 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
   actividades" y el rojo para errores.
 - Progreso: "Series por grupo muscular" va siempre visible. El progreso por ejercicio usa `progresoDe` (lib.ts):
   peso más alto y sus reps; a igual peso compara reps; sin peso, reps o tiempo.
+- Todo lo que se despliega lleva `<Chevron>` (ui.tsx) **a la izquierda**: bloques de la sesión, filas de Progreso,
+  ayudas. No usar triángulos ▸ ▾.
 - Fechas `dd/mm/yyyy`. Decimales con coma. Excepción pedida por el dueño: "Últ. vez (dd/mm)" en la tarjeta de la
   sesión, que además no se corta: ocupa las líneas que necesite.
 

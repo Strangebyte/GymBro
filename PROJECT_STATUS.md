@@ -4,7 +4,7 @@
 
 ## Dónde está
 
-- La app está completa y funcionando en las pruebas automáticas (94 de 94, sin errores de consola).
+- La app está completa y funcionando en las pruebas automáticas (95 de 95, sin errores de consola).
 - **Publicada en GitHub Pages:** https://<usuario>.github.io/GymBro/ (repositorio público
   `<usuario>/GymBro`). Cada push a `main` la vuelve a publicar sola. Verificado el 14-11-2026 en
   Chromium: abre sin errores, registra el service worker y arranca con catálogo y plan, sin sesiones.
@@ -74,6 +74,7 @@ video y scroll táctil con una hoja abierta.
 | Fecha | Qué se hizo |
 |---|---|
 | 10-11-2026 | Diseño (`docs/historico/`), catálogo de 96 ejercicios, primera versión solo de registro |
+| 15-11-2026 | Chevrón a la izquierda en todo lo desplegable; color neutro para la barra inferior de Android (sin confirmar en el teléfono) |
 | 15-11-2026 | Flecha en las filas de Progreso, sin recarga al deslizar, adjuntar desde la ficha, bloque sin contador de series, "Últ. vez" corta y completa |
 | 15-11-2026 | Paletas de color: verde, azul y violeta, cada una en claro y oscuro (probado solo en el simulador) |
 | 14-11-2026 | Progreso con reps, series por grupo siempre visible, acentos en etiquetas (probado solo en el simulador) |

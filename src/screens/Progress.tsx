@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, setSettings, type SetLog, type Settings } from '../db'
-import { Catalogo, Chips, Sheet, TopBar } from '../ui'
+import { Catalogo, Chevron, Chips, Sheet, TopBar } from '../ui'
 import { agruparPorDia, etiqueta, fmtFecha, hoyISO, lunesDe, numES, plural, progresoDe, sumarDias, unidadDe, type Medida, type Punto } from '../lib'
 import { PREGUNTAS } from './Today'
 
@@ -169,6 +169,7 @@ export function ProgressScreen({ settings }: { settings: Settings }) {
           {filas.map((f) => (
             <div key={f.id}>
               <button className="pm" onClick={() => setAbierto(abierto === f.id ? null : f.id)} aria-expanded={abierto === f.id}>
+                <Chevron abierto={abierto === f.id} />
                 <span><b className="small" style={{ display: 'block' }}>{f.ex.nombre}</b>
                   <span className="xsmall muted">{f.pts.length ? `${plural(f.pts.length, 'sesión', 'sesiones')}${f.medida === 'kg' ? ' con peso' : f.medida === 'reps' ? ' · en reps, sin peso' : ' · por tiempo'}` : 'Sin registros en el período'}</span></span>
                 <span className="mono small" style={{ textAlign: 'right' }}>
@@ -181,7 +182,6 @@ export function ProgressScreen({ settings }: { settings: Settings }) {
                   {f.delta}
                   {f.pct && <span className="xsmall" style={{ display: 'block', fontWeight: 600 }}>{f.pct}</span>}
                 </span>
-                <span className="muted" aria-hidden="true">{abierto === f.id ? '▾' : '▸'}</span>
               </button>
               {abierto === f.id && f.pts.length > 0 && <div className="pm-d"><GraficoPesos puntos={f.pts} unidad={unidadDe(f.medida, f.ex.lastre)} /></div>}
             </div>

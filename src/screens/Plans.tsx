@@ -1,7 +1,7 @@
 import { useMemo, useRef, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, kgToG, type Exercise, type PBlock, type PSet } from '../db'
-import { Picker, TopBar, useDialogos, useNav } from '../ui'
+import { Chevron, Picker, TopBar, useDialogos, useNav } from '../ui'
 import { etiqueta, plural, GRUPOS, guardarArchivo, numES, resumenSets, setValido, slugify } from '../lib'
 import { activarPlan, borrarPlan, duplicarDia, reordenarDias } from '../actions'
 import { EJEMPLO_PLAN, exportarPlan, guardarPlan, leerPlan, pedidoParaIA, type ImpPlan, type Resolucion } from '../plan'
@@ -307,7 +307,7 @@ export function ImportScreen() {
             onChange={async (e) => { const f = e.target.files?.[0]; if (f) leer(await f.text()); e.target.value = '' }} />
         </div>
         <button className="card tight" onClick={() => setAyuda((a) => !a)} aria-expanded={ayuda}>
-          <div className="row spread"><b className="small">¿Cómo es el archivo?</b><span className="muted">{ayuda ? '▾' : '▸'}</span></div>
+          <div className="row"><Chevron abierto={ayuda} /><b className="small">¿Cómo es el archivo?</b></div>
           {ayuda && (
             <>
               <div className="xsmall muted" style={{ marginTop: 6 }}>

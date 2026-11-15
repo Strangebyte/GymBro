@@ -246,7 +246,9 @@ label.f { display: block; font-size: 12.5px; font-weight: 700; color: var(--mute
 .chart .pt { fill: var(--surface); stroke: var(--pri); stroke-width: 2.5; }
 .chart .pt.sel { fill: var(--pri); }
 .chart text { fill: var(--muted); font-size: 11px; font-weight: 600; }
-.pm { display: grid; grid-template-columns: 1fr 74px 66px 12px; gap: 7px; align-items: center; width: 100%; padding: 11px 14px; border-bottom: 1px solid var(--line); text-align: left; }
+.chev { color: var(--muted); flex-shrink: 0; transition: transform .15s ease; }
+.chev.abierto { transform: rotate(90deg); }
+.pm { display: grid; grid-template-columns: 22px 1fr 74px 66px; gap: 6px; align-items: center; width: 100%; padding: 11px 14px; border-bottom: 1px solid var(--line); text-align: left; }
 .pm:last-child { border-bottom: none; }
 .pm-d { padding: 4px 14px 14px; border-bottom: 1px solid var(--line); }
 .up { color: var(--ok); } .down { color: var(--bad); }

@@ -14,8 +14,10 @@ export default defineConfig({
         name: 'Gym Log',
         short_name: 'Gym Log',
         description: 'Registro de entrenamiento: series, pesos, reps, RIR e intensidad',
-        theme_color: '#0c8a72',
-        background_color: '#f3f5f4',
+        // Android pinta con theme_color la barra de gestos de abajo y no se puede cambiar según el tema o la paleta
+        // elegidos: va un neutro oscuro, que no desentona con ninguno. La barra de arriba sí sigue al tema (App.tsx).
+        theme_color: '#101214',
+        background_color: '#101214',
         display: 'standalone',
         orientation: 'portrait',
         start_url: './',

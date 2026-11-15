@@ -10,6 +10,8 @@ Registro de qué se decidió y por qué. Lo más nuevo, arriba.
 | El recuadro "Sin video ni imagen" de la ficha abre el selector de archivos ahí mismo | Pedido del dueño: antes mandaba a la pantalla de edición |
 | El encabezado del bloque ya no muestra "0/6 series" | Pedido del dueño |
 | "Últ. vez (dd/mm)" y sin cortar el texto | Con RIR o RPE la línea no entraba en el móvil. El dueño propuso acortar el rótulo; además se dejó que ocupe más de una línea para que siempre se lea completa |
+| Chevrón a la izquierda, un poco más grande, en todo lo que se despliega | Pedido del dueño: le gusta más que el triángulo y lo quiere del mismo lado en toda la app |
+| Barra inferior de Android en un neutro oscuro fijo | Android la pinta con el color del manifiesto, que era el verde de la marca y no puede seguir al tema ni a la paleta. Un neutro oscuro no desentona con ninguno |
 | Flecha en las filas de "Progreso por ejercicio" | No se notaba que al tocarlas se abría el gráfico |
 | Tres paletas: verde (la original), azul y violeta, cada una con claro y oscuro | Pedido del dueño: la de ahora más dos. Se evitó naranja y rojo como color principal porque ya significan "otras actividades" y "error" |
 | El tema y la paleta se recuerdan también fuera de la base | Para pintar con los colores elegidos desde el primer instante al abrir, sin destello verde |
