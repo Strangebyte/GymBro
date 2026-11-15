@@ -10,6 +10,9 @@ Registro de qué se decidió y por qué. Lo más nuevo, arriba.
 | El recuadro "Sin video ni imagen" de la ficha abre el selector de archivos ahí mismo | Pedido del dueño: antes mandaba a la pantalla de edición |
 | El encabezado del bloque ya no muestra "0/6 series" | Pedido del dueño |
 | "Últ. vez (dd/mm)" y sin cortar el texto | Con RIR o RPE la línea no entraba en el móvil. El dueño propuso acortar el rótulo; además se dejó que ocupe más de una línea para que siempre se lea completa |
+| Formas más redondas: botones, chips y controles tipo píldora, tarjetas más curvas. La letra no cambia | El dueño pidió "rounded style" y, consultado, eligió formas más redondas y no una letra redondeada |
+| Imágenes de ejercicios incluidas en la app, tomadas de Free Exercise DB (dominio público, Unlicense) | Pedido del dueño, empezando con 5 de prueba. Van dentro de la app para que funcionen sin conexión y las vea cualquiera que la instale. La foto o video que cargue el usuario tiene prioridad |
+| Las dos fotos (inicio y fin del movimiento) van una arriba de la otra | Lado a lado quedaban muy chicas en el ancho del teléfono |
 | La app se llama GymBro, con ícono nuevo: mancuerna en diagonal con degradé verde → azul → violeta sobre fondo oscuro | Pedido del dueño. El degradé usa los colores de las tres paletas. La base y el formato de copia conservan el nombre viejo para no romper los datos guardados |
 | Chevrón a la izquierda, un poco más grande, en todo lo que se despliega | Pedido del dueño: le gusta más que el triángulo y lo quiere del mismo lado en toda la app |
 | Barra inferior de Android en un neutro oscuro fijo | Android la pinta con el color del manifiesto, que era el verde de la marca y no puede seguir al tema ni a la paleta. Un neutro oscuro no desentona con ninguno |

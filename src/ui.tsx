@@ -301,6 +301,11 @@ export function HistorialLista({ exerciseId, lastre, excluir }: { exerciseId: nu
 
 export const MAX_MEDIA_MB = 40
 
+// Imágenes que vienen con la app: src/ejercicios-img/<slug>.webp (las arma tools/imagenes/gen.py).
+const IMAGENES_INCLUIDAS = import.meta.glob('./ejercicios-img/*.webp', { eager: true, query: '?url', import: 'default' }) as Record<string, string>
+/** Imagen incluida para ese ejercicio, si hay. La que carga el usuario tiene prioridad. */
+export const imagenIncluida = (slug?: string | null): string | null => (slug ? IMAGENES_INCLUIDAS[`./ejercicios-img/${slug}.webp`] ?? null : null)
+
 /** Por qué no se puede usar el archivo como video o imagen de un ejercicio, o null si sirve. */
 export function problemaMedia(file: File): string | null {
   if (!file.type.startsWith('image/') && !file.type.startsWith('video/')) return 'Tiene que ser una imagen o un video.'
@@ -311,9 +316,11 @@ export async function guardarMediaDe(exerciseId: number, file: File): Promise<vo
   await db.media.put({ exercise_id: exerciseId, tipo: file.type.startsWith('video/') ? 'video' : 'imagen', blob: file, nombre: file.name, size: file.size })
 }
 
-/** Muestra el video o la imagen guardados de un ejercicio, y el enlace externo si tiene. */
-export function MediaView({ exerciseId, url }: { exerciseId: number; url?: string | null }) {
-  const m = useLiveQuery(() => db.media.get(exerciseId), [exerciseId])
+/** Muestra el video o la imagen del ejercicio (la propia o, si no hay, la que viene con la app) y el enlace externo si tiene. */
+export function MediaView({ exerciseId, url, slug }: { exerciseId: number; url?: string | null; slug?: string | null }) {
+  const incluida = imagenIncluida(slug)
+  // undefined mientras carga; null si el usuario no cargó nada propio
+  const m = useLiveQuery(async () => (await db.media.get(exerciseId)) ?? null, [exerciseId])
   const [src, setSrc] = useState<string | null>(null)
   useEffect(() => {
     if (!m) { setSrc(null); return }
@@ -321,20 +328,22 @@ export function MediaView({ exerciseId, url }: { exerciseId: number; url?: strin
     setSrc(u)
     return () => URL.revokeObjectURL(u)
   }, [m])
-  if (!m && !url) return null
+  if (m === undefined) return null   // todavía no se sabe si hay una propia: no mostrar la incluida para después cambiarla
+  if (!m && !url && !incluida) return null
   return (
     <div className="media">
       {m && src && (m.tipo === 'video'
         ? <video src={src} controls playsInline loop muted preload="metadata" aria-label="Video del ejercicio" />
         : <img src={src} alt="Imagen del ejercicio" />)}
-      {url && <a className="btn soft block sm" style={{ marginTop: m ? 8 : 0 }} href={url} target="_blank" rel="noopener noreferrer">Abrir enlace del ejercicio ↗</a>}
+      {!m && incluida && <img src={incluida} alt="Posición inicial y final del ejercicio" />}
+      {url && <a className="btn soft block sm" style={{ marginTop: m || incluida ? 8 : 0 }} href={url} target="_blank" rel="noopener noreferrer">Abrir enlace del ejercicio ↗</a>}
     </div>
   )
 }
 
-export function useTieneMedia(exerciseId: number, url?: string | null): boolean {
+export function useTieneMedia(exerciseId: number, url?: string | null, slug?: string | null): boolean {
   const n = useLiveQuery(() => db.media.where('exercise_id').equals(exerciseId).count(), [exerciseId])
-  return !!n || !!url
+  return !!n || !!url || !!imagenIncluida(slug)
 }
 
 export const Ico = {

@@ -4,7 +4,7 @@
 
 ## Dónde está
 
-- La app está completa y funcionando en las pruebas automáticas (95 de 95, sin errores de consola).
+- La app está completa y funcionando en las pruebas automáticas (97 de 97, sin errores de consola).
 - **Publicada en GitHub Pages:** https://<usuario>.github.io/GymBro/ (repositorio público
   `<usuario>/GymBro`). Cada push a `main` la vuelve a publicar sola. Verificado el 14-11-2026 en
   Chromium: abre sin errores, registra el service worker y arranca con catálogo y plan, sin sesiones.
@@ -25,6 +25,9 @@ video y scroll táctil con una hoja abierta.
 - **Probar en el teléfono** lo último publicado, que solo se verificó en el simulador: Progreso con reps
   (a igual peso muestra "+N reps"; ejercicios sin peso siguen reps o tiempo), series por grupo muscular siempre
   visible, que ya no se recargue al deslizar hacia abajo, adjuntar foto o video desde la ficha, acentos en categorías y etiquetas, las tres paletas de color (Ajustes → Color), y "Copiar pedido para Claude" en Importar plan con un Claude real.
+- **Imágenes de ejercicios:** hay 5 de prueba (Press plano, Dominadas PRONA, Peso muerto - BR, Empuje de cadera - BR,
+  Fondos). Si al dueño le gustan, sumar el resto en `tools/imagenes/gen.py`; muchos ejercicios del entrenador no
+  tienen equivalente en el banco de imágenes y van a quedar sin foto.
 - **Probar en iPhone** (otra persona): instalación desde Safari, sonido de descanso, copia de seguridad.
   No vibra en iPhone: es una limitación de iOS.
 - **Borrar un ejercicio no borra su video o imagen** (queda ocupando espacio). Sin arreglar.
@@ -74,6 +77,7 @@ video y scroll táctil con una hoja abierta.
 | Fecha | Qué se hizo |
 |---|---|
 | 10-11-2026 | Diseño (`docs/historico/`), catálogo de 96 ejercicios, primera versión solo de registro |
+| 15-11-2026 | Formas más redondas en toda la app; imágenes incluidas para 5 ejercicios, de prueba |
 | 15-11-2026 | La app pasa a llamarse GymBro, con ícono nuevo (mancuerna en degradé); chevrones más chicos |
 | 15-11-2026 | Chevrón a la izquierda en todo lo desplegable; color neutro para la barra inferior de Android (sin confirmar en el teléfono) |
 | 15-11-2026 | Flecha en las filas de Progreso, sin recarga al deslizar, adjuntar desde la ficha, bloque sin contador de series, "Últ. vez" corta y completa |

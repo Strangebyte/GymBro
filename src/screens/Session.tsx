@@ -158,7 +158,7 @@ export function Tarjeta(props: { item: Item; sesion: Session; porEjercicio: bool
   const { confirmar } = useDialogos()
   const [previo, setPrevio] = useState<{ fecha: string; txt: string } | null>(null)
   const [hoja, setHoja] = useState<'historial' | 'media' | 'cambiar' | null>(null)
-  const tieneMedia = useTieneMedia(ex.id!, ex.url)
+  const tieneMedia = useTieneMedia(ex.id!, ex.url, ex.slug)
   const nota = useLiveQuery(async () => {
     if (sesion.plan_day_id == null) return null
     const dia = await db.planDays.get(sesion.plan_day_id)
@@ -218,7 +218,7 @@ export function Tarjeta(props: { item: Item; sesion: Session; porEjercicio: bool
       </div>
 
       {hoja === 'historial' && <Sheet titulo={ex.nombre} onCerrar={() => setHoja(null)}><HistorialLista exerciseId={ex.id!} lastre={ex.lastre} excluir={sesion.id} /></Sheet>}
-      {hoja === 'media' && <Sheet titulo={ex.nombre} onCerrar={() => setHoja(null)}><MediaView exerciseId={ex.id!} url={ex.url} /></Sheet>}
+      {hoja === 'media' && <Sheet titulo={ex.nombre} onCerrar={() => setHoja(null)}><MediaView exerciseId={ex.id!} url={ex.url} slug={ex.slug} /></Sheet>}
       {hoja === 'cambiar' && (
         <Picker titulo={`Reemplazar ${ex.nombre}`} onCerrar={() => setHoja(null)}
           onElegir={(nuevo) => { void db.setLogs.bulkUpdate(sets.map((s) => ({ key: s.id!, changes: { exercise_id: nuevo.id! } }))) }} />

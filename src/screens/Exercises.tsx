@@ -34,7 +34,8 @@ export function ExerciseScreen({ id }: { id: number }) {
   const ex = useLiveQuery(() => db.exercises.get(id), [id])
   const [hist, setHist] = useState<SesionDeEjercicio[] | null>(null)
   useEffect(() => { let v = true; void historicoEjercicio(id, 40).then((h) => { if (v) setHist(h) }); return () => { v = false } }, [id])
-  const tieneMedia = useTieneMedia(id, ex?.url)
+  const tieneMedia = useTieneMedia(id, ex?.url, ex?.slug)
+  const propia = useLiveQuery(() => db.media.where('exercise_id').equals(id).count(), [id])
   if (!ex) return <><TopBar titulo="Ejercicio" atras /><div className="main sin-tabs"><div className="empty">Cargando…</div></div></>
 
   const { medida, puntos } = progresoDe((hist ?? []).flatMap((s) => s.sets.filter((x) => x.tipo !== 'calentamiento').map((set) => ({ fecha: s.fecha, set }))))
@@ -65,14 +66,10 @@ export function ExerciseScreen({ id }: { id: number }) {
         </div>
 
         <div style={{ marginBottom: 10 }}>
-          {tieneMedia
-            ? <MediaView exerciseId={id} url={ex.url} />
-            : (
-              <>
-                <label className="media-vacio" style={{ display: 'block', cursor: 'pointer' }} htmlFor="fm">Sin video ni imagen.<br /><b>Tocá para agregar uno</b></label>
-                <input id="fm" type="file" accept="image/*,video/*" style={{ display: 'none' }} onChange={(e) => { void adjuntar(e.target.files?.[0]); e.target.value = '' }} />
-              </>
-            )}
+          {tieneMedia && <MediaView exerciseId={id} url={ex.url} slug={ex.slug} />}
+          {!tieneMedia && <label className="media-vacio" style={{ display: 'block', cursor: 'pointer' }} htmlFor="fm">Sin video ni imagen.<br /><b>Tocá para agregar uno</b></label>}
+          {tieneMedia && propia === 0 && <label className="btn ghost block sm" style={{ marginTop: 6, cursor: 'pointer' }} htmlFor="fm">Usar mi propia foto o video</label>}
+          <input id="fm" type="file" accept="image/*,video/*" style={{ display: 'none' }} onChange={(e) => { void adjuntar(e.target.files?.[0]); e.target.value = '' }} />
         </div>
 
         <div className="row" style={{ marginBottom: 10 }}>

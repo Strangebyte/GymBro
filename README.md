@@ -18,6 +18,11 @@ pip install playwright && playwright install chromium   # una sola vez
 npm run test:e2e
 ```
 
+## Créditos
+
+Las imágenes de ejercicios incluidas vienen de [Free Exercise DB](https://github.com/yuhonas/free-exercise-db),
+de dominio público.
+
 ## Documentación
 
 | Archivo | Para qué |

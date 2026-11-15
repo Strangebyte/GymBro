@@ -128,6 +128,7 @@ def main():
             ok('Abrir un bloque cierra el anterior', pg.locator('.bloque-c').count() == 1 and 'Press plano' in pg.locator('.bloque-c').inner_text())
             ej = pg.locator('.ej', has_text='Press plano')
             ok('Series precargadas con el plan y editables a mano', ej.locator('input').nth(0).input_value() == '8' and ej.locator('input').nth(1).input_value() == '80')
+            ok('Sesión: botón para ver la imagen incluida', ej.locator('[aria-label^="Ver video o imagen"]').count() == 1)
             ok('Sin controles de RIR/RPE/fallo en la sesión', pg.locator('.bloque-c .chip').count() == 0)
             ok('Última vez: fecha corta y texto completo, sin cortar', 'Últ. vez (10/11):' in ej.inner_text() and ej.locator('.truncate').count() == 0)
             campo = ej.locator('input').nth(1); campo.fill('82,5'); campo.blur(); pg.wait_for_timeout(250)
@@ -304,9 +305,14 @@ def main():
             tab(pg, 'Ejercicios'); pg.fill('[aria-label="Buscar ejercicio"]', 'press plano'); pg.wait_for_timeout(300)
             pg.click('.item >> text=Press plano'); pg.wait_for_timeout(500)
             ok('Ficha: gráfico de peso máximo e historial sin enlaces', pg.locator('.chart').count() == 1 and pg.locator('.main button.item').count() == 0 and '/2026' in texto(pg))
-            ok('Ficha: recuadro para agregar video o imagen', pg.locator('.media-vacio').count() == 1)
+            ok('Ficha: imagen que viene con la app', pg.locator('.media img').count() == 1 and pg.locator('.media-vacio').count() == 0
+               and pg.evaluate("document.querySelector('.media img').naturalWidth") == 640 and '.webp' in pg.locator('.media img').get_attribute('src'))
             pg.set_input_files('#fm', os.path.join(FIX, 'imagen.png')); pg.wait_for_timeout(500)
-            ok('Ficha: adjuntar la imagen ahí mismo, sin pasar por Editar', pg.locator('.media img').count() == 1 and pg.locator('.media-vacio').count() == 0 and 'HISTORIAL' in texto(pg).upper())
+            ok('Ficha: la imagen propia se adjunta ahí mismo y reemplaza a la incluida', pg.locator('.media img').count() == 1
+               and pg.locator('.media img').get_attribute('src').startswith('blob:') and 'HISTORIAL' in texto(pg).upper())
+            pg.click('[aria-label="Volver"]'); pg.wait_for_timeout(300)
+            pg.fill('[aria-label="Buscar ejercicio"]', 'remo neutro'); pg.wait_for_timeout(300); pg.locator('.item').first.click(); pg.wait_for_timeout(500)
+            ok('Ficha sin imagen: recuadro para agregar una', pg.locator('.media-vacio').count() == 1 and pg.locator('.media img').count() == 0)
             captura(pg, 'F2-ficha')
             ctx.close()
 

@@ -20,7 +20,7 @@ npm run seed         # regenera src/seed.json, src/seed-historial.json y data/*.
 npm run test:e2e     # requiere dist/ y: pip install playwright && playwright install chromium
 ```
 
-Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 95 verificaciones tienen que pasar
+Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 97 verificaciones tienen que pasar
 y no puede haber errores de consola. Si cambiás un flujo, actualizá `tests/e2e.py` en el mismo cambio.
 
 ## Cómo trabajar con el dueño
@@ -53,6 +53,7 @@ src/
     Progress.tsx   Progreso + GraficoPesos
     More.tsx       Ajustes
 tools/seed/    Generador de datos iniciales (Python) y catálogo base
+tools/imagenes/  gen.py baja y arma las imágenes incluidas de ejercicios (requiere Pillow y conexión)
 tools/logo/    gen.py dibuja el ícono (public/icon-*.png); requiere Pillow
 tests/         e2e.py (Playwright, Python) y fixtures
 data/          Catálogo y plan actual en JSON legible (generados)
@@ -105,6 +106,11 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
 - Las etiquetas de grupo y equipo van en el encabezado del bloque, no en cada ejercicio.
 - Historial de un ejercicio: lista informativa, sin enlaces.
 - Catálogo agrupado por categoría (`categoria()` en lib.ts), con filtro detrás de un ícono junto al buscador.
+- Imágenes incluidas: `src/ejercicios-img/<slug>.webp` (las arma `tools/imagenes/gen.py` desde Free Exercise DB,
+  dominio público). Se muestran si el usuario no cargó una propia; la propia siempre tiene prioridad. Por ahora
+  son 5 de prueba. No bajar imágenes de otras fuentes sin revisar la licencia.
+- Estilo de formas redondas (pedido por el dueño): botones, chips y controles tipo píldora; tarjetas con
+  `--radius: 22px`. Mantenerlo en lo nuevo.
 - Video/imagen: se cargan desde la ficha del ejercicio (tocando el recuadro vacío) o al crear o editarlo. En la
   sesión solo se ven (botón ▶).
 - Recordatorio de copia en Hoy cuando hay 4 o más sesiones propias posteriores a la última copia
