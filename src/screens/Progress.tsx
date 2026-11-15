@@ -1,18 +1,16 @@
 import { useMemo, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
-import { db, setSettings, type Settings } from '../db'
+import { db, setSettings, type SetLog, type Settings } from '../db'
 import { Catalogo, Chips, Sheet, TopBar } from '../ui'
-import { agruparPorDia, etiqueta, fmtFecha, hoyISO, lunesDe, numES, plural, sumarDias } from '../lib'
+import { agruparPorDia, etiqueta, fmtFecha, hoyISO, lunesDe, numES, plural, progresoDe, sumarDias, unidadDe, type Medida, type Punto } from '../lib'
 import { PREGUNTAS } from './Today'
 
-export interface PuntoPeso { fecha: string; kg: number; reps: number | null }
-
 /** Gráfico de línea con puntos que se pueden tocar. */
-export function GraficoPesos({ puntos, unidad = 'kg' }: { puntos: PuntoPeso[]; unidad?: string }) {
+export function GraficoPesos({ puntos, unidad = 'kg' }: { puntos: Punto[]; unidad?: string }) {
   const [sel, setSel] = useState(puntos.length - 1)
   if (!puntos.length) return null
   const W = 320, H = 150, px = 34, py = 16
-  const ks = puntos.map((p) => p.kg)
+  const ks = puntos.map((p) => p.valor)
   let min = Math.min(...ks), max = Math.max(...ks)
   if (max - min < 1) { min -= 2.5; max += 2.5 }
   const pad = (max - min) * 0.12
@@ -22,21 +20,21 @@ export function GraficoPesos({ puntos, unidad = 'kg' }: { puntos: PuntoPeso[]; u
   const s = puntos[Math.min(sel, puntos.length - 1)]
   return (
     <div>
-      <svg className="chart" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`Peso máximo por sesión, de ${numES(puntos[0].kg)} a ${numES(puntos[puntos.length - 1].kg)} ${unidad}`}>
+      <svg className="chart" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`Mejor marca por sesión, de ${numES(puntos[0].valor)} a ${numES(puntos[puntos.length - 1].valor)} ${unidad}`}>
         {[0, 0.5, 1].map((t) => { const v = min + pad + t * (max - min - 2 * pad); return (
           <g key={t}><line className="eje" x1={px} x2={W - 6} y1={y(v)} y2={y(v)} /><text x={px - 5} y={y(v) + 4} textAnchor="end">{numES(Math.round(v * 2) / 2)}</text></g>
         ) })}
-        <polyline className="ln" points={puntos.map((p, i) => `${x(i)},${y(p.kg)}`).join(' ')} />
+        <polyline className="ln" points={puntos.map((p, i) => `${x(i)},${y(p.valor)}`).join(' ')} />
         {puntos.map((p, i) => (
           <g key={i} onClick={() => setSel(i)} style={{ cursor: 'pointer' }}>
-            <circle cx={x(i)} cy={y(p.kg)} r={14} fill="transparent" />
-            <circle className={`pt${i === sel ? ' sel' : ''}`} cx={x(i)} cy={y(p.kg)} r={i === sel ? 5.5 : 4} />
+            <circle cx={x(i)} cy={y(p.valor)} r={14} fill="transparent" />
+            <circle className={`pt${i === sel ? ' sel' : ''}`} cx={x(i)} cy={y(p.valor)} r={i === sel ? 5.5 : 4} />
           </g>
         ))}
         <text x={px} y={H - 4}>{fmtFecha(puntos[0].fecha).slice(0, 5)}</text>
         {puntos.length > 1 && <text x={W - 6} y={H - 4} textAnchor="end">{fmtFecha(puntos[puntos.length - 1].fecha).slice(0, 5)}</text>}
       </svg>
-      <div className="small center" role="status"><b>{fmtFecha(s.fecha)}</b> · {numES(s.kg)} {unidad}{s.reps != null ? ` × ${s.reps} reps` : ''}</div>
+      <div className="small center" role="status"><b>{fmtFecha(s.fecha)}</b> · {numES(s.valor)} {unidad}{s.reps != null ? ` × ${s.reps} reps` : ''}</div>
       <div className="xsmall muted center">Tocá un punto para ver esa sesión</div>
     </div>
   )
@@ -52,7 +50,6 @@ export function ProgressScreen({ settings }: { settings: Settings }) {
   const [periodo, setPeriodo] = useState(90)
   const [abierto, setAbierto] = useState<number | null>(null)
   const [elegir, setElegir] = useState(false)
-  const [verGrupos, setVerGrupos] = useState(false)
 
   const base = useMemo(() => {
     if (!sesiones || !actividades || !sets || !ejercicios) return null
@@ -75,20 +72,19 @@ export function ProgressScreen({ settings }: { settings: Settings }) {
     const fechaDe = new Map(sesiones.filter((s) => s.estado === 'completada').map((s) => [s.id!, s.fecha]))
     const mapaEx = new Map(ejercicios.map((e) => [e.id!, e]))
 
-    // peso máximo por ejercicio y sesión
-    const tope = new Map<number, Map<string, PuntoPeso>>()
+    // mejor serie de cada ejercicio en cada sesión (peso; sin peso, reps; sin reps, tiempo)
+    const porEj = new Map<number, { fecha: string; set: SetLog }[]>()
     for (const s of sets) {
       const f = fechaDe.get(s.session_id)
-      if (!s.hecha || !f || !s.peso_g || s.tipo === 'calentamiento') continue
-      let m = tope.get(s.exercise_id); if (!m) { m = new Map(); tope.set(s.exercise_id, m) }
-      const kg = s.peso_g / 1000, prev = m.get(f)
-      if (!prev || kg > prev.kg || (kg === prev.kg && (s.reps ?? 0) > (prev.reps ?? 0))) m.set(f, { fecha: f, kg, reps: s.reps })
+      if (!s.hecha || !f || s.tipo === 'calentamiento') continue
+      let a = porEj.get(s.exercise_id); if (!a) { a = []; porEj.set(s.exercise_id, a) }
+      a.push({ fecha: f, set: s })
     }
-    const series = new Map<number, PuntoPeso[]>()
-    for (const [id, m] of tope) series.set(id, [...m.values()].sort((a, b) => a.fecha.localeCompare(b.fecha)))
+    const series = new Map<number, { medida: Medida; puntos: Punto[] }>()
+    for (const [id, a] of porEj) { const p = progresoDe(a); if (p.puntos.length) series.set(id, p) }
     const PRINCIPALES = ['sentadilla', 'bisagra', 'zancada', 'empuje_horizontal', 'empuje_vertical', 'traccion_horizontal', 'traccion_vertical']
-    const frecuentes = [...series.entries()].filter(([id, a]) => { const e = mapaEx.get(id); return a.length >= 2 && !!e && e.vol && !e.archivo && PRINCIPALES.includes(e.patron) && e.grupo !== 'core' })
-      .sort((a, b) => b[1].length - a[1].length).slice(0, 6).map(([id]) => id)
+    const frecuentes = [...series.entries()].filter(([id, a]) => { const e = mapaEx.get(id); return a.puntos.length >= 2 && !!e && e.vol && !e.archivo && PRINCIPALES.includes(e.patron) && e.grupo !== 'core' })
+      .sort((a, b) => b[1].puntos.length - a[1].puntos.length).slice(0, 6).map(([id]) => id)
 
     // series por grupo
     const desde7 = sumarDias(hoy, -6), desde35 = sumarDias(hoy, -34)
@@ -119,10 +115,23 @@ export function ProgressScreen({ settings }: { settings: Settings }) {
   const seguidos = (settings.seguimiento ?? base.frecuentes).filter((id) => base.mapaEx.has(id))
   const desde = periodo ? sumarDias(hoyISO(), -periodo) : ''
   const filas = seguidos.map((id) => {
-    const pts = (base.series.get(id) ?? []).filter((p) => p.fecha >= desde)
+    const serie = base.series.get(id)
+    const medida: Medida = serie?.medida ?? 'kg'
+    const pts = (serie?.puntos ?? []).filter((p) => p.fecha >= desde)
     const ex = base.mapaEx.get(id)!
-    const d = pts.length > 1 ? pts[pts.length - 1].kg - pts[0].kg : null
-    return { id, ex, pts, d, pct: d != null && pts[0].kg ? (d / pts[0].kg) * 100 : null }
+    const pri = pts[0], ult = pts[pts.length - 1]
+    const d = pts.length > 1 ? ult.valor - pri.valor : null
+    const cambia = d != null && Math.abs(d) >= 0.01
+    // A igual peso, el progreso está en las reps hechas con esa carga.
+    const dReps = medida === 'kg' && d != null && !cambia && pri.reps != null && ult.reps != null ? ult.reps - pri.reps : 0
+    const signo = (n: number) => (n > 0 ? '+' : '−')
+    const u = medida === 'kg' ? 'kg' : medida === 'reps' ? 'reps' : 's'
+    return {
+      id, ex, medida, pts, pri, ult,
+      sube: cambia ? d! : dReps,
+      delta: d == null ? '' : cambia ? `${signo(d)}${numES(Math.abs(d))} ${u}` : dReps ? `${signo(dReps)}${Math.abs(dReps)} reps` : 'igual',
+      pct: cambia && pri.valor ? `${signo(d!)}${Math.abs(Math.round((d! / pri.valor) * 100))}%` : null,
+    }
   })
   const alternar = (id: number) => void setSettings({ seguimiento: seguidos.includes(id) ? seguidos.filter((x) => x !== id) : [...seguidos, id] })
   const maxSem = Math.max(settings.objetivo_semanal, ...base.semanas.map((s) => s.gym + s.act), 1)
@@ -151,7 +160,7 @@ export function ProgressScreen({ settings }: { settings: Settings }) {
         </div>
 
         <div className="row spread" style={{ margin: '20px 2px 8px' }}>
-          <h2 style={{ margin: 0 }}>Peso máximo por ejercicio</h2>
+          <h2 style={{ margin: 0 }}>Progreso por ejercicio</h2>
           <button className="btn sm" onClick={() => setElegir(true)}>Elegir ejercicios</button>
         </div>
         <div style={{ marginBottom: 8 }}><Chips sm opciones={PERIODOS} valor={periodo} onPick={setPeriodo} /></div>
@@ -161,18 +170,23 @@ export function ProgressScreen({ settings }: { settings: Settings }) {
             <div key={f.id}>
               <button className="pm" onClick={() => setAbierto(abierto === f.id ? null : f.id)} aria-expanded={abierto === f.id}>
                 <span><b className="small" style={{ display: 'block' }}>{f.ex.nombre}</b>
-                  <span className="xsmall muted">{f.pts.length ? `${plural(f.pts.length, 'sesión', 'sesiones')} con peso` : 'Sin registros con peso en el período'}</span></span>
-                <span className="mono small" style={{ textAlign: 'right' }}>{f.pts.length ? <>{f.pts.length > 1 && <span className="muted">{numES(f.pts[0].kg)} → </span>}<b>{numES(f.pts[f.pts.length - 1].kg)}</b></> : '—'}</span>
-                <span className={`mono small bold ${f.d == null || Math.abs(f.d) < 0.01 ? 'muted' : f.d > 0 ? 'up' : 'down'}`} style={{ textAlign: 'right' }}>
-                  {f.d == null ? '' : Math.abs(f.d) < 0.01 ? 'igual' : `${f.d > 0 ? '+' : '−'}${numES(Math.abs(f.d))} kg`}
-                  {f.pct != null && Math.abs(f.d!) >= 0.01 && <span className="xsmall" style={{ display: 'block', fontWeight: 600 }}>{f.pct > 0 ? '+' : '−'}{Math.abs(Math.round(f.pct))}%</span>}
+                  <span className="xsmall muted">{f.pts.length ? `${plural(f.pts.length, 'sesión', 'sesiones')}${f.medida === 'kg' ? ' con peso' : f.medida === 'reps' ? ' · en reps, sin peso' : ' · por tiempo'}` : 'Sin registros en el período'}</span></span>
+                <span className="mono small" style={{ textAlign: 'right' }}>
+                  {f.pts.length ? <>{f.pts.length > 1 && <span className="muted">{numES(f.pri.valor)} → </span>}<b>{numES(f.ult.valor)}</b>{f.medida === 'seg' ? ' s' : ''}</> : '—'}
+                  {f.medida === 'kg' && f.pts.length > 0 && f.ult.reps != null && (
+                    <span className="xsmall muted" style={{ display: 'block' }}>{f.pts.length > 1 && f.pri.reps != null ? `${f.pri.reps} → ` : '× '}{f.ult.reps} reps</span>
+                  )}
+                </span>
+                <span className={`mono small bold ${f.sube === 0 ? 'muted' : f.sube > 0 ? 'up' : 'down'}`} style={{ textAlign: 'right' }}>
+                  {f.delta}
+                  {f.pct && <span className="xsmall" style={{ display: 'block', fontWeight: 600 }}>{f.pct}</span>}
                 </span>
               </button>
-              {abierto === f.id && f.pts.length > 0 && <div className="pm-d"><GraficoPesos puntos={f.pts} unidad={f.ex.lastre ? 'kg de lastre' : 'kg'} /></div>}
+              {abierto === f.id && f.pts.length > 0 && <div className="pm-d"><GraficoPesos puntos={f.pts} unidad={unidadDe(f.medida, f.ex.lastre)} /></div>}
             </div>
           ))}
         </div>
-        <div className="xsmall muted" style={{ marginTop: 6 }}>El peso más alto que moviste en cada sesión, sin calentamientos. Variación entre la primera y la última sesión del período. Tocá un ejercicio para ver el gráfico.</div>
+        <div className="xsmall muted" style={{ marginTop: 6 }}>La mejor serie de cada sesión, sin calentamientos: el peso más alto y las reps hechas con ese peso. En ejercicios sin peso, las reps (o el tiempo) más altas. La variación compara la primera y la última sesión del período; a igual peso, compara las reps. Tocá un ejercicio para ver el gráfico.</div>
 
         <h2>Wellness por semana</h2>
         <div className="card">
@@ -204,10 +218,8 @@ export function ProgressScreen({ settings }: { settings: Settings }) {
           )}
         </div>
 
-        <button className="row spread" style={{ width: '100%', margin: '20px 2px 8px' }} onClick={() => setVerGrupos((v) => !v)} aria-expanded={verGrupos}>
-          <h2 style={{ margin: 0 }}>Series por grupo muscular · 7 días</h2><span className="muted">{verGrupos ? '▾' : '▸'}</span>
-        </button>
-        {verGrupos && (
+        <h2>Series por grupo muscular · 7 días</h2>
+        {(
           <div className="card">
             {!base.grupos.length && <div className="muted small">Sin series en las últimas cinco semanas.</div>}
             {base.grupos.slice(0, 12).map((g) => (
@@ -229,7 +241,7 @@ export function ProgressScreen({ settings }: { settings: Settings }) {
       {elegir && (
         <Sheet titulo="Ejercicios a seguir" onCerrar={() => setElegir(false)} full accion={<button className="btn primary sm" onClick={() => setElegir(false)}>Listo · {seguidos.length}</button>}>
           <Catalogo pegajoso onElegir={(e) => alternar(e.id!)}
-            marca={(e) => (seguidos.includes(e.id!) ? <span className="pill pri">✓ siguiendo</span> : base.series.has(e.id!) ? <span className="pill">{base.series.get(e.id!)!.length} ses.</span> : null)} />
+            marca={(e) => (seguidos.includes(e.id!) ? <span className="pill pri">✓ siguiendo</span> : base.series.has(e.id!) ? <span className="pill">{base.series.get(e.id!)!.puntos.length} ses.</span> : null)} />
         </Sheet>
       )}
     </>

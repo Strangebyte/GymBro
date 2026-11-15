@@ -44,6 +44,15 @@ export function SettingsScreen({ settings }: { settings: Settings }) {
           <button className={`chip${settings.tema === 'oscuro' ? ' on' : ''}`} aria-pressed={settings.tema === 'oscuro'} onClick={() => void setSettings({ tema: 'oscuro' })}>Oscuro</button>
         </div>
 
+        <div className="card row">
+          <span className="grow small bold">Color</span>
+          {([['verde', 'Verde', '#0c8a72'], ['azul', 'Azul', '#2563c9'], ['violeta', 'Violeta', '#6d4bd1']] as const).map(([v, t, c]) => (
+            <button key={v} className={`chip${settings.paleta === v ? ' on' : ''}`} aria-pressed={settings.paleta === v} onClick={() => void setSettings({ paleta: v })}>
+              <i aria-hidden="true" style={{ display: 'inline-block', width: 10, height: 10, borderRadius: 5, background: c, marginRight: 6, border: '1px solid rgba(255,255,255,.7)' }} />{t}
+            </button>
+          ))}
+        </div>
+
         <h2>Entrenamiento</h2>
         <div className="card col">
           <div className="row spread"><span className="small bold">Objetivo semanal de gym</span><div style={{ width: 170 }}><Stepper value={settings.objetivo_semanal} step={1} min={1} max={14} unit="sesiones" onChange={(v) => void setSettings({ objetivo_semanal: v ?? 4 })} /></div></div>

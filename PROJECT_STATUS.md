@@ -1,10 +1,10 @@
 # Estado del proyecto
 
-**Última actualización:** 14-11-2026 · **Versión:** 1.0.0
+**Última actualización:** 15-11-2026 · **Versión:** 1.0.0
 
 ## Dónde está
 
-- La app está completa y funcionando en las pruebas automáticas (87 de 87, sin errores de consola).
+- La app está completa y funcionando en las pruebas automáticas (91 de 91, sin errores de consola).
 - **Publicada en GitHub Pages:** https://<usuario>.github.io/GymBro/ (repositorio público
   `<usuario>/GymBro`). Cada push a `main` la vuelve a publicar sola. Verificado el 14-11-2026 en
   Chromium: abre sin errores, registra el service worker y arranca con catálogo y plan, sin sesiones.
@@ -19,6 +19,17 @@
 Probar en el teléfono lo último que se agregó y solo se verificó en el simulador: botón atrás con hojas y
 diálogos abiertos, editar una sesión, cargar una sesión pasada y el recordatorio de copia. Sigue sin probar:
 video y scroll táctil con una hoja abierta.
+
+## Pendiente (anotado el 14-11-2026, al cortar la sesión de trabajo)
+
+- **Probar en el teléfono** lo último publicado, que solo se verificó en el simulador: Progreso con reps
+  (a igual peso muestra "+N reps"; ejercicios sin peso siguen reps o tiempo), series por grupo muscular siempre
+  visible, acentos en categorías y etiquetas, las tres paletas de color (Ajustes → Color), y "Copiar pedido para Claude" en Importar plan con un Claude real.
+- **Probar en iPhone** (otra persona): instalación desde Safari, sonido de descanso, copia de seguridad.
+  No vibra en iPhone: es una limitación de iOS.
+- **"Última vez" en la sesión** va en una línea que se corta; con series ascendentes puede no entrar. Sin revisar.
+- **Borrar un ejercicio no borra su video o imagen** (queda ocupando espacio). Sin arreglar.
+- **Pantalla encendida durante la sesión:** no funciona en el teléfono del dueño; dijo que no le molesta. Sin investigar.
 
 ## Hecho
 
@@ -53,7 +64,7 @@ video y scroll táctil con una hoja abierta.
 
 ## Ideas en espera (no pedidas todavía)
 
-- Backup automático (Drive u otro) una vez que tenga hosting propio
+- Backup automático (Drive u otro): el dueño lo descartó por ahora; exigiría cuenta de Google
 - Inventario de discos y calculadora de carga por lado
 - Peso corporal y medidas
 - Incluir video/imagen en la copia de seguridad (zip)
@@ -64,6 +75,8 @@ video y scroll táctil con una hoja abierta.
 | Fecha | Qué se hizo |
 |---|---|
 | 10-11-2026 | Diseño (`docs/historico/`), catálogo de 96 ejercicios, primera versión solo de registro |
+| 15-11-2026 | Paletas de color: verde, azul y violeta, cada una en claro y oscuro (probado solo en el simulador) |
+| 14-11-2026 | Progreso con reps, series por grupo siempre visible, acentos en etiquetas (probado solo en el simulador) |
 | 14-11-2026 | Importar plan: botón que copia el pedido para Claude y pegado tolerante (probado solo en el simulador) |
 | 14-11-2026 | Botón atrás, edición de sesiones, sesiones pasadas y recordatorio de copia (probado solo en el simulador) |
 | 14-11-2026 | Sonido al terminar el descanso (confirmado por el dueño en el teléfono) |

@@ -17,7 +17,7 @@ npm run seed         # regenera src/seed.json, src/seed-historial.json y data/*.
 npm run test:e2e     # requiere dist/ y: pip install playwright && playwright install chromium
 ```
 
-Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 87 verificaciones tienen que pasar
+Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 91 verificaciones tienen que pasar
 y no puede haber errores de consola. Si cambiás un flujo, actualizá `tests/e2e.py` en el mismo cambio.
 
 ## Cómo trabajar con el dueño
@@ -107,6 +107,11 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
 - Importar plan: el camino principal para quien no tiene archivo es "Copiar pedido para Claude" (`pedidoParaIA`
   en plan.ts: formato + reglas + catálogo de esa persona) y pegar la respuesta. Si cambia el formato, actualizar
   ese texto, `EJEMPLO_PLAN` y `docs/formato-plan-gym.md` juntos.
+- Apariencia: tema claro/oscuro y paleta (`verde`, `azul`, `violeta`). Una paleta nueva son dos bloques en
+  styles.css (`[data-paleta]` claro y oscuro) y una opción en Ajustes; el naranja queda reservado para "otras
+  actividades" y el rojo para errores.
+- Progreso: "Series por grupo muscular" va siempre visible. El progreso por ejercicio usa `progresoDe` (lib.ts):
+  peso más alto y sus reps; a igual peso compara reps; sin peso, reps o tiempo.
 - Fechas `dd/mm/yyyy`. Decimales con coma.
 
 ## Trampas técnicas

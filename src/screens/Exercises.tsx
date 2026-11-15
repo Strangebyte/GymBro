@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, type Exercise, type Mide } from '../db'
 import { Catalogo, Chips, HistorialLista, MAX_MEDIA_MB, MediaView, Stepper, TopBar, useDialogos, useNav, useTieneMedia } from '../ui'
-import { numES, EQUIPOS, etiqueta, GRUPOS, historicoEjercicio, PATRONES, type SesionDeEjercicio } from '../lib'
+import { numES, EQUIPOS, etiqueta, GRUPOS, historicoEjercicio, PATRONES, progresoDe, unidadDe, type SesionDeEjercicio } from '../lib'
 import { crearEjercicio } from '../actions'
-import { GraficoPesos, type PuntoPeso } from './Progress'
+import { GraficoPesos } from './Progress'
 
 export function ExercisesScreen() {
   const nav = useNav()
@@ -29,15 +29,12 @@ export function ExerciseScreen({ id }: { id: number }) {
   const tieneMedia = useTieneMedia(id, ex?.url)
   if (!ex) return <><TopBar titulo="Ejercicio" atras /><div className="main sin-tabs"><div className="empty">Cargando…</div></div></>
 
-  const tope = new Map<string, PuntoPeso>()
-  for (const s of hist ?? []) for (const x of s.sets) {
-    if (!x.peso_g || x.tipo === 'calentamiento') continue
-    const kg = x.peso_g / 1000, prev = tope.get(s.fecha)
-    if (!prev || kg > prev.kg) tope.set(s.fecha, { fecha: s.fecha, kg, reps: x.reps })
-  }
-  const puntos = [...tope.values()].sort((a, b) => a.fecha.localeCompare(b.fecha))
-  const pesoMax = puntos.length ? Math.max(...puntos.map((p) => p.kg)) : 0
-  const ultimo = puntos.length ? puntos[puntos.length - 1].kg : null
+  const { medida, puntos } = progresoDe((hist ?? []).flatMap((s) => s.sets.filter((x) => x.tipo !== 'calentamiento').map((set) => ({ fecha: s.fecha, set }))))
+  const maximo = puntos.length ? Math.max(...puntos.map((p) => p.valor)) : null
+  const ultimo = puntos.length ? puntos[puntos.length - 1].valor : null
+  const rotulo = medida === 'kg' ? { u: ex.lastre ? 'último lastre' : 'último kg', m: ex.lastre ? 'lastre máx' : 'kg máx', t: 'Peso máximo por sesión' }
+    : medida === 'reps' ? { u: 'últimas reps', m: 'reps máx', t: 'Reps máximas por sesión' }
+    : { u: 'último tiempo (s)', m: 'tiempo máx (s)', t: 'Tiempo máximo por sesión' }
 
   return (
     <>
@@ -67,14 +64,14 @@ export function ExerciseScreen({ id }: { id: number }) {
 
         <div className="row" style={{ marginBottom: 10 }}>
           <div className="stat"><b>{hist?.length ?? '—'}</b><span>sesiones</span></div>
-          <div className="stat"><b>{ultimo != null ? numES(ultimo) : '—'}</b><span>{ex.lastre ? 'último lastre' : 'último kg'}</span></div>
-          <div className="stat"><b>{pesoMax ? numES(pesoMax) : '—'}</b><span>{ex.lastre ? 'lastre máx' : 'kg máx'}</span></div>
+          <div className="stat"><b>{ultimo != null ? numES(ultimo) : '—'}</b><span>{rotulo.u}</span></div>
+          <div className="stat"><b>{maximo != null ? numES(maximo) : '—'}</b><span>{rotulo.m}</span></div>
         </div>
 
         {puntos.length > 1 && (
           <div className="card">
-            <div className="bold small" style={{ marginBottom: 6 }}>Peso máximo por sesión</div>
-            <GraficoPesos puntos={puntos} unidad={ex.lastre ? 'kg de lastre' : 'kg'} />
+            <div className="bold small" style={{ marginBottom: 6 }}>{rotulo.t}</div>
+            <GraficoPesos puntos={puntos} unidad={unidadDe(medida, ex.lastre)} />
           </div>
         )}
 

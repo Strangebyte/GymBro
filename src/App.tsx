@@ -54,9 +54,13 @@ export default function App() {
   }, [])
   useEffect(() => { if (estado === 'listo') void getSettings().then(setSettingsLocal) }, [metaSettings, estado])
   useEffect(() => {
-    document.documentElement.dataset.theme = settings.tema
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', settings.tema === 'oscuro' ? '#0e1412' : '#f3f5f4')
-  }, [settings.tema])
+    const raiz = document.documentElement
+    raiz.dataset.theme = settings.tema
+    raiz.dataset.paleta = settings.paleta
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', getComputedStyle(raiz).getPropertyValue('--bg').trim())
+    // Se recuerda aparte para pintar bien desde el primer instante al abrir (ver main.tsx).
+    try { localStorage.setItem('gl-aspecto', `${settings.tema} ${settings.paleta}`) } catch { /* sin almacenamiento */ }
+  }, [settings.tema, settings.paleta])
 
   // Botón "atrás" de Android: cierra la hoja o el diálogo abierto y, si no hay, la pantalla de arriba (ver ui.tsx).
   useEffect(() => atras.escuchar(sacar), [sacar])

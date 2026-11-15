@@ -2,6 +2,13 @@
 
 Registro de qué se decidió y por qué. Lo más nuevo, arriba.
 
+## 15-11-2026 — Paletas de color
+
+| Decisión | Razón |
+|---|---|
+| Tres paletas: verde (la original), azul y violeta, cada una con claro y oscuro | Pedido del dueño: la de ahora más dos. Se evitó naranja y rojo como color principal porque ya significan "otras actividades" y "error" |
+| El tema y la paleta se recuerdan también fuera de la base | Para pintar con los colores elegidos desde el primer instante al abrir, sin destello verde |
+
 ## 14-11-2026 — Primera prueba en el teléfono y pendientes de la revisión
 
 | Decisión | Razón |
@@ -14,6 +21,10 @@ Registro de qué se decidió y por qué. Lo más nuevo, arriba.
 | Las sesiones de días pasados se cargan desde el calendario con la pantalla de sesión normal | Mismo flujo que ya conoce; solo cambia que no hay reloj y la duración se carga a mano |
 | Una sesión pasada avanza la rotación solo si es la más nueva | Cargar una sesión vieja no debe mover el "te toca" |
 | Si una sesión queda abierta más de 4 horas, al cerrar se pide la duración | Una sesión olvidada quedaba con 20 horas |
+| Progreso mira también las reps: a igual peso compara las reps; sin peso sigue reps o tiempo | Con solo el peso máximo, pasar de 80×6 a 80×8 figuraba "igual" y los ejercicios sin carga no tenían seguimiento. Son marcas reales, no fuerza estimada |
+| "Series por grupo muscular" siempre visible en Progreso | Pedido del dueño: no quiere tocar para desplegarla (reemplaza la decisión anterior de dejarla colapsada) |
+| Etiquetas con acento (bíceps, glúteo, máquina…) solo al mostrar | Las claves guardadas siguen sin acento; los nombres de ejercicios del entrenador no se tocan |
+| Sin botón de descanso manual | El dueño lo descartó |
 | Recordatorio de copia cada 4 sesiones propias, con "Más tarde" | Todo vive en un solo dispositivo y nada avisaba. Cuatro es más o menos una semana de entrenamiento |
 | La copia se sigue descargando al teléfono; sin botón de compartir ni subida automática a Drive | El dueño lo descartó. Lo automático exigiría cuenta de Google y registrar la app |
 | Importar plan: botón que copia el pedido para Claude, con el catálogo de quien usa la app | El dueño compartió la app con otras personas que no tienen los archivos del proyecto para pedirle un plan a Claude |

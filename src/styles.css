@@ -20,6 +20,23 @@
   --w5: #173a2c; --w4: #17343b; --w3: #37321a; --w2: #3b2c16; --w1: #401f1f;
   --w5t: #6fe0b3; --w4t: #7fd0de; --w3t: #e6cc6a; --w2t: #f0ad5c; --w1t: #ff8f88;
 }
+/* Paletas: cambian el color principal y el tinte de los fondos. La verde es la de base (arriba). */
+[data-paleta='azul'] {
+  --bg: #f3f4f7; --surface-2: #eef0f5; --line: #dfe3ea; --text: #141a24; --muted: #667085;
+  --pri: #2563c9; --pri-ink: #ffffff; --pri-soft: #dfe9fb; --pri-text: #1d4fa3;
+}
+[data-paleta='azul'][data-theme='oscuro'] {
+  --bg: #0e1218; --surface: #161b24; --surface-2: #1e2530; --line: #2a3342; --text: #e8ecf3; --muted: #8b96a8;
+  --pri: #5b9bff; --pri-ink: #06172f; --pri-soft: #17294a; --pri-text: #8db8ff;
+}
+[data-paleta='violeta'] {
+  --bg: #f5f4f8; --surface-2: #f0eef5; --line: #e2dfea; --text: #1a1624; --muted: #6c6779;
+  --pri: #6d4bd1; --pri-ink: #ffffff; --pri-soft: #e9e3fa; --pri-text: #5636b0;
+}
+[data-paleta='violeta'][data-theme='oscuro'] {
+  --bg: #121019; --surface: #1a1724; --surface-2: #231f30; --line: #312c42; --text: #ece9f4; --muted: #958fa6;
+  --pri: #a58bff; --pri-ink: #170d3a; --pri-soft: #2a2150; --pri-text: #c0aeff;
+}
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 html, body, #root { height: 100%; }
 body {

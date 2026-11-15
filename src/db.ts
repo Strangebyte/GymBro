@@ -122,6 +122,8 @@ export interface Meta { key: string; value: unknown }
 
 export interface Settings {
   tema: 'claro' | 'oscuro'
+  /** Color principal de la app. Cada paleta tiene su versión clara y oscura (styles.css). */
+  paleta: 'verde' | 'azul' | 'violeta'
   objetivo_semanal: number
   descanso_s: number
   vibrar: boolean
@@ -138,6 +140,7 @@ export interface Settings {
 }
 export const SETTINGS_DEFAULT: Settings = {
   tema: 'claro',
+  paleta: 'verde',
   objetivo_semanal: 4,
   descanso_s: 120,
   vibrar: true,

@@ -121,6 +121,29 @@ export function agruparPorDia(sesiones: Session[], actividades: Activity[]): Map
   return m
 }
 
+// ------------------------------------------------------------------ progreso
+export type Medida = 'kg' | 'reps' | 'seg'
+/** Mejor marca de una sesión. `reps` solo acompaña al peso: las reps hechas con esa carga. */
+export interface Punto { fecha: string; valor: number; reps: number | null }
+
+/**
+ * Mejor serie de cada sesión de un ejercicio. Con peso: la carga más alta y, a igual carga, la de más reps.
+ * Sin peso: las reps más altas. Sin reps: el tiempo más largo. No es una fuerza estimada: son marcas reales.
+ */
+export function progresoDe(filas: { fecha: string; set: SetLog }[]): { medida: Medida; puntos: Punto[] } {
+  const medida: Medida = filas.some((f) => f.set.peso_g) ? 'kg' : filas.some((f) => f.set.reps != null) ? 'reps' : filas.some((f) => f.set.seg != null) ? 'seg' : 'kg'
+  const m = new Map<string, Punto>()
+  for (const { fecha, set } of filas) {
+    const valor = medida === 'kg' ? (set.peso_g ? set.peso_g / 1000 : null) : medida === 'reps' ? set.reps : set.seg
+    if (valor == null) continue
+    const reps = medida === 'kg' ? set.reps : null
+    const prev = m.get(fecha)
+    if (!prev || valor > prev.valor || (valor === prev.valor && (reps ?? 0) > (prev.reps ?? 0))) m.set(fecha, { fecha, valor, reps })
+  }
+  return { medida, puntos: [...m.values()].sort((a, b) => a.fecha.localeCompare(b.fecha)) }
+}
+export const unidadDe = (m: Medida, lastre = false): string => (m === 'kg' ? (lastre ? 'kg de lastre' : 'kg') : m === 'reps' ? 'reps' : 'segundos')
+
 // ------------------------------------------------------------------ dispositivo
 export function vibrar(patron: number | number[]): void {
   try { navigator.vibrate?.(patron) } catch { /* no soportado */ }
@@ -206,16 +229,23 @@ export function categoria(e: Exercise): string {
   if (e.patron === 'pliometria') return 'Potencia y pliometría'
   if (e.grupo === 'core' || e.patron.startsWith('core')) return 'Core'
   if (e.grupo === 'full_body') return 'Cuerpo completo'
-  const t = e.grupo.replace(/_/g, ' ')
+  const t = etiqueta(e.grupo)
   return t.charAt(0).toUpperCase() + t.slice(1)
 }
-const ORDEN_CAT = ['Pecho', 'Dorsal', 'Trapecio', 'Hombro anterior', 'Hombro lateral', 'Hombro posterior', 'Biceps', 'Triceps',
-  'Gluteo', 'Cuadriceps', 'Isquios', 'Aductores', 'Gemelo', 'Cuerpo completo', 'Core', 'Potencia y pliometría', 'Movilidad']
+const ORDEN_CAT = ['Pecho', 'Dorsal', 'Trapecio', 'Hombro anterior', 'Hombro lateral', 'Hombro posterior', 'Bíceps', 'Tríceps',
+  'Glúteo', 'Cuádriceps', 'Isquios', 'Aductores', 'Gemelo', 'Cuerpo completo', 'Core', 'Potencia y pliometría', 'Movilidad']
 export function agruparPorCategoria(lista: Exercise[]): { cat: string; items: Exercise[] }[] {
   const m = new Map<string, Exercise[]>()
   for (const e of lista) { const c = categoria(e); m.set(c, [...(m.get(c) ?? []), e]) }
   const pos = (c: string) => { const i = ORDEN_CAT.indexOf(c); return i < 0 ? 99 : i }
   return [...m.entries()].sort((a, b) => pos(a[0]) - pos(b[0]) || a[0].localeCompare(b[0], 'es')).map(([cat, items]) => ({ cat, items }))
 }
-export const etiqueta = (s: string): string => s.replace(/_/g, ' ')
+// Los grupos, equipos y patrones se guardan sin acentos (son claves); acá va cómo se muestran.
+const CON_ACENTO: Record<string, string> = {
+  biceps: 'bíceps', triceps: 'tríceps', gluteo: 'glúteo', cuadriceps: 'cuádriceps', maquina: 'máquina', cajon: 'cajón',
+  traccion_horizontal: 'tracción horizontal', traccion_vertical: 'tracción vertical', pliometria: 'pliometría', locomocion: 'locomoción',
+  core_antiextension: 'core antiextensión', core_antiflexion_lateral: 'core antiflexión lateral', core_antirotacion: 'core antirrotación',
+  core_rotacion: 'core rotación',
+}
+export function etiqueta(s: string): string { return CON_ACENTO[s] ?? s.replace(/_/g, ' ') }
 export const plural = (n: number, uno: string, varios: string): string => `${n} ${n === 1 ? uno : varios}`
