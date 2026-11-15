@@ -1,5 +1,9 @@
-"""Arma docs/nombres-ejercicios.xlsx: nombre actual, nombre sugerido y otros nombres de cada ejercicio."""
-import json, sys
+"""Arma privado/nombres-ejercicios.xlsx: nombre actual, nombre sugerido, otros nombres y la última vez que se hizo
+cada ejercicio. Va en privado/ (fuera del repositorio) porque lleva fechas del historial personal.
+
+Uso:  python tools/nombres/gen.py .        (requiere openpyxl)
+"""
+import json, os, sys
 from openpyxl import Workbook
 from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 from openpyxl.utils import get_column_letter
@@ -130,15 +134,37 @@ def main(raiz):
         acentos = {'biceps': 'Bíceps', 'triceps': 'Tríceps', 'gluteo': 'Glúteo', 'cuadriceps': 'Cuádriceps'}
         return acentos.get(e['grupo'], e['grupo'].replace('_', ' ').capitalize())
 
+    # Última sesión en la que aparece cada ejercicio (del historial personal, si está en esta PC).
+    ultima = {}
+    ruta_hist = f'{raiz}/src/seed-historial.json'
+    if os.path.exists(ruta_hist):
+        for ses in json.load(open(ruta_hist, encoding='utf-8')):
+            for fila in ses['sets']:
+                if fila[0] not in ultima or ses['fecha'] >= ultima[fila[0]][0]: ultima[fila[0]] = (ses['fecha'], ses['nombre'])
+    plan = json.load(open(f'{raiz}/src/seed.json', encoding='utf-8'))['plan']
+    en_plan = {}
+    for d in plan['dias']:
+        for b in d['bloques']:
+            for x in b['ejercicios']: en_plan.setdefault(x['slug'], []).append(f"{d['nombre'].split(' · ')[0]}, bloque {b['orden']}")
+    def donde(slug):
+        partes = []
+        if slug in ultima:
+            f, nombre = ultima[slug]
+            partes.append(f'{f[8:10]}/{f[5:7]}/{f[0:4]} — {nombre}')
+        else:
+            partes.append('Sin registros en el historial')
+        if slug in en_plan: partes.append('Plan actual: ' + '; '.join(en_plan[slug]))
+        return chr(10).join(partes)
+
     wb = Workbook(); ws = wb.active; ws.title = 'Ejercicios'
     fuente = Font(name='Arial', size=10); negrita = Font(name='Arial', size=10, bold=True)
     borde = Border(bottom=Side(style='thin', color='D9D9D9'))
     ws['A1'] = 'GymBro — nombres de los ejercicios'; ws['A1'].font = Font(name='Arial', size=14, bold=True)
     ws['A2'] = ('Cómo usarlo: las columnas amarillas son para que las edites. En "Nombre sugerido" dejá el nombre que querés que se vea en la app; '
                 'en "Otros nombres" van los nombres con los que se tiene que reconocer el ejercicio al importar un plan, separados por punto y coma. '
-                'Las filas marcadas con DUDA son las que no pude interpretar con certeza. No cambies la columna "Nombre actual": es la que identifica al ejercicio.')
-    ws['A2'].font = fuente; ws['A2'].alignment = Alignment(wrap_text=True, vertical='top'); ws.merge_cells('A2:E2'); ws.row_dimensions[2].height = 58
-    cab = ['Nombre actual', 'Nombre sugerido', 'Otros nombres (separados por punto y coma)', 'Comentario', 'Categoría']
+                'Las filas marcadas con DUDA son las que no pude interpretar con certeza; la última columna dice cuándo lo hiciste por última vez y en qué día del plan actual está, para ubicarlo. No cambies la columna "Nombre actual": es la que identifica al ejercicio.')
+    ws['A2'].font = fuente; ws['A2'].alignment = Alignment(wrap_text=True, vertical='top'); ws.merge_cells('A2:F2'); ws.row_dimensions[2].height = 58
+    cab = ['Nombre actual', 'Nombre sugerido', 'Otros nombres (separados por punto y coma)', 'Comentario', 'Categoría', 'Última vez que lo hice']
     for c, t in enumerate(cab, 1):
         x = ws.cell(row=4, column=c, value=t); x.font = Font(name='Arial', size=10, bold=True, color='FFFFFF')
         x.fill = PatternFill('solid', start_color='1F2933'); x.alignment = Alignment(vertical='center', wrap_text=True)
@@ -147,15 +173,16 @@ def main(raiz):
     for i, e in enumerate(cat):
         sug, otros, com = N[e['slug']]
         fila = 5 + i
-        valores = [e['nombre'], sug, '; '.join(otros), com, categoria(e)]
+        valores = [e['nombre'], sug, '; '.join(otros), com, categoria(e), donde(e['slug'])]
         for c, v in enumerate(valores, 1):
             x = ws.cell(row=fila, column=c, value=v); x.font = negrita if c == 2 else fuente
             x.alignment = Alignment(wrap_text=True, vertical='top'); x.border = borde
             if c in (2, 3): x.fill = amarillo
             if c == 4 and com.startswith('DUDA'): x.fill = duda
-    for c, w in enumerate([38, 46, 70, 52, 22], 1): ws.column_dimensions[get_column_letter(c)].width = w
-    ws.freeze_panes = 'B5'; ws.auto_filter.ref = f'A4:E{4 + len(cat)}'
-    salida = f'{raiz}/docs/nombres-ejercicios.xlsx'; wb.save(salida)
+    for c, w in enumerate([38, 46, 70, 52, 22, 46], 1): ws.column_dimensions[get_column_letter(c)].width = w
+    ws.freeze_panes = 'B5'; ws.auto_filter.ref = f'A4:F{4 + len(cat)}'
+    os.makedirs(f'{raiz}/privado', exist_ok=True)
+    salida = f'{raiz}/privado/nombres-ejercicios.xlsx'; wb.save(salida)
     dudas = sum(1 for s in N.values() if s[2].startswith('DUDA'))
     print(f'{len(cat)} ejercicios · {dudas} con DUDA · {salida}')
 

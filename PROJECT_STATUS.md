@@ -25,7 +25,7 @@ video y scroll táctil con una hoja abierta.
 - **Probar en el teléfono** lo último publicado, que solo se verificó en el simulador: Progreso con reps
   (a igual peso muestra "+N reps"; ejercicios sin peso siguen reps o tiempo), series por grupo muscular siempre
   visible, que ya no se recargue al deslizar hacia abajo, adjuntar foto o video desde la ficha, acentos en categorías y etiquetas, las tres paletas de color (Ajustes → Color), y "Copiar pedido para Claude" en Importar plan con un Claude real.
-- **Renombrar ejercicios:** `docs/nombres-ejercicios.xlsx` tiene, para los 100 ejercicios, un nombre sugerido más
+- **Renombrar ejercicios:** `privado/nombres-ejercicios.xlsx` (fuera del repo: lleva fechas del historial) tiene, para los 100 ejercicios, un nombre sugerido más
   claro y una lista de otros nombres para reconocerlos al importar. El dueño lo tiene que revisar (28 filas con DUDA).
   Cuando lo devuelva: aplicar los nombres y los alias al catálogo, también en las apps ya instaladas (hoy la
   carga inicial corre una sola vez, así que hace falta una actualización del catálogo por `slug`).

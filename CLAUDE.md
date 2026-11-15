@@ -54,7 +54,7 @@ src/
     More.tsx       Ajustes
 tools/seed/    Generador de datos iniciales (Python) y catálogo base
 tools/imagenes/  gen.py baja y arma las imágenes incluidas de ejercicios (requiere Pillow y conexión)
-tools/nombres/  gen.py arma docs/nombres-ejercicios.xlsx (propuesta de nombres claros y alias; requiere openpyxl)
+tools/nombres/  gen.py arma privado/nombres-ejercicios.xlsx (propuesta de nombres claros y alias; requiere openpyxl)
 tools/logo/    gen.py dibuja el ícono (public/icon-*.png); requiere Pillow
 tests/         e2e.py (Playwright, Python) y fixtures
 data/          Catálogo y plan actual en JSON legible (generados)
