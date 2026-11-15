@@ -4,7 +4,7 @@
 
 ## Dónde está
 
-- La app está completa y funcionando en las pruebas automáticas (97 de 97, sin errores de consola).
+- La app está completa y funcionando en las pruebas automáticas (101 de 101, sin errores de consola).
 - **Publicada en GitHub Pages:** https://<usuario>.github.io/GymBro/ (repositorio público
   `<usuario>/GymBro`). Cada push a `main` la vuelve a publicar sola. Verificado el 14-11-2026 en
   Chromium: abre sin errores, registra el service worker y arranca con catálogo y plan, sin sesiones.
@@ -25,6 +25,10 @@ video y scroll táctil con una hoja abierta.
 - **Probar en el teléfono** lo último publicado, que solo se verificó en el simulador: Progreso con reps
   (a igual peso muestra "+N reps"; ejercicios sin peso siguen reps o tiempo), series por grupo muscular siempre
   visible, que ya no se recargue al deslizar hacia abajo, adjuntar foto o video desde la ficha, acentos en categorías y etiquetas, las tres paletas de color (Ajustes → Color), y "Copiar pedido para Claude" en Importar plan con un Claude real.
+- **Renombrar ejercicios:** `docs/nombres-ejercicios.xlsx` tiene, para los 100 ejercicios, un nombre sugerido más
+  claro y una lista de otros nombres para reconocerlos al importar. El dueño lo tiene que revisar (28 filas con DUDA).
+  Cuando lo devuelva: aplicar los nombres y los alias al catálogo, también en las apps ya instaladas (hoy la
+  carga inicial corre una sola vez, así que hace falta una actualización del catálogo por `slug`).
 - **Imágenes de ejercicios:** 28 de 100 tienen imagen incluida (las de coincidencia segura). Quedan 12 candidatos
   dudosos anotados en `tools/imagenes/gen.py` para confirmar con el dueño, y unos 60 sin equivalente en el banco
   (movilidad, core, pliometría y variantes propias del entrenador): para esos haría falta que el dueño cargue su
@@ -78,6 +82,7 @@ video y scroll táctil con una hoja abierta.
 | Fecha | Qué se hizo |
 |---|---|
 | 10-11-2026 | Diseño (`docs/historico/`), catálogo de 96 ejercicios, primera versión solo de registro |
+| 15-11-2026 | Importador: arreglos en "Crear nuevo" / "Vincular"; Excel con propuesta de nombres y alias |
 | 15-11-2026 | Imágenes incluidas para 28 ejercicios (solo coincidencias seguras, revisadas una por una) |
 | 15-11-2026 | Formas más redondas en toda la app; imágenes incluidas para 5 ejercicios, de prueba |
 | 15-11-2026 | La app pasa a llamarse GymBro, con ícono nuevo (mancuerna en degradé); chevrones más chicos |

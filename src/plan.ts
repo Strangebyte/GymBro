@@ -1,5 +1,5 @@
 import { db, kgToG, type Exercise, type PSet } from './db'
-import { agruparPorCategoria, norm, setValido } from './lib'
+import { agruparPorCategoria, GRUPOS, norm, setValido } from './lib'
 import { crearEjercicio } from './actions'
 
 export const PLAN_FORMAT = 'plan-gym/v1'
@@ -12,7 +12,8 @@ export interface ImpPlan {
   dias: ImpDia[]
   /** clave normalizada -> id del ejercicio del catálogo, o null si no se reconoce */
   resueltos: Map<string, number | null>
-  desconocidos: { clave: string; original: string; sugerencia: Exercise | null }[]
+  /** `grupo`: músculo principal que trae el archivo para un ejercicio nuevo, si lo trae y es válido. */
+  desconocidos: { clave: string; original: string; sugerencia: Exercise | null; grupo: string | null }[]
   errores: string[]
 }
 
@@ -104,7 +105,8 @@ export function leerPlan(texto: string, catalogo: Exercise[]): ImpPlan {
           if (id == null) {
             let mejor: Exercise | null = null, punt = 0
             for (const c of catalogo) { const p = similitud(clave, norm(c.nombre)); if (p > punt) { punt = p; mejor = c } }
-            out.desconocidos.push({ clave, original, sugerencia: punt >= 0.62 ? mejor : null })
+            const g = typeof e.grupo === 'string' ? norm(e.grupo).replace(/ /g, '_') : ''
+            out.desconocidos.push({ clave, original, sugerencia: punt >= 0.62 ? mejor : null, grupo: GRUPOS.includes(g) ? g : null })
           }
         }
         bloque.ejercicios.push({ original, clave, notas: typeof e.notas === 'string' && e.notas.trim() ? e.notas.trim() : null, series })
@@ -124,7 +126,15 @@ export async function guardarPlan(imp: ImpPlan, resoluciones: Map<string, Resolu
     const r = resoluciones.get(d.clave)
     if (!r) throw new Error(`Falta resolver el ejercicio "${d.original}".`)
     if (r.tipo === 'crear') {
-      ids.set(d.clave, await crearEjercicio({ nombre: r.nombre.trim() || d.original, grupo: r.grupo, alias: r.nombre.trim() && norm(r.nombre) !== d.clave ? [d.original] : [] }))
+      const nombre = r.nombre.trim() || d.original
+      // Si ya hay uno con ese nombre (del catálogo o recién creado en esta misma importación), se usa ese: no duplicar.
+      const igual = (await db.exercises.toArray()).find((x) => norm(x.nombre) === norm(nombre))
+      if (igual) {
+        if (norm(igual.nombre) !== d.clave && !(igual.alias ?? []).some((a) => norm(a) === d.clave)) await db.exercises.update(igual.id!, { alias: [...(igual.alias ?? []), d.original] })
+        ids.set(d.clave, igual.id!)
+      } else {
+        ids.set(d.clave, await crearEjercicio({ nombre, grupo: r.grupo, alias: norm(nombre) !== d.clave ? [d.original] : [] }))
+      }
     } else {
       const ex = await db.exercises.get(r.id)
       if (!ex) throw new Error(`El ejercicio vinculado a "${d.original}" ya no existe.`)
@@ -220,6 +230,7 @@ Reglas del formato:
 - Si todas las series de un ejercicio son iguales se puede abreviar con "series": 3 y los valores al lado. Si cambian (series ascendentes, por ejemplo), escribilas una por una.
 - En ejercicios con lastre (dominadas, fondos), "peso_kg" es el peso agregado.
 - "peso_kg" es opcional: si no sabés qué carga uso, no lo pongas. No inventes pesos.
+- Si usás un ejercicio que no está en mi lista, agregale "grupo" con su músculo principal, uno de: ${GRUPOS.join(', ')}.
 - "notas" es opcional, para una indicación corta por ejercicio.
 - Los días rotan en el orden del archivo: no llevan fechas ni días de la semana.
 - Tiene que ser JSON válido: sin comentarios y sin comas finales.

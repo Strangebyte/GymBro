@@ -261,7 +261,7 @@ export function Catalogo(props: { onElegir: (e: Exercise) => void; marca?: (e: E
 }
 
 /** Selector de ejercicios del catálogo, con alta rápida si no existe. */
-export function Picker(props: { titulo: string; onElegir: (e: Exercise) => void; onCerrar: () => void; multi?: boolean }) {
+export function Picker(props: { titulo: string; onElegir: (e: Exercise) => void; onCerrar: () => void; multi?: boolean; sinCrear?: boolean }) {
   const [marcados, setMarcados] = useState<number[]>([])
   const elegir = (e: Exercise) => {
     props.onElegir(e)
@@ -275,7 +275,7 @@ export function Picker(props: { titulo: string; onElegir: (e: Exercise) => void;
   return (
     <Sheet titulo={props.titulo} onCerrar={props.onCerrar} full
       accion={props.multi ? <button className="btn primary sm" onClick={props.onCerrar}>Listo{marcados.length ? ` · ${marcados.length}` : ''}</button> : undefined}>
-      <Catalogo pegajoso onElegir={elegir} onCrear={(n) => void crear(n)}
+      <Catalogo pegajoso onElegir={elegir} onCrear={props.sinCrear ? undefined : (n) => void crear(n)}
         marca={(e) => (marcados.includes(e.id!) ? <span className="pill pri">agregado</span> : null)} />
     </Sheet>
   )

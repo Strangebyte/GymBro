@@ -245,13 +245,16 @@ export function ImportScreen() {
   const [activar, setActivar] = useState(true)
   const [ocupado, setOcupado] = useState(false)
   const [pedido, setPedido] = useState<string | null>(null)
+  // Lo que se escribió en "Crear nuevo" para cada ejercicio, para no perderlo al pasar a "Vincular" y volver.
+  const borradores = useRef(new Map<string, Resolucion>())
   const file = useRef<HTMLInputElement>(null)
   const mapa = useMemo(() => new Map((ejercicios ?? []).map((e) => [e.id!, e])), [ejercicios])
 
   const leer = (t: string) => {
     const r = leerPlan(t, ejercicios ?? [])
     const m = new Map<string, Resolucion>()
-    for (const d of r.desconocidos) m.set(d.clave, { tipo: 'crear', nombre: d.original, grupo: 'full_body' })
+    for (const d of r.desconocidos) m.set(d.clave, { tipo: 'crear', nombre: d.original, grupo: d.grupo ?? 'full_body' })
+    borradores.current = new Map()
     setRes(m); setImp(r)
   }
   // Copia el pedido para el asistente. Si el navegador no deja copiar, lo muestra para copiarlo a mano.
@@ -259,7 +262,7 @@ export function ImportScreen() {
     const t = pedidoParaIA(ejercicios ?? [])
     try { await navigator.clipboard.writeText(t); setPedido(null); avisar('Pedido copiado. Pegalo en Claude.') } catch { setPedido(t) }
   }
-  const poner = (clave: string, r: Resolucion) => setRes((m) => new Map(m).set(clave, r))
+  const poner = (clave: string, r: Resolucion) => { if (r.tipo === 'crear') borradores.current.set(clave, r); setRes((m) => new Map(m).set(clave, r)) }
   const importar = async () => {
     if (!imp) return
     setOcupado(true)
@@ -352,13 +355,15 @@ export function ImportScreen() {
                       <div className="xsmall muted">En el archivo</div>
                       <b>{d.original}</b>
                       <div className="row" style={{ margin: '9px 0' }}>
-                        <button className={`chip grow${r.tipo === 'crear' ? ' on' : ''}`} aria-pressed={r.tipo === 'crear'} onClick={() => poner(d.clave, { tipo: 'crear', nombre: d.original, grupo: 'full_body' })}>Crear nuevo</button>
+                        <button className={`chip grow${r.tipo === 'crear' ? ' on' : ''}`} aria-pressed={r.tipo === 'crear'} onClick={() => { if (r.tipo !== 'crear') poner(d.clave, borradores.current.get(d.clave) ?? { tipo: 'crear', nombre: d.original, grupo: d.grupo ?? 'full_body' }) }}>Crear nuevo</button>
                         <button className={`chip grow${r.tipo === 'vincular' ? ' on' : ''}`} aria-pressed={r.tipo === 'vincular'} onClick={() => setVincular(d.clave)}>Vincular a existente</button>
                       </div>
                       {r.tipo === 'crear' ? (
                         <>
+                          <label className="f" style={{ marginTop: 0 }}>Nombre con el que queda en la app</label>
                           <input value={r.nombre} aria-label="Nombre del ejercicio nuevo" onChange={(e) => poner(d.clave, { ...r, nombre: e.target.value })} />
-                          <select style={{ marginTop: 6 }} value={r.grupo} aria-label="Grupo muscular" onChange={(e) => poner(d.clave, { ...r, grupo: e.target.value })}>
+                          <label className="f">Músculo principal</label>
+                          <select value={r.grupo} aria-label="Grupo muscular" onChange={(e) => poner(d.clave, { ...r, grupo: e.target.value })}>
                             {GRUPOS.map((g) => <option key={g} value={g}>{etiqueta(g)}</option>)}
                           </select>
                           {d.sugerencia && (
@@ -401,7 +406,7 @@ export function ImportScreen() {
           </>
         )}
       </div>
-      {vincular && <Picker titulo="Vincular a…" onCerrar={() => setVincular(null)} onElegir={(e) => poner(vincular, { tipo: 'vincular', id: e.id! })} />}
+      {vincular && <Picker sinCrear titulo="Vincular a…" onCerrar={() => setVincular(null)} onElegir={(e) => poner(vincular, { tipo: 'vincular', id: e.id! })} />}
     </>
   )
 }

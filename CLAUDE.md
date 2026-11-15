@@ -20,7 +20,7 @@ npm run seed         # regenera src/seed.json, src/seed-historial.json y data/*.
 npm run test:e2e     # requiere dist/ y: pip install playwright && playwright install chromium
 ```
 
-Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 97 verificaciones tienen que pasar
+Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 101 verificaciones tienen que pasar
 y no puede haber errores de consola. Si cambiás un flujo, actualizá `tests/e2e.py` en el mismo cambio.
 
 ## Cómo trabajar con el dueño
@@ -54,6 +54,7 @@ src/
     More.tsx       Ajustes
 tools/seed/    Generador de datos iniciales (Python) y catálogo base
 tools/imagenes/  gen.py baja y arma las imágenes incluidas de ejercicios (requiere Pillow y conexión)
+tools/nombres/  gen.py arma docs/nombres-ejercicios.xlsx (propuesta de nombres claros y alias; requiere openpyxl)
 tools/logo/    gen.py dibuja el ícono (public/icon-*.png); requiere Pillow
 tests/         e2e.py (Playwright, Python) y fixtures
 data/          Catálogo y plan actual en JSON legible (generados)
@@ -93,6 +94,8 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
 - **Datos importados** (`origen: 'importado'`, `confianza: 'media'`): pesos leídos de capturas. Avisarlo donde
   se muestren.
 - **Al entrenar solo se ven nombres del catálogo.** El importador obliga a crear o vincular lo desconocido.
+  Crear con un nombre que ya existe usa ese ejercicio en vez de duplicarlo. El selector de "Vincular" no da de
+  alta ejercicios. El archivo puede traer `grupo` (opcional) para los ejercicios que no están en el catálogo.
 
 ## Reglas de interfaz acordadas con el dueño
 

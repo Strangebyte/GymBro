@@ -10,6 +10,7 @@ Registro de qué se decidió y por qué. Lo más nuevo, arriba.
 | El recuadro "Sin video ni imagen" de la ficha abre el selector de archivos ahí mismo | Pedido del dueño: antes mandaba a la pantalla de edición |
 | El encabezado del bloque ya no muestra "0/6 series" | Pedido del dueño |
 | "Últ. vez (dd/mm)" y sin cortar el texto | Con RIR o RPE la línea no entraba en el móvil. El dueño propuso acortar el rótulo; además se dejó que ocupe más de una línea para que siempre se lea completa |
+| Importador: "Crear nuevo" ya no borra lo editado; crear con un nombre existente usa ese ejercicio; el selector de "Vincular" no da de alta; el archivo puede traer el músculo principal | El dueño notó que crear y vincular no andaban bien. Se reprodujo: tocar "Crear nuevo" reiniciaba el nombre y el grupo, y los ejercicios nuevos quedaban todos como "cuerpo completo" |
 | Formas más redondas: botones, chips y controles tipo píldora, tarjetas más curvas. La letra no cambia | El dueño pidió "rounded style" y, consultado, eligió formas más redondas y no una letra redondeada |
 | Imágenes de ejercicios incluidas en la app, tomadas de Free Exercise DB (dominio público, Unlicense) | Pedido del dueño, empezando con 5 de prueba. Van dentro de la app para que funcionen sin conexión y las vea cualquiera que la instale. La foto o video que cargue el usuario tiene prioridad |
 | Las dos fotos (inicio y fin del movimiento) van una arriba de la otra | Lado a lado quedaban muy chicas en el ancho del teléfono |
