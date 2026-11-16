@@ -207,7 +207,7 @@ export function ExerciseFormScreen({ id }: { id: number | null }) {
         </div>
         <div className="card">
           <label className="f" style={{ marginTop: 0 }} htmlFor="ea">Otros nombres, separados por coma</label>
-          <input id="ea" value={alias} onChange={(e) => setAlias(e.target.value)} placeholder="Sirven para reconocerlo al importar planes" />
+          <textarea id="ea" rows={4} value={alias} onChange={(e) => setAlias(e.target.value)} placeholder="Sirven para reconocerlo al importar planes" />
           <label className="f" htmlFor="eo">Notas</label>
           <textarea id="eo" rows={2} value={f.notas ?? ''} onChange={(e) => setF({ ...f, notas: e.target.value || null })} />
         </div>

@@ -3,7 +3,7 @@
 La app se llama **GymBro** (antes "Gym Log"). Por compatibilidad con datos ya guardados, siguen con el nombre
 viejo y **no se cambian**: la base `gym-log-v2`, el formato de copia `gym-log-backup/v2` y la clave `gl-aspecto`.
 
-App de entrenamiento personal del dueño: planes por día, registro de series, wellness, otras actividades,
+App de entrenamiento personal: planes por día, registro de series, wellness, otras actividades,
 calendario y progreso. PWA en React que guarda todo en el dispositivo (IndexedDB). Sin backend ni cuentas.
 La usa él en Android; a lo sumo la comparte con alguien más. No es un producto para vender.
 
@@ -23,14 +23,16 @@ npm run test:e2e     # requiere dist/ y: pip install playwright && playwright in
 Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 122 verificaciones tienen que pasar
 y no puede haber errores de consola. Si cambiás un flujo, actualizá `tests/e2e.py` en el mismo cambio.
 
-## Cómo trabajar con el dueño
+## Cómo trabajar
 
 - Español rioplatense, directo y conciso. Toda la interfaz está en español (voseo: "elegí", "tocá").
-- No es programador de oficio: explicar decisiones por su efecto, no por su mecánica.
-- **Ante una duda sobre qué pide, preguntar antes de construir.** Lo dijo explícitamente: prefiere una
-  pregunta a rehacer todo. Lo que es criterio técnico, decidirlo y avisar.
+- Explicar las decisiones por su efecto, no por su mecánica.
+- **Ante una duda sobre qué se pide, preguntar antes de construir.** Lo que es criterio técnico, decidirlo y avisar.
 - Separar lo verificado de lo inferido y decir qué no se probó.
 - Ser crítico con lo que se agrega: si algo no aporta, no hacerlo y decir por qué.
+- **El repositorio es público y no lleva datos personales** (nombre, apodo, mail, usuario, ciudades, otras personas, otros
+  proyectos). En la documentación, quien usa y decide sobre la app es "el dueño". No escribir esos datos en archivos
+  ni en mensajes de commit.
 
 ## Mapa del código
 

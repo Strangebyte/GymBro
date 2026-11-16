@@ -39,9 +39,9 @@ video y scroll táctil con una hoja abierta.
   músculos secundarios cargados, así que en "Series por grupo muscular" solo suman a su grupo principal.
 - **Probar en iPhone** (otra persona): instalación desde Safari, sonido de descanso, copia de seguridad.
   No vibra en iPhone: es una limitación de iOS.
-- **Datos personales en el repositorio público (auditado el 16-11-2026):** no hay mail ni apellido en los archivos ni en
-  el historial de git. Sí aparecen: el apodo "el dueño" (unas 75 veces en la documentación), el usuario de GitHub en la
-  dirección de la app, dos ciudades y el nombre de otro proyecto suyo en `docs/historico/`, y menciones a otras personas. Falta que el dueño decida si quiere quitarlos (y si también del historial de git).
+- **Datos personales (16-11-2026):** se quitaron de los archivos y de todo el historial de git: apodo, usuario,
+  ciudades, otras personas y otros proyectos. Los commits se firman como "GymBro". Queda a cargo del dueño cambiar
+  el nombre de usuario de GitHub, que es lo único que sigue visible (en la dirección del repositorio y de la app).
 - **Herramientas de desarrollo con avisos de seguridad:** `npm audit` marca 7 en dependencias de compilación (Vite y
   el generador del service worker). No van dentro de la app publicada; arreglarlos exige subir Vite de versión mayor.
 - **Restaurar una copia no valida el contenido fila por fila:** un archivo armado a mano con datos incompletos puede
@@ -92,6 +92,7 @@ video y scroll táctil con una hoja abierta.
 | Fecha | Qué se hizo |
 |---|---|
 | 10-11-2026 | Diseño (`docs/historico/`), catálogo de 96 ejercicios, primera versión solo de registro |
+| 16-11-2026 | Datos personales fuera de los archivos y del historial de git; campo de otros nombres más grande |
 | 16-11-2026 | Auditoría de la app y de datos personales en el repositorio; arreglos menores; el bloque cerrado del editor muestra grupos y equipamiento |
 | 16-11-2026 | Editor de días con botón Guardar y aviso al salir con cambios; "Rebote y frenado" borrado del todo; la versión pública ya no trae el plan Mesociclo B |
 | 16-11-2026 | Grupos, patrones y equipamiento unificados (con conversión de los datos guardados); editor de días compacto con bloques que se abren y cierran; cuestionario nuevo en el pedido para la IA; arreglo del zoom en iPhone (sin verificar) |
