@@ -28,6 +28,8 @@ export interface Exercise {
   alias: string[]
   custom: boolean
   descanso_s: number | null
+  /** El usuario lo modificó desde la app: las revisiones del catálogo ya no le pisan el nombre ni los demás datos. */
+  editado?: boolean
   /** Enlace externo a un video o página del ejercicio. */
   url?: string | null
 }
@@ -332,7 +334,7 @@ export async function actualizarCatalogo(): Promise<void> {
       if (!e) { await db.exercises.add(deSemilla(s)); continue }
       const alias = [...(e.alias ?? [])]
       for (const a of s.alias ?? []) if (!alias.includes(a)) alias.push(a)
-      if (e.custom) await db.exercises.update(e.id!, { alias })   // lo creó el usuario con el mismo nombre: no se pisa
+      if (e.custom || e.editado) await db.exercises.update(e.id!, { alias })   // creado o modificado por el usuario: no se pisa
       else await db.exercises.update(e.id!, {
         nombre: s.nombre, legible: s.legible, grupo: s.grupo, sec: s.sec, equipo: s.equipo, patron: s.patron, alias,
         // Lo archivado solo se tocó en la revisión 2 (se sacaron los archivados de fábrica); después es decisión del usuario.

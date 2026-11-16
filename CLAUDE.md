@@ -20,7 +20,7 @@ npm run seed         # regenera src/seed.json, src/seed-historial.json y data/*.
 npm run test:e2e     # requiere dist/ y: pip install playwright && playwright install chromium
 ```
 
-Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 121 verificaciones tienen que pasar
+Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 122 verificaciones tienen que pasar
 y no puede haber errores de consola. Si cambiás un flujo, actualizá `tests/e2e.py` en el mismo cambio.
 
 ## Cómo trabajar con el dueño
@@ -129,8 +129,8 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
   "Hombros", "Espalda" con trapecio, "Aductores y abductores" juntos, más "Antebrazos" y "Lumbares"), un solo patrón
   "Core", y el patrón escondido en el formulario detrás de "Más opciones". Las claves viejas se convierten con
   `GRUPO_NUEVO` y `PATRON_NUEVO` (db.ts).
-- Editor de un día del plan: igual que la sesión. Bloques colapsados (con los nombres de los ejercicios en el
-  encabezado), abrir uno cierra el otro, tabla compacta y acciones como enlaces. La nota del ejercicio aparece
+- Editor de un día del plan: igual que la sesión. Bloques colapsados (con grupos y equipamiento en el
+  encabezado, lo mismo que se ve al entrenar), abrir uno cierra el otro, tabla compacta y acciones como enlaces. La nota del ejercicio aparece
   solo si tiene una o si se toca "+ Nota". Los cambios quedan en un borrador: se guardan con el botón "Guardar"
   (arriba a la derecha), y salir con cambios sin guardar pregunta "Guardar / Salir sin guardar / Seguir editando".
 - Apariencia: tema claro/oscuro y paleta (`verde`, `azul`, `violeta`). Una paleta nueva son dos bloques en
@@ -159,7 +159,8 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
   revisión en los teléfonos ya instalados (`actualizarCatalogo` en db.ts), reconociendo cada ejercicio por su
   `slug`, que **nunca se cambia** aunque cambie el nombre. El nombre viejo siempre queda como alias. Un ejercicio
   retirado que tiene historial se archiva, no se borra, salvo que el dueño pida borrarlo del todo (`eliminar`: se va con
-  sus series y sale de los planes). Los ejercicios que creó el usuario no se pisan.
+  sus series y sale de los planes). Los ejercicios que el usuario creó (`custom`) o modificó desde la app (`editado`)
+  no se pisan: solo reciben los alias nuevos.
 - **Cambios de esquema:** agregar `this.version(N+1).stores(...)` en db.ts, con `.upgrade()` si hay que
   transformar datos. Nunca editar una versión ya publicada: el usuario tiene datos reales.
 - **iPhone agranda la pantalla** al tocar un campo con letra de menos de 16px. Por eso styles.css fuerza 16px en

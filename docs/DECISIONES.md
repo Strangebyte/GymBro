@@ -6,6 +6,10 @@ Registro de qué se decidió y por qué. Lo más nuevo, arriba.
 
 | Decisión | Razón |
 |---|---|
+| En el editor, el bloque cerrado muestra grupos y equipamiento en vez de los nombres de los ejercicios | Pedido del dueño: quiere ver lo mismo que ve al entrenar |
+| Un ejercicio que el usuario modificó desde la app queda marcado y las revisiones del catálogo ya no le cambian el nombre ni los datos | Salió de la auditoría: sin esto, cada revisión pisaba los cambios hechos a mano |
+| El enlace de un ejercicio solo se muestra si empieza con http o https | Salió de la auditoría: una copia de seguridad armada a mano podía traer otro tipo de enlace |
+| Borrar un ejercicio borra también su video o imagen | Quedaba ocupando espacio |
 | El editor de un día ya no guarda solo: botón "Guardar" arriba a la derecha y aviso al salir con cambios | Pedido del dueño. El aviso ofrece guardar, salir sin guardar o seguir editando, y también salta con el botón atrás del teléfono |
 | "Rebote y frenado" se borra del todo, con sus 3 series registradas, y sale del plan | El dueño lo confirmó después de saber que tenía historial |
 | La versión pública arranca sin planes: el plan Mesociclo B pasa a ser un archivo privado, igual que el historial | El dueño no quiere que a quien instala la app le aparezca su plan. En los teléfonos que ya lo tenían no se borra solo: no se puede distinguir el del dueño del de los demás |

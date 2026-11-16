@@ -184,7 +184,8 @@ export function PlanDayScreen({ id }: { id: number }) {
         {invalidas > 0 && <div className="banner err">{invalidas} {invalidas === 1 ? 'serie no tiene' : 'series no tienen'} ningún dato. Cada serie necesita al menos reps, tiempo, peso, RIR o RPE.</div>}
 
         {bloques.map((b, bi) => {
-          const nombres = b.ejercicios.map((e) => mapa.get(e.exercise_id)?.nombre ?? 'Ejercicio borrado').join(' · ')
+          const exs = b.ejercicios.map((e) => mapa.get(e.exercise_id)).filter((x): x is Exercise => !!x)
+          const desc = [...new Set([...exs.map((x) => etiqueta(x.grupo)), ...exs.map((x) => x.equipo).filter((q) => q !== 'peso_corporal').map(etiqueta)])]
           const malas = b.ejercicios.reduce((n, e) => n + e.series.filter((x) => !setValido(x)).length, 0)
           return (
             <div key={bi} className="bloque">
@@ -195,7 +196,7 @@ export function PlanDayScreen({ id }: { id: number }) {
                   <span className="grow">
                     <span className="bold">Bloque {b.orden}</span>
                     <span className="xsmall muted" style={{ display: 'block' }}>{plural(b.ejercicios.length, 'ejercicio', 'ejercicios')}{malas > 0 ? ` · ${plural(malas, 'serie sin datos', 'series sin datos')}` : ''}</span>
-                    {nombres && <span className="xsmall muted truncate" style={{ display: 'block' }}>{nombres}</span>}
+                    {desc.length > 0 && <span className="xsmall muted truncate" style={{ display: 'block' }}>{desc.slice(0, 5).join(' · ')}</span>}
                   </span>
                 </button>
               </div>

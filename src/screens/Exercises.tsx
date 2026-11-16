@@ -131,7 +131,7 @@ export function ExerciseFormScreen({ id }: { id: number | null }) {
     if (url && !/^https?:\/\//i.test(url)) url = `https://${url}`
     const datos = { ...f, nombre, url, alias: alias.split(',').map((a) => a.trim()).filter(Boolean) }
     try {
-      if (id != null) { await db.exercises.update(id, datos); await guardarMedia(id); nav.volver() }
+      if (id != null) { await db.exercises.update(id, { ...datos, editado: true }); await guardarMedia(id); nav.volver() }
       else {
         const nid = await crearEjercicio(datos as Partial<Exercise> & { nombre: string })
         if (url) await db.exercises.update(nid, { url })
@@ -216,7 +216,7 @@ export function ExerciseFormScreen({ id }: { id: number | null }) {
           <button className="btn ghost block danger" style={{ marginTop: 8 }} onClick={async () => {
             const enPlanes = (await db.planDays.toArray()).some((d) => d.bloques.some((b) => b.ejercicios.some((e) => e.exercise_id === id)))
             if (enPlanes) { avisar('Está en uso en un plan. Quitalo del plan o archivalo.'); return }
-            if (await confirmar({ titulo: '¿Borrar este ejercicio?', ok: 'Borrar', peligro: true })) { await db.exercises.delete(id); nav.raiz({ v: 'ejercicios' }) }
+            if (await confirmar({ titulo: '¿Borrar este ejercicio?', ok: 'Borrar', peligro: true })) { await db.media.delete(id); await db.exercises.delete(id); nav.raiz({ v: 'ejercicios' }) }
           }}>Borrar ejercicio</button>
         )}
         {id != null && usos > 0 && <div className="xsmall muted center" style={{ marginTop: 10 }}>Tiene {usos} series registradas, así que no se puede borrar; sí archivar.</div>}

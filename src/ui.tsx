@@ -367,6 +367,7 @@ export function MediaView({ exerciseId, url, slug }: { exerciseId: number; url?:
     return () => URL.revokeObjectURL(u)
   }, [m])
   if (m === undefined) return null   // todavía no se sabe si hay una propia: no mostrar la incluida para después cambiarla
+  if (url && !/^https?:\/\//i.test(url)) url = null   // solo enlaces web: nada de javascript: u otros esquemas
   if (!m && !url && !incluida) return null
   return (
     <div className="media">
