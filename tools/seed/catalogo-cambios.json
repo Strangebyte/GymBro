@@ -1,5 +1,5 @@
 {
- "rev": 2,
+ "rev": 3,
  "ejercicios": {
   "cadera-con-glide-lateral-cuadrupedia": {
    "nombre": "Movilidad de cadera en cuadrupedia con glide lateral",
@@ -1372,9 +1372,9 @@
    "slug": "hiperextensiones-lumbares",
    "nombre": "Hiperextensiones lumbares",
    "legible": null,
-   "grupo": "core",
+   "grupo": "lumbares",
    "sec": [],
-   "equipo": "maquina",
+   "equipo": "banco",
    "patron": "bisagra",
    "unilateral": false,
    "lastre": false,
@@ -2442,5 +2442,28 @@
    ],
    "imagen": "Farmers_Walk"
   }
- ]
+ ],
+ "grupos": {
+  "dorsal": "espalda",
+  "trapecio": "espalda",
+  "hombro_anterior": "hombros",
+  "hombro_lateral": "hombros",
+  "hombro_posterior": "hombros",
+  "isquios": "isquiotibiales",
+  "aductores": "aductores_abductores",
+  "gemelo": "gemelos",
+  "full_body": "cuerpo_completo",
+  "movilidad_cadera": "movilidad",
+  "movilidad_dorsal": "movilidad",
+  "movilidad_isquios": "movilidad",
+  "movilidad_posterior": "movilidad",
+  "movilidad_aductores": "movilidad"
+ },
+ "patrones": {
+  "core_antiextension": "core",
+  "core_antiflexion_lateral": "core",
+  "core_antirotacion": "core",
+  "core_rotacion": "core",
+  "locomocion": "acarreo"
+ }
 }

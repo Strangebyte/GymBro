@@ -40,7 +40,7 @@ Es el archivo que acepta **Planes → Importar plan** en GymBro, y el mismo que 
 | Peso con lastre | En dominadas, fondos y similares, `peso_kg` es el lastre agregado |
 | Atajo | Si todas las series son iguales: `"series": 3` y los valores al lado (`"reps": 7, "peso_kg": 20, "rir": 2`) |
 | Nombre del ejercicio | Se compara sin mayúsculas ni acentos contra nombre, descripción y otros nombres del catálogo |
-| `grupo` (opcional) | Solo para ejercicios que no están en el catálogo: su músculo principal (`pecho`, `dorsal`, `biceps`, `gluteo`, `cuadriceps`, `isquios`, `core`…). Queda preelegido al crearlo |
+| `grupo` (opcional) | Solo para ejercicios que no están en el catálogo: su músculo principal (`Pecho`, `Espalda`, `Hombros`, `Bíceps`, `Glúteo`, `Cuádriceps`, `Isquiotibiales`, `Core`…; se acepta el nombre o la clave). Queda preelegido al crearlo |
 | Ejercicio desconocido | La app pregunta: crearlo (con nombre editable) o vincularlo a uno existente. Si se vincula, el nombre del archivo queda guardado como «otro nombre» y la próxima vez se reconoce solo |
 | Rotación | Los días rotan en el orden del archivo. No llevan fechas |
 

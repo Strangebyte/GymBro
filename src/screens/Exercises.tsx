@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, type Exercise, type Mide } from '../db'
-import { Catalogo, Chips, guardarMediaDe, HistorialLista, MAX_MEDIA_MB, MediaView, problemaMedia, Stepper, TopBar, useDialogos, useNav, useTieneMedia } from '../ui'
+import { Catalogo, Chevron, Chips, guardarMediaDe, HistorialLista, MAX_MEDIA_MB, MediaView, problemaMedia, Stepper, TopBar, useDialogos, useNav, useTieneMedia } from '../ui'
 import { numES, EQUIPOS, etiqueta, GRUPOS, historicoEjercicio, PATRONES, progresoDe, unidadDe, type SesionDeEjercicio } from '../lib'
 import { crearEjercicio } from '../actions'
 import { GraficoPesos } from './Progress'
@@ -97,6 +97,7 @@ export function ExerciseFormScreen({ id }: { id: number | null }) {
   const { confirmar, avisar } = useDialogos()
   const [f, setF] = useState<Partial<Exercise>>({ nombre: '', grupo: 'pecho', equipo: 'barra', patron: 'aislamiento', mide: 'reps', vol: true, unilateral: false, lastre: false, inc: 2.5, alias: [] })
   const [alias, setAlias] = useState('')
+  const [mas, setMas] = useState(false)
   const [usos, setUsos] = useState(0)
   const [archivoNuevo, setArchivoNuevo] = useState<File | null>(null)
   const [quitarMedia, setQuitarMedia] = useState(false)
@@ -164,11 +165,19 @@ export function ExerciseFormScreen({ id }: { id: number | null }) {
           <input id="el" value={f.legible ?? ''} onChange={(e) => setF({ ...f, legible: e.target.value || null })} />
           {sel('grupo', GRUPOS, 'Grupo muscular principal')}
           {sel('equipo', EQUIPOS, 'Equipamiento')}
-          {sel('patron', PATRONES, 'Patrón de movimiento')}
           <label className="f">Se mide en</label>
           <Chips opciones={[{ v: 'reps' as Mide, t: 'repeticiones' }, { v: 'seg' as Mide, t: 'tiempo' }, { v: 'ambos' as Mide, t: 'cualquiera' }]} valor={(f.mide ?? 'reps') as Mide} onPick={(v) => setF({ ...f, mide: v })} />
           <label className="f">Descanso entre series</label>
           <Stepper value={f.descanso_s ?? null} step={15} unit="segundos" onChange={(v) => setF({ ...f, descanso_s: v })} />
+          <button className="row" style={{ width: '100%', marginTop: 12, minHeight: 36 }} onClick={() => setMas((m) => !m)} aria-expanded={mas}>
+            <Chevron abierto={mas} /><span className="small bold">Más opciones</span>
+          </button>
+          {mas && (
+            <>
+              {sel('patron', PATRONES, 'Patrón de movimiento')}
+              <div className="xsmall muted" style={{ marginTop: 4 }}>Tipo de movimiento. Solo se usa para ordenar el catálogo y elegir qué ejercicios se muestran primero en Progreso.</div>
+            </>
+          )}
         </div>
         <div className="card">
           <label className="f" style={{ marginTop: 0 }}>Video o imagen del ejercicio</label>

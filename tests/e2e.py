@@ -120,7 +120,7 @@ def main():
             ok('6 bloques, todos colapsados', pg.locator('.bloque').count() == 6 and pg.locator('.ej').count() == 0)
             ok('Flecha de desplegar a la izquierda del bloque', pg.locator('.bloque-h button.row').first.evaluate('b => b.firstElementChild.classList.contains("chev")'))
             ok('Un tilde por bloque', pg.locator('.tilde').count() == 6)
-            ok('Etiquetas del bloque en su encabezado', 'Movilidad cadera' in pg.locator('.bloque').first.inner_text())
+            ok('Etiquetas del bloque en su encabezado', 'Movilidad' in pg.locator('.bloque').first.inner_text())
             ok('Encabezado de bloque sin contador de series', 'series' not in pg.locator('.bloque').first.inner_text())
             ok('37 series del plan', 'de 37 series' in texto(pg, '.topbar'))
             captura(pg, 'B2-sesion')
@@ -150,7 +150,7 @@ def main():
             ok('Selector: "Listo" en la cabecera', pg.locator('.sheet-h >> text=Listo').count() == 1)
             ok('Selector agrupado por categoría', pg.locator('.sheet h2.cat').count() >= 10)
             pg.click('.sheet [aria-label="Filtrar ejercicios"]'); pg.wait_for_timeout(200)
-            pg.locator('.sheet .chip', has_text='Isquios').click(); pg.wait_for_timeout(300)
+            pg.locator('.sheet .chip', has_text='Isquiotibiales').click(); pg.wait_for_timeout(300)
             ok('Filtro por categoría', pg.locator('.sheet h2.cat').count() == 1 and pg.locator('.sheet .item').count() == 13, str(pg.locator('.sheet .item').count()))
             captura(pg, 'B4-selector')
             pg.locator('.sheet .item', has_text='Curl nórdico de isquiotibiales').click(); pg.wait_for_timeout(200)
@@ -292,7 +292,10 @@ def main():
             pg.click('text=Día A'); pg.wait_for_timeout(400)
             t = texto(pg)
             ok('El plan usa los nombres del catálogo', 'Press inclinado en Smith' in t and 'Dominadas con agarre prono' in t and 'Dominadas agarre prono' not in t)
-            card = pg.locator('.card', has_text='Press inclinado en Smith')
+            ok('Editor de día: bloques colapsados, con los ejercicios a la vista en el encabezado', pg.locator('.bloque').count() == 2 and pg.locator('.ed-serie').count() == 0)
+            pg.locator('.bloque-h button.row').nth(0).click(); pg.wait_for_timeout(250); pg.locator('.bloque-h button.row').nth(1).click(); pg.wait_for_timeout(300)
+            ok('Editor de día: abrir un bloque cierra el otro', pg.locator('.bloque-c').count() == 1 and pg.locator('.ej').count() == 3 and 'Hollow' in pg.locator('.bloque-c').inner_text())
+            card = pg.locator('.ej', has_text='Press inclinado en Smith')
             card.locator('[aria-label="Serie 1: RIR"]').fill('2'); card.locator('[aria-label="Serie 1: RIR"]').blur(); pg.wait_for_timeout(300)
             ok('Editor: cargar RIR borra el RPE de esa serie', card.locator('[aria-label="Serie 1: RPE"]').input_value() == '' and card.locator('[aria-label="Serie 2: RPE"]').input_value() == '8')
             card.locator('text=+ Serie').click(); pg.wait_for_timeout(300)
@@ -308,6 +311,7 @@ def main():
             print('\nF. Ejercicios: alta, imagen, agrupado')
             ctx, pg = abrir()
             tab(pg, 'Ejercicios')
+            ok('Grupos unificados en el catálogo', 'HOMBROS' in texto(pg).upper() and 'ESPALDA' in texto(pg).upper() and 'DORSAL' not in texto(pg).upper() and 'HOMBRO ANTERIOR' not in texto(pg).upper())
             ok('Categorías con acento', 'BÍCEPS' in texto(pg).upper() and 'GLÚTEO' in texto(pg).upper())
             ok('Catálogo agrupado y con filtro', pg.locator('h2.cat').count() >= 10 and pg.locator('[aria-label="Filtrar ejercicios"]').count() == 1)
             captura(pg, 'F1-ejercicios')
@@ -420,7 +424,7 @@ def main():
             desp, _ = backup(pg)
             ids = {e['id'] for e in desp['exercises']}
             porSlug = {e['slug']: e for e in desp['exercises']}
-            ok('Catálogo viejo → nuevo: 156 ejercicios y la revisión anotada', len(desp['exercises']) == 156 and [m['value'] for m in desp['meta'] if m['key'] == 'catalogo'] == [2], str(len(desp['exercises'])))
+            ok('Catálogo viejo → nuevo: 156 ejercicios y la revisión anotada', len(desp['exercises']) == 156 and [m['value'] for m in desp['meta'] if m['key'] == 'catalogo'] == [3], str(len(desp['exercises'])))
             ok('No se pierde ninguna serie ni sesión', len(desp['setLogs']) == len(antes['setLogs']) == 1087 and len(desp['sessions']) == 29)
             ok('Ninguna serie ni plan apunta a un ejercicio inexistente', all(l['exercise_id'] in ids for l in desp['setLogs'])
                and all(x['exercise_id'] in ids for d in desp['planDays'] for b in d['bloques'] for x in b['ejercicios']))
@@ -431,6 +435,9 @@ def main():
             ok('Nombres nuevos, el viejo queda como alias, y los clásicos agregados', porSlug['press-plano']['nombre'] == 'Press de banca con barra'
                and 'Press plano' in porSlug['press-plano']['alias'] and 'camilla-de-cuadriceps' in porSlug and porSlug['press-plano']['id'] == viejo['press-plano'])
             ok('Ya no hay archivados de fábrica; el retirado con historial queda oculto', [e['slug'] for e in desp['exercises'] if e['archivo']] == ['rebote-y-freno'] and 'remo-tandem-en-puntas' not in porSlug)
+            viejos = {'dorsal', 'trapecio', 'hombro_anterior', 'hombro_lateral', 'hombro_posterior', 'isquios', 'aductores', 'gemelo', 'full_body', 'movilidad_cadera'}
+            ok('Grupos y patrones unificados en los datos ya guardados', not any(e['grupo'] in viejos or e['patron'].startswith('core_') or e['patron'] == 'locomocion' or any(x['grupo'] in viejos for x in e['sec']) for e in desp['exercises'])
+               and porSlug['press-militar-br']['grupo'] == 'hombros' and porSlug['dominadas-prona']['grupo'] == 'espalda' and porSlug['hiperextensiones-lumbares']['grupo'] == 'lumbares')
             ctx.close()
             navegador.close()
     finally:

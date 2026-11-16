@@ -2,6 +2,17 @@
 
 Registro de qué se decidió y por qué. Lo más nuevo, arriba.
 
+## 16-11-2026 — Grupos, editor de días y pedido para la IA
+
+| Decisión | Razón |
+|---|---|
+| 15 grupos musculares en vez de 20: un solo "Movilidad", un solo "Hombros", "Espalda" (con trapecio), "Aductores y abductores" juntos; se agregan "Antebrazos" y "Lumbares" | Había cinco grupos de movilidad y tres de hombro para pocos ejercicios. Juntar aductores y abductores lo pidió el dueño |
+| Un solo patrón "Core"; "Bisagra de cadera (peso muerto)" y "Acarreos y desplazamientos" como nombres; el patrón queda detrás de "Más opciones" | Es el dato más técnico y el que menos usa quien arma su plan |
+| Equipamiento: "Disco / lastre", "Deslizadores", "Pelota (fitball)", y se agregan "Banco" y "TRX / anillas" | Nombres más claros y dos equipos comunes que faltaban |
+| El editor de un día del plan funciona como la sesión: bloques colapsados, uno abierto por vez, tabla compacta | Pedido del dueño: era muy largo y quería poder abrir y cerrar bloques igual que al entrenar |
+| El pedido para que una IA arme un plan lleva un cuestionario de 22 preguntas, con reglas de salud | El dueño pasó un cuestionario de 28. Se sacaron las que la app no puede usar (días y horarios fijos, qué tan lleno está el gimnasio, alimentación, cardio, qué medir) y se sumaron tres que sí cambian el plan en esta app: cuántas semanas dura, si quiere movilidad y core en cada sesión, y en qué deporte quiere rendir |
+| En iPhone todos los campos van con letra de 16px | Con menos, iOS agranda la pantalla al tocarlos (pasaba en "Pegar el plan") |
+
 ## 15-11-2026 — Revisión del catálogo
 
 | Decisión | Razón |

@@ -127,6 +127,8 @@ export function PlanDayScreen({ id }: { id: number }) {
   const ejercicios = useLiveQuery(() => db.exercises.toArray(), [])
   const [picker, setPicker] = useState<{ b: number; e: number | null } | null>(null)
   const [rev, setRev] = useState(0)
+  const [abierto, setAbierto] = useState<number | null | undefined>(undefined)
+  const [notaDe, setNotaDe] = useState<string | null>(null)   // ejercicio al que se le está agregando una nota
   const mapa = useMemo(() => new Map((ejercicios ?? []).map((e) => [e.id!, e])), [ejercicios])
   if (!dia || !ejercicios) return <><TopBar titulo="Día" atras /><div className="main sin-tabs"><div className="empty">Cargando…</div></div></>
 
@@ -148,78 +150,99 @@ export function PlanDayScreen({ id }: { id: number }) {
     })
   }
 
+  // Bloques colapsados, uno abierto por vez, igual que en la sesión. Con un solo bloque, arranca abierto.
+  const ab = abierto === undefined ? (dia.bloques.length === 1 ? 0 : null) : abierto
+
   return (
     <>
       <TopBar titulo="Editar día" atras />
       <div className="main sin-tabs">
-        <div className="card">
+        <div className="card tight">
           <label className="f" style={{ marginTop: 0 }} htmlFor="dn">Nombre del día</label>
           <input id="dn" defaultValue={dia.nombre} onBlur={(e) => void db.planDays.update(id, { nombre: e.target.value.trim() || 'Día sin nombre' })} />
         </div>
         {invalidas > 0 && <div className="banner err">{invalidas} {invalidas === 1 ? 'serie no tiene' : 'series no tienen'} ningún dato. Cada serie necesita al menos reps, tiempo, peso, RIR o RPE.</div>}
 
-        {dia.bloques.map((b, bi) => (
-          <div key={bi}>
-            <div className="row spread" style={{ margin: '16px 2px 8px' }}>
-              <b>Bloque {b.orden}</b>
-              <button className="btn sm danger" onClick={async () => {
-                if (!b.ejercicios.length || await confirmar({ titulo: `¿Borrar el bloque ${b.orden}?`, ok: 'Borrar', peligro: true })) editar((bl) => { bl.splice(bi, 1) })
-              }}>Borrar bloque</button>
-            </div>
-            {b.ejercicios.map((e, ei) => {
-              const ex = mapa.get(e.exercise_id)
-              const enSeg = e.series.some((s) => s.seg != null) || (ex?.mide === 'seg' && !e.series.some((s) => s.reps != null))
-              return (
-                <div key={`${ei}-${rev}`} className="card tight">
-                  <div className="row top">
-                    <button className="grow" onClick={() => setPicker({ b: bi, e: ei })}>
-                      <b style={{ fontSize: 15 }}>{ex?.nombre ?? 'Ejercicio borrado'}</b>
-                      <div className="xsmall muted">{ex ? `${etiqueta(ex.grupo)} · tocá para cambiarlo` : 'Tocá para elegir otro'}</div>
-                    </button>
-                    <button className="chip sm" disabled={ei === 0} aria-label="Subir ejercicio" onClick={() => editar((bl) => { const a = bl[bi].ejercicios; [a[ei - 1], a[ei]] = [a[ei], a[ei - 1]] })}>↑</button>
-                    <button className="chip sm" disabled={ei === b.ejercicios.length - 1} aria-label="Bajar ejercicio" onClick={() => editar((bl) => { const a = bl[bi].ejercicios; [a[ei + 1], a[ei]] = [a[ei], a[ei + 1]] })}>↓</button>
-                    <button className="chip sm" aria-label="Quitar ejercicio" onClick={() => editar((bl) => { bl[bi].ejercicios.splice(ei, 1) })}>✕</button>
-                  </div>
-
-                  <div className="ed-serie" style={{ marginTop: 10 }}>
-                    <span /><span className="h">{enSeg ? 'seg' : 'reps'}</span><span className="h">kg</span><span className="h">RIR</span><span className="h">RPE</span><span className="h">fallo</span><span />
-                  </div>
-                  {e.series.map((s, si) => {
-                    const set = (c: Partial<PSet>) => editar((bl) => { Object.assign(bl[bi].ejercicios[ei].series[si], c) }, false)
+        {dia.bloques.map((b, bi) => {
+          const nombres = b.ejercicios.map((e) => mapa.get(e.exercise_id)?.nombre ?? 'Ejercicio borrado').join(' · ')
+          const malas = b.ejercicios.reduce((n, e) => n + e.series.filter((x) => !setValido(x)).length, 0)
+          return (
+            <div key={bi} className="bloque">
+              <div className="bloque-h">
+                <button className="row grow" onClick={() => setAbierto(ab === bi ? null : bi)} aria-expanded={ab === bi}>
+                  <Chevron abierto={ab === bi} />
+                  <span className="num">{b.orden}</span>
+                  <span className="grow">
+                    <span className="bold">Bloque {b.orden}</span>
+                    <span className="xsmall muted" style={{ display: 'block' }}>{plural(b.ejercicios.length, 'ejercicio', 'ejercicios')}{malas > 0 ? ` · ${plural(malas, 'serie sin datos', 'series sin datos')}` : ''}</span>
+                    {nombres && <span className="xsmall muted truncate" style={{ display: 'block' }}>{nombres}</span>}
+                  </span>
+                </button>
+              </div>
+              {ab === bi && (
+                <div className="bloque-c">
+                  {b.ejercicios.map((e, ei) => {
+                    const ex = mapa.get(e.exercise_id)
+                    const enSeg = e.series.some((x) => x.seg != null) || (ex?.mide === 'seg' && !e.series.some((x) => x.reps != null))
+                    const clave = `${bi}-${ei}`
+                    const nombre = ex?.nombre ?? 'Ejercicio borrado'
                     return (
-                      <div key={si} className={`ed-serie${setValido(s) ? '' : ' mal'}`}>
-                        <span className="xsmall muted center">{si + 1}</span>
-                        <input inputMode="numeric" aria-label={`Serie ${si + 1}: ${enSeg ? 'segundos' : 'reps'}`} defaultValue={aTxt(enSeg ? s.seg : s.reps)} key={`m${enSeg}${si}${e.series.length}`}
-                          onBlur={(ev) => set(enSeg ? { seg: aNum(ev.target.value), reps: null } : { reps: aNum(ev.target.value), seg: null })} />
-                        <input inputMode="decimal" aria-label={`Serie ${si + 1}: peso en kg`} defaultValue={s.peso_g ? aTxt(s.peso_g / 1000) : ''} key={`p${si}${e.series.length}`}
-                          onBlur={(ev) => { const n = aNum(ev.target.value); set({ peso_g: n == null ? null : kgToG(n) }) }} />
-                        <input inputMode="numeric" aria-label={`Serie ${si + 1}: RIR`} defaultValue={aTxt(s.rir)} key={`i${si}${e.series.length}${s.rir ?? 'x'}`}
-                          onBlur={(ev) => { const n = aNum(ev.target.value); set(n == null ? { rir: null } : { rir: n, rpe: null }) }} />
-                        <input inputMode="numeric" aria-label={`Serie ${si + 1}: RPE`} defaultValue={aTxt(s.rpe)} key={`e${si}${e.series.length}${s.rpe ?? 'x'}`}
-                          onBlur={(ev) => { const n = aNum(ev.target.value); set(n == null ? { rpe: null } : { rpe: Math.min(10, n), rir: null }) }} />
-                        <button className={`chip sm${s.fallo ? ' on' : ''}`} aria-pressed={!!s.fallo} aria-label={`Serie ${si + 1} al fallo`} onClick={() => set({ fallo: !s.fallo })}>F</button>
-                        <button className="chip sm" aria-label={`Borrar serie ${si + 1}`} onClick={() => editar((bl) => { bl[bi].ejercicios[ei].series.splice(si, 1) })}>✕</button>
+                      <div key={`${ei}-${rev}`} className="ej">
+                        <div className="row">
+                          <b className="grow" style={{ fontSize: 14.5, lineHeight: 1.25 }}>{nombre}</b>
+                          <button className="mini" disabled={ei === 0} aria-label="Subir ejercicio" onClick={() => editar((bl) => { const x = bl[bi].ejercicios; [x[ei - 1], x[ei]] = [x[ei], x[ei - 1]] })}>↑</button>
+                          <button className="mini" disabled={ei === b.ejercicios.length - 1} aria-label="Bajar ejercicio" onClick={() => editar((bl) => { const x = bl[bi].ejercicios; [x[ei + 1], x[ei]] = [x[ei], x[ei + 1]] })}>↓</button>
+                        </div>
+                        <div className="ed-serie" style={{ marginTop: 6 }}>
+                          <span /><span className="h">{enSeg ? 'seg' : 'reps'}</span><span className="h">kg</span><span className="h">RIR</span><span className="h">RPE</span><span className="h">fallo</span><span />
+                        </div>
+                        {e.series.map((x, si) => {
+                          const set = (c: Partial<PSet>) => editar((bl) => { Object.assign(bl[bi].ejercicios[ei].series[si], c) }, false)
+                          return (
+                            <div key={si} className={`ed-serie${setValido(x) ? '' : ' mal'}`}>
+                              <span className="xsmall muted center">{si + 1}</span>
+                              <input inputMode="numeric" aria-label={`Serie ${si + 1}: ${enSeg ? 'segundos' : 'reps'}`} defaultValue={aTxt(enSeg ? x.seg : x.reps)} key={`m${enSeg}${si}${e.series.length}`}
+                                onBlur={(ev) => set(enSeg ? { seg: aNum(ev.target.value), reps: null } : { reps: aNum(ev.target.value), seg: null })} />
+                              <input inputMode="decimal" aria-label={`Serie ${si + 1}: peso en kg`} defaultValue={x.peso_g ? aTxt(x.peso_g / 1000) : ''} key={`p${si}${e.series.length}`}
+                                onBlur={(ev) => { const n = aNum(ev.target.value); set({ peso_g: n == null ? null : kgToG(n) }) }} />
+                              <input inputMode="numeric" aria-label={`Serie ${si + 1}: RIR`} defaultValue={aTxt(x.rir)} key={`i${si}${e.series.length}${x.rir ?? 'x'}`}
+                                onBlur={(ev) => { const n = aNum(ev.target.value); set(n == null ? { rir: null } : { rir: n, rpe: null }) }} />
+                              <input inputMode="numeric" aria-label={`Serie ${si + 1}: RPE`} defaultValue={aTxt(x.rpe)} key={`e${si}${e.series.length}${x.rpe ?? 'x'}`}
+                                onBlur={(ev) => { const n = aNum(ev.target.value); set(n == null ? { rpe: null } : { rpe: Math.min(10, n), rir: null }) }} />
+                              <button className={`chip sm${x.fallo ? ' on' : ''}`} aria-pressed={!!x.fallo} aria-label={`Serie ${si + 1} al fallo`} onClick={() => set({ fallo: !x.fallo })}>F</button>
+                              <button className="x" aria-label={`Borrar serie ${si + 1}`} onClick={() => editar((bl) => { bl[bi].ejercicios[ei].series.splice(si, 1) })}>✕</button>
+                            </div>
+                          )
+                        })}
+                        <div className="acc">
+                          <button onClick={() => editar((bl) => { const ss = bl[bi].ejercicios[ei].series; ss.push(ss.length ? { ...ss[ss.length - 1], fallo: false } : { reps: 10 }) })}>+ Serie</button>
+                          <button onClick={() => setPicker({ b: bi, e: ei })}>Cambiar</button>
+                          {(ex?.mide !== 'reps' || enSeg) && (
+                            <button onClick={() => editar((bl) => {
+                              for (const z of bl[bi].ejercicios[ei].series) { if (enSeg) { z.reps = z.seg ?? null; z.seg = null } else { z.seg = z.reps ?? null; z.reps = null } }
+                            })}>{enSeg ? 'Medir en reps' : 'Medir en tiempo'}</button>
+                          )}
+                          {!e.notas && notaDe !== clave && <button onClick={() => setNotaDe(clave)}>+ Nota</button>}
+                          <button className="q" onClick={() => editar((bl) => { bl[bi].ejercicios.splice(ei, 1) })}>Quitar</button>
+                        </div>
+                        {(e.notas || notaDe === clave) && (
+                          <input style={{ marginTop: 4 }} placeholder="Nota para este ejercicio" aria-label={`Nota de ${nombre}`} defaultValue={e.notas ?? ''} autoFocus={notaDe === clave}
+                            onBlur={(ev) => { setNotaDe(null); editar((bl) => { bl[bi].ejercicios[ei].notas = ev.target.value.trim() || null }) }} />
+                        )}
                       </div>
                     )
                   })}
-                  <div className="row" style={{ marginTop: 6 }}>
-                    <button className="btn sm grow" onClick={() => editar((bl) => { const ss = bl[bi].ejercicios[ei].series; ss.push(ss.length ? { ...ss[ss.length - 1], fallo: false } : { reps: 10 }) })}>+ Serie</button>
-                    {ex?.mide !== 'reps' || enSeg ? (
-                      <button className="btn sm grow" onClick={() => editar((bl) => {
-                        for (const s of bl[bi].ejercicios[ei].series) { if (enSeg) { s.reps = s.seg ?? null; s.seg = null } else { s.seg = s.reps ?? null; s.reps = null } }
-                      })}>{enSeg ? 'Medir en reps' : 'Medir en tiempo'}</button>
-                    ) : null}
-                  </div>
-                  <input style={{ marginTop: 8 }} placeholder="Nota para este ejercicio (opcional)" aria-label="Nota del ejercicio" defaultValue={e.notas ?? ''}
-                    onBlur={(ev) => editar((bl) => { bl[bi].ejercicios[ei].notas = ev.target.value.trim() || null })} />
+                  <button className="btn soft block sm" style={{ marginTop: 8 }} onClick={() => setPicker({ b: bi, e: null })}>+ Ejercicio en el bloque {b.orden}</button>
+                  <button className="btn ghost block sm danger" style={{ marginTop: 2 }} onClick={async () => {
+                    if (!b.ejercicios.length || await confirmar({ titulo: `¿Borrar el bloque ${b.orden}?`, ok: 'Borrar', peligro: true })) { setAbierto(null); editar((bl) => { bl.splice(bi, 1) }) }
+                  }}>Borrar bloque</button>
                 </div>
-              )
-            })}
-            <button className="btn soft block sm" onClick={() => setPicker({ b: bi, e: null })}>+ Ejercicio en el bloque {b.orden}</button>
-          </div>
-        ))}
+              )}
+            </div>
+          )
+        })}
 
-        <button className="btn block" style={{ marginTop: 16 }} onClick={() => editar((bl) => { bl.push({ orden: bl.length ? Math.max(...bl.map((x) => x.orden)) + 1 : 1, ejercicios: [] }) })}>+ Bloque</button>
+        <button className="btn block" style={{ marginTop: 12 }} onClick={() => { setAbierto(dia.bloques.length); editar((bl) => { bl.push({ orden: bl.length ? Math.max(...bl.map((x) => x.orden)) + 1 : 1, ejercicios: [] }) }) }}>+ Bloque</button>
         <button className="btn primary block" style={{ marginTop: 10 }} onClick={nav.volver}>Listo</button>
         <div className="xsmall muted center" style={{ marginTop: 8 }}>Los cambios se guardan solos. RIR y RPE no van juntos: al cargar uno se borra el otro.</div>
       </div>

@@ -1,5 +1,5 @@
-import { db, kgToG, type Exercise, type PSet } from './db'
-import { agruparPorCategoria, GRUPOS, norm, setValido } from './lib'
+import { db, GRUPO_NUEVO, kgToG, type Exercise, type PSet } from './db'
+import { agruparPorCategoria, etiqueta, GRUPOS, norm, setValido } from './lib'
 import { crearEjercicio } from './actions'
 
 export const PLAN_FORMAT = 'plan-gym/v1'
@@ -41,6 +41,15 @@ function leerSerie(o: Record<string, unknown>): PSet {
   if (rpe != null) s.rpe = rpe
   if (o.al_fallo === true || o.fallo === true) s.fallo = true
   return s
+}
+
+/** Músculo principal que trae el archivo para un ejercicio nuevo: acepta la clave, el nombre visible o una clave vieja. */
+function grupoDe(v: unknown): string | null {
+  if (typeof v !== 'string') return null
+  const t = norm(v)
+  for (const g of GRUPOS) if (t === norm(g) || t === norm(etiqueta(g))) return g
+  const clave = t.replace(/ /g, '_')
+  return GRUPO_NUEVO[clave] ?? ({ hombro: 'hombros', gluteos: 'gluteo', gemelo: 'gemelos', isquios: 'isquiotibiales', abductores: 'aductores_abductores', aductores: 'aductores_abductores', dorsales: 'espalda', lumbar: 'lumbares', abdominales: 'core', antebrazo: 'antebrazos' } as Record<string, string>)[clave] ?? null
 }
 
 /** Coeficiente de Dice sobre bigramas: tolera plurales, acentos y errores de tipeo. */
@@ -105,8 +114,7 @@ export function leerPlan(texto: string, catalogo: Exercise[]): ImpPlan {
           if (id == null) {
             let mejor: Exercise | null = null, punt = 0
             for (const c of catalogo) { const p = similitud(clave, norm(c.nombre)); if (p > punt) { punt = p; mejor = c } }
-            const g = typeof e.grupo === 'string' ? norm(e.grupo).replace(/ /g, '_') : ''
-            out.desconocidos.push({ clave, original, sugerencia: punt >= 0.62 ? mejor : null, grupo: GRUPOS.includes(g) ? g : null })
+            out.desconocidos.push({ clave, original, sugerencia: punt >= 0.62 ? mejor : null, grupo: grupoDe(e.grupo) })
           }
         }
         bloque.ejercicios.push({ original, clave, notas: typeof e.notas === 'string' && e.notas.trim() ? e.notas.trim() : null, series })
@@ -219,7 +227,50 @@ export function pedidoParaIA(catalogo: Exercise[], modo: 'crear' | 'convertir' =
   const intro = modo === 'crear'
     ? `Necesito que me armes un plan de entrenamiento para importar en mi app de gimnasio (GymBro).
 
-Antes de armarlo, preguntame lo que te falte saber: mi objetivo, cuántos días por semana entreno, cuánto dura cada sesión, qué equipamiento tengo, mi nivel y si tengo lesiones o ejercicios que quiera evitar. Si ya te lo conté, no vuelvas a preguntar.
+Antes de armar el plan necesitás conocerme. Reglas para preguntar:
+- Preguntá en tandas de 4 a 6 preguntas, no todas de golpe.
+- No armes el plan sin respuesta a las preguntas 2, 3 y 4.
+- Si aparece una señal de alarma (dolor de pecho, mareos o desmayos, dolor nocturno, hormigueo o pérdida de fuerza que se irradia, lesión aguda sin diagnóstico, cirugía sin alta, presión alta no controlada, embarazo o posparto sin autorización médica): no armes el plan y decime que consulte a un médico.
+- Si ya te di un dato, no lo vuelvas a preguntar. Si una respuesta sobre días, tiempo o equipamiento es vaga, repreguntá.
+- Si te digo que lo armes con lo que hay, hacelo, pero aclarando qué supusiste.
+
+Salud
+1. Edad, sexo, altura y peso.
+2. ¿Algún médico te dijo que no entrenes o que lo hagas solo con supervisión? ¿Tomás medicación que afecte la presión, el pulso o la energía?
+3. ¿Tenés dolor ahora, o una lesión o cirugía que siga dando síntomas? ¿Cuál y qué movimiento lo despierta?
+4. ¿Hay movimientos que no podés hacer o que evitás por molestia?
+
+Objetivo
+5. ¿Qué querés lograr, en tus palabras?
+6. Si tuvieras que elegir uno solo: fuerza, masa muscular, perder grasa, salud y energía, o rendir en un deporte (¿cuál?).
+7. ¿Hay una fecha o un evento? ¿Cuántas semanas pensás seguir este plan?
+
+Nivel
+8. ¿Cuánto tiempo entrenaste con continuidad y cuándo fue la última vez?
+9. ¿Qué cargas movés hoy en sentadilla, peso muerto, press de banca y press militar? ¿Cuántas dominadas y flexiones hacés? Si no sabés, decímelo y dejo los pesos sin cargar.
+10. ¿Dominás la técnica de esos ejercicios básicos o preferís arrancar con variantes más simples?
+11. ¿Sabés qué son el RIR y el RPE? Si no, armo el plan solo con series y repeticiones.
+
+Tiempo
+12. ¿Cuántos días por semana podés entrenar de forma realista? En una semana mala, ¿cuántos garantizás?
+13. ¿Cuánto tiempo tenés por sesión?
+
+Equipamiento
+14. ¿Dónde entrenás: gimnasio, casa o las dos?
+15. ¿Qué tenés disponible? Rack, barra y discos, mancuernas (hasta cuántos kg), poleas, máquinas, barra de dominadas, bandas, kettlebells.
+
+Recuperación
+16. ¿Cuántas horas dormís y cómo venís de estrés?
+17. ¿Hacés otro deporte o actividad física en paralelo? ¿Cuál, cuántas veces por semana y qué tan intenso?
+
+Preferencias
+18. ¿Qué ejercicios o tipo de entrenamiento disfrutás y cuáles no querés ver?
+19. ¿Preferís repetir la misma rutina y progresar en los números, o necesitás variedad?
+20. ¿Querés que cada sesión incluya entrada en calor, movilidad y core, o solo el trabajo principal?
+21. ¿Qué te hizo abandonar planes anteriores? (tiempo, aburrimiento, dolor, falta de resultados)
+22. ¿Algo más que deba saber? (viajes, restricciones de espacio o de ruido)
+
+Cómo funciona la app, para que el plan encaje: los días rotan en orden y sin fechas (si salteo un día, el siguiente me espera), cada día se divide en bloques de ejercicios que se hacen juntos, y la app registra sola pesos, repeticiones y progreso. Si el plan lleva una progresión entre semanas, explicala en "objetivo" o en las "notas" de cada ejercicio.
 
 Cuando tengas todo, respondé`
     : `Ya tengo un plan de entrenamiento y necesito pasarlo al formato de mi app de gimnasio (GymBro), sin cambiarlo. Te lo paso junto con este mensaje (como texto, foto o archivo). Si no lo ves, pedímelo antes de seguir.
@@ -241,7 +292,7 @@ Reglas del formato:
 - Si todas las series de un ejercicio son iguales se puede abreviar con "series": 3 y los valores al lado. Si cambian (series ascendentes, por ejemplo), escribilas una por una.
 - En ejercicios con lastre (dominadas, fondos), "peso_kg" es el peso agregado.
 - "peso_kg" es opcional: si no sabés qué carga uso, no lo pongas. No inventes pesos.
-- Si usás un ejercicio que no está en mi lista, agregale "grupo" con su músculo principal, uno de: ${GRUPOS.join(', ')}.
+- Si usás un ejercicio que no está en mi lista, agregale "grupo" con su músculo principal, uno de: ${GRUPOS.map(etiqueta).join(', ')}.
 - "notas" es opcional, para una indicación corta por ejercicio.
 - Los días rotan en el orden del archivo: no llevan fechas ni días de la semana.
 - Tiene que ser JSON válido: sin comentarios y sin comas finales.

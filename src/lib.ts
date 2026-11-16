@@ -219,22 +219,21 @@ export async function hacerCopia(): Promise<'ok' | 'cancelado' | 'error'> {
   return r
 }
 
-export const GRUPOS = ['pecho', 'dorsal', 'trapecio', 'hombro_anterior', 'hombro_lateral', 'hombro_posterior', 'biceps', 'triceps',
-  'core', 'gluteo', 'cuadriceps', 'isquios', 'aductores', 'gemelo', 'full_body',
-  'movilidad_cadera', 'movilidad_dorsal', 'movilidad_isquios', 'movilidad_posterior', 'movilidad_aductores']
-export const EQUIPOS = ['barra', 'mancuernas', 'kettlebell', 'maquina', 'polea', 'peso_corporal', 'banda', 'disco', 'landmine', 'fitball', 'cajon', 'slider', 'rodillo', 'otro']
+export const GRUPOS = ['pecho', 'espalda', 'hombros', 'biceps', 'triceps', 'antebrazos', 'core', 'lumbares',
+  'gluteo', 'cuadriceps', 'isquiotibiales', 'aductores_abductores', 'gemelos', 'cuerpo_completo', 'movilidad']
+export const EQUIPOS = ['barra', 'mancuernas', 'kettlebell', 'maquina', 'polea', 'peso_corporal', 'banco', 'banda', 'disco', 'landmine',
+  'fitball', 'trx', 'cajon', 'slider', 'rodillo', 'otro']
 export const PATRONES = ['empuje_horizontal', 'empuje_vertical', 'traccion_horizontal', 'traccion_vertical', 'sentadilla', 'bisagra', 'zancada',
-  'aislamiento', 'pliometria', 'locomocion', 'core_antiextension', 'core_antiflexion_lateral', 'core_antirotacion', 'core_rotacion', 'movilidad']
+  'aislamiento', 'pliometria', 'acarreo', 'core', 'movilidad']
 /** Categoría para agrupar el catálogo: fuerza por músculo; movilidad, core y potencia aparte. */
 export function categoria(e: Exercise): string {
-  if (!e.vol || e.patron === 'movilidad') return 'Movilidad'
+  if (!e.vol || e.patron === 'movilidad' || e.grupo === 'movilidad') return 'Movilidad'
   if (e.patron === 'pliometria') return 'Potencia y pliometría'
   if (e.grupo === 'core' || e.patron.startsWith('core')) return 'Core'
-  if (e.grupo === 'full_body') return 'Cuerpo completo'
   return etiqueta(e.grupo)
 }
-const ORDEN_CAT = ['Pecho', 'Dorsal', 'Trapecio', 'Hombro anterior', 'Hombro lateral', 'Hombro posterior', 'Bíceps', 'Tríceps',
-  'Glúteo', 'Cuádriceps', 'Isquios', 'Aductores', 'Gemelo', 'Cuerpo completo', 'Core', 'Potencia y pliometría', 'Movilidad']
+const ORDEN_CAT = ['Pecho', 'Espalda', 'Hombros', 'Bíceps', 'Tríceps', 'Antebrazos', 'Glúteo', 'Cuádriceps', 'Isquiotibiales',
+  'Aductores y abductores', 'Gemelos', 'Lumbares', 'Cuerpo completo', 'Core', 'Potencia y pliometría', 'Movilidad']
 export function agruparPorCategoria(lista: Exercise[]): { cat: string; items: Exercise[] }[] {
   const m = new Map<string, Exercise[]>()
   for (const e of lista) { const c = categoria(e); m.set(c, [...(m.get(c) ?? []), e]) }
@@ -243,10 +242,10 @@ export function agruparPorCategoria(lista: Exercise[]): { cat: string; items: Ex
 }
 // Los grupos, equipos y patrones se guardan sin acentos (son claves); acá va cómo se muestran.
 const CON_ACENTO: Record<string, string> = {
-  biceps: 'bíceps', triceps: 'tríceps', gluteo: 'glúteo', cuadriceps: 'cuádriceps', maquina: 'máquina', cajon: 'cajón',
-  traccion_horizontal: 'tracción horizontal', traccion_vertical: 'tracción vertical', pliometria: 'pliometría', locomocion: 'locomoción',
-  core_antiextension: 'core antiextensión', core_antiflexion_lateral: 'core antiflexión lateral', core_antirotacion: 'core antirrotación',
-  core_rotacion: 'core rotación',
+  biceps: 'bíceps', triceps: 'tríceps', gluteo: 'glúteo', cuadriceps: 'cuádriceps', aductores_abductores: 'aductores y abductores',
+  maquina: 'máquina', cajon: 'cajón', disco: 'disco / lastre', slider: 'deslizadores', fitball: 'pelota (fitball)', trx: 'TRX / anillas',
+  traccion_horizontal: 'tracción horizontal', traccion_vertical: 'tracción vertical', pliometria: 'pliometría',
+  bisagra: 'bisagra de cadera (peso muerto)', acarreo: 'acarreos y desplazamientos',
 }
 /** Nombre para mostrar de un grupo, equipo o patrón: con acento y con mayúscula inicial. */
 export function etiqueta(s: string): string { const t = CON_ACENTO[s] ?? s.replace(/_/g, ' '); return t.charAt(0).toUpperCase() + t.slice(1) }

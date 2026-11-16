@@ -9,13 +9,15 @@ Qué sale en catalogo-cambios.json:
   archivar    ejercicios que el dueño pidió eliminar pero tienen historial: quedan ocultos, no se borran
   borrar      ejercicios sin uso que se eliminan
   nuevos      ejercicios clásicos que no estaban en el catálogo (con la carpeta de su foto en Free Exercise DB)
+  grupos, patrones   clave vieja -> clave nueva (revisión 3: grupos y patrones unificados). Tienen que coincidir con
+                     GRUPO_NUEVO y PATRON_NUEVO de src/db.ts, que es lo que convierte los datos ya guardados
 Cada vez que cambie el resultado hay que subir "rev": la app aplica los cambios una sola vez por revisión.
 """
 import json, os, re, unicodedata
 from openpyxl import load_workbook
 
 RAIZ = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
-REV = 2
+REV = 3
 
 def norm(s):
     s = unicodedata.normalize('NFKD', s).encode('ascii', 'ignore').decode().lower()
@@ -96,6 +98,19 @@ ALIAS = {
     'camilla-isquiosurales-1p-mq': ['Camilla de isquiotibiales a una pierna', 'Camilla de isquiosurales a una pierna', 'Camilla femoral a una pierna', 'Curl femoral acostado a una pierna', 'Single leg lying leg curl'],
 }
 
+# ---------------------------------------------------------------- grupos y patrones unificados (16-11-2026)
+GRUPOS = {
+    'dorsal': 'espalda', 'trapecio': 'espalda',
+    'hombro_anterior': 'hombros', 'hombro_lateral': 'hombros', 'hombro_posterior': 'hombros',
+    'isquios': 'isquiotibiales', 'aductores': 'aductores_abductores', 'gemelo': 'gemelos', 'full_body': 'cuerpo_completo',
+    'movilidad_cadera': 'movilidad', 'movilidad_dorsal': 'movilidad', 'movilidad_isquios': 'movilidad',
+    'movilidad_posterior': 'movilidad', 'movilidad_aductores': 'movilidad',
+}
+PATRONES = {
+    'core_antiextension': 'core', 'core_antiflexion_lateral': 'core', 'core_antirotacion': 'core', 'core_rotacion': 'core',
+    'locomocion': 'acarreo',
+}
+
 # ---------------------------------------------------------------- ejercicios clásicos que faltaban
 def N(nombre, grupo, equipo, patron, alias, imagen=None, **kw):
     e = {'slug': slugify(nombre), 'nombre': nombre, 'legible': None, 'grupo': grupo, 'sec': [], 'equipo': equipo, 'patron': patron,
@@ -122,7 +137,7 @@ NUEVOS = [
     N('Remo en barra T', 'dorsal', 'barra', 'traccion_horizontal', ['Remo T', 'Remo en punta', 'T-bar row', 'T bar row'], 'T-Bar_Row_with_Handle'),
     N('Face pull', 'hombro_posterior', 'polea', 'traccion_horizontal', ['Face pulls', 'Jalón a la cara', 'Tirón a la cara'], 'Face_Pull'),
     N('Encogimientos de hombros con mancuernas', 'trapecio', 'mancuernas', 'aislamiento', ['Encogimientos', 'Encogimiento de trapecio', 'Trapecio con mancuernas', 'Shrugs', 'Dumbbell shrug'], 'Dumbbell_Shrug'),
-    N('Hiperextensiones lumbares', 'core', 'maquina', 'bisagra', ['Hiperextensiones', 'Extensiones lumbares', 'Lumbares en banco', 'Back extension', 'Hyperextension', 'Banco romano'], 'Hyperextensions_Back_Extensions'),
+    N('Hiperextensiones lumbares', 'lumbares', 'banco', 'bisagra', ['Hiperextensiones', 'Extensiones lumbares', 'Lumbares en banco', 'Back extension', 'Hyperextension', 'Banco romano'], 'Hyperextensions_Back_Extensions'),
     N('Dominadas asistidas', 'dorsal', 'maquina', 'traccion_vertical', ['Dominadas asistidas en máquina', 'Dominadas con asistencia', 'Assisted pull up', 'Assisted pull ups']),
     # hombros
     N('Press de hombros con mancuernas', 'hombro_anterior', 'mancuernas', 'empuje_vertical', ['Press militar con mancuernas', 'Press de hombro sentado con mancuernas', 'Dumbbell shoulder press', 'Shoulder press'], 'Dumbbell_Shoulder_Press'),
@@ -219,7 +234,8 @@ def main():
         alias[:] = limpios
     assert not (set(ejercicios) & {n['slug'] for n in nuevos}), 'un ejercicio nuevo repite el slug de uno existente'
 
-    salida = {'rev': REV, 'ejercicios': ejercicios, 'fusiones': FUSIONES, 'archivar': ARCHIVAR, 'borrar': BORRAR, 'nuevos': nuevos}
+    salida = {'rev': REV, 'ejercicios': ejercicios, 'fusiones': FUSIONES, 'archivar': ARCHIVAR, 'borrar': BORRAR, 'nuevos': nuevos,
+              'grupos': GRUPOS, 'patrones': PATRONES}
     ruta = os.path.join(RAIZ, 'tools', 'seed', 'catalogo-cambios.json')
     json.dump(salida, open(ruta, 'w', encoding='utf-8', newline='\n'), ensure_ascii=False, indent=1)
     print(f'{len(ejercicios)} renombrados · {len(FUSIONES)} fusionados · {len(ARCHIVAR)} archivado · {len(BORRAR)} borrado · {len(nuevos)} nuevos → {len(ejercicios) + len(nuevos)} en total')

@@ -5,7 +5,7 @@
    "slug": "flexo-extension-cadera-bd",
    "nombre": "Flexo-extensión de cadera con banda",
    "legible": null,
-   "grupo": "movilidad_cadera",
+   "grupo": "movilidad",
    "sec": [],
    "equipo": "banda",
    "patron": "movilidad",
@@ -27,7 +27,7 @@
    "slug": "psoas-dinamico",
    "nombre": "Estiramiento dinámico de psoas",
    "legible": null,
-   "grupo": "movilidad_cadera",
+   "grupo": "movilidad",
    "sec": [],
    "equipo": "peso_corporal",
    "patron": "movilidad",
@@ -49,7 +49,7 @@
    "slug": "aductores-dinamico",
    "nombre": "Estiramiento dinámico de aductores",
    "legible": null,
-   "grupo": "movilidad_aductores",
+   "grupo": "movilidad",
    "sec": [],
    "equipo": "peso_corporal",
    "patron": "movilidad",
@@ -71,7 +71,7 @@
    "slug": "isquiotibiales-rd",
    "nombre": "Liberación de isquiotibiales con rodillo",
    "legible": null,
-   "grupo": "movilidad_isquios",
+   "grupo": "movilidad",
    "sec": [],
    "equipo": "rodillo",
    "patron": "movilidad",
@@ -95,7 +95,7 @@
    "slug": "isquiotibiales-en-columna",
    "nombre": "Estiramiento de isquiotibiales con la pierna apoyada en una columna",
    "legible": null,
-   "grupo": "movilidad_isquios",
+   "grupo": "movilidad",
    "sec": [],
    "equipo": "peso_corporal",
    "patron": "movilidad",
@@ -118,7 +118,7 @@
    "slug": "spiderman-rotacion-dt",
    "nombre": "Zancada Spiderman con rotación torácica",
    "legible": null,
-   "grupo": "movilidad_dorsal",
+   "grupo": "movilidad",
    "sec": [],
    "equipo": "peso_corporal",
    "patron": "movilidad",
@@ -142,7 +142,7 @@
    "slug": "spiderman-rotacion",
    "nombre": "Zancada Spiderman con rotación",
    "legible": null,
-   "grupo": "movilidad_dorsal",
+   "grupo": "movilidad",
    "sec": [],
    "equipo": "peso_corporal",
    "patron": "movilidad",
@@ -162,7 +162,7 @@
    "slug": "carpa-2p",
    "nombre": "Carpa a dos piernas (estiramiento de cadena posterior)",
    "legible": null,
-   "grupo": "movilidad_posterior",
+   "grupo": "movilidad",
    "sec": [],
    "equipo": "peso_corporal",
    "patron": "movilidad",
@@ -188,7 +188,7 @@
    "slug": "buda-asistido-dc",
    "nombre": "Sentadilla profunda sostenida con disco",
    "legible": null,
-   "grupo": "movilidad_cadera",
+   "grupo": "movilidad",
    "sec": [],
    "equipo": "disco",
    "patron": "movilidad",
@@ -212,7 +212,7 @@
    "slug": "buda-rotacion-tronco-asistido",
    "nombre": "Sentadilla profunda con rotación de tronco",
    "legible": null,
-   "grupo": "movilidad_cadera",
+   "grupo": "movilidad",
    "sec": [],
    "equipo": "peso_corporal",
    "patron": "movilidad",
@@ -234,7 +234,7 @@
    "slug": "rotacion-tronco-pared-t",
    "nombre": "Rotación torácica en pared",
    "legible": null,
-   "grupo": "movilidad_dorsal",
+   "grupo": "movilidad",
    "sec": [],
    "equipo": "peso_corporal",
    "patron": "movilidad",
@@ -257,7 +257,7 @@
    "slug": "bretzel",
    "nombre": "Estiramiento Bretzel",
    "legible": null,
-   "grupo": "movilidad_dorsal",
+   "grupo": "movilidad",
    "sec": [],
    "equipo": "peso_corporal",
    "patron": "movilidad",
@@ -280,7 +280,7 @@
    "slug": "caderas-y-piramidal",
    "nombre": "Estiramiento de cadera y piramidal",
    "legible": null,
-   "grupo": "movilidad_cadera",
+   "grupo": "movilidad",
    "sec": [],
    "equipo": "peso_corporal",
    "patron": "movilidad",
@@ -304,7 +304,7 @@
    "slug": "cadera-con-glide-lateral-cuadrupedia",
    "nombre": "Movilidad de cadera en cuadrupedia con glide lateral",
    "legible": null,
-   "grupo": "movilidad_cadera",
+   "grupo": "movilidad",
    "sec": [],
    "equipo": "peso_corporal",
    "patron": "movilidad",
@@ -330,7 +330,7 @@
    "grupo": "gluteo",
    "sec": [
     {
-     "grupo": "isquios",
+     "grupo": "isquiotibiales",
      "factor": 0.4
     },
     {
@@ -339,7 +339,7 @@
     }
    ],
    "equipo": "peso_corporal",
-   "patron": "core_antiextension",
+   "patron": "core",
    "unilateral": true,
    "lastre": false,
    "mide": "reps",
@@ -363,12 +363,12 @@
    "grupo": "gluteo",
    "sec": [
     {
-     "grupo": "isquios",
+     "grupo": "isquiotibiales",
      "factor": 0.4
     }
    ],
    "equipo": "fitball",
-   "patron": "core_antiextension",
+   "patron": "core",
    "unilateral": true,
    "lastre": false,
    "mide": "reps",
@@ -391,7 +391,7 @@
    "grupo": "core",
    "sec": [],
    "equipo": "peso_corporal",
-   "patron": "core_antiflexion_lateral",
+   "patron": "core",
    "unilateral": false,
    "lastre": false,
    "mide": "reps",
@@ -412,7 +412,7 @@
    "grupo": "core",
    "sec": [],
    "equipo": "peso_corporal",
-   "patron": "core_antiflexion_lateral",
+   "patron": "core",
    "unilateral": false,
    "lastre": false,
    "mide": "reps",
@@ -430,7 +430,7 @@
    "slug": "puente-isquio-con-cambio",
    "nombre": "Puente de isquiotibiales alternando piernas",
    "legible": null,
-   "grupo": "isquios",
+   "grupo": "isquiotibiales",
    "sec": [
     {
      "grupo": "gluteo",
@@ -438,7 +438,7 @@
     }
    ],
    "equipo": "peso_corporal",
-   "patron": "core_antiextension",
+   "patron": "core",
    "unilateral": false,
    "lastre": false,
    "mide": "reps",
@@ -460,12 +460,12 @@
    "grupo": "gluteo",
    "sec": [
     {
-     "grupo": "isquios",
+     "grupo": "isquiotibiales",
      "factor": 0.4
     }
    ],
    "equipo": "peso_corporal",
-   "patron": "core_antiextension",
+   "patron": "core",
    "unilateral": false,
    "lastre": false,
    "mide": "reps",
@@ -487,12 +487,12 @@
    "grupo": "core",
    "sec": [
     {
-     "grupo": "hombro_anterior",
+     "grupo": "hombros",
      "factor": 0.3
     }
    ],
    "equipo": "disco",
-   "patron": "core_rotacion",
+   "patron": "core",
    "unilateral": false,
    "lastre": false,
    "mide": "reps",
@@ -519,7 +519,7 @@
     }
    ],
    "equipo": "peso_corporal",
-   "patron": "core_antirotacion",
+   "patron": "core",
    "unilateral": true,
    "lastre": false,
    "mide": "reps",
@@ -542,7 +542,7 @@
    "grupo": "core",
    "sec": [],
    "equipo": "banda",
-   "patron": "core_antiflexion_lateral",
+   "patron": "core",
    "unilateral": false,
    "lastre": false,
    "mide": "reps",
@@ -564,7 +564,7 @@
    "grupo": "core",
    "sec": [],
    "equipo": "disco",
-   "patron": "core_antiextension",
+   "patron": "core",
    "unilateral": false,
    "lastre": false,
    "mide": "ambos",
@@ -586,7 +586,7 @@
    "slug": "plancha-copenhague-1-2-con",
    "nombre": "Plancha Copenhague",
    "legible": null,
-   "grupo": "aductores",
+   "grupo": "aductores_abductores",
    "sec": [
     {
      "grupo": "core",
@@ -594,7 +594,7 @@
     }
    ],
    "equipo": "peso_corporal",
-   "patron": "core_antiflexion_lateral",
+   "patron": "core",
    "unilateral": true,
    "lastre": false,
    "mide": "ambos",
@@ -617,7 +617,7 @@
    "grupo": "core",
    "sec": [],
    "equipo": "peso_corporal",
-   "patron": "core_antiextension",
+   "patron": "core",
    "unilateral": false,
    "lastre": false,
    "mide": "reps",
@@ -641,7 +641,7 @@
    "grupo": "core",
    "sec": [],
    "equipo": "peso_corporal",
-   "patron": "core_antiflexion_lateral",
+   "patron": "core",
    "unilateral": true,
    "lastre": false,
    "mide": "reps",
@@ -664,12 +664,12 @@
    "grupo": "core",
    "sec": [
     {
-     "grupo": "aductores",
+     "grupo": "aductores_abductores",
      "factor": 0.4
     }
    ],
    "equipo": "peso_corporal",
-   "patron": "core_antiextension",
+   "patron": "core",
    "unilateral": false,
    "lastre": false,
    "mide": "reps",
@@ -692,7 +692,7 @@
    "grupo": "core",
    "sec": [],
    "equipo": "peso_corporal",
-   "patron": "core_antiextension",
+   "patron": "core",
    "unilateral": false,
    "lastre": false,
    "mide": "reps",
@@ -716,16 +716,16 @@
    "grupo": "core",
    "sec": [
     {
-     "grupo": "hombro_lateral",
+     "grupo": "hombros",
      "factor": 0.4
     },
     {
-     "grupo": "trapecio",
+     "grupo": "espalda",
      "factor": 0.3
     }
    ],
    "equipo": "kettlebell",
-   "patron": "locomocion",
+   "patron": "acarreo",
    "unilateral": true,
    "lastre": false,
    "mide": "ambos",
@@ -750,7 +750,7 @@
    "grupo": "core",
    "sec": [],
    "equipo": "peso_corporal",
-   "patron": "core_antiextension",
+   "patron": "core",
    "unilateral": false,
    "lastre": false,
    "mide": "ambos",
@@ -774,12 +774,12 @@
    "grupo": "core",
    "sec": [
     {
-     "grupo": "hombro_anterior",
+     "grupo": "hombros",
      "factor": 0.3
     }
    ],
    "equipo": "peso_corporal",
-   "patron": "core_antirotacion",
+   "patron": "core",
    "unilateral": false,
    "lastre": false,
    "mide": "reps",
@@ -802,7 +802,7 @@
    "grupo": "core",
    "sec": [],
    "equipo": "barra",
-   "patron": "core_antiextension",
+   "patron": "core",
    "unilateral": false,
    "lastre": false,
    "mide": "reps",
@@ -824,7 +824,7 @@
    "grupo": "cuadriceps",
    "sec": [
     {
-     "grupo": "hombro_anterior",
+     "grupo": "hombros",
      "factor": 0.6
     },
     {
@@ -857,7 +857,7 @@
    "grupo": "gluteo",
    "sec": [
     {
-     "grupo": "isquios",
+     "grupo": "isquiotibiales",
      "factor": 0.6
     },
     {
@@ -892,7 +892,7 @@
      "factor": 0.4
     },
     {
-     "grupo": "hombro_anterior",
+     "grupo": "hombros",
      "factor": 0.4
     }
    ],
@@ -977,7 +977,7 @@
    "slug": "2do-tiempo-split-br",
    "nombre": "2do tiempo split con barra",
    "legible": null,
-   "grupo": "hombro_anterior",
+   "grupo": "hombros",
    "sec": [
     {
      "grupo": "cuadriceps",
@@ -1011,7 +1011,7 @@
    "slug": "burpee",
    "nombre": "Burpee",
    "legible": null,
-   "grupo": "full_body",
+   "grupo": "cuerpo_completo",
    "sec": [],
    "equipo": "peso_corporal",
    "patron": "pliometria",
@@ -1121,7 +1121,7 @@
      "factor": 0.4
     },
     {
-     "grupo": "gemelo",
+     "grupo": "gemelos",
      "factor": 0.3
     }
    ],
@@ -1145,7 +1145,7 @@
    "slug": "caida-lm",
    "nombre": "Caída a estocadas con landmine",
    "legible": null,
-   "grupo": "full_body",
+   "grupo": "cuerpo_completo",
    "sec": [],
    "equipo": "landmine",
    "patron": "pliometria",
@@ -1169,7 +1169,7 @@
    "grupo": "cuadriceps",
    "sec": [
     {
-     "grupo": "gemelo",
+     "grupo": "gemelos",
      "factor": 0.4
     }
    ],
@@ -1198,7 +1198,7 @@
    "grupo": "cuadriceps",
    "sec": [
     {
-     "grupo": "gemelo",
+     "grupo": "gemelos",
      "factor": 0.4
     }
    ],
@@ -1347,7 +1347,7 @@
    "grupo": "gluteo",
    "sec": [
     {
-     "grupo": "isquios",
+     "grupo": "isquiotibiales",
      "factor": 0.5
     }
    ],
@@ -1376,7 +1376,7 @@
    "grupo": "gluteo",
    "sec": [
     {
-     "grupo": "isquios",
+     "grupo": "isquiotibiales",
      "factor": 0.5
     }
    ],
@@ -1401,7 +1401,7 @@
    "slug": "peso-muerto-1p-kb",
    "nombre": "Peso muerto a una pierna con kettlebell",
    "legible": null,
-   "grupo": "isquios",
+   "grupo": "isquiotibiales",
    "sec": [
     {
      "grupo": "gluteo",
@@ -1434,10 +1434,10 @@
    "slug": "caminata-de-gemelo-mc",
    "nombre": "Caminata en puntas de pie con mancuernas",
    "legible": null,
-   "grupo": "gemelo",
+   "grupo": "gemelos",
    "sec": [],
    "equipo": "mancuernas",
-   "patron": "locomocion",
+   "patron": "acarreo",
    "unilateral": false,
    "lastre": false,
    "mide": "reps",
@@ -1458,7 +1458,7 @@
    "slug": "curl-nordico",
    "nombre": "Curl nórdico de isquiotibiales",
    "legible": null,
-   "grupo": "isquios",
+   "grupo": "isquiotibiales",
    "sec": [
     {
      "grupo": "gluteo",
@@ -1486,7 +1486,7 @@
    "slug": "curl-isquio-1p-exc-mb",
    "nombre": "Curl de isquiotibiales excéntrico a una pierna sobre pelota",
    "legible": null,
-   "grupo": "isquios",
+   "grupo": "isquiotibiales",
    "sec": [],
    "equipo": "fitball",
    "patron": "bisagra",
@@ -1516,7 +1516,7 @@
    "slug": "patadas-de-talon-fb",
    "nombre": "Patadas de talón en fitball",
    "legible": null,
-   "grupo": "isquios",
+   "grupo": "isquiotibiales",
    "sec": [],
    "equipo": "fitball",
    "patron": "bisagra",
@@ -1538,7 +1538,7 @@
    "slug": "isquiotibiales-en-polea",
    "nombre": "Curl de isquiotibiales en polea",
    "legible": null,
-   "grupo": "isquios",
+   "grupo": "isquiotibiales",
    "sec": [],
    "equipo": "polea",
    "patron": "bisagra",
@@ -1560,7 +1560,7 @@
    "slug": "excentrico-carrera-isquios-polea",
    "nombre": "Excéntrico de isquiotibiales en gesto de carrera, con polea",
    "legible": null,
-   "grupo": "isquios",
+   "grupo": "isquiotibiales",
    "sec": [],
    "equipo": "polea",
    "patron": "bisagra",
@@ -1582,7 +1582,7 @@
    "slug": "gesto-sprint-isquios-con-slider",
    "nombre": "Curl de isquiotibiales con deslizadores, en gesto de sprint",
    "legible": null,
-   "grupo": "isquios",
+   "grupo": "isquiotibiales",
    "sec": [],
    "equipo": "slider",
    "patron": "bisagra",
@@ -1606,7 +1606,7 @@
    "slug": "camilla-isquiosurales-1p-mq",
    "nombre": "Camilla isquiotibiales a una pierna",
    "legible": null,
-   "grupo": "isquios",
+   "grupo": "isquiotibiales",
    "sec": [],
    "equipo": "maquina",
    "patron": "aislamiento",
@@ -1637,7 +1637,7 @@
      "factor": 0.5
     },
     {
-     "grupo": "hombro_anterior",
+     "grupo": "hombros",
      "factor": 0.3
     }
    ],
@@ -1668,7 +1668,7 @@
    "grupo": "pecho",
    "sec": [
     {
-     "grupo": "hombro_anterior",
+     "grupo": "hombros",
      "factor": 0.4
     },
     {
@@ -1763,7 +1763,7 @@
      "factor": 0.6
     },
     {
-     "grupo": "hombro_anterior",
+     "grupo": "hombros",
      "factor": 0.3
     }
    ],
@@ -1796,7 +1796,7 @@
      "factor": 0.6
     },
     {
-     "grupo": "hombro_anterior",
+     "grupo": "hombros",
      "factor": 0.3
     }
    ],
@@ -1821,7 +1821,7 @@
    "slug": "press-militar-br",
    "nombre": "Press militar con barra, de pie",
    "legible": null,
-   "grupo": "hombro_anterior",
+   "grupo": "hombros",
    "sec": [
     {
      "grupo": "triceps",
@@ -1856,7 +1856,7 @@
    "slug": "press-hombro-mq",
    "nombre": "Press de hombros en máquina",
    "legible": null,
-   "grupo": "hombro_anterior",
+   "grupo": "hombros",
    "sec": [
     {
      "grupo": "triceps",
@@ -1884,7 +1884,7 @@
    "slug": "press-hombro-ba-kb",
    "nombre": "Press hombro con KB",
    "legible": null,
-   "grupo": "hombro_anterior",
+   "grupo": "hombros",
    "sec": [
     {
      "grupo": "triceps",
@@ -1913,7 +1913,7 @@
    "slug": "press-hombro-rr-kb",
    "nombre": "Press de hombro arrodillado con KB",
    "legible": null,
-   "grupo": "hombro_anterior",
+   "grupo": "hombros",
    "sec": [
     {
      "grupo": "triceps",
@@ -1945,7 +1945,7 @@
    "slug": "press-hombro-1m-rr-kb",
    "nombre": "Press hombro a un brazo con KB",
    "legible": null,
-   "grupo": "hombro_anterior",
+   "grupo": "hombros",
    "sec": [
     {
      "grupo": "triceps",
@@ -1978,7 +1978,7 @@
    "slug": "press-hombro-1m-pdb-kb",
    "nombre": "Press de hombro a un brazo con kettlebell, con una rodilla en el piso",
    "legible": null,
-   "grupo": "hombro_anterior",
+   "grupo": "hombros",
    "sec": [
     {
      "grupo": "triceps",
@@ -2009,7 +2009,7 @@
    "slug": "press-en-landmine",
    "nombre": "Press hombro en landmine",
    "legible": null,
-   "grupo": "hombro_anterior",
+   "grupo": "hombros",
    "sec": [
     {
      "grupo": "pecho",
@@ -2041,7 +2041,7 @@
    "slug": "dominadas-prona",
    "nombre": "Dominadas con agarre prono",
    "legible": null,
-   "grupo": "dorsal",
+   "grupo": "espalda",
    "sec": [
     {
      "grupo": "biceps",
@@ -2075,7 +2075,7 @@
    "slug": "dominadas-palmar",
    "nombre": "Dominadas con agarre supino",
    "legible": null,
-   "grupo": "dorsal",
+   "grupo": "espalda",
    "sec": [
     {
      "grupo": "biceps",
@@ -2103,7 +2103,7 @@
    "slug": "dorsalera-palmar-mq",
    "nombre": "Polea al pecho con agarre supino",
    "legible": null,
-   "grupo": "dorsal",
+   "grupo": "espalda",
    "sec": [
     {
      "grupo": "biceps",
@@ -2133,14 +2133,10 @@
    "slug": "remo-neutro-mq",
    "nombre": "Remo en máquina con agarre neutro",
    "legible": null,
-   "grupo": "dorsal",
+   "grupo": "espalda",
    "sec": [
     {
      "grupo": "biceps",
-     "factor": 0.4
-    },
-    {
-     "grupo": "trapecio",
      "factor": 0.4
     }
    ],
@@ -2166,7 +2162,7 @@
    "slug": "remo-1m-plancha-alta-kb",
    "nombre": "Remo a un brazo en plancha alta con KB",
    "legible": null,
-   "grupo": "dorsal",
+   "grupo": "espalda",
    "sec": [
     {
      "grupo": "core",
@@ -2200,7 +2196,7 @@
    "slug": "remo-1m-cd-kb",
    "nombre": "Remo a un brazo con apoyo en banco",
    "legible": null,
-   "grupo": "dorsal",
+   "grupo": "espalda",
    "sec": [
     {
      "grupo": "biceps",
@@ -2236,10 +2232,10 @@
    "slug": "remo-al-menton-br",
    "nombre": "Remo al mentón con barra",
    "legible": null,
-   "grupo": "trapecio",
+   "grupo": "espalda",
    "sec": [
     {
-     "grupo": "hombro_lateral",
+     "grupo": "hombros",
      "factor": 0.6
     }
    ],
@@ -2265,7 +2261,7 @@
    "slug": "remo-invertido-puente-br",
    "nombre": "Remo invertido en barra, con la cadera en puente",
    "legible": null,
-   "grupo": "dorsal",
+   "grupo": "espalda",
    "sec": [
     {
      "grupo": "biceps",
@@ -2299,10 +2295,10 @@
    "slug": "y-bd",
    "nombre": "Elevación en Y con banda",
    "legible": null,
-   "grupo": "hombro_posterior",
+   "grupo": "hombros",
    "sec": [
     {
-     "grupo": "trapecio",
+     "grupo": "espalda",
      "factor": 0.5
     }
    ],
@@ -2402,7 +2398,7 @@
    "grupo": "biceps",
    "sec": [
     {
-     "grupo": "hombro_anterior",
+     "grupo": "hombros",
      "factor": 0.5
     }
    ],
@@ -2454,13 +2450,8 @@
    "slug": "vuelo-combinado-alterno",
    "nombre": "Vuelos frontal y lateral alternados con mancuernas",
    "legible": null,
-   "grupo": "hombro_lateral",
-   "sec": [
-    {
-     "grupo": "hombro_anterior",
-     "factor": 0.4
-    }
-   ],
+   "grupo": "hombros",
+   "sec": [],
    "equipo": "mancuernas",
    "patron": "aislamiento",
    "unilateral": true,
@@ -2480,13 +2471,8 @@
    "slug": "vuelo-frontal-lateral",
    "nombre": "Vuelos frontales + laterales con mancuernas",
    "legible": null,
-   "grupo": "hombro_lateral",
-   "sec": [
-    {
-     "grupo": "hombro_anterior",
-     "factor": 0.5
-    }
-   ],
+   "grupo": "hombros",
+   "sec": [],
    "equipo": "mancuernas",
    "patron": "aislamiento",
    "unilateral": false,
@@ -2511,7 +2497,7 @@
    "grupo": "cuadriceps",
    "sec": [
     {
-     "grupo": "gemelo",
+     "grupo": "gemelos",
      "factor": 0.4
     }
    ],
@@ -2562,7 +2548,7 @@
    "slug": "peso-muerto-br",
    "nombre": "Peso muerto con barra",
    "legible": null,
-   "grupo": "isquios",
+   "grupo": "isquiotibiales",
    "sec": [
     {
      "grupo": "gluteo",
@@ -2596,14 +2582,10 @@
    "slug": "remo-pendley-prono",
    "nombre": "Remo Pendlay con barra, agarre prono",
    "legible": null,
-   "grupo": "dorsal",
+   "grupo": "espalda",
    "sec": [
     {
      "grupo": "biceps",
-     "factor": 0.4
-    },
-    {
-     "grupo": "trapecio",
      "factor": 0.4
     }
    ],
@@ -2831,7 +2813,7 @@
    "slug": "jalon-al-pecho-con-agarre-prono",
    "nombre": "Jalón al pecho con agarre prono",
    "legible": null,
-   "grupo": "dorsal",
+   "grupo": "espalda",
    "sec": [],
    "equipo": "polea",
    "patron": "traccion_vertical",
@@ -2855,7 +2837,7 @@
    "slug": "remo-con-barra-inclinado",
    "nombre": "Remo con barra inclinado",
    "legible": null,
-   "grupo": "dorsal",
+   "grupo": "espalda",
    "sec": [],
    "equipo": "barra",
    "patron": "traccion_horizontal",
@@ -2878,7 +2860,7 @@
    "slug": "remo-sentado-en-polea",
    "nombre": "Remo sentado en polea",
    "legible": null,
-   "grupo": "dorsal",
+   "grupo": "espalda",
    "sec": [],
    "equipo": "polea",
    "patron": "traccion_horizontal",
@@ -2902,7 +2884,7 @@
    "slug": "remo-en-barra-t",
    "nombre": "Remo en barra T",
    "legible": null,
-   "grupo": "dorsal",
+   "grupo": "espalda",
    "sec": [],
    "equipo": "barra",
    "patron": "traccion_horizontal",
@@ -2923,7 +2905,7 @@
    "slug": "face-pull",
    "nombre": "Face pull",
    "legible": null,
-   "grupo": "hombro_posterior",
+   "grupo": "hombros",
    "sec": [],
    "equipo": "polea",
    "patron": "traccion_horizontal",
@@ -2944,7 +2926,7 @@
    "slug": "encogimientos-de-hombros-con-mancuernas",
    "nombre": "Encogimientos de hombros con mancuernas",
    "legible": null,
-   "grupo": "trapecio",
+   "grupo": "espalda",
    "sec": [],
    "equipo": "mancuernas",
    "patron": "aislamiento",
@@ -2967,9 +2949,9 @@
    "slug": "hiperextensiones-lumbares",
    "nombre": "Hiperextensiones lumbares",
    "legible": null,
-   "grupo": "core",
+   "grupo": "lumbares",
    "sec": [],
-   "equipo": "maquina",
+   "equipo": "banco",
    "patron": "bisagra",
    "unilateral": false,
    "lastre": false,
@@ -2991,7 +2973,7 @@
    "slug": "dominadas-asistidas",
    "nombre": "Dominadas asistidas",
    "legible": null,
-   "grupo": "dorsal",
+   "grupo": "espalda",
    "sec": [],
    "equipo": "maquina",
    "patron": "traccion_vertical",
@@ -3013,7 +2995,7 @@
    "slug": "press-de-hombros-con-mancuernas",
    "nombre": "Press de hombros con mancuernas",
    "legible": null,
-   "grupo": "hombro_anterior",
+   "grupo": "hombros",
    "sec": [],
    "equipo": "mancuernas",
    "patron": "empuje_vertical",
@@ -3035,7 +3017,7 @@
    "slug": "press-arnold",
    "nombre": "Press Arnold",
    "legible": null,
-   "grupo": "hombro_anterior",
+   "grupo": "hombros",
    "sec": [],
    "equipo": "mancuernas",
    "patron": "empuje_vertical",
@@ -3055,7 +3037,7 @@
    "slug": "vuelos-laterales-con-mancuernas",
    "nombre": "Vuelos laterales con mancuernas",
    "legible": null,
-   "grupo": "hombro_lateral",
+   "grupo": "hombros",
    "sec": [],
    "equipo": "mancuernas",
    "patron": "aislamiento",
@@ -3078,7 +3060,7 @@
    "slug": "vuelos-frontales-con-mancuernas",
    "nombre": "Vuelos frontales con mancuernas",
    "legible": null,
-   "grupo": "hombro_anterior",
+   "grupo": "hombros",
    "sec": [],
    "equipo": "mancuernas",
    "patron": "aislamiento",
@@ -3101,7 +3083,7 @@
    "slug": "vuelos-posteriores-con-mancuernas",
    "nombre": "Vuelos posteriores con mancuernas",
    "legible": null,
-   "grupo": "hombro_posterior",
+   "grupo": "hombros",
    "sec": [],
    "equipo": "mancuernas",
    "patron": "aislamiento",
@@ -3125,7 +3107,7 @@
    "slug": "posteriores-en-maquina",
    "nombre": "Posteriores en máquina",
    "legible": null,
-   "grupo": "hombro_posterior",
+   "grupo": "hombros",
    "sec": [],
    "equipo": "maquina",
    "patron": "aislamiento",
@@ -3524,7 +3506,7 @@
    "slug": "peso-muerto-rumano-con-barra",
    "nombre": "Peso muerto rumano con barra",
    "legible": null,
-   "grupo": "isquios",
+   "grupo": "isquiotibiales",
    "sec": [],
    "equipo": "barra",
    "patron": "bisagra",
@@ -3567,7 +3549,7 @@
    "slug": "buenos-dias-con-barra",
    "nombre": "Buenos días con barra",
    "legible": null,
-   "grupo": "isquios",
+   "grupo": "isquiotibiales",
    "sec": [],
    "equipo": "barra",
    "patron": "bisagra",
@@ -3588,7 +3570,7 @@
    "slug": "camilla-de-isquiotibiales-acostado",
    "nombre": "Camilla de isquiotibiales acostado",
    "legible": null,
-   "grupo": "isquios",
+   "grupo": "isquiotibiales",
    "sec": [],
    "equipo": "maquina",
    "patron": "aislamiento",
@@ -3612,7 +3594,7 @@
    "slug": "camilla-de-isquiotibiales-sentado",
    "nombre": "Camilla de isquiotibiales sentado",
    "legible": null,
-   "grupo": "isquios",
+   "grupo": "isquiotibiales",
    "sec": [],
    "equipo": "maquina",
    "patron": "aislamiento",
@@ -3702,7 +3684,7 @@
    "slug": "abductores-en-maquina",
    "nombre": "Abductores en máquina",
    "legible": null,
-   "grupo": "aductores",
+   "grupo": "aductores_abductores",
    "sec": [],
    "equipo": "maquina",
    "patron": "aislamiento",
@@ -3725,7 +3707,7 @@
    "slug": "aductores-en-maquina",
    "nombre": "Aductores en máquina",
    "legible": null,
-   "grupo": "aductores",
+   "grupo": "aductores_abductores",
    "sec": [],
    "equipo": "maquina",
    "patron": "aislamiento",
@@ -3748,7 +3730,7 @@
    "slug": "gemelos-de-pie-en-maquina",
    "nombre": "Gemelos de pie en máquina",
    "legible": null,
-   "grupo": "gemelo",
+   "grupo": "gemelos",
    "sec": [],
    "equipo": "maquina",
    "patron": "aislamiento",
@@ -3772,7 +3754,7 @@
    "slug": "gemelos-sentado-en-maquina",
    "nombre": "Gemelos sentado en máquina",
    "legible": null,
-   "grupo": "gemelo",
+   "grupo": "gemelos",
    "sec": [],
    "equipo": "maquina",
    "patron": "aislamiento",
@@ -3794,7 +3776,7 @@
    "slug": "gemelos-en-prensa",
    "nombre": "Gemelos en prensa",
    "legible": null,
-   "grupo": "gemelo",
+   "grupo": "gemelos",
    "sec": [],
    "equipo": "maquina",
    "patron": "aislamiento",
@@ -3818,7 +3800,7 @@
    "grupo": "core",
    "sec": [],
    "equipo": "peso_corporal",
-   "patron": "core_antiextension",
+   "patron": "core",
    "unilateral": false,
    "lastre": false,
    "mide": "seg",
@@ -3841,7 +3823,7 @@
    "grupo": "core",
    "sec": [],
    "equipo": "peso_corporal",
-   "patron": "core_antiflexion_lateral",
+   "patron": "core",
    "unilateral": true,
    "lastre": false,
    "mide": "seg",
@@ -3863,7 +3845,7 @@
    "grupo": "core",
    "sec": [],
    "equipo": "peso_corporal",
-   "patron": "core_antiextension",
+   "patron": "core",
    "unilateral": false,
    "lastre": false,
    "mide": "reps",
@@ -3885,7 +3867,7 @@
    "grupo": "core",
    "sec": [],
    "equipo": "peso_corporal",
-   "patron": "core_antiextension",
+   "patron": "core",
    "unilateral": false,
    "lastre": false,
    "mide": "reps",
@@ -3908,7 +3890,7 @@
    "grupo": "core",
    "sec": [],
    "equipo": "otro",
-   "patron": "core_antiextension",
+   "patron": "core",
    "unilateral": false,
    "lastre": false,
    "mide": "reps",
@@ -3931,7 +3913,7 @@
    "grupo": "core",
    "sec": [],
    "equipo": "peso_corporal",
-   "patron": "core_rotacion",
+   "patron": "core",
    "unilateral": false,
    "lastre": false,
    "mide": "reps",
@@ -3972,10 +3954,10 @@
    "slug": "caminata-del-granjero",
    "nombre": "Caminata del granjero",
    "legible": null,
-   "grupo": "full_body",
+   "grupo": "cuerpo_completo",
    "sec": [],
    "equipo": "mancuernas",
-   "patron": "locomocion",
+   "patron": "acarreo",
    "unilateral": false,
    "lastre": false,
    "mide": "reps",

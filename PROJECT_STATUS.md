@@ -1,10 +1,10 @@
 # Estado del proyecto
 
-**Última actualización:** 15-11-2026 · **Versión:** 1.0.0
+**Última actualización:** 16-11-2026 · **Versión:** 1.0.0
 
 ## Dónde está
 
-- La app está completa y funcionando en las pruebas automáticas (109 de 109, sin errores de consola).
+- La app está completa y funcionando en las pruebas automáticas (113 de 113, sin errores de consola).
 - **Publicada en GitHub Pages:** https://<usuario>.github.io/GymBro/ (repositorio público
   `<usuario>/GymBro`). Cada push a `main` la vuelve a publicar sola. Verificado el 14-11-2026 en
   Chromium: abre sin errores, registra el service worker y arranca con catálogo y plan, sin sesiones.
@@ -25,13 +25,9 @@ video y scroll táctil con una hoja abierta.
 - **Probar en el teléfono** lo último publicado, que solo se verificó en el simulador: Progreso con reps
   (a igual peso muestra "+N reps"; ejercicios sin peso siguen reps o tiempo), series por grupo muscular siempre
   visible, que ya no se recargue al deslizar hacia abajo, adjuntar foto o video desde la ficha, acentos en categorías y etiquetas, las tres paletas de color (Ajustes → Color), y "Copiar pedido para Claude" en Importar plan con un Claude real.
-- **Grupos, patrones y equipamiento (aprobado por el dueño, sin hacer):** unificar la movilidad en un solo grupo;
-  unificar hombro anterior, lateral y posterior en "Hombros"; "Dorsal" pasa a "Espalda" e incluye trapecio; "Isquios" a
-  "Isquiotibiales"; "Gemelo" a "Gemelos"; "Full body" a "Cuerpo completo"; **aductores y abductores en un solo grupo**
-  (pedido del dueño); agregar "Antebrazos" y "Lumbares" (ahí van las hiperextensiones, hoy en core). Patrones: juntar los
-  cuatro de core en "Core", renombrar bisagra y locomoción, y esconder el patrón del formulario detrás de "más opciones".
-  Equipamiento: "Disco / lastre", "Deslizadores", "Pelota (fitball)", y agregar "Banco" y "TRX / anillas". Hay que
-  convertir los datos ya guardados (nueva revisión del catálogo) y cambia "Series por grupo muscular".
+- **Probar en iPhone** que ya no se agrande la pantalla al tocar "Pegar el plan" ni otros campos. El arreglo no se
+  pudo verificar acá: solo aplica en iOS.
+- **Antebrazos** quedó como grupo sin ejercicios de fábrica; sumar alguno si el dueño lo pide.
 - **"Rebote y frenado":** El dueño pidió eliminarlo, pero tiene historial y está en su plan (Día 6, bloque 3). Quedó
   archivado (oculto). Falta que confirme si quiere borrarlo del todo, con sus series, y sacarlo del plan.
 - **Nombres a confirmar:** "Plancha sube y baja con disco" (era "Plancha CONSTRUYO"; el dueño dejó el nombre a criterio).
@@ -89,6 +85,7 @@ video y scroll táctil con una hoja abierta.
 | Fecha | Qué se hizo |
 |---|---|
 | 10-11-2026 | Diseño (`docs/historico/`), catálogo de 96 ejercicios, primera versión solo de registro |
+| 16-11-2026 | Grupos, patrones y equipamiento unificados (con conversión de los datos guardados); editor de días compacto con bloques que se abren y cierran; cuestionario nuevo en el pedido para la IA; arreglo del zoom en iPhone (sin verificar) |
 | 15-11-2026 | Catálogo revisado con el Excel del dueño: nombres claros, alias, 4 fusiones, 61 clásicos nuevos con foto, sin archivados de fábrica; actualización automática en apps ya instaladas; se quitó "salto mínimo de carga" |
 | 15-11-2026 | Importar plan en dos caminos (ya tengo un plan / que una IA lo arme), con un pedido distinto para cada uno; etiquetas con mayúscula inicial |
 | 15-11-2026 | Importador: arreglos en "Crear nuevo" / "Vincular"; Excel con propuesta de nombres y alias |

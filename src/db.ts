@@ -211,7 +211,7 @@ type SeedHist = { fecha: string; nombre: string; dur: number | null; wellness: n
 function descansoDefault(e: SeedEx): number {
   if (!e.vol) return 30
   if (e.patron === 'aislamiento') return 75
-  if (e.patron === 'pliometria' || e.patron.startsWith('core') || e.patron === 'locomocion') return 60
+  if (e.patron === 'pliometria' || e.patron.startsWith('core') || e.patron === 'acarreo' || e.patron === 'locomocion') return 60
   return 150
 }
 
@@ -224,6 +224,33 @@ export function pset(s: SeedSet): PSet {
   if (s.rpe != null) o.rpe = s.rpe
   if (s.fallo) o.fallo = true
   return o
+}
+
+// Revisión 3 del catálogo: grupos y patrones unificados. Clave vieja -> clave nueva. Tiene que coincidir con
+// GRUPOS y PATRONES de tools/nombres/aplicar.py. Sirve también para leer planes o copias con las claves viejas.
+export const GRUPO_NUEVO: Record<string, string> = {
+  dorsal: 'espalda', trapecio: 'espalda',
+  hombro_anterior: 'hombros', hombro_lateral: 'hombros', hombro_posterior: 'hombros',
+  isquios: 'isquiotibiales', aductores: 'aductores_abductores', gemelo: 'gemelos', full_body: 'cuerpo_completo',
+  movilidad_cadera: 'movilidad', movilidad_dorsal: 'movilidad', movilidad_isquios: 'movilidad',
+  movilidad_posterior: 'movilidad', movilidad_aductores: 'movilidad',
+}
+export const PATRON_NUEVO: Record<string, string> = {
+  core_antiextension: 'core', core_antiflexion_lateral: 'core', core_antirotacion: 'core', core_rotacion: 'core',
+  locomocion: 'acarreo',
+}
+/** Pasa grupo, secundarios y patrón de un ejercicio a las claves nuevas. Devuelve null si no hay nada que cambiar. */
+function clavesNuevas(e: Exercise): Pick<Exercise, 'grupo' | 'sec' | 'patron'> | null {
+  const grupo = GRUPO_NUEVO[e.grupo] ?? e.grupo
+  const patron = PATRON_NUEVO[e.patron] ?? e.patron
+  const junta = new Map<string, number>()
+  for (const x of e.sec ?? []) {
+    const k = GRUPO_NUEVO[x.grupo] ?? x.grupo
+    if (k !== grupo) junta.set(k, Math.max(junta.get(k) ?? 0, x.factor))   // dos secundarios que ahora son el mismo: queda el mayor
+  }
+  const sec = [...junta].map(([g, factor]) => ({ grupo: g, factor }))
+  const igual = grupo === e.grupo && patron === e.patron && JSON.stringify(sec) === JSON.stringify(e.sec ?? [])
+  return igual ? null : { grupo, sec, patron }
 }
 
 function deSemilla(e: SeedEx): Exercise {
@@ -246,6 +273,11 @@ export async function actualizarCatalogo(): Promise<void> {
   if (actual >= rev || !data.catalogo) return
   const { fusiones, borrar } = data.catalogo
   await db.transaction('rw', [db.exercises, db.planDays, db.setLogs, db.media, db.meta], async () => {
+    // 0. Grupos y patrones a las claves nuevas, en todos los ejercicios (también los que creó el usuario).
+    for (const e of await db.exercises.toArray()) {
+      const c = clavesNuevas(e)
+      if (c) await db.exercises.update(e.id!, c)
+    }
     const porSlug = new Map((await db.exercises.toArray()).map((e) => [e.slug, e]))
     const dias = await db.planDays.toArray()
     const enPlanes = (id: number) => dias.some((d) => d.bloques.some((b) => b.ejercicios.some((x) => x.exercise_id === id)))
@@ -284,7 +316,11 @@ export async function actualizarCatalogo(): Promise<void> {
       const alias = [...(e.alias ?? [])]
       for (const a of s.alias ?? []) if (!alias.includes(a)) alias.push(a)
       if (e.custom) await db.exercises.update(e.id!, { alias })   // lo creó el usuario con el mismo nombre: no se pisa
-      else await db.exercises.update(e.id!, { nombre: s.nombre, legible: s.legible, equipo: s.equipo, patron: s.patron, archivo: s.archivo, alias })
+      else await db.exercises.update(e.id!, {
+        nombre: s.nombre, legible: s.legible, grupo: s.grupo, sec: s.sec, equipo: s.equipo, patron: s.patron, alias,
+        // Lo archivado solo se tocó en la revisión 2 (se sacaron los archivados de fábrica); después es decisión del usuario.
+        ...(actual < 2 ? { archivo: s.archivo } : {}),
+      })
     }
     await db.meta.put({ key: 'catalogo', value: rev })
   })

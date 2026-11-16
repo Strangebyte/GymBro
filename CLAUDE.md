@@ -20,7 +20,7 @@ npm run seed         # regenera src/seed.json, src/seed-historial.json y data/*.
 npm run test:e2e     # requiere dist/ y: pip install playwright && playwright install chromium
 ```
 
-Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 109 verificaciones tienen que pasar
+Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 113 verificaciones tienen que pasar
 y no puede haber errores de consola. Si cambiás un flujo, actualizá `tests/e2e.py` en el mismo cambio.
 
 ## Cómo trabajar con el dueño
@@ -124,7 +124,14 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
   subir el archivo .json o copiar un pedido para la IA y pegar la respuesta; cambia el pedido (`pedidoParaIA` en
   plan.ts, modos `convertir` y `crear`: los dos llevan formato + reglas + catálogo de esa persona). Si cambia el
   formato, actualizar ese texto, `EJEMPLO_PLAN` y `docs/formato-plan-gym.md` juntos.
-- Grupos, equipamiento y patrones se muestran con `etiqueta()` (lib.ts): con acento y mayúscula inicial.
+- Grupos, equipamiento y patrones se muestran con `etiqueta()` (lib.ts): con acento y mayúscula inicial. Las listas
+  (`GRUPOS`, `EQUIPOS`, `PATRONES`) son las acordadas con el dueño el 16-11-2026: 15 grupos (un solo "Movilidad", un solo
+  "Hombros", "Espalda" con trapecio, "Aductores y abductores" juntos, más "Antebrazos" y "Lumbares"), un solo patrón
+  "Core", y el patrón escondido en el formulario detrás de "Más opciones". Las claves viejas se convierten con
+  `GRUPO_NUEVO` y `PATRON_NUEVO` (db.ts).
+- Editor de un día del plan: igual que la sesión. Bloques colapsados (con los nombres de los ejercicios en el
+  encabezado), abrir uno cierra el otro, tabla compacta y acciones como enlaces. La nota del ejercicio aparece
+  solo si tiene una o si se toca "+ Nota".
 - Apariencia: tema claro/oscuro y paleta (`verde`, `azul`, `violeta`). Una paleta nueva son dos bloques en
   styles.css (`[data-paleta]` claro y oscuro) y una opción en Ajustes; el naranja queda reservado para "otras
   actividades" y el rojo para errores.
@@ -153,6 +160,8 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
   retirado que tiene historial se archiva, no se borra. Los ejercicios que creó el usuario no se pisan.
 - **Cambios de esquema:** agregar `this.version(N+1).stores(...)` en db.ts, con `.upgrade()` si hay que
   transformar datos. Nunca editar una versión ya publicada: el usuario tiene datos reales.
+- **iPhone agranda la pantalla** al tocar un campo con letra de menos de 16px. Por eso styles.css fuerza 16px en
+  todos los campos solo en iOS (`@supports (-webkit-touch-callout: none)`). No sacarlo.
 - **Hooks antes de cualquier `return`** condicional (las pantallas devuelven "Cargando…" temprano).
 - **Hojas y diálogos** fijan el fondo (`useFondoFijo`) y se registran para el botón atrás (`useCapa`). Si se
   agrega otro overlay, usar los dos.
