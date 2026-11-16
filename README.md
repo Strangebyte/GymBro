@@ -32,4 +32,4 @@ de dominio público.
 | `docs/DECISIONES.md` | Decisiones tomadas y sus razones |
 | `docs/DEPLOY.md` | Cómo publicarla en un hosting propio |
 | `docs/formato-plan-gym.md` | Formato del archivo de plan importable |
-| `data/` | Catálogo y plan actual en JSON (para pedirle planes nuevos a Claude) |
+| `data/` | Catálogo en JSON (para pedirle planes nuevos a Claude) |

@@ -1,7 +1,8 @@
 import Dexie, { type Table } from 'dexie'
 import seed from './seed.json'
 
-// Historial personal: archivo opcional que no está en el repositorio. Si falta, la app arranca sin sesiones.
+// Plan e historial personales: archivos opcionales que no están en el repositorio. Si faltan, la app arranca sin planes ni sesiones.
+const planSemilla = Object.values(import.meta.glob('./seed-plan.json', { eager: true, import: 'default' }))[0] as SeedPlan | undefined
 const historial = Object.values(import.meta.glob('./seed-historial.json', { eager: true, import: 'default' }))[0] as SeedHist[] | undefined
 
 export const BACKUP_FORMAT = 'gym-log-backup/v2'
@@ -203,9 +204,9 @@ type SeedEx = {
 type SeedData = {
   exercises: SeedEx[]
   /** Revisión del catálogo: qué ejercicios se fusionaron o se borraron respecto de la anterior. */
-  catalogo?: { rev: number; fusiones: Record<string, string>; borrar: string[] }
-  plan: { nombre: string; objetivo: string; dias: { nombre: string; bloques: { orden: number; ejercicios: { slug: string; notas: string | null; series: SeedSet[] }[] }[] }[] }
+  catalogo?: { rev: number; fusiones: Record<string, string>; borrar: string[]; eliminar?: string[] }
 }
+type SeedPlan = { nombre: string; objetivo: string; dias: { nombre: string; bloques: { orden: number; ejercicios: { slug: string; notas: string | null; series: SeedSet[] }[] }[] }[] }
 type SeedHist = { fecha: string; nombre: string; dur: number | null; wellness: number | null; notas: string | null; sets: (string | number | null)[][] }
 
 function descansoDefault(e: SeedEx): number {
@@ -271,7 +272,7 @@ export async function actualizarCatalogo(): Promise<void> {
   const rev = data.catalogo?.rev ?? 1
   const actual = ((await db.meta.get('catalogo'))?.value as number | undefined) ?? 1
   if (actual >= rev || !data.catalogo) return
-  const { fusiones, borrar } = data.catalogo
+  const { fusiones, borrar, eliminar = [] } = data.catalogo
   await db.transaction('rw', [db.exercises, db.planDays, db.setLogs, db.media, db.meta], async () => {
     // 0. Grupos y patrones a las claves nuevas, en todos los ejercicios (también los que creó el usuario).
     for (const e of await db.exercises.toArray()) {
@@ -309,6 +310,22 @@ export async function actualizarCatalogo(): Promise<void> {
       else { await db.media.delete(e.id!); await db.exercises.delete(e.id!) }
       porSlug.delete(s)
     }
+    // 2b. Ejercicios borrados del todo (lo pidió el dueño): se van con sus series registradas y salen de los planes.
+    for (const s of eliminar) {
+      const e = porSlug.get(s)
+      if (!e) continue
+      await db.setLogs.where('exercise_id').equals(e.id!).delete()
+      for (const d of dias) {
+        if (!enPlanes(e.id!) || !d.bloques.some((b) => b.ejercicios.some((x) => x.exercise_id === e.id))) continue
+        d.bloques = d.bloques.map((b) => ({ ...b, ejercicios: b.ejercicios.filter((x) => x.exercise_id !== e.id) }))
+        await db.planDays.update(d.id!, { bloques: d.bloques })
+      }
+      const ajustes = (await db.meta.get('settings'))?.value as Partial<Settings> | undefined
+      if (ajustes?.seguimiento?.includes(e.id!)) await db.meta.put({ key: 'settings', value: { ...ajustes, seguimiento: ajustes.seguimiento.filter((x) => x !== e.id) } })
+      await db.media.delete(e.id!)
+      await db.exercises.delete(e.id!)
+      porSlug.delete(s)
+    }
     // 3. Nombres, otros nombres y equipamiento de los que quedan; alta de los que faltan.
     for (const s of data.exercises) {
       const e = porSlug.get(s.slug)
@@ -342,15 +359,17 @@ async function doSeed(conHistorial: boolean): Promise<void> {
     if (nuevos.length) await db.exercises.bulkAdd(nuevos)
     const idDe = new Map((await db.exercises.toArray()).map((e) => [e.slug, e.id!]))
 
-    if (conHistorial) {
-      const planId = await db.plans.add({ nombre: data.plan.nombre, objetivo: data.plan.objetivo, activo: true, cursor: 0, creado: Date.now() })
-      await db.planDays.bulkAdd(data.plan.dias.map((d, i) => ({
+    if (conHistorial && planSemilla) {
+      const planId = await db.plans.add({ nombre: planSemilla.nombre, objetivo: planSemilla.objetivo, activo: true, cursor: 0, creado: Date.now() })
+      await db.planDays.bulkAdd(planSemilla.dias.map((d, i) => ({
         plan_id: planId, orden: i, nombre: d.nombre,
         bloques: d.bloques.map((b) => ({
           orden: b.orden,
           ejercicios: b.ejercicios.map((x) => ({ exercise_id: idDe.get(x.slug)!, notas: x.notas, series: x.series.map(pset) })),
         })),
       })))
+    }
+    if (conHistorial) {
       for (const h of historial ?? []) {
         const inicio = new Date(`${h.fecha}T18:00:00`).getTime()
         const sid = await db.sessions.add({

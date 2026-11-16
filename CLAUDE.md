@@ -20,7 +20,7 @@ npm run seed         # regenera src/seed.json, src/seed-historial.json y data/*.
 npm run test:e2e     # requiere dist/ y: pip install playwright && playwright install chromium
 ```
 
-Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 113 verificaciones tienen que pasar
+Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 121 verificaciones tienen que pasar
 y no puede haber errores de consola. Si cambiás un flujo, actualizá `tests/e2e.py` en el mismo cambio.
 
 ## Cómo trabajar con el dueño
@@ -37,8 +37,8 @@ y no puede haber errores de consola. Si cambiás un flujo, actualizá `tests/e2e
 ```
 src/
   db.ts        Esquema Dexie, tipos, ajustes, carga inicial (seed), copia de seguridad
-  seed.json    Generado (catálogo + plan). NO editar a mano: sale de tools/seed/gen.py
-  seed-historial.json  Generado. Historial personal, opcional y fuera del repo (ver abajo)
+  seed.json    Generado (catálogo). NO editar a mano: sale de tools/seed/gen.py
+  seed-plan.json, seed-historial.json  Generados. Plan e historial del dueño, opcionales y fuera del repo (ver abajo)
   lib.ts       Formato de series y fechas, búsqueda, categorías, consultas de historial, guardarArchivo
   actions.ts   Ciclo de vida de la sesión, operaciones sobre planes, alta de ejercicios
   plan.ts      Formato plan-gym/v1: leer, validar, mapear ejercicios, guardar, exportar
@@ -58,7 +58,7 @@ tools/nombres/  gen.py arma privado/nombres-ejercicios.xlsx (propuesta de nombre
                del dueño en tools/seed/catalogo-cambios.json (requieren openpyxl)
 tools/logo/    gen.py dibuja el ícono (public/icon-*.png); requiere Pillow
 tests/         e2e.py (Playwright, Python) y fixtures
-data/          Catálogo y plan actual en JSON legible (generados)
+data/          Catálogo en JSON legible (generado)
 docs/          Decisiones, formato de plan, deploy, fuentes, histórico
 ```
 
@@ -131,7 +131,8 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
   `GRUPO_NUEVO` y `PATRON_NUEVO` (db.ts).
 - Editor de un día del plan: igual que la sesión. Bloques colapsados (con los nombres de los ejercicios en el
   encabezado), abrir uno cierra el otro, tabla compacta y acciones como enlaces. La nota del ejercicio aparece
-  solo si tiene una o si se toca "+ Nota".
+  solo si tiene una o si se toca "+ Nota". Los cambios quedan en un borrador: se guardan con el botón "Guardar"
+  (arriba a la derecha), y salir con cambios sin guardar pregunta "Guardar / Salir sin guardar / Seguir editando".
 - Apariencia: tema claro/oscuro y paleta (`verde`, `azul`, `violeta`). Una paleta nueva son dos bloques en
   styles.css (`[data-paleta]` claro y oscuro) y una opción en Ajustes; el naranja queda reservado para "otras
   actividades" y el rojo para errores.
@@ -157,22 +158,27 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
   `tools/seed/catalogo-cambios.json` subiendo `rev`, y después `npm run seed`. La app los aplica una vez por
   revisión en los teléfonos ya instalados (`actualizarCatalogo` en db.ts), reconociendo cada ejercicio por su
   `slug`, que **nunca se cambia** aunque cambie el nombre. El nombre viejo siempre queda como alias. Un ejercicio
-  retirado que tiene historial se archiva, no se borra. Los ejercicios que creó el usuario no se pisan.
+  retirado que tiene historial se archiva, no se borra, salvo que el dueño pida borrarlo del todo (`eliminar`: se va con
+  sus series y sale de los planes). Los ejercicios que creó el usuario no se pisan.
 - **Cambios de esquema:** agregar `this.version(N+1).stores(...)` en db.ts, con `.upgrade()` si hay que
   transformar datos. Nunca editar una versión ya publicada: el usuario tiene datos reales.
 - **iPhone agranda la pantalla** al tocar un campo con letra de menos de 16px. Por eso styles.css fuerza 16px en
   todos los campos solo en iOS (`@supports (-webkit-touch-callout: none)`). No sacarlo.
 - **Hooks antes de cualquier `return`** condicional (las pantallas devuelven "Cargando…" temprano).
+- **Pantallas con cambios sin guardar:** `useGuardiaSalida(sucio, alSalir)` (ui.tsx) intercepta la flecha de volver y el
+  botón atrás del teléfono; para salir de verdad, `sinGuardia()` y después `nav.volver()`. `useDialogos().elegir()` es
+  el diálogo de dos acciones más cancelar.
 - **Hojas y diálogos** fijan el fondo (`useFondoFijo`) y se registran para el botón atrás (`useCapa`). Si se
   agrega otro overlay, usar los dos.
 - **Botón atrás** (`atras` en ui.tsx): cada pantalla apilada y cada overlay abierto es una entrada del historial
   del navegador. Lo que la app cierra por su cuenta se descuenta con `atras.quitar()`, y ese `popstate` se
   ignora. No llamar a `history.back()` ni `pushState` directamente desde las pantallas.
-- **El historial personal no está en el repositorio** (que es público): `src/seed-historial.json`,
-  `tools/seed/gen.py`, `docs/fuentes/*.md` y `privado/` están en `.gitignore` y existen solo en la PC del dueño.
-  `db.ts` carga el historial con `import.meta.glob`, así que compila con o sin el archivo. La versión publicada
-  arranca sin sesiones; las del dueño se cargan restaurando `privado/gym-log-historial.json`. Las pruebas e2e
-  necesitan el historial: solo pasan en esta PC. Nunca sacar esos archivos del `.gitignore`.
+- **Ni el plan ni el historial del dueño están en el repositorio** (que es público): `src/seed-plan.json`,
+  `src/seed-historial.json`, `tools/seed/gen.py`, `docs/fuentes/*.md` y `privado/` están en `.gitignore` y existen solo
+  en la PC del dueño. `db.ts` los carga con `import.meta.glob`, así que compila con o sin ellos. La versión publicada
+  arranca sin planes ni sesiones (el dueño lo pidió: no quiere que a otros les aparezca su plan); lo de él se carga
+  restaurando una copia. Las pruebas e2e necesitan los dos archivos: solo pasan en esta PC. Nunca sacarlos del
+  `.gitignore`.
 - `tests/e2e.py` fija la fecha en 14-11-2026 porque el historial sembrado es relativo a esa fecha.
 - `tsconfig` tiene `noUnusedLocals` y `noUnusedParameters`: el build falla con imports sin usar.
 

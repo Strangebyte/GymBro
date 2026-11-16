@@ -6,7 +6,8 @@ Uso:  python tools/nombres/aplicar.py        (requiere openpyxl; el Excel solo e
 Qué sale en catalogo-cambios.json:
   ejercicios  slug -> nombre nuevo, otros nombres (alias) y, si cambió, equipamiento o patrón
   fusiones    slug que desaparece -> slug que lo absorbe (eran el mismo ejercicio)
-  archivar    ejercicios que el dueño pidió eliminar pero tienen historial: quedan ocultos, no se borran
+  archivar    ejercicios que quedan ocultos sin borrarse
+  eliminar    ejercicios que el dueño pidió borrar del todo: se van con sus series registradas y salen de los planes
   borrar      ejercicios sin uso que se eliminan
   nuevos      ejercicios clásicos que no estaban en el catálogo (con la carpeta de su foto en Free Exercise DB)
   grupos, patrones   clave vieja -> clave nueva (revisión 3: grupos y patrones unificados). Tienen que coincidir con
@@ -17,7 +18,7 @@ import json, os, re, unicodedata
 from openpyxl import load_workbook
 
 RAIZ = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
-REV = 3
+REV = 4
 
 def norm(s):
     s = unicodedata.normalize('NFKD', s).encode('ascii', 'ignore').decode().lower()
@@ -67,7 +68,8 @@ FUSIONES = {
     'curl-isquios-1p-exc-fb': 'curl-isquio-1p-exc-mb',
     'curl-isquios-fb': 'curl-isquio-1p-exc-mb',
 }
-ARCHIVAR = ['rebote-y-freno']            # "Eliminalo", pero tiene historial y está en el plan: se oculta
+ARCHIVAR = []
+ELIMINAR = ['rebote-y-freno']            # "Borrá del todo rebote y frenado" (16-11-2026): se va con su historial
 BORRAR = ['remo-tandem-en-puntas']       # "Eliminalo", sin registros
 # Cambios de equipamiento o patrón que se desprenden de sus correcciones.
 OTROS = {
@@ -208,7 +210,7 @@ def main():
         }
     assert len(filas) == len(base) == 100, (len(filas), len(base))
 
-    fuera = set(FUSIONES) | set(BORRAR)
+    fuera = set(FUSIONES) | set(BORRAR) | set(ELIMINAR)
     ejercicios = {}
     for slug, f in filas.items():
         if slug in fuera: continue
@@ -234,11 +236,11 @@ def main():
         alias[:] = limpios
     assert not (set(ejercicios) & {n['slug'] for n in nuevos}), 'un ejercicio nuevo repite el slug de uno existente'
 
-    salida = {'rev': REV, 'ejercicios': ejercicios, 'fusiones': FUSIONES, 'archivar': ARCHIVAR, 'borrar': BORRAR, 'nuevos': nuevos,
+    salida = {'rev': REV, 'ejercicios': ejercicios, 'fusiones': FUSIONES, 'archivar': ARCHIVAR, 'borrar': BORRAR, 'eliminar': ELIMINAR, 'nuevos': nuevos,
               'grupos': GRUPOS, 'patrones': PATRONES}
     ruta = os.path.join(RAIZ, 'tools', 'seed', 'catalogo-cambios.json')
     json.dump(salida, open(ruta, 'w', encoding='utf-8', newline='\n'), ensure_ascii=False, indent=1)
-    print(f'{len(ejercicios)} renombrados · {len(FUSIONES)} fusionados · {len(ARCHIVAR)} archivado · {len(BORRAR)} borrado · {len(nuevos)} nuevos → {len(ejercicios) + len(nuevos)} en total')
+    print(f'{len(ejercicios)} renombrados · {len(FUSIONES)} fusionados · {len(ARCHIVAR)} archivados · {len(BORRAR) + len(ELIMINAR)} borrados · {len(nuevos)} nuevos → {len(ejercicios) + len(nuevos)} en total')
 
 if __name__ == '__main__':
     main()

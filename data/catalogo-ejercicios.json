@@ -2491,34 +2491,6 @@
    ]
   },
   {
-   "slug": "rebote-y-freno",
-   "nombre": "Rebote y frenado (salto con aterrizaje controlado)",
-   "legible": null,
-   "grupo": "cuadriceps",
-   "sec": [
-    {
-     "grupo": "gemelos",
-     "factor": 0.4
-    }
-   ],
-   "equipo": "peso_corporal",
-   "patron": "pliometria",
-   "unilateral": false,
-   "lastre": false,
-   "mide": "reps",
-   "vol": true,
-   "inc": null,
-   "archivo": true,
-   "notas": null,
-   "alias": [
-    "Rebote y freno",
-    "Salto con recepción",
-    "Aterrizaje y freno",
-    "Drop and stick",
-    "Snap down"
-   ]
-  },
-  {
    "slug": "laterales-con-banda",
    "nombre": "Saltos laterales con una mano agarrando banda elástica",
    "legible": null,

@@ -4,10 +4,10 @@
 
 ## Dónde está
 
-- La app está completa y funcionando en las pruebas automáticas (113 de 113, sin errores de consola).
+- La app está completa y funcionando en las pruebas automáticas (121 de 121, sin errores de consola).
 - **Publicada en GitHub Pages:** https://<usuario>.github.io/GymBro/ (repositorio público
   `<usuario>/GymBro`). Cada push a `main` la vuelve a publicar sola. Verificado el 14-11-2026 en
-  Chromium: abre sin errores, registra el service worker y arranca con catálogo y plan, sin sesiones.
+  Chromium: abre sin errores, registra el service worker. Desde el 16-11-2026 arranca solo con el catálogo: sin planes ni sesiones.
 - **El historial personal no está en el repositorio.** Se carga en el teléfono restaurando
   `privado/gym-log-historial.json` (Ajustes → Restaurar desde una copia). Ver `docs/DEPLOY.md`.
 - **Instalada en el Android del dueño (14-11-2026).** Probado ahí: vibración y sonido al terminar el descanso.
@@ -28,8 +28,9 @@ video y scroll táctil con una hoja abierta.
 - **Probar en iPhone** que ya no se agrande la pantalla al tocar "Pegar el plan" ni otros campos. El arreglo no se
   pudo verificar acá: solo aplica en iOS.
 - **Antebrazos** quedó como grupo sin ejercicios de fábrica; sumar alguno si el dueño lo pide.
-- **"Rebote y frenado":** El dueño pidió eliminarlo, pero tiene historial y está en su plan (Día 6, bloque 3). Quedó
-  archivado (oculto). Falta que confirme si quiere borrarlo del todo, con sus series, y sacarlo del plan.
+- **Plan Mesociclo B en teléfonos que ya tenían la app:** las instalaciones nuevas ya no lo traen, pero a quien la
+  instaló antes le sigue apareciendo hasta que lo borre a mano (Planes → Borrar plan). No se borra solo porque no
+  hay forma de distinguir el teléfono del dueño del de los demás.
 - **Nombres a confirmar:** "Plancha sube y baja con disco" (era "Plancha CONSTRUYO"; el dueño dejó el nombre a criterio).
   Los ejercicios con DUDA que no corrigió quedaron con el nombre sugerido.
 - **Imágenes de ejercicios:** 86 de 156 tienen imagen incluida. Quedan 12 candidatos dudosos anotados en
@@ -57,7 +58,7 @@ video y scroll táctil con una hoja abierta.
 - Calendario mensual con colores para gym y otras actividades; detalle al tocar un día
 - Progreso: constancia semanal, peso máximo por ejercicio (interactivo), wellness semanal, series por grupo
 - Ajustes: tema claro/oscuro, objetivo semanal, descanso, tilde, tipos de actividad, copia de seguridad
-- Datos iniciales: plan actual (Mesociclo B, 6 días) e historial de 29 sesiones (02-09 al 11-11-2026)
+- Datos iniciales públicos: solo el catálogo. El plan Mesociclo B y el historial de 29 sesiones son del dueño y quedan fuera del repositorio
 
 ## Limitaciones conocidas
 
@@ -85,6 +86,7 @@ video y scroll táctil con una hoja abierta.
 | Fecha | Qué se hizo |
 |---|---|
 | 10-11-2026 | Diseño (`docs/historico/`), catálogo de 96 ejercicios, primera versión solo de registro |
+| 16-11-2026 | Editor de días con botón Guardar y aviso al salir con cambios; "Rebote y frenado" borrado del todo; la versión pública ya no trae el plan Mesociclo B |
 | 16-11-2026 | Grupos, patrones y equipamiento unificados (con conversión de los datos guardados); editor de días compacto con bloques que se abren y cierran; cuestionario nuevo en el pedido para la IA; arreglo del zoom en iPhone (sin verificar) |
 | 15-11-2026 | Catálogo revisado con el Excel del dueño: nombres claros, alias, 4 fusiones, 61 clásicos nuevos con foto, sin archivados de fábrica; actualización automática en apps ya instaladas; se quitó "salto mínimo de carga" |
 | 15-11-2026 | Importar plan en dos caminos (ya tengo un plan / que una IA lo arme), con un pedido distinto para cada uno; etiquetas con mayúscula inicial |

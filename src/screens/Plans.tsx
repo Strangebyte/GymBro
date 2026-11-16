@@ -1,7 +1,7 @@
 import { useMemo, useRef, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
-import { db, kgToG, type Exercise, type PBlock, type PSet } from '../db'
-import { Chevron, Picker, TopBar, useDialogos, useNav } from '../ui'
+import { db, kgToG, type Exercise, type PBlock, type PlanDay, type PSet } from '../db'
+import { Chevron, Picker, sinGuardia, TopBar, useDialogos, useGuardiaSalida, useNav } from '../ui'
 import { etiqueta, plural, GRUPOS, guardarArchivo, numES, resumenSets, setValido, slugify } from '../lib'
 import { activarPlan, borrarPlan, duplicarDia, reordenarDias } from '../actions'
 import { EJEMPLO_PLAN, exportarPlan, guardarPlan, leerPlan, pedidoParaIA, type ImpPlan, type Resolucion } from '../plan'
@@ -122,22 +122,42 @@ const aTxt = (n: number | null | undefined): string => (n == null ? '' : numES(n
 
 export function PlanDayScreen({ id }: { id: number }) {
   const nav = useNav()
-  const { confirmar } = useDialogos()
+  const { confirmar, elegir } = useDialogos()
   const dia = useLiveQuery(() => db.planDays.get(id), [id])
   const ejercicios = useLiveQuery(() => db.exercises.toArray(), [])
   const [picker, setPicker] = useState<{ b: number; e: number | null } | null>(null)
+  // Los cambios quedan en un borrador hasta tocar "Guardar". Van en refs para que guardar lea siempre lo último,
+  // aunque el toque en "Guardar" llegue pegado a la salida de un campo.
+  const borrador = useRef<PBlock[] | null>(null)
+  const nombreNuevo = useRef<string | null>(null)
+  const [sucio, setSucio] = useState(false)
+  const [, setVersion] = useState(0)
+  const guardarTodo = async () => {
+    const c: Partial<PlanDay> = {}
+    if (borrador.current) c.bloques = borrador.current
+    if (nombreNuevo.current != null) c.nombre = nombreNuevo.current.trim() || 'Día sin nombre'
+    if (Object.keys(c).length) await db.planDays.update(id, c)
+    sinGuardia(); nav.volver()
+  }
+  const alSalir = async () => {
+    const r = await elegir({ titulo: '¿Guardar los cambios?', texto: 'Cambiaste este día del plan y todavía no lo guardaste.', ok: 'Guardar', otro: 'Salir sin guardar', cancelar: 'Seguir editando' })
+    if (r === 'ok') await guardarTodo()
+    else if (r === 'otro') { sinGuardia(); nav.volver() }
+  }
+  useGuardiaSalida(sucio, () => void alSalir())
   const [rev, setRev] = useState(0)
   const [abierto, setAbierto] = useState<number | null | undefined>(undefined)
   const [notaDe, setNotaDe] = useState<string | null>(null)   // ejercicio al que se le está agregando una nota
   const mapa = useMemo(() => new Map((ejercicios ?? []).map((e) => [e.id!, e])), [ejercicios])
   if (!dia || !ejercicios) return <><TopBar titulo="Día" atras /><div className="main sin-tabs"><div className="empty">Cargando…</div></div></>
 
-  const guardar = (bloques: PBlock[]) => void db.planDays.update(id, { bloques })
+  const bloques = borrador.current ?? dia.bloques
   const editar = (fn: (b: PBlock[]) => void, estructural = true) => {
-    const c: PBlock[] = JSON.parse(JSON.stringify(dia.bloques)); fn(c); guardar(c)
+    const c: PBlock[] = JSON.parse(JSON.stringify(bloques)); fn(c)
+    borrador.current = c; setSucio(true); setVersion((v) => v + 1)
     if (estructural) setRev((r) => r + 1)
   }
-  const invalidas = dia.bloques.reduce((n, b) => n + b.ejercicios.reduce((m, e) => m + e.series.filter((s) => !setValido(s)).length, 0), 0)
+  const invalidas = bloques.reduce((n, b) => n + b.ejercicios.reduce((m, e) => m + e.series.filter((s) => !setValido(s)).length, 0), 0)
 
   const elegido = (ex: Exercise) => {
     if (!picker) return
@@ -151,19 +171,19 @@ export function PlanDayScreen({ id }: { id: number }) {
   }
 
   // Bloques colapsados, uno abierto por vez, igual que en la sesión. Con un solo bloque, arranca abierto.
-  const ab = abierto === undefined ? (dia.bloques.length === 1 ? 0 : null) : abierto
+  const ab = abierto === undefined ? (bloques.length === 1 ? 0 : null) : abierto
 
   return (
     <>
-      <TopBar titulo="Editar día" atras />
+      <TopBar titulo="Editar día" atras der={<button className="btn primary sm" onClick={() => void guardarTodo()}>Guardar</button>} />
       <div className="main sin-tabs">
         <div className="card tight">
           <label className="f" style={{ marginTop: 0 }} htmlFor="dn">Nombre del día</label>
-          <input id="dn" defaultValue={dia.nombre} onBlur={(e) => void db.planDays.update(id, { nombre: e.target.value.trim() || 'Día sin nombre' })} />
+          <input id="dn" defaultValue={dia.nombre} onChange={(e) => { nombreNuevo.current = e.target.value; if (!sucio) setSucio(true) }} />
         </div>
         {invalidas > 0 && <div className="banner err">{invalidas} {invalidas === 1 ? 'serie no tiene' : 'series no tienen'} ningún dato. Cada serie necesita al menos reps, tiempo, peso, RIR o RPE.</div>}
 
-        {dia.bloques.map((b, bi) => {
+        {bloques.map((b, bi) => {
           const nombres = b.ejercicios.map((e) => mapa.get(e.exercise_id)?.nombre ?? 'Ejercicio borrado').join(' · ')
           const malas = b.ejercicios.reduce((n, e) => n + e.series.filter((x) => !setValido(x)).length, 0)
           return (
@@ -242,12 +262,11 @@ export function PlanDayScreen({ id }: { id: number }) {
           )
         })}
 
-        <button className="btn block" style={{ marginTop: 12 }} onClick={() => { setAbierto(dia.bloques.length); editar((bl) => { bl.push({ orden: bl.length ? Math.max(...bl.map((x) => x.orden)) + 1 : 1, ejercicios: [] }) }) }}>+ Bloque</button>
-        <button className="btn primary block" style={{ marginTop: 10 }} onClick={nav.volver}>Listo</button>
-        <div className="xsmall muted center" style={{ marginTop: 8 }}>Los cambios se guardan solos. RIR y RPE no van juntos: al cargar uno se borra el otro.</div>
+        <button className="btn block" style={{ marginTop: 12 }} onClick={() => { setAbierto(bloques.length); editar((bl) => { bl.push({ orden: bl.length ? Math.max(...bl.map((x) => x.orden)) + 1 : 1, ejercicios: [] }) }) }}>+ Bloque</button>
+        <div className="xsmall muted center" style={{ marginTop: 10 }}>Tocá «Guardar», arriba, para conservar los cambios. RIR y RPE no van juntos: al cargar uno se borra el otro.</div>
       </div>
       {picker && (
-        <Picker multi={picker.e == null} titulo={picker.e == null ? `Agregar al bloque ${dia.bloques[picker.b]?.orden}` : 'Cambiar ejercicio'}
+        <Picker multi={picker.e == null} titulo={picker.e == null ? `Agregar al bloque ${bloques[picker.b]?.orden}` : 'Cambiar ejercicio'}
           onCerrar={() => setPicker(null)} onElegir={elegido} />
       )}
     </>

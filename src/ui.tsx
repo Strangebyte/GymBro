@@ -46,6 +46,12 @@ export const atras = {
     prof -= k
     retroceder(k)
   },
+  /** Si la pantalla actual tiene cambios sin guardar, le pregunta al usuario y devuelve true (no hay que salir). */
+  bloqueado(): boolean {
+    if (!guardia) return false
+    guardia()
+    return true
+  },
   /** Atiende el botón atrás del sistema. `sacar` cierra la pantalla de arriba. */
   escuchar(sacar: () => void): () => void {
     const onPop = () => {
@@ -54,12 +60,32 @@ export const atras = {
       if (g > prof) { retroceder(1); return }   // "adelante" del navegador: se deshace
       const n = prof - g
       prof = g
-      for (let i = 0; i < n; i++) { const cerrar = abiertas.pop(); if (cerrar) cerrar(); else sacar() }
+      for (let i = 0; i < n; i++) {
+        const cerrar = abiertas.pop()
+        if (cerrar) cerrar()
+        else if (guardia) { atras.sumar(); guardia() }   // la pantalla tiene cambios sin guardar: no se sale, se pregunta
+        else sacar()
+      }
     }
     window.addEventListener('popstate', onPop)
     return () => window.removeEventListener('popstate', onPop)
   },
 }
+
+// Pantalla con cambios sin guardar: mientras haya guardia, salir (flecha de la barra o botón atrás) la llama en vez de salir.
+let guardia: (() => void) | null = null
+export function useGuardiaSalida(activa: boolean, alIntentarSalir: () => void): void {
+  const ref = useRef(alIntentarSalir)
+  ref.current = alIntentarSalir
+  useEffect(() => {
+    if (!activa) return
+    const fn = () => ref.current()
+    guardia = fn
+    return () => { if (guardia === fn) guardia = null }
+  }, [activa])
+}
+/** Quita la guardia ya mismo, para poder salir después de guardar o descartar. */
+export function sinGuardia(): void { guardia = null }
 
 /** Registra una hoja o diálogo abierto para que el botón atrás lo cierre. */
 function useCapa(cerrar: () => void): void {
@@ -77,34 +103,46 @@ function Capa({ cerrar }: { cerrar: () => void }) { useCapa(cerrar); return null
 // ------------------------------------------------------------------ diálogos y avisos
 interface Pregunta { titulo: string; texto?: string; ok?: string; peligro?: boolean }
 type Confirmar = (p: Pregunta) => Promise<boolean>
-const DlgCtx = createContext<{ confirmar: Confirmar; avisar: (t: string) => void }>({ confirmar: async () => false, avisar: () => {} })
+/** Pregunta con dos acciones además de cancelar. Devuelve cuál se eligió, o null si se canceló. */
+interface Eleccion { titulo: string; texto?: string; ok: string; otro: string; cancelar?: string }
+type Elegir = (p: Eleccion) => Promise<'ok' | 'otro' | null>
+const DlgCtx = createContext<{ confirmar: Confirmar; elegir: Elegir; avisar: (t: string) => void }>({ confirmar: async () => false, elegir: async () => null, avisar: () => {} })
 export const useDialogos = () => useContext(DlgCtx)
 
 export function Dialogos({ children }: { children: ReactNode }) {
-  const [preg, setPreg] = useState<(Pregunta & { res: (b: boolean) => void }) | null>(null)
+  const [preg, setPreg] = useState<(Pregunta & { otro?: string; cancelar?: string; res: (v: 'ok' | 'otro' | null) => void }) | null>(null)
   const [toast, setToast] = useState<string | null>(null)
   const t = useRef<number>()
-  const confirmar = useCallback<Confirmar>((p) => new Promise((res) => setPreg({ ...p, res })), [])
+  const confirmar = useCallback<Confirmar>((p) => new Promise((res) => setPreg({ ...p, res: (v) => res(v === 'ok') })), [])
+  const elegir = useCallback<Elegir>((p) => new Promise((res) => setPreg({ ...p, res })), [])
   const avisar = useCallback((txt: string) => {
     setToast(txt)
     window.clearTimeout(t.current)
     t.current = window.setTimeout(() => setToast(null), 3200)
   }, [])
-  const cerrar = (b: boolean) => { preg?.res(b); setPreg(null) }
-  const valor = useMemo(() => ({ confirmar, avisar }), [confirmar, avisar])
+  const cerrar = (v: 'ok' | 'otro' | null) => { preg?.res(v); setPreg(null) }
+  const valor = useMemo(() => ({ confirmar, elegir, avisar }), [confirmar, elegir, avisar])
   return (
     <DlgCtx.Provider value={valor}>
       {children}
       {preg && (
-        <div className="overlay" style={{ alignItems: 'center' }} onClick={() => cerrar(false)}>
-          <FondoFijo /><Capa cerrar={() => cerrar(false)} />
+        <div className="overlay" style={{ alignItems: 'center' }} onClick={() => cerrar(null)}>
+          <FondoFijo /><Capa cerrar={() => cerrar(null)} />
           <div className="dialog" role="dialog" aria-modal="true" onClick={(e) => e.stopPropagation()}>
             <h3>{preg.titulo}</h3>
             {preg.texto && <p className="small muted" style={{ margin: '8px 0 0' }}>{preg.texto}</p>}
-            <div className="row" style={{ marginTop: 18 }}>
-              <button className="btn grow" onClick={() => cerrar(false)}>Cancelar</button>
-              <button className={`btn grow ${preg.peligro ? 'danger' : 'primary'}`} onClick={() => cerrar(true)}>{preg.ok ?? 'Aceptar'}</button>
-            </div>
+            {preg.otro ? (
+              <div className="col" style={{ marginTop: 18, gap: 8 }}>
+                <button className="btn primary block" onClick={() => cerrar('ok')}>{preg.ok}</button>
+                <button className="btn danger block" onClick={() => cerrar('otro')}>{preg.otro}</button>
+                <button className="btn ghost block" onClick={() => cerrar(null)}>{preg.cancelar ?? 'Cancelar'}</button>
+              </div>
+            ) : (
+              <div className="row" style={{ marginTop: 18 }}>
+                <button className="btn grow" onClick={() => cerrar(null)}>Cancelar</button>
+                <button className={`btn grow ${preg.peligro ? 'danger' : 'primary'}`} onClick={() => cerrar('ok')}>{preg.ok ?? 'Aceptar'}</button>
+              </div>
+            )}
           </div>
         </div>
       )}

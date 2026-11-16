@@ -67,7 +67,7 @@ export default function App() {
 
   const nav = useMemo<Nav>(() => ({
     ir: (v) => { atras.sumar(); scrolls.current[pilaRef.current.length - 1] = window.scrollY; setPila((p) => [...p, v]); window.scrollTo(0, 0) },
-    volver: () => { if (pilaRef.current.length <= 1) return; sacar(); atras.quitar(1) },
+    volver: () => { if (pilaRef.current.length <= 1 || atras.bloqueado()) return; sacar(); atras.quitar(1) },
     reemplazar: (v) => { setPila((p) => [...p.slice(0, -1), v]); window.scrollTo(0, 0) },
     raiz: (v) => { atras.quitar(pilaRef.current.length - 1); scrolls.current = []; setPila([v]); window.scrollTo(0, 0) },
   }), [sacar])

@@ -1,4 +1,6 @@
-"""Arma privado/nombres-ejercicios.xlsx: nombre actual, nombre sugerido, otros nombres y la última vez que se hizo
+"""(Ya cumplió su función el 15-11-2026: parte del catálogo anterior a la revisión de nombres y hoy no corre tal cual.)
+
+Arma privado/nombres-ejercicios.xlsx: nombre actual, nombre sugerido, otros nombres y la última vez que se hizo
 cada ejercicio. Va en privado/ (fuera del repositorio) porque lleva fechas del historial personal.
 
 Uso:  python tools/nombres/gen.py .        (requiere openpyxl)

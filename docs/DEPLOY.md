@@ -35,8 +35,8 @@ Netlify, Cloudflare Pages y Vercel aceptan una carpeta estática. Compilar y sub
 
 ## Sobre el historial
 
-El repositorio es público y **no incluye el historial del dueño**. La app publicada arranca con el catálogo y el
-plan, sin sesiones. Para cargar las 29 sesiones en el teléfono: pasar `privado/gym-log-historial.json` al
+El repositorio es público y **no incluye el historial del dueño**. La app publicada arranca solo con el
+catálogo: sin planes y sin sesiones. Para cargar las 29 sesiones en el teléfono: pasar `privado/gym-log-historial.json` al
 teléfono y en la app ir a Ajustes → Restaurar desde una copia.
 
 En la PC del dueño, `npm run build` sí incluye el historial (existe `src/seed-historial.json`); por eso **no hay

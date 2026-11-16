@@ -1,5 +1,6 @@
 # Datos personales: historial de entrenamiento. No se suben.
 src/seed-historial.json
+src/seed-plan.json
 tools/seed/gen.py
 docs/fuentes/*.md
 !docs/fuentes/README.md

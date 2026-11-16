@@ -1,5 +1,5 @@
 {
- "rev": 3,
+ "rev": 4,
  "ejercicios": {
   "cadera-con-glide-lateral-cuadrupedia": {
    "nombre": "Movilidad de cadera en cuadrupedia con glide lateral",
@@ -738,16 +738,6 @@
     "Nordic hamstring"
    ]
   },
-  "rebote-y-freno": {
-   "nombre": "Rebote y frenado (salto con aterrizaje controlado)",
-   "alias": [
-    "Rebote y freno",
-    "Salto con recepción",
-    "Aterrizaje y freno",
-    "Drop and stick",
-    "Snap down"
-   ]
-  },
   "laterales-con-banda": {
    "nombre": "Saltos laterales con una mano agarrando banda elástica",
    "alias": [
@@ -1007,11 +997,12 @@
   "curl-isquios-1p-exc-fb": "curl-isquio-1p-exc-mb",
   "curl-isquios-fb": "curl-isquio-1p-exc-mb"
  },
- "archivar": [
-  "rebote-y-freno"
- ],
+ "archivar": [],
  "borrar": [
   "remo-tandem-en-puntas"
+ ],
+ "eliminar": [
+  "rebote-y-freno"
  ],
  "nuevos": [
   {
