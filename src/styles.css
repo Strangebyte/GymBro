@@ -146,6 +146,11 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--pri); outline-o
 .bloque-h button.row { text-align: left; min-height: 48px; gap: 10px; }
 .bloque-h .num { width: 30px; height: 30px; border-radius: 999px; background: var(--pri-soft); color: var(--pri-text); display: grid; place-items: center; font-weight: 800; font-size: 14px; flex-shrink: 0; }
 .bloque-c { padding: 0 10px 10px; }
+/* Abrir y cerrar bloques: el alto pasa de 0 al contenido con una transición (truco de grid: 0fr a 1fr). */
+.despl { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows .24s ease, opacity .2s ease; }
+.despl.abierto { grid-template-rows: 1fr; opacity: 1; }
+.despl > div { overflow: hidden; min-height: 0; }
+@media (prefers-reduced-motion: reduce) { .despl { transition: none; } }
 .tilde { width: 46px; height: 46px; border-radius: 999px; border: 2px solid var(--line); color: var(--line); font-size: 21px; font-weight: 800; text-align: center; flex-shrink: 0; background: var(--surface); }
 .tilde.on { background: var(--pri); border-color: var(--pri); color: var(--pri-ink); }
 .tilde.ch { width: 36px; height: 36px; font-size: 17px; border-radius: 999px; }

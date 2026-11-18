@@ -174,6 +174,41 @@ export function Chevron({ abierto }: { abierto: boolean }) {
   )
 }
 
+/**
+ * Contenido que se abre y se cierra con una transición (alto y opacidad). Si ya estaba abierto al montarse, aparece sin
+ * animar (volver a una pantalla). `cerrarYa`: se cierra sin animar, porque se abrió otro bloque y la pantalla se acomoda.
+ */
+export function Desplegable({ abierto, cerrarYa = false, children }: { abierto: boolean; cerrarYa?: boolean; children: ReactNode }) {
+  const [montado, setMontado] = useState(abierto)
+  const [visible, setVisible] = useState(abierto)
+  useEffect(() => {
+    if (abierto) {
+      setMontado(true)
+      let r2 = 0
+      const r1 = requestAnimationFrame(() => { r2 = requestAnimationFrame(() => setVisible(true)) })
+      return () => { cancelAnimationFrame(r1); cancelAnimationFrame(r2) }
+    }
+    setVisible(false)
+    if (cerrarYa) { setMontado(false); return }
+    const t = window.setTimeout(() => setMontado(false), 260)
+    return () => window.clearTimeout(t)
+  }, [abierto, cerrarYa])
+  if (!montado || (!abierto && cerrarYa)) return null
+  return <div className={`despl${visible && abierto ? ' abierto' : ''}`}><div>{children}</div></div>
+}
+
+/** Lleva la pantalla hasta que el elemento quede arriba, justo debajo de la barra superior. */
+export function alinearArriba(el: HTMLElement | null): void {
+  if (!el) return
+  const destino = () => {
+    const barra = document.querySelector('.topbar') as HTMLElement | null
+    return Math.max(0, el.getBoundingClientRect().top + window.scrollY - (barra?.offsetHeight ?? 0) - 8)
+  }
+  window.scrollTo({ top: destino(), behavior: 'smooth' })
+  // Si el bloque está al final, la página todavía no era tan larga: cuando termina de abrirse, se corrige.
+  window.setTimeout(() => { if (Math.abs(window.scrollY - destino()) > 4) window.scrollTo({ top: destino(), behavior: 'smooth' }) }, 320)
+}
+
 let capas = 0
 /** Mientras haya una hoja o diálogo abierto, el fondo no se desplaza. */
 function useFondoFijo(): void {

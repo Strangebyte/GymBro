@@ -1,7 +1,7 @@
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, type Exercise, type PBlock, type PlanDay, type PSet } from '../db'
-import { Chevron, Picker, sinGuardia, TopBar, useDialogos, useGuardiaSalida, useNav } from '../ui'
+import { alinearArriba, Chevron, Desplegable, Picker, sinGuardia, TopBar, useDialogos, useGuardiaSalida, useNav } from '../ui'
 import { etiqueta, plural, GRUPOS, guardarArchivo, numES, pesoDesdeTexto, pesoTxt, resumenSets, rotuloPeso, setValido, slugify } from '../lib'
 import { activarPlan, borrarPlan, duplicarDia, reordenarDias } from '../actions'
 import { EJEMPLO_PLAN, exportarPlan, guardarPlan, leerPlan, pedidoParaIA, type ImpPlan, type Resolucion } from '../plan'
@@ -147,6 +147,12 @@ export function PlanDayScreen({ id }: { id: number }) {
   useGuardiaSalida(sucio, () => void alSalir())
   const [rev, setRev] = useState(0)
   const [abierto, setAbierto] = useState<number | null | undefined>(undefined)
+  const irA = useRef<number | null>(null)   // bloque recién abierto: la pantalla lo lleva arriba
+  useEffect(() => {
+    if (irA.current == null) return
+    const b = irA.current; irA.current = null
+    requestAnimationFrame(() => alinearArriba(document.querySelector(`[data-bloque="${b}"]`)))
+  }, [abierto])
   const [notaDe, setNotaDe] = useState<string | null>(null)   // ejercicio al que se le está agregando una nota
   const mapa = useMemo(() => new Map((ejercicios ?? []).map((e) => [e.id!, e])), [ejercicios])
   if (!dia || !ejercicios) return <><TopBar titulo="Día" atras /><div className="main sin-tabs"><div className="empty">Cargando…</div></div></>
@@ -190,9 +196,9 @@ export function PlanDayScreen({ id }: { id: number }) {
           const desc = [...new Set([...exs.map((x) => etiqueta(x.grupo)), ...exs.map((x) => x.equipo).filter((q) => q !== 'peso_corporal').map(etiqueta)])]
           const malas = b.ejercicios.reduce((n, e) => n + e.series.filter((x) => !setValido(x)).length, 0)
           return (
-            <div key={bi} className="bloque">
+            <div key={bi} className="bloque" data-bloque={bi}>
               <div className="bloque-h">
-                <button className="row grow" onClick={() => setAbierto(ab === bi ? null : bi)} aria-expanded={ab === bi}>
+                <button className="row grow" onClick={() => { if (ab !== bi) irA.current = bi; setAbierto(ab === bi ? null : bi) }} aria-expanded={ab === bi}>
                   <Chevron abierto={ab === bi} />
                   <span className="num">{b.orden}</span>
                   <span className="grow">
@@ -202,7 +208,7 @@ export function PlanDayScreen({ id }: { id: number }) {
                   </span>
                 </button>
               </div>
-              {ab === bi && (
+              <Desplegable abierto={ab === bi} cerrarYa={ab != null}>
                 <div className="bloque-c">
                   {b.ejercicios.map((e, ei) => {
                     const ex = mapa.get(e.exercise_id)
@@ -260,7 +266,7 @@ export function PlanDayScreen({ id }: { id: number }) {
                     if (!b.ejercicios.length || await confirmar({ titulo: `¿Borrar el bloque ${b.orden}?`, ok: 'Borrar', peligro: true })) { setAbierto(null); editar((bl) => { bl.splice(bi, 1) }) }
                   }}>Borrar bloque</button>
                 </div>
-              )}
+              </Desplegable>
             </div>
           )
         })}

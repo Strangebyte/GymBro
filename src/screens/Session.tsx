@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, type Exercise, type Session, type SetLog, type Settings } from '../db'
-import { Chevron, Chips, HistorialLista, Ico, MediaView, Picker, Sheet, Stepper, TopBar, useDialogos, useNav, useTieneMedia } from '../ui'
+import { alinearArriba, Chevron, Chips, Desplegable, HistorialLista, Ico, MediaView, Picker, Sheet, Stepper, TopBar, useDialogos, useNav, useTieneMedia } from '../ui'
 import { etiqueta, fmtDur, fmtFecha, fmtFechaCorta, mmss, pesoDesdeTexto, pesoTxt, plural, prepararSonido, resumenSets, rotuloPeso, setValido, sonar, ultimaVez, unidadPeso, vibrar } from '../lib'
 import { agregarEjercicio, agregarSerie, descartarSesion, sesionEnCurso, terminarSesion } from '../actions'
 
@@ -41,6 +41,14 @@ export function SessionScreen({ settings }: { settings: Settings }) {
   const porEjercicio = settings.tilde === 'ejercicio'
 
   const setAbierto = (b: number | null) => { memoria.abierto = b; setAbiertoLocal(b) }
+  // Al abrir un bloque tocándolo, la pantalla lo lleva arriba (el que estaba abierto se cierra y todo se corre).
+  const irA = useRef<number | null>(null)
+  const tocarBloque = (b: number) => { if (abierto !== b) irA.current = b; setAbierto(abierto === b ? null : b) }
+  useEffect(() => {
+    if (irA.current == null) return
+    const b = irA.current; irA.current = null
+    requestAnimationFrame(() => alinearArriba(document.querySelector(`[data-bloque="${b}"]`)))
+  }, [abierto])
   useEffect(() => {
     if (sesion?.id && memoria.sesion !== sesion.id) { memoria.sesion = sesion.id; setAbierto(null) }
   }, [sesion?.id])
@@ -95,9 +103,9 @@ export function SessionScreen({ settings }: { settings: Settings }) {
           const desc = [...new Set([...its.map((i) => etiqueta(i.ex.grupo)), ...its.map((i) => i.ex.equipo).filter((e) => e !== 'peso_corporal').map(etiqueta)])]
           const nombre = esExtra ? (conPlan ? 'Ejercicios adicionales' : 'Ejercicios') : `Bloque ${b}`
           return (
-            <div key={b} className={`bloque${listo ? ' listo' : ''}`}>
+            <div key={b} className={`bloque${listo ? ' listo' : ''}`} data-bloque={b}>
               <div className="bloque-h">
-                <button className="row grow" onClick={() => setAbierto(abierto === b ? null : b)} aria-expanded={abierto === b}>
+                <button className="row grow" onClick={() => tocarBloque(b)} aria-expanded={abierto === b}>
                   <Chevron abierto={abierto === b} />
                   <span className="num">{esExtra ? '+' : b}</span>
                   <span className="grow">
@@ -112,7 +120,7 @@ export function SessionScreen({ settings }: { settings: Settings }) {
                 )}
                 {porEjercicio && listo && <span className="hecho" aria-label="Bloque hecho">✓</span>}
               </div>
-              {abierto === b && (
+              <Desplegable abierto={abierto === b} cerrarYa={abierto != null}>
                 <div className="bloque-c">
                   {its.map((it) => (
                     <Tarjeta key={`${it.key}-${it.ex.id}`} item={it} sesion={sesion} porEjercicio={porEjercicio}
@@ -120,7 +128,7 @@ export function SessionScreen({ settings }: { settings: Settings }) {
                   ))}
                   {esExtra && <button className="btn xs block" onClick={() => setPicker(b)}>+ Otro ejercicio</button>}
                 </div>
-              )}
+              </Desplegable>
             </div>
           )
         })}
