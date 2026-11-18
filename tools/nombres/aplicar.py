@@ -123,9 +123,8 @@ DOS_PESAS = [
     'sentadilla-salto-kb', 'sentadilla-split-salto-cambio-kb',
 ]
 
-# Pesos del historial importado que eran la suma de las dos mancuernas (lo confirmó el dueño el 18-11-2026): se dividen
-# por dos, en el historial y en el plan. Solo esos valores exactos, en kg.
-CORREGIR_SUMA = {'rev': 6, 'ejercicios': {'biceps-mc': [40], 'caminata-de-gemelo-mc': [52, 56]}}
+# (18-11-2026) Se había agregado una corrección que dividía por dos algunos pesos sumados del historial; el dueño pidió
+# revertirla: los ajusta él a mano.
 DOS_PESAS_NUEVOS = [
     'Press de banca con mancuernas', 'Press declinado con mancuernas', 'Aperturas con mancuernas',
     'Encogimientos de hombros con mancuernas', 'Press de hombros con mancuernas', 'Press Arnold', 'Vuelos laterales con mancuernas',
@@ -258,7 +257,7 @@ def main():
     assert not (set(ejercicios) & {n['slug'] for n in nuevos}), 'un ejercicio nuevo repite el slug de uno existente'
 
     salida = {'rev': REV, 'ejercicios': ejercicios, 'fusiones': FUSIONES, 'archivar': ARCHIVAR, 'borrar': BORRAR, 'eliminar': ELIMINAR, 'nuevos': nuevos,
-              'grupos': GRUPOS, 'patrones': PATRONES, 'corregir_suma': CORREGIR_SUMA}
+              'grupos': GRUPOS, 'patrones': PATRONES}
     ruta = os.path.join(RAIZ, 'tools', 'seed', 'catalogo-cambios.json')
     json.dump(salida, open(ruta, 'w', encoding='utf-8', newline='\n'), ensure_ascii=False, indent=1)
     print(f'{len(ejercicios)} renombrados · {len(FUSIONES)} fusionados · {len(ARCHIVAR)} archivados · {len(BORRAR) + len(ELIMINAR)} borrados · {len(nuevos)} nuevos → {len(ejercicios) + len(nuevos)} en total')

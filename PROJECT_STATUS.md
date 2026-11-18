@@ -95,7 +95,8 @@ video y scroll táctil con una hoja abierta.
 | Fecha | Qué se hizo |
 |---|---|
 | 10-11-2026 | Diseño (`docs/historico/`), catálogo de 96 ejercicios, primera versión solo de registro |
-| 18-11-2026 | Técnicas por serie (myo-reps, rest-pause, drop set); bloques con transición que quedan arriba al abrirse; pesos sumados a la mitad y dos ejercicios más con dos pesas (revisión 6) |
+| 18-11-2026 | Se revirtió la división por dos de los pesos sumados: el dueño los ajusta a mano |
+| 18-11-2026 | Técnicas por serie (myo-reps, rest-pause, drop set); bloques con transición que quedan arriba al abrirse; dos ejercicios más con dos pesas (revisión 6) |
 | 18-11-2026 | Ejercicios con dos pesas: la tabla dice "kg c/u" y se anota el peso de una sola (revisión 5 del catálogo) |
 | 18-11-2026 | Ajuste de unidad de peso (kg o lb); el editor de días ya no marca cambios al pasar por un campo sin tocarlo |
 | 16-11-2026 | Datos personales fuera de los archivos y del historial de git; campo de otros nombres más grande |

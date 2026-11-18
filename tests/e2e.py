@@ -464,8 +464,7 @@ def main():
             ok('Nombres nuevos, el viejo queda como alias, y los clásicos agregados', porSlug['press-plano']['nombre'] == 'Press de banca con barra'
                and 'Press plano' in porSlug['press-plano']['alias'] and 'camilla-de-cuadriceps' in porSlug and porSlug['press-plano']['id'] == viejo['press-plano'])
             pesos = lambda d, slug: sorted({l['peso_g'] for l in d['setLogs'] if l['exercise_id'] == {e['slug']: e['id'] for e in d['exercises']}[slug] and l['peso_g']})
-            ok('Pesos que eran la suma de dos mancuernas: a la mitad, también en el plan', pesos(antes, 'biceps-mc') == [40000] and pesos(desp, 'biceps-mc') == [20000]
-               and pesos(desp, 'caminata-de-gemelo-mc') == [26000, 28000] and all(s.get('peso_g') == 28000 for d in desp['planDays'] for b in d['bloques'] for x in b['ejercicios'] if x['exercise_id'] == porSlug['caminata-de-gemelo-mc']['id'] for s in x['series']), str(pesos(desp, 'caminata-de-gemelo-mc')))
+            ok('Los pesos del historial quedan como estaban (sin dividir)', pesos(antes, 'biceps-mc') == pesos(desp, 'biceps-mc') == [40000] and pesos(desp, 'caminata-de-gemelo-mc') == [52000, 56000], str(pesos(desp, 'caminata-de-gemelo-mc')))
             ok('Dos pesas marcado en los ejercicios ya guardados', porSlug['biceps-mc'].get('dos_pesas') is True and not porSlug['sentadilla-goblet'].get('dos_pesas') and porSlug['press-arnold'].get('dos_pesas') is True and porSlug['sentadilla-salto-kb'].get('dos_pesas') is True)
             ok('Sin archivados de fábrica; los dos ejercicios retirados ya no están', not [e for e in desp['exercises'] if e['archivo']] and 'remo-tandem-en-puntas' not in porSlug and 'rebote-y-freno' not in porSlug)
             viejos = {'dorsal', 'trapecio', 'hombro_anterior', 'hombro_lateral', 'hombro_posterior', 'isquios', 'aductores', 'gemelo', 'full_body', 'movilidad_cadera'}
