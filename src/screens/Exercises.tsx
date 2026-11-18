@@ -209,7 +209,7 @@ export function ExerciseFormScreen({ id }: { id: number | null }) {
         <div className="card">
           {interruptor('unilateral', 'Unilateral', 'Se hace por lado')}
           {interruptor('lastre', 'Peso corporal con lastre', 'El peso cargado es el lastre agregado')}
-          {interruptor('dos_pesas', 'Se hace con dos mancuernas o pesas', `Anotás el peso de una sola: si usás dos de 12 ${unidadPeso()}, escribís 12. En la tabla aparece «${unidadPeso()} c/u».`)}
+          {interruptor('dos_pesas', 'Peso por mancuerna, no la suma', `Anotás el peso de una mancuerna, pesa o KB. En la tabla aparece «${unidadPeso()} c/u» en vez de «${unidadPeso()}».`)}
           {interruptor('vol', 'Suma volumen', 'Desmarcalo para movilidad y activación')}
           {id != null && interruptor('archivo', 'Archivado', 'No aparece en los buscadores salvo que lo pidas')}
         </div>

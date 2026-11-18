@@ -18,7 +18,7 @@ import json, os, re, unicodedata
 from openpyxl import load_workbook
 
 RAIZ = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
-REV = 5
+REV = 6
 
 def norm(s):
     s = unicodedata.normalize('NFKD', s).encode('ascii', 'ignore').decode().lower()
@@ -115,12 +115,17 @@ PATRONES = {
 
 # ---------------------------------------------------------------- dos pesas (18-11-2026)
 # Ejercicios que se hacen con dos mancuernas o dos kettlebells: el peso que se anota es el de una sola ("kg c/u").
-# Los de una sola pesa (goblet, swing, remos y press a un brazo, pullover…) quedan afuera. Dudosos, a confirmar con el
-# dueño: thrusters-kb y press-hombro-rr-kb (marcados como dos), sentadilla-salto-kb y sentadilla-split-salto-cambio-kb (una).
+# Los de una sola pesa (goblet, swing, remos y press a un brazo, pullover…) quedan afuera. Los dudosos los confirmó el
+# dueño el 18-11-2026: thrusters, press arrodillado y las dos sentadillas con salto son con dos pesas.
 DOS_PESAS = [
     'caminata-de-gemelo-mc', 'press-inclinado-con-mancuernas', 'biceps-mc', 'biceps-alterno-mc', 'biceps-hombro-mc',
     'vuelo-combinado-alterno', 'vuelo-frontal-lateral', 'press-hombro-ba-kb', 'press-hombro-rr-kb', 'thrusters-kb',
+    'sentadilla-salto-kb', 'sentadilla-split-salto-cambio-kb',
 ]
+
+# Pesos del historial importado que eran la suma de las dos mancuernas (lo confirmó el dueño el 18-11-2026): se dividen
+# por dos, en el historial y en el plan. Solo esos valores exactos, en kg.
+CORREGIR_SUMA = {'rev': 6, 'ejercicios': {'biceps-mc': [40], 'caminata-de-gemelo-mc': [52, 56]}}
 DOS_PESAS_NUEVOS = [
     'Press de banca con mancuernas', 'Press declinado con mancuernas', 'Aperturas con mancuernas',
     'Encogimientos de hombros con mancuernas', 'Press de hombros con mancuernas', 'Press Arnold', 'Vuelos laterales con mancuernas',
@@ -253,7 +258,7 @@ def main():
     assert not (set(ejercicios) & {n['slug'] for n in nuevos}), 'un ejercicio nuevo repite el slug de uno existente'
 
     salida = {'rev': REV, 'ejercicios': ejercicios, 'fusiones': FUSIONES, 'archivar': ARCHIVAR, 'borrar': BORRAR, 'eliminar': ELIMINAR, 'nuevos': nuevos,
-              'grupos': GRUPOS, 'patrones': PATRONES}
+              'grupos': GRUPOS, 'patrones': PATRONES, 'corregir_suma': CORREGIR_SUMA}
     ruta = os.path.join(RAIZ, 'tools', 'seed', 'catalogo-cambios.json')
     json.dump(salida, open(ruta, 'w', encoding='utf-8', newline='\n'), ensure_ascii=False, indent=1)
     print(f'{len(ejercicios)} renombrados · {len(FUSIONES)} fusionados · {len(ARCHIVAR)} archivados · {len(BORRAR) + len(ELIMINAR)} borrados · {len(nuevos)} nuevos → {len(ejercicios) + len(nuevos)} en total')

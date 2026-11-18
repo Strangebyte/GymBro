@@ -1,5 +1,5 @@
 {
- "rev": 5,
+ "rev": 6,
  "ejercicios": {
   "cadera-con-glide-lateral-cuadrupedia": {
    "nombre": "Movilidad de cadera en cuadrupedia con glide lateral",
@@ -141,7 +141,7 @@
     "Sentadilla con salto con kettlebell",
     "Sentadilla SALTO - KB"
    ],
-   "dos_pesas": false
+   "dos_pesas": true
   },
   "rotacion-tronco-pared-t": {
    "nombre": "Rotación torácica en pared",
@@ -929,7 +929,7 @@
     "Scissor jump",
     "Sentadilla SPLIT SALTO CAMBIO - KB"
    ],
-   "dos_pesas": false
+   "dos_pesas": true
   },
   "2do-tiempo-split-br": {
    "nombre": "2do tiempo split con barra",
@@ -2611,5 +2611,17 @@
   "core_antirotacion": "core",
   "core_rotacion": "core",
   "locomocion": "acarreo"
+ },
+ "corregir_suma": {
+  "rev": 6,
+  "ejercicios": {
+   "biceps-mc": [
+    40
+   ],
+   "caminata-de-gemelo-mc": [
+    52,
+    56
+   ]
+  }
  }
 }

@@ -978,7 +978,7 @@
     "Sentadilla con salto con kettlebell",
     "Sentadilla SALTO - KB"
    ],
-   "dos_pesas": false
+   "dos_pesas": true
   },
   {
    "slug": "sentadilla-split-salto-cambio-kb",
@@ -1009,7 +1009,7 @@
     "Scissor jump",
     "Sentadilla SPLIT SALTO CAMBIO - KB"
    ],
-   "dos_pesas": false
+   "dos_pesas": true
   },
   {
    "slug": "2do-tiempo-split-br",

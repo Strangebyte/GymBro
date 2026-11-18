@@ -211,7 +211,11 @@ type SeedEx = {
 type SeedData = {
   exercises: SeedEx[]
   /** Revisión del catálogo: qué ejercicios se fusionaron o se borraron respecto de la anterior. */
-  catalogo?: { rev: number; fusiones: Record<string, string>; borrar: string[]; eliminar?: string[] }
+  catalogo?: {
+    rev: number; fusiones: Record<string, string>; borrar: string[]; eliminar?: string[]
+    /** Pesos que eran la suma de dos mancuernas: se dividen por dos (solo esos valores, en gramos), una vez, al pasar a `rev`. */
+    corregir_suma?: { rev: number; ejercicios: Record<string, number[]> }
+  }
 }
 type SeedPlan = { nombre: string; objetivo: string; dias: { nombre: string; bloques: { orden: number; ejercicios: { slug: string; notas: string | null; series: SeedSet[] }[] }[] }[] }
 type SeedHist = { fecha: string; nombre: string; dur: number | null; wellness: number | null; notas: string | null; sets: (string | number | null)[][] }
@@ -332,6 +336,24 @@ export async function actualizarCatalogo(): Promise<void> {
       await db.media.delete(e.id!)
       await db.exercises.delete(e.id!)
       porSlug.delete(s)
+    }
+    // 2c. Pesos cargados como suma de las dos mancuernas: a la mitad, en las series registradas y en los planes.
+    const cs = data.catalogo?.corregir_suma
+    if (cs && actual < cs.rev) {
+      for (const [slug, valores] of Object.entries(cs.ejercicios)) {
+        const e = porSlug.get(slug)
+        if (!e) continue
+        const mitad = <T extends { peso_g?: number | null }>(x: T): T => (x.peso_g != null && valores.includes(x.peso_g) ? { ...x, peso_g: Math.round(x.peso_g / 2) } : x)
+        await db.setLogs.where('exercise_id').equals(e.id!).modify((l) => {
+          if (l.peso_g != null && valores.includes(l.peso_g)) l.peso_g = Math.round(l.peso_g / 2)
+          if (l.plan) l.plan = mitad(l.plan)
+        })
+        for (const d of dias) {
+          if (!d.bloques.some((b) => b.ejercicios.some((x) => x.exercise_id === e.id))) continue
+          d.bloques = d.bloques.map((b) => ({ ...b, ejercicios: b.ejercicios.map((x) => (x.exercise_id === e.id ? { ...x, series: x.series.map(mitad) } : x)) }))
+          await db.planDays.update(d.id!, { bloques: d.bloques })
+        }
+      }
     }
     // 3. Nombres, otros nombres y equipamiento de los que quedan; alta de los que faltan.
     for (const s of data.exercises) {
