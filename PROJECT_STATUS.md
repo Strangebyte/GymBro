@@ -4,7 +4,7 @@
 
 ## Dónde está
 
-- La app está completa y funcionando en las pruebas automáticas (139 de 139, sin errores de consola).
+- La app está completa y funcionando en las pruebas automáticas (147 de 147, sin errores de consola).
 - **Publicada en GitHub Pages:** https://<usuario>.github.io/GymBro/ (repositorio público
   `<usuario>/GymBro`). Cada push a `main` la vuelve a publicar sola. Verificado el 14-11-2026 en
   Chromium: abre sin errores, registra el service worker. Desde el 16-11-2026 arranca solo con el catálogo: sin planes ni sesiones.
@@ -27,17 +27,17 @@ video y scroll táctil con una hoja abierta.
   unidad en libras, editor de días con Guardar y aviso al salir, y "Copiar pedido para la IA" con una IA real.
 - **Pesos sumados a corregir a mano (el dueño):** "Curl de bíceps con mancuernas" 40 kg y "Caminata en puntas de pie"
   52-56 kg en el historial importado, y 56 kg en el Día 1 del plan, son la suma de las dos mancuernas.
-- **Técnicas, posible mejora:** un cronómetro corto (15 segundos) entre mini-series o pausas. No se hizo; esperar a ver si
-  hace falta al usarlas. Tampoco se pueden elegir técnicas en la sesión: solo en el plan, igual que RIR, RPE y fallo.
+- **Cronómetro de descanso, a decidir con el dueño:** hoy solo arranca al tildar un ejercicio entero (modo por ejercicio),
+  no al terminar cada serie, y el dueño duda de que sirva así. Opciones planteadas el 18-11-2026: sacarlo, o que arranque
+  al tildar cada serie. El cronómetro corto entre mini-series de las técnicas depende de esa decisión.
+- **Músculos secundarios:** los ejercicios nuevos no los tienen y el formulario no permite cargarlos. Propuesta del
+  18-11-2026, sin decisión: cargarlos de fábrica y sumar una opción en el formulario.
 - **Probar en iPhone** que ya no se agrande la pantalla al tocar "Pegar el plan" ni otros campos. El arreglo no se
   pudo verificar acá: solo aplica en iOS.
-- **Antebrazos** quedó como grupo sin ejercicios de fábrica; sumar alguno si el dueño lo pide.
 - **Plan Mesociclo B en teléfonos que ya tenían la app:** las instalaciones nuevas ya no lo traen, pero a quien la
   instaló antes le sigue apareciendo hasta que lo borre a mano (Planes → Borrar plan). No se borra solo porque no
   hay forma de distinguir el teléfono del dueño del de los demás.
-- **Nombres a confirmar:** "Plancha sube y baja con disco" (era "Plancha CONSTRUYO"; el dueño dejó el nombre a criterio).
-  Los ejercicios con DUDA que no corrigió quedaron con el nombre sugerido.
-- **Imágenes de ejercicios:** 86 de 156 tienen imagen incluida. Quedan 12 candidatos dudosos anotados en
+- **Imágenes de ejercicios:** 92 de 161 tienen imagen incluida. Quedan 12 candidatos dudosos anotados en
   `tools/imagenes/gen.py` y unos 55 sin equivalente en el banco (movilidad, core, pliometría y variantes del
   entrenador): para esos haría falta que el dueño cargue su propia foto o video. Los ejercicios nuevos no tienen
   músculos secundarios cargados, así que en "Series por grupo muscular" solo suman a su grupo principal.
@@ -88,7 +88,7 @@ video y scroll táctil con una hoja abierta.
 
 - Backup automático (Drive u otro): el dueño lo descartó por ahora; exigiría cuenta de Google
 - Inventario de discos y calculadora de carga por lado
-- Peso corporal y medidas
+- Medidas del cuerpo (perímetros: cintura, brazo, pierna…), con gráfico como el del peso corporal. Al dueño le gusta la idea; queda para más adelante
 - Incluir video/imagen en la copia de seguridad (zip)
 - Skill de Claude para generar planes en `plan-gym/v1` (el dueño dijo que más adelante)
 
@@ -97,6 +97,7 @@ video y scroll táctil con una hoja abierta.
 | Fecha | Qué se hizo |
 |---|---|
 | 10-11-2026 | Diseño (`docs/historico/`), catálogo de 96 ejercicios, primera versión solo de registro |
+| 18-11-2026 | Peso corporal con gráfico en Progreso; 6 ejercicios de antebrazo; "Plancha construyo"; tramos de las técnicas con límite y para quitar (revisión 7) |
 | 18-11-2026 | Se revirtió la división por dos de los pesos sumados: el dueño los ajusta a mano |
 | 18-11-2026 | Técnicas por serie (myo-reps, rest-pause, drop set); bloques con transición que quedan arriba al abrirse; dos ejercicios más con dos pesas (revisión 6) |
 | 18-11-2026 | Ejercicios con dos pesas: la tabla dice "kg c/u" y se anota el peso de una sola (revisión 5 del catálogo) |

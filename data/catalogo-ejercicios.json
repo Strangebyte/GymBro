@@ -582,7 +582,7 @@
   },
   {
    "slug": "plancha-construyo",
-   "nombre": "Plancha sube y baja con disco",
+   "nombre": "Plancha construyo",
    "legible": null,
    "grupo": "core",
    "sec": [],
@@ -597,7 +597,7 @@
    "notas": null,
    "alias": [
     "Plancha construyo con disco",
-    "Plancha construyo",
+    "Plancha sube y baja con disco",
     "Plancha de codos a manos",
     "Plancha comando",
     "Plank up down",
@@ -4099,6 +4099,149 @@
     "Farmer's walk"
    ],
    "dos_pesas": true
+  },
+  {
+   "slug": "curl-de-muneca-con-barra",
+   "nombre": "Curl de muñeca con barra",
+   "legible": null,
+   "grupo": "antebrazos",
+   "sec": [],
+   "equipo": "barra",
+   "patron": "aislamiento",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Curl de muñeca",
+    "Flexión de muñeca con barra",
+    "Flexiones de muñeca",
+    "Wrist curl",
+    "Barbell wrist curl"
+   ],
+   "dos_pesas": false
+  },
+  {
+   "slug": "curl-de-muneca-con-mancuernas",
+   "nombre": "Curl de muñeca con mancuernas",
+   "legible": null,
+   "grupo": "antebrazos",
+   "sec": [],
+   "equipo": "mancuernas",
+   "patron": "aislamiento",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Flexión de muñeca con mancuernas",
+    "Dumbbell wrist curl"
+   ],
+   "dos_pesas": true
+  },
+  {
+   "slug": "extension-de-muneca-con-barra",
+   "nombre": "Extensión de muñeca con barra",
+   "legible": null,
+   "grupo": "antebrazos",
+   "sec": [],
+   "equipo": "barra",
+   "patron": "aislamiento",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Extensión de muñeca",
+    "Curl de muñeca invertido",
+    "Curl de muñeca prono",
+    "Reverse wrist curl",
+    "Wrist extension"
+   ],
+   "dos_pesas": false
+  },
+  {
+   "slug": "curl-invertido-con-barra",
+   "nombre": "Curl invertido con barra",
+   "legible": null,
+   "grupo": "antebrazos",
+   "sec": [
+    {
+     "grupo": "biceps",
+     "factor": 0.5
+    }
+   ],
+   "equipo": "barra",
+   "patron": "aislamiento",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Curl invertido",
+    "Curl prono con barra",
+    "Curl de bíceps invertido",
+    "Reverse curl",
+    "Reverse barbell curl"
+   ],
+   "dos_pesas": false
+  },
+  {
+   "slug": "rodillo-de-muneca",
+   "nombre": "Rodillo de muñeca",
+   "legible": null,
+   "grupo": "antebrazos",
+   "sec": [],
+   "equipo": "otro",
+   "patron": "aislamiento",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Enrollador de muñeca",
+    "Rodillo de antebrazos",
+    "Wrist roller"
+   ],
+   "dos_pesas": false
+  },
+  {
+   "slug": "pinza-de-discos",
+   "nombre": "Pinza de discos",
+   "legible": null,
+   "grupo": "antebrazos",
+   "sec": [],
+   "equipo": "disco",
+   "patron": "aislamiento",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "seg",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Agarre de discos",
+    "Sostener discos con pinza",
+    "Plate pinch",
+    "Pinch grip"
+   ],
+   "dos_pesas": false
   }
  ]
 }

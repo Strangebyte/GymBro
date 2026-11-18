@@ -18,7 +18,7 @@ import json, os, re, unicodedata
 from openpyxl import load_workbook
 
 RAIZ = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
-REV = 6
+REV = 7
 
 def norm(s):
     s = unicodedata.normalize('NFKD', s).encode('ascii', 'ignore').decode().lower()
@@ -37,7 +37,7 @@ FINAL = {
     'biceps-hombro-mc': 'Bíceps + press hombro con manc.',
     'sentadilla-salto-kb': 'Sentadilla con salto con KB',
     'rotacion-tronco-pared-t': 'Rotación torácica en pared',
-    'plancha-construyo': 'Plancha sube y baja con disco',   # explicó el movimiento y dejó el nombre a criterio
+    'plancha-construyo': 'Plancha construyo',               # el dueño pidió volver a este nombre (18-11-2026)
     'peso-muerto-1p-kb': 'Peso muerto a una pierna con kettlebell',
     'caida-lm': 'Caída a estocadas con landmine',
     'dorsalera-palmar-mq': 'Polea al pecho con agarre supino',
@@ -84,7 +84,7 @@ OTROS = {
 ALIAS = {
     'desliz-barra-en-puntas': ['Desliz de barra', 'Deslizamiento de barra'],
     'elevaciones-de-cadera-1p-mb': ['Puente de glúteo a una pierna sobre pelota', 'Elevación de cadera a una pierna en fitball', 'Puente a una pierna en fitball', 'Single leg glute bridge on ball'],
-    'plancha-construyo': ['Plancha construyo con disco', 'Plancha construyo', 'Plancha de codos a manos', 'Plancha comando', 'Plank up down', 'Up down plank', 'Commando plank'],
+    'plancha-construyo': ['Plancha construyo con disco', 'Plancha sube y baja con disco', 'Plancha de codos a manos', 'Plancha comando', 'Plank up down', 'Up down plank', 'Commando plank'],
     'plancha-copenhague-1-2-con': ['Copenhague', 'Plancha de aductores', 'Copenhagen plank', 'Copenhagen adductor plank'],
     'puente-lateral-cambio': ['Puente lateral con cambio', 'Plancha lateral inclinada con técnica de carrera'],
     'giros-oh-en-tandem': ['Giros overhead en tándem', 'Giros OH', 'Giros con disco sobre la cabeza'],
@@ -129,7 +129,7 @@ DOS_PESAS_NUEVOS = [
     'Press de banca con mancuernas', 'Press declinado con mancuernas', 'Aperturas con mancuernas',
     'Encogimientos de hombros con mancuernas', 'Press de hombros con mancuernas', 'Press Arnold', 'Vuelos laterales con mancuernas',
     'Vuelos frontales con mancuernas', 'Vuelos posteriores con mancuernas', 'Curl martillo con mancuernas', 'Estocadas con mancuernas',
-    'Caminata del granjero',
+    'Caminata del granjero', 'Curl de muñeca con mancuernas',
 ]
 
 # ---------------------------------------------------------------- ejercicios clásicos que faltaban
@@ -209,6 +209,13 @@ NUEVOS = [
     # potencia y acarreos
     N('Salto al cajón', 'cuadriceps', 'cajon', 'pliometria', ['Saltos al cajón', 'Salto al cajón a dos piernas', 'Box jump', 'Box jumps'], 'Front_Box_Jump'),
     N('Caminata del granjero', 'full_body', 'mancuernas', 'locomocion', ['Paseo del granjero', 'Caminata de granjero', 'Farmer walk', 'Farmer carry', "Farmer's walk"], 'Farmers_Walk'),
+    # antebrazos (18-11-2026: el grupo no tenía ejercicios)
+    N('Curl de muñeca con barra', 'antebrazos', 'barra', 'aislamiento', ['Curl de muñeca', 'Flexión de muñeca con barra', 'Flexiones de muñeca', 'Wrist curl', 'Barbell wrist curl'], 'Palms-Up_Barbell_Wrist_Curl_Over_A_Bench'),
+    N('Curl de muñeca con mancuernas', 'antebrazos', 'mancuernas', 'aislamiento', ['Flexión de muñeca con mancuernas', 'Dumbbell wrist curl'], 'Seated_Dumbbell_Palms-Up_Wrist_Curl'),
+    N('Extensión de muñeca con barra', 'antebrazos', 'barra', 'aislamiento', ['Extensión de muñeca', 'Curl de muñeca invertido', 'Curl de muñeca prono', 'Reverse wrist curl', 'Wrist extension'], 'Palms-Down_Wrist_Curl_Over_A_Bench'),
+    N('Curl invertido con barra', 'antebrazos', 'barra', 'aislamiento', ['Curl invertido', 'Curl prono con barra', 'Curl de bíceps invertido', 'Reverse curl', 'Reverse barbell curl'], 'Reverse_Barbell_Curl', sec=[{'grupo': 'biceps', 'factor': 0.5}]),
+    N('Rodillo de muñeca', 'antebrazos', 'otro', 'aislamiento', ['Enrollador de muñeca', 'Rodillo de antebrazos', 'Wrist roller'], 'Wrist_Roller'),
+    N('Pinza de discos', 'antebrazos', 'disco', 'aislamiento', ['Agarre de discos', 'Sostener discos con pinza', 'Plate pinch', 'Pinch grip'], 'Plate_Pinch', mide='seg'),
 ]
 
 def main():

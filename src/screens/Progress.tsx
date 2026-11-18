@@ -1,12 +1,12 @@
 import { useMemo, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, setSettings, type SetLog, type Settings } from '../db'
-import { Catalogo, Chevron, Chips, Sheet, TopBar } from '../ui'
-import { agruparPorDia, etiqueta, fmtFecha, hoyISO, lunesDe, numES, plural, progresoDe, sumarDias, unidadDe, unidadPeso, type Medida, type Punto } from '../lib'
+import { Catalogo, Chevron, Chips, Sheet, TopBar, useDialogos } from '../ui'
+import { agruparPorDia, enUnidad, etiqueta, fmtFecha, fmtPeso, hoyISO, lunesDe, numES, pesoDesdeTexto, pesoTxt, plural, progresoDe, sumarDias, unidadDe, unidadPeso, type Medida, type Punto } from '../lib'
 import { PREGUNTAS } from './Today'
 
 /** Gráfico de línea con puntos que se pueden tocar. */
-export function GraficoPesos({ puntos, unidad = unidadPeso() }: { puntos: Punto[]; unidad?: string }) {
+export function GraficoPesos({ puntos, unidad = unidadPeso(), ayuda = 'Tocá un punto para ver esa sesión' }: { puntos: Punto[]; unidad?: string; ayuda?: string }) {
   const [sel, setSel] = useState(puntos.length - 1)
   if (!puntos.length) return null
   const W = 320, H = 150, px = 34, py = 16
@@ -35,8 +35,72 @@ export function GraficoPesos({ puntos, unidad = unidadPeso() }: { puntos: Punto[
         {puntos.length > 1 && <text x={W - 6} y={H - 4} textAnchor="end">{fmtFecha(puntos[puntos.length - 1].fecha).slice(0, 5)}</text>}
       </svg>
       <div className="small center" role="status"><b>{fmtFecha(s.fecha)}</b> · {numES(s.valor)} {unidad}{s.reps != null ? ` × ${s.reps} reps` : ''}</div>
-      <div className="xsmall muted center">Tocá un punto para ver esa sesión</div>
+      <div className="xsmall muted center">{ayuda}</div>
     </div>
+  )
+}
+
+// ------------------------------------------------------------------ peso corporal
+/** Peso corporal: se carga cuando uno quiere (no es obligatorio) y se ve su evolución. */
+function PesoCorporalCard() {
+  const { avisar } = useDialogos()
+  const filas = useLiveQuery(() => db.pesoCorporal.orderBy('fecha').toArray(), [])
+  const [hoja, setHoja] = useState<'cargar' | 'lista' | null>(null)
+  if (!filas) return null
+  const ult = filas[filas.length - 1]
+  const pts: Punto[] = filas.map((f) => ({ fecha: f.fecha, valor: enUnidad(f.peso_g), reps: null }))
+  return (
+    <>
+      <h2>Peso corporal</h2>
+      <div className="card" data-seccion="peso-corporal">
+        {!filas.length && <div className="muted small">Registrá tu peso cuando quieras y acá vas a ver cómo evoluciona. No es obligatorio.</div>}
+        {filas.length === 1 && <div className="small"><b>{fmtPeso(ult.peso_g)}</b> <span className="muted">el {fmtFecha(ult.fecha)}</span></div>}
+        {filas.length > 1 && <GraficoPesos key={filas.length} puntos={pts} ayuda="Tocá un punto para ver ese registro" />}
+        <div className="row" style={{ marginTop: 10 }}>
+          <button className="btn primary sm grow" onClick={() => setHoja('cargar')}>Registrar peso</button>
+          {filas.length > 0 && <button className="btn sm grow" onClick={() => setHoja('lista')}>Ver registros</button>}
+        </div>
+      </div>
+      {hoja === 'cargar' && <CargarPeso ultimo={ult?.peso_g ?? null} onCerrar={() => setHoja(null)} onListo={() => { setHoja(null); avisar('Peso registrado.') }} />}
+      {hoja === 'lista' && (
+        <Sheet titulo="Registros de peso" onCerrar={() => setHoja(null)}>
+          {!filas.length && <div className="empty">No hay registros.</div>}
+          <div className="list">
+            {[...filas].reverse().map((f) => (
+              <div key={f.id} className="item">
+                <b className="small mono" style={{ minWidth: 92 }}>{fmtFecha(f.fecha)}</b>
+                <span className="grow small">{fmtPeso(f.peso_g)}</span>
+                <button className="mini" aria-label={`Borrar el registro del ${fmtFecha(f.fecha)}`} onClick={() => void db.pesoCorporal.delete(f.id!)}>✕</button>
+              </div>
+            ))}
+          </div>
+        </Sheet>
+      )}
+    </>
+  )
+}
+
+function CargarPeso({ ultimo, onCerrar, onListo }: { ultimo: number | null; onCerrar: () => void; onListo: () => void }) {
+  const [fecha, setFecha] = useState(hoyISO())
+  const [txt, setTxt] = useState('')
+  const g = pesoDesdeTexto(txt, null)
+  const guardar = async () => {
+    if (!g || !fecha) return
+    const previo = await db.pesoCorporal.where('fecha').equals(fecha).first()   // uno por día: si ya hay, se reemplaza
+    if (previo) await db.pesoCorporal.update(previo.id!, { peso_g: g })
+    else await db.pesoCorporal.add({ fecha, peso_g: g })
+    onListo()
+  }
+  return (
+    <Sheet titulo="Registrar peso" onCerrar={onCerrar}>
+      <label className="f" style={{ marginTop: 0 }} htmlFor="pcf">Fecha</label>
+      <input id="pcf" type="date" value={fecha} max={hoyISO()} onChange={(e) => setFecha(e.target.value)} />
+      <label className="f" htmlFor="pcp">Peso ({unidadPeso()})</label>
+      <input id="pcp" inputMode="decimal" value={txt} placeholder={pesoTxt(ultimo) || '—'} onChange={(e) => setTxt(e.target.value)}
+        onKeyDown={(e) => { if (e.key === 'Enter') void guardar() }} />
+      <div className="xsmall muted" style={{ marginTop: 6 }}>Si ya hay un registro ese día, se reemplaza.</div>
+      <button className="btn primary block" style={{ marginTop: 12 }} disabled={!g || !fecha} onClick={() => void guardar()}>Guardar</button>
+    </Sheet>
   )
 }
 
@@ -158,6 +222,8 @@ export function ProgressScreen({ settings }: { settings: Settings }) {
           <div className="xsmall muted" style={{ marginTop: 6 }}>Cada columna es una semana (lunes a domingo). Objetivo: {settings.objetivo_semanal} de gym.</div>
           {base.tipos.length > 0 && <div className="small" style={{ marginTop: 8 }}>{base.tipos.map(([t, n]) => `${t} ${n}`).join(' · ')}</div>}
         </div>
+
+        <PesoCorporalCard />
 
         <div className="row spread" style={{ margin: '20px 2px 8px' }}>
           <h2 style={{ margin: 0 }}>Progreso por ejercicio</h2>

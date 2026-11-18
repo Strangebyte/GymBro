@@ -36,6 +36,9 @@ export interface Exercise {
   url?: string | null
 }
 
+/** Peso corporal: optativo, uno por día. En gramos, como todos los pesos. */
+export interface PesoCorporal { id?: number; fecha: string; peso_g: number }
+
 /** Video o imagen de un ejercicio, guardado en el dispositivo. No entra en la copia de seguridad. */
 export interface Media {
   exercise_id: number
@@ -175,6 +178,7 @@ class GymDB extends Dexie {
   activities!: Table<Activity, number>
   meta!: Table<Meta, string>
   media!: Table<Media, number>
+  pesoCorporal!: Table<PesoCorporal, number>
   constructor() {
     super('gym-log-v2')
     // Migraciones futuras: this.version(2).stores({...}).upgrade(tx => ...)
@@ -188,6 +192,7 @@ class GymDB extends Dexie {
       meta: 'key',
     })
     this.version(2).stores({ media: 'exercise_id' })
+    this.version(3).stores({ pesoCorporal: '++id, &fecha' })
   }
 }
 export const db = new GymDB()
@@ -425,7 +430,9 @@ export async function estadoPersistencia(): Promise<{ persistido: boolean; usoMB
 }
 
 // ------------------------------------------------------------------ backup
-const TABLAS = ['exercises', 'plans', 'planDays', 'sessions', 'setLogs', 'activities', 'meta'] as const
+const TABLAS = ['exercises', 'plans', 'planDays', 'sessions', 'setLogs', 'activities', 'pesoCorporal', 'meta'] as const
+// Tablas que las copias viejas no traen (se agregaron después): si faltan, se restauran vacías.
+const OPCIONALES: readonly string[] = ['pesoCorporal']
 
 export async function exportarTodo(): Promise<string> {
   const out: Record<string, unknown> = { formato: BACKUP_FORMAT, exportado: new Date().toISOString() }
@@ -437,11 +444,11 @@ export async function importarTodo(texto: string): Promise<{ sesiones: number; s
   let data: Record<string, unknown>
   try { data = JSON.parse(texto) } catch { throw new Error('El archivo no es un JSON válido.') }
   if (data.formato !== BACKUP_FORMAT) throw new Error(`Este archivo no es una copia de GymBro (formato: ${String(data.formato ?? 'ninguno')}).`)
-  for (const t of TABLAS) if (!Array.isArray(data[t])) throw new Error(`Backup incompleto: falta la tabla ${t}.`)
+  for (const t of TABLAS) if (!Array.isArray(data[t]) && !OPCIONALES.includes(t)) throw new Error(`Backup incompleto: falta la tabla ${t}.`)
   await db.transaction('rw', TABLAS.map((t) => db.table(t)), async () => {
     for (const t of TABLAS) {
       await db.table(t).clear()
-      const filas = data[t] as unknown[]
+      const filas = (data[t] as unknown[] | undefined) ?? []
       if (filas.length) await db.table(t).bulkAdd(filas)
     }
   })

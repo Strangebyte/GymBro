@@ -20,7 +20,7 @@ npm run seed         # regenera src/seed.json, src/seed-historial.json y data/*.
 npm run test:e2e     # requiere dist/ y: pip install playwright && playwright install chromium
 ```
 
-Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 139 verificaciones tienen que pasar
+Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 147 verificaciones tienen que pasar
 y no puede haber errores de consola. Si cambiás un flujo, actualizá `tests/e2e.py` en el mismo cambio.
 
 ## Cómo trabajar
@@ -75,6 +75,7 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
 | `setLogs` | Una fila por serie de una sesión. `hecha`, `plan` (copia de lo prescripto), `confianza` |
 | `activities` | Otras actividades físicas (pádel, correr…) |
 | `media` | Video o imagen por ejercicio (Blob). No entra en la copia de seguridad |
+| `pesoCorporal` | Peso corporal, optativo, uno por día (`&fecha`). Va en la copia; las copias viejas sin esta tabla se restauran igual |
 | `meta` | `settings`, `seeded` |
 
 ## Reglas del dominio — no romper
@@ -87,6 +88,7 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
   muestra "kg c/u" (`rotuloPeso`). No convierte nada: es solo el rótulo, para que todos carguen igual.
 - **Técnicas por serie** (`tec`: myo-reps, rest-pause o drop set) se configuran en el plan, no en la sesión. En la sesión
   se cargan los "tramos" (`tramos`: reps de cada mini-serie o pausa; peso y reps de cada bajada) debajo de la serie.
+  Se pueden agregar hasta 3 más de lo prescripto (máximo 10) y quitar de a uno; `tramos` sin definir = sin cargar todavía.
   Progreso y "series por grupo" cuentan solo la serie principal (reps/peso_g): así una serie con técnica se compara con
   una normal y no infla el volumen.
 - **El plan y el registro son tablas separadas.** Nada de lo que pasa en una sesión modifica el plan, con una
@@ -122,8 +124,8 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
 - Historial de un ejercicio: lista informativa, sin enlaces.
 - Catálogo agrupado por categoría (`categoria()` en lib.ts), con filtro detrás de un ícono junto al buscador.
 - Imágenes incluidas: `src/ejercicios-img/<slug>.webp` (las arma `tools/imagenes/gen.py` desde Free Exercise DB,
-  dominio público). Se muestran si el usuario no cargó una propia; la propia siempre tiene prioridad. Hay 86 de
-  156; los candidatos dudosos están anotados en ese mismo archivo, sin incluir. No bajar imágenes de otras fuentes
+  dominio público). Se muestran si el usuario no cargó una propia; la propia siempre tiene prioridad. Hay 92 de
+  161; los candidatos dudosos están anotados en ese mismo archivo, sin incluir. No bajar imágenes de otras fuentes
   sin revisar la licencia.
 - Estilo de formas redondas (pedido por el dueño): botones, chips y controles tipo píldora; tarjetas con
   `--radius: 22px`. Mantenerlo en lo nuevo.

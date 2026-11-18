@@ -332,7 +332,7 @@ def main():
             pg.click('[aria-label="Volver"]'); pg.wait_for_timeout(300)
             ok('Dos planes; el importado quedó activo', pg.locator('.main .card').count() == 2 and 'activo' in pg.locator('.main .card').first.inner_text())
             tab(pg, 'Ejercicios')
-            ok('El ejercicio creado al importar está en el catálogo', '156 en el catálogo' in texto(pg, '.topbar'))
+            ok('El ejercicio creado al importar está en el catálogo', '162 en el catálogo' in texto(pg, '.topbar'))
             ctx.close()
 
             # ------------------------------------------------------------ F
@@ -407,7 +407,7 @@ def main():
             captura(pg, 'H0-violeta-oscuro')
             pg.click('[aria-label="Volver"]'); pg.wait_for_timeout(200)
             data, ruta = backup(pg)
-            ok('Copia: formato y contenido', data['formato'] == 'gym-log-backup/v2' and len(data['sessions']) == 29 and len(data['exercises']) == 155 and len(data['plans']) == 1)
+            ok('Copia: formato y contenido', data['formato'] == 'gym-log-backup/v2' and len(data['sessions']) == 29 and len(data['exercises']) == 161 and len(data['plans']) == 1)
             pg.click('[aria-label="Ajustes"]'); pg.click('text=Empezar de cero'); pg.wait_for_timeout(250)
             pg.click('.dialog button.danger'); pg.wait_for_timeout(500)
             ok('Empezar de cero borra sesiones y planes', '0' in pg.locator('.kv', has_text='Sesiones').inner_text())
@@ -452,7 +452,7 @@ def main():
             desp, _ = backup(pg)
             ids = {e['id'] for e in desp['exercises']}
             porSlug = {e['slug']: e for e in desp['exercises']}
-            ok('Catálogo viejo → nuevo: 155 ejercicios y la revisión anotada', len(desp['exercises']) == 155 and [m['value'] for m in desp['meta'] if m['key'] == 'catalogo'] == [6], str(len(desp['exercises'])))
+            ok('Catálogo viejo → nuevo: 161 ejercicios y la revisión anotada', len(desp['exercises']) == 161 and [m['value'] for m in desp['meta'] if m['key'] == 'catalogo'] == [7], str(len(desp['exercises'])))
             viejo = {e['slug']: e['id'] for e in antes['exercises']}
             n_borradas = sum(1 for l in antes['setLogs'] if l['exercise_id'] == viejo['rebote-y-freno'])
             ok('Solo se pierden las series del ejercicio que el dueño pidió borrar del todo', len(antes['setLogs']) == 1087 and n_borradas == 3 and len(desp['setLogs']) == 1087 - n_borradas and len(desp['sessions']) == 29, f"{len(desp['setLogs'])} {n_borradas}")
@@ -465,6 +465,7 @@ def main():
                and 'Press plano' in porSlug['press-plano']['alias'] and 'camilla-de-cuadriceps' in porSlug and porSlug['press-plano']['id'] == viejo['press-plano'])
             pesos = lambda d, slug: sorted({l['peso_g'] for l in d['setLogs'] if l['exercise_id'] == {e['slug']: e['id'] for e in d['exercises']}[slug] and l['peso_g']})
             ok('Los pesos del historial quedan como estaban (sin dividir)', pesos(antes, 'biceps-mc') == pesos(desp, 'biceps-mc') == [40000] and pesos(desp, 'caminata-de-gemelo-mc') == [52000, 56000], str(pesos(desp, 'caminata-de-gemelo-mc')))
+            ok('Revisión 7: plancha construyo y ejercicios de antebrazo', porSlug['plancha-construyo']['nombre'] == 'Plancha construyo' and sum(1 for e in desp['exercises'] if e['grupo'] == 'antebrazos') == 6)
             ok('Dos pesas marcado en los ejercicios ya guardados', porSlug['biceps-mc'].get('dos_pesas') is True and not porSlug['sentadilla-goblet'].get('dos_pesas') and porSlug['press-arnold'].get('dos_pesas') is True and porSlug['sentadilla-salto-kb'].get('dos_pesas') is True)
             ok('Sin archivados de fábrica; los dos ejercicios retirados ya no están', not [e for e in desp['exercises'] if e['archivo']] and 'remo-tandem-en-puntas' not in porSlug and 'rebote-y-freno' not in porSlug)
             viejos = {'dorsal', 'trapecio', 'hombro_anterior', 'hombro_lateral', 'hombro_posterior', 'isquios', 'aductores', 'gemelo', 'full_body', 'movilidad_cadera'}
@@ -531,6 +532,12 @@ def main():
             curl.locator('[aria-label="Agregar otra pausa a la serie 1"]').click(); pg.wait_for_timeout(400)
             curl.locator('[aria-label="Curl de bíceps con mancuernas, serie 1, pausa 3: reps"]').fill('2')
             curl.locator('[aria-label="Curl de bíceps con mancuernas, serie 1, pausa 3: reps"]').blur(); pg.wait_for_timeout(400)
+            mas = curl.locator('[aria-label="Agregar otra pausa a la serie 1"]')
+            mas.click(); pg.wait_for_timeout(300); mas.click(); pg.wait_for_timeout(300)
+            ok('Tramos: hasta 3 más de lo prescripto (2 pausas → máximo 5)', curl.locator('[aria-label^="Curl de bíceps con mancuernas, serie 1, pausa"]').count() == 5 and mas.count() == 0)
+            menos = curl.locator('[aria-label="Quitar la última pausa de la serie 1"]')
+            menos.click(); pg.wait_for_timeout(300); menos.click(); pg.wait_for_timeout(300)
+            ok('Tramos: se pueden quitar', curl.locator('[aria-label^="Curl de bíceps con mancuernas, serie 1, pausa"]').count() == 3 and mas.count() == 1)
             pg.locator('.bloque-h .tilde').first.click(); pg.wait_for_timeout(300)
             pg.click('.topbar >> text=Terminar'); pg.wait_for_timeout(300); pg.click('text=Guardar sesión'); pg.wait_for_timeout(700)
             data, _ = backup(pg)
@@ -541,6 +548,27 @@ def main():
             tab(pg, 'Calendario'); pg.click('.card >> text=Día T'); pg.wait_for_timeout(500)
             t = texto(pg)
             ok('Historial: muestra los tramos', '↓ 55 kg × 8 · 45 kg × 6' in t and '+ 4·3·2' in t, t[-260:])
+            ctx.close()
+            # ------------------------------------------------------------ L
+            print('\nL. Peso corporal')
+            ctx, pg = abrir()
+            tab(pg, 'Progreso'); pg.wait_for_selector('.pm', timeout=8000)
+            sec = pg.locator('[data-seccion="peso-corporal"]')
+            ok('Peso corporal: sin registros invita a cargar, no obliga', 'No es obligatorio' in sec.inner_text() and sec.locator('.chart').count() == 0)
+            sec.locator('text=Registrar peso').click(); pg.wait_for_timeout(300)
+            pg.fill('#pcp', '80,5'); pg.click('.sheet >> text="Guardar"'); pg.wait_for_timeout(400)
+            ok('Peso corporal: un registro muestra el valor', '80,5 kg' in sec.inner_text())
+            sec.locator('text=Registrar peso').click(); pg.wait_for_timeout(300)
+            pg.fill('#pcf', '2026-11-01'); pg.fill('#pcp', '82'); pg.click('.sheet >> text="Guardar"'); pg.wait_for_timeout(400)
+            sec.locator('text=Registrar peso').click(); pg.wait_for_timeout(300)
+            pg.fill('#pcp', '80'); pg.click('.sheet >> text="Guardar"'); pg.wait_for_timeout(400)     # mismo día: reemplaza
+            ok('Peso corporal: con dos registros aparece el gráfico', sec.locator('.chart').count() == 1 and '80 kg' in sec.inner_text())
+            data, _ = backup(pg)
+            ok('Peso corporal: se guarda en gramos, uno por día, y va en la copia', sorted((p['fecha'], p['peso_g']) for p in data['pesoCorporal']) == [('2026-11-01', 82000), ('2026-11-14', 80000)], str(data.get('pesoCorporal')))
+            tab(pg, 'Progreso'); pg.wait_for_selector('.pm', timeout=8000)
+            sec.locator('text=Ver registros').click(); pg.wait_for_timeout(300)
+            pg.click('[aria-label="Borrar el registro del 01/11/2026"]'); pg.wait_for_timeout(300); pg.click('.sheet [aria-label="Cerrar"]'); pg.wait_for_timeout(300)
+            ok('Peso corporal: se puede borrar un registro', sec.locator('.chart').count() == 0 and '80 kg' in sec.inner_text())
             ctx.close()
             navegador.close()
     finally:

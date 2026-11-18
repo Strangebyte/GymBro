@@ -242,11 +242,13 @@ export function Tarjeta(props: { item: Item; sesion: Session; porEjercicio: bool
 /** Debajo de una serie con técnica: reps de cada mini-serie (myo), de cada tanda tras una pausa (rest-pause) o peso y reps de cada bajada (drop). */
 function Tramos({ s, ex }: { s: SetLog; ex: Exercise }) {
   const tec = s.tec!
-  const tramos: Tramo[] = s.tramos?.length ? s.tramos : Array.from({ length: tec.n }, () => ({ reps: null }))
+  // Sin cargar todavía: tantos casilleros como lo prescripto. Si el usuario los quitó todos queda [] (y no se vuelven a llenar).
+  const tramos: Tramo[] = s.tramos ?? Array.from({ length: tec.n }, () => ({ reps: null }))
+  const max = Math.min(10, tec.n + 3)   // hasta 3 más de lo prescripto
   // Cada cambio lee lo último guardado dentro de una transacción: si se cargan peso y reps seguidos, uno no pisa al otro.
   const cambiar = (fn: (actuales: Tramo[]) => Tramo[]) => void db.transaction('rw', db.setLogs, async () => {
     const guardados = (await db.setLogs.get(s.id!))?.tramos
-    await db.setLogs.update(s.id!, { tramos: fn(guardados?.length ? guardados : tramos) })
+    await db.setLogs.update(s.id!, { tramos: fn(guardados ?? tramos) })
   })
   const guardar = (i: number, c: Partial<Tramo>) => cambiar((ts) => ts.map((t, j) => (j === i ? { ...t, ...c } : t)))
   const sugerido = (i: number) => (s.peso_g && tec.pct ? Math.round(s.peso_g * Math.pow(1 - tec.pct / 100, i + 1)) : null)
@@ -268,7 +270,8 @@ function Tramos({ s, ex }: { s: SetLog; ex: Exercise }) {
           defaultValue={t.reps ?? ''} placeholder={tec.reps ? String(tec.reps) : '—'}
           onBlur={(e) => { const n = aNum(e.target.value); if (n !== t.reps) guardar(i, { reps: n }) }} />
       )))}
-      <button className="mas" aria-label={`Agregar otra ${cual} a la serie ${s.serie}`} onClick={() => cambiar((ts) => [...ts, { reps: null }])}>+</button>
+      {tramos.length > 0 && <button className="mas" aria-label={`Quitar la última ${cual} de la serie ${s.serie}`} onClick={() => cambiar((ts) => ts.slice(0, -1))}>−</button>}
+      {tramos.length < max && <button className="mas" aria-label={`Agregar otra ${cual} a la serie ${s.serie}`} onClick={() => cambiar((ts) => (ts.length < max ? [...ts, { reps: null }] : ts))}>+</button>}
     </div>
   )
 }

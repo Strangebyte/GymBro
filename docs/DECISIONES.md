@@ -6,6 +6,10 @@ Registro de qué se decidió y por qué. Lo más nuevo, arriba.
 
 | Decisión | Razón |
 |---|---|
+| Peso corporal optativo, uno por día, con gráfico en Progreso | Pedido del dueño: cargarlo cuando quiera, sin obligación. Uno por día para que el gráfico no tenga saltos raros; cargar otro el mismo día lo reemplaza |
+| En las técnicas se pueden agregar hasta 3 tramos más de lo prescripto y quitar de a uno | Pedido del dueño: se podían agregar sin límite y no se podían borrar |
+| Seis ejercicios de antebrazo (curl y extensión de muñeca, curl invertido, rodillo, pinza de discos) | El grupo existía sin ejercicios; pedido del dueño |
+| Vuelve el nombre "Plancha construyo" | Lo pidió el dueño |
 | Técnicas por serie: myo-reps, rest-pause y drop set, como una serie principal con "tramos" | Las tres son una serie seguida de tramos casi sin descanso; solo cambia si el tramo lleva peso (drop) o no. Una sola estructura sirve para las tres y para otras que aparezcan |
 | Progreso y series por grupo cuentan solo la serie principal | Así una serie con técnica se compara con una normal y el volumen no se infla |
 | Al abrir un bloque, la pantalla lo deja arriba; abrir y cerrar tiene transición | Pedido del dueño: al abrir otro bloque, el anterior se cerraba y la pantalla quedaba en otra parte |
