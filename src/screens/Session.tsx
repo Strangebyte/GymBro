@@ -1,8 +1,8 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
-import { db, type Exercise, type Session, type SetLog, type Settings } from '../db'
+import { db, type Exercise, type Session, type SetLog, type Settings, type Tramo } from '../db'
 import { alinearArriba, Chevron, Chips, Desplegable, HistorialLista, Ico, MediaView, Picker, Sheet, Stepper, TopBar, useDialogos, useNav, useTieneMedia } from '../ui'
-import { etiqueta, fmtDur, fmtFecha, fmtFechaCorta, mmss, pesoDesdeTexto, pesoTxt, plural, prepararSonido, resumenSets, rotuloPeso, setValido, sonar, ultimaVez, unidadPeso, vibrar } from '../lib'
+import { etiqueta, fmtDur, fmtFecha, fmtFechaCorta, mmss, NOMBRE_TEC, pesoDesdeTexto, pesoTxt, plural, prepararSonido, resumenSets, rotuloPeso, setValido, sonar, tecCorta, ultimaVez, unidadPeso, vibrar } from '../lib'
 import { agregarEjercicio, agregarSerie, descartarSesion, sesionEnCurso, terminarSesion } from '../actions'
 
 export type Item = { key: string; bloque: number; orden: number; ex: Exercise; sets: SetLog[] }
@@ -186,7 +186,7 @@ export function Tarjeta(props: { item: Item; sesion: Session; porEjercicio: bool
     if (!(await confirmar({ titulo: `¿Quitar ${ex.nombre}?`, texto: 'Solo se quita de esta sesión. El plan no cambia.', ok: 'Quitar', peligro: true }))) return
     await db.setLogs.bulkDelete(sets.map((s) => s.id!))
   }
-  const objetivo = (s: SetLog) => [s.tipo === 'calentamiento' ? 'calent.' : '', s.rir != null ? `RIR ${s.rir}` : '', s.rpe != null ? `RPE ${s.rpe}` : '', s.fallo ? 'fallo' : ''].filter(Boolean).join(' · ')
+  const objetivo = (s: SetLog) => [s.tipo === 'calentamiento' ? 'calent.' : '', s.rir != null ? `RIR ${s.rir}` : '', s.rpe != null ? `RPE ${s.rpe}` : '', s.fallo ? 'fallo' : '', tecCorta(s.tec)].filter(Boolean).join(' · ')
 
   return (
     <div className={`ej${listo ? ' listo' : ''}`}>
@@ -207,7 +207,8 @@ export function Tarjeta(props: { item: Item; sesion: Session; porEjercicio: bool
         <span /><span>{enSeg ? 'seg' : 'reps'}{ex.unilateral ? ' c/lado' : ''}</span><span>{ex.lastre ? `lastre ${unidadPeso()}` : rotuloPeso(ex.dos_pesas)}</span><span>objetivo</span><span />
       </div>
       {sets.map((s) => (
-        <div key={s.id} className="ss">
+        <Fragment key={s.id}>
+        <div className="ss">
           <span className="n">{s.serie}</span>
           <input inputMode="numeric" aria-label={`${ex.nombre}, serie ${s.serie}: ${enSeg ? 'segundos' : 'reps'}`}
             defaultValue={enSeg ? (s.seg ?? '') : (s.reps ?? '')} placeholder={s.fallo ? 'fallo' : '—'}
@@ -218,6 +219,8 @@ export function Tarjeta(props: { item: Item; sesion: Session; porEjercicio: bool
           <span className="obj">{objetivo(s) || '—'}</span>
           <button className="x" aria-label={`Borrar serie ${s.serie} de ${ex.nombre}`} onClick={() => void db.setLogs.delete(s.id!)}>✕</button>
         </div>
+        {s.tec && <Tramos s={s} ex={ex} />}
+        </Fragment>
       ))}
       <div className="acc">
         <button onClick={() => void agregarSerie(sets, editando)}>+ Serie</button>
@@ -231,6 +234,41 @@ export function Tarjeta(props: { item: Item; sesion: Session; porEjercicio: bool
         <Picker titulo={`Reemplazar ${ex.nombre}`} onCerrar={() => setHoja(null)}
           onElegir={(nuevo) => { void db.setLogs.bulkUpdate(sets.map((s) => ({ key: s.id!, changes: { exercise_id: nuevo.id! } }))) }} />
       )}
+    </div>
+  )
+}
+
+// ------------------------------------------------------------------ técnicas
+/** Debajo de una serie con técnica: reps de cada mini-serie (myo), de cada tanda tras una pausa (rest-pause) o peso y reps de cada bajada (drop). */
+function Tramos({ s, ex }: { s: SetLog; ex: Exercise }) {
+  const tec = s.tec!
+  const tramos: Tramo[] = s.tramos?.length ? s.tramos : Array.from({ length: tec.n }, () => ({ reps: null }))
+  // Cada cambio lee lo último guardado dentro de una transacción: si se cargan peso y reps seguidos, uno no pisa al otro.
+  const cambiar = (fn: (actuales: Tramo[]) => Tramo[]) => void db.transaction('rw', db.setLogs, async () => {
+    const guardados = (await db.setLogs.get(s.id!))?.tramos
+    await db.setLogs.update(s.id!, { tramos: fn(guardados?.length ? guardados : tramos) })
+  })
+  const guardar = (i: number, c: Partial<Tramo>) => cambiar((ts) => ts.map((t, j) => (j === i ? { ...t, ...c } : t)))
+  const sugerido = (i: number) => (s.peso_g && tec.pct ? Math.round(s.peso_g * Math.pow(1 - tec.pct / 100, i + 1)) : null)
+  const cual = tec.tipo === 'myo' ? 'mini-serie' : tec.tipo === 'rp' ? 'pausa' : 'bajada'
+  return (
+    <div className="tramos" aria-label={`${NOMBRE_TEC[tec.tipo]} de la serie ${s.serie}`}>
+      <span className="t">{tec.tipo === 'drop' ? '↓' : '+'}</span>
+      {tramos.map((t, i) => (tec.tipo === 'drop' ? (
+        <span key={`${i}-${tramos.length}`} className="par">
+          <input inputMode="decimal" aria-label={`${ex.nombre}, serie ${s.serie}, ${cual} ${i + 1}: peso`} defaultValue={pesoTxt(t.peso_g)}
+            placeholder={pesoTxt(sugerido(i)) || unidadPeso()}
+            onBlur={(e) => { const g = pesoDesdeTexto(e.target.value, t.peso_g); if (g !== (t.peso_g || null)) guardar(i, { peso_g: g }) }} />
+          ×
+          <input inputMode="numeric" aria-label={`${ex.nombre}, serie ${s.serie}, ${cual} ${i + 1}: reps`} defaultValue={t.reps ?? ''} placeholder="reps"
+            onBlur={(e) => { const n = aNum(e.target.value); if (n !== t.reps) guardar(i, { reps: n }) }} />
+        </span>
+      ) : (
+        <input key={`${i}-${tramos.length}`} inputMode="numeric" aria-label={`${ex.nombre}, serie ${s.serie}, ${cual} ${i + 1}: reps`}
+          defaultValue={t.reps ?? ''} placeholder={tec.reps ? String(tec.reps) : '—'}
+          onBlur={(e) => { const n = aNum(e.target.value); if (n !== t.reps) guardar(i, { reps: n }) }} />
+      )))}
+      <button className="mas" aria-label={`Agregar otra ${cual} a la serie ${s.serie}`} onClick={() => cambiar((ts) => [...ts, { reps: null }])}>+</button>
     </div>
   )
 }

@@ -37,6 +37,7 @@ Es el archivo que acepta **Planes → Importar plan** en GymBro, y el mismo que 
 | RIR y RPE | Excluyentes: nunca los dos en la misma serie |
 | RIR | Repeticiones en reserva. 0 = al fallo; más alto = más lejos del fallo |
 | RPE | Esfuerzo percibido de 1 a 10. 10 = fallo |
+| Técnicas (opcional) | Myo-reps: `"tecnica": "myo"`, `"mini_series"` y `"reps_mini"`. Rest-pause: `"tecnica": "rest-pause"` y `"pausas"`. Drop set: `"tecnica": "drop"`, `"bajadas"` y `"baja_pct"` (cuánto baja el peso cada vez, en %). Van en la serie donde se aplican |
 | Dos mancuernas o pesas | `peso_kg` es el peso de una sola, no la suma |
 | Peso con lastre | En dominadas, fondos y similares, `peso_kg` es el lastre agregado |
 | Atajo | Si todas las series son iguales: `"series": 3` y los valores al lado (`"reps": 7, "peso_kg": 20, "rir": 2`) |

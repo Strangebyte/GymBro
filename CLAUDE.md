@@ -20,7 +20,7 @@ npm run seed         # regenera src/seed.json, src/seed-historial.json y data/*.
 npm run test:e2e     # requiere dist/ y: pip install playwright && playwright install chromium
 ```
 
-Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 128 verificaciones tienen que pasar
+Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 139 verificaciones tienen que pasar
 y no puede haber errores de consola. Si cambiás un flujo, actualizá `tests/e2e.py` en el mismo cambio.
 
 ## Cómo trabajar
@@ -85,6 +85,10 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
   siempre, sin importar la unidad elegida.
 - **Dos pesas** (`dos_pesas`): en los ejercicios con dos mancuernas o kettlebells se anota el peso de una sola y se
   muestra "kg c/u" (`rotuloPeso`). No convierte nada: es solo el rótulo, para que todos carguen igual.
+- **Técnicas por serie** (`tec`: myo-reps, rest-pause o drop set) se configuran en el plan, no en la sesión. En la sesión
+  se cargan los "tramos" (`tramos`: reps de cada mini-serie o pausa; peso y reps de cada bajada) debajo de la serie.
+  Progreso y "series por grupo" cuentan solo la serie principal (reps/peso_g): así una serie con técnica se compara con
+  una normal y no infla el volumen.
 - **El plan y el registro son tablas separadas.** Nada de lo que pasa en una sesión modifica el plan, con una
   sola excepción explícita: la casilla "Actualizar el plan con los pesos y reps de hoy" al cerrar (desmarcada
   por defecto), que solo toca peso/reps/segundos de series que coinciden por ejercicio, bloque, orden y serie.
@@ -145,6 +149,8 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
   actividades" y el rojo para errores.
 - Progreso: "Series por grupo muscular" va siempre visible. El progreso por ejercicio usa `progresoDe` (lib.ts):
   peso más alto y sus reps; a igual peso compara reps; sin peso, reps o tiempo.
+- Bloques de la sesión y del editor de días: se abren y cierran con transición (`<Desplegable>`). Al abrir uno tocándolo,
+  la pantalla lo deja arriba, debajo de la barra (`alinearArriba`); el que estaba abierto se cierra sin animar.
 - Todo lo que se despliega lleva `<Chevron>` (ui.tsx) **a la izquierda**: bloques de la sesión, filas de Progreso,
   ayudas. No usar triángulos ▸ ▾.
 - Fechas `dd/mm/yyyy`. Decimales con coma. Excepción pedida por el dueño: "Últ. vez (dd/mm)" en la tarjeta de la

@@ -53,7 +53,13 @@ export interface PSet {
   rir?: number | null
   rpe?: number | null
   fallo?: boolean
+  /** Técnica de la serie (myo-reps, rest-pause o drop set). */
+  tec?: Tecnica | null
 }
+/** `n`: mini-series (myo), pausas (rest-pause) o bajadas de peso (drop). `reps`: reps por mini-serie. `pct`: cuánto baja el peso. */
+export interface Tecnica { tipo: 'myo' | 'rp' | 'drop'; n: number; reps?: number | null; pct?: number | null }
+/** Lo hecho después de la serie principal: cada mini-serie, cada tanda tras una pausa o cada bajada (con su peso). */
+export interface Tramo { reps: number | null; peso_g?: number | null }
 export interface PExercise { exercise_id: number; notas: string | null; series: PSet[] }
 export interface PBlock { orden: number; ejercicios: PExercise[] }
 
@@ -112,6 +118,9 @@ export interface SetLog {
   ts: number
   plan: PSet | null
   confianza: 'alta' | 'media'
+  /** Técnica prescripta (viene del plan) y lo que se hizo en cada tramo. La serie principal sigue en reps/peso_g. */
+  tec?: Tecnica | null
+  tramos?: Tramo[]
 }
 
 export interface Activity {

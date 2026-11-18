@@ -165,6 +165,13 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--pri); outline-o
 .ss input { padding: 7px 4px; text-align: center; border-radius: 13px; font-size: 15.5px; font-weight: 700; min-height: 38px; }
 .ss .obj { font-size: 12px; color: var(--muted); text-align: center; font-weight: 600; }
 .ss .x { color: var(--muted); font-size: 13px; height: 38px; text-align: center; }
+/* Tramos de una serie con técnica (mini-series, pausas o bajadas), debajo de la serie. */
+.tramos { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin: 3px 30px 6px 26px; }
+.tramos .t { font-size: 13px; color: var(--muted); font-weight: 800; width: 12px; text-align: center; }
+.tramos input { width: 44px; min-height: 32px; padding: 4px 2px; text-align: center; border-radius: 11px; font-size: 14.5px; font-weight: 650; }
+.tramos .par { display: inline-flex; align-items: center; gap: 3px; font-size: 12px; color: var(--muted); margin-right: 4px; }
+.tramos .par input:first-child { width: 52px; }
+.tramos .mas { width: 32px; height: 32px; border-radius: 999px; border: 1px dashed var(--line); color: var(--muted); font-weight: 700; }
 .acc { display: flex; gap: 14px; margin-top: 6px; }
 .acc button { font-size: 12.5px; font-weight: 650; color: var(--pri-text); min-height: 32px; padding: 0 2px; }
 .acc button.q { color: var(--bad); margin-left: auto; }
@@ -234,7 +241,7 @@ body.fijo { overflow: hidden; }
 .dialog { background: var(--surface); margin: auto 18px; border-radius: 28px; padding: 20px; max-width: 420px; width: 100%; align-self: center; }
 .toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(84px + env(safe-area-inset-bottom)); z-index: 60; background: var(--text); color: var(--bg); padding: 11px 16px; border-radius: 20px; font-size: 14px; font-weight: 600; max-width: 88%; text-align: center; }
 
-.ed-serie { display: grid; grid-template-columns: 18px repeat(4, 1fr) 32px 28px; gap: 4px; align-items: center; margin-bottom: 4px; }
+.ed-serie { display: grid; grid-template-columns: 18px repeat(4, 1fr) 42px 26px; gap: 4px; align-items: center; margin-bottom: 4px; }
 .ed-serie input { padding: 5px 2px; min-height: 34px; text-align: center; border-radius: 11px; font-size: 14.5px; font-weight: 650; }
 .ed-serie .chip { min-height: 32px; min-width: 0; padding: 0; }
 .ed-serie .x { color: var(--muted); font-size: 13px; height: 34px; text-align: center; }

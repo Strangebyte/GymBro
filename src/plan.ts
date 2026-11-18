@@ -1,4 +1,4 @@
-import { db, GRUPO_NUEVO, kgToG, type Exercise, type PSet } from './db'
+import { db, GRUPO_NUEVO, kgToG, type Exercise, type PSet, type Tecnica } from './db'
 import { agruparPorCategoria, etiqueta, GRUPOS, norm, setValido, unidadPeso } from './lib'
 import { crearEjercicio } from './actions'
 
@@ -27,6 +27,19 @@ const num = (v: unknown): number | null => {
   return Number.isFinite(n) ? n : null
 }
 
+const NOMBRES_TEC: Record<string, Tecnica['tipo']> = {
+  myo: 'myo', 'myo reps': 'myo', myoreps: 'myo', 'rest pause': 'rp', restpause: 'rp', rp: 'rp', drop: 'drop', 'drop set': 'drop', dropset: 'drop',
+}
+/** Técnica de una serie del archivo: null si no trae, 'mala' si trae un nombre que no se conoce. */
+function tecDe(o: Record<string, unknown>): Tecnica | null | 'mala' {
+  if (o.tecnica == null || o.tecnica === '') return null
+  const tipo = NOMBRES_TEC[norm(String(o.tecnica))]
+  if (!tipo) return 'mala'
+  if (tipo === 'myo') return { tipo, n: num(o.mini_series) ?? 4, reps: num(o.reps_mini) }
+  if (tipo === 'rp') return { tipo, n: num(o.pausas) ?? 2 }
+  return { tipo, n: num(o.bajadas) ?? 2, pct: num(o.baja_pct) ?? 20 }
+}
+
 function leerSerie(o: Record<string, unknown>): PSet {
   const s: PSet = {}
   const reps = num(o.reps ?? o.repeticiones)
@@ -40,6 +53,8 @@ function leerSerie(o: Record<string, unknown>): PSet {
   if (rir != null) s.rir = rir
   if (rpe != null) s.rpe = rpe
   if (o.al_fallo === true || o.fallo === true) s.fallo = true
+  const tec = tecDe(o)
+  if (tec && tec !== 'mala') s.tec = tec
   return s
 }
 
@@ -103,7 +118,9 @@ export function leerPlan(texto: string, catalogo: Exercise[]): ImpPlan {
         if (Array.isArray(e.series)) series = (e.series as Record<string, unknown>[]).map(leerSerie)
         else if (num(e.series) != null) series = Array.from({ length: num(e.series)! }, () => leerSerie(e))
         if (!series.length) out.errores.push(`${donde} (${original}): no tiene series.`)
+        const crudas = (Array.isArray(e.series) ? e.series : series.map(() => e)) as Record<string, unknown>[]
         series.forEach((s, si) => {
+          if (crudas[si] && tecDe(crudas[si]) === 'mala') out.errores.push(`${donde} (${original}), serie ${si + 1}: técnica "${String(crudas[si].tecnica)}" desconocida. Va "myo", "rest-pause" o "drop".`)
           if (!setValido(s)) out.errores.push(`${donde} (${original}), serie ${si + 1}: necesita al menos reps, peso, RIR, RPE o tiempo.`)
           if (s.rir != null && s.rpe != null) out.errores.push(`${donde} (${original}), serie ${si + 1}: tiene RIR y RPE a la vez; va uno solo.`)
         })
@@ -178,6 +195,9 @@ export async function exportarPlan(planId: number): Promise<string> {
     if (s.rir != null) o.rir = s.rir
     if (s.rpe != null) o.rpe = s.rpe
     if (s.fallo) o.al_fallo = true
+    if (s.tec?.tipo === 'myo') { o.tecnica = 'myo'; o.mini_series = s.tec.n; if (s.tec.reps) o.reps_mini = s.tec.reps }
+    if (s.tec?.tipo === 'rp') { o.tecnica = 'rest-pause'; o.pausas = s.tec.n }
+    if (s.tec?.tipo === 'drop') { o.tecnica = 'drop'; o.bajadas = s.tec.n; if (s.tec.pct) o.baja_pct = s.tec.pct }
     return o
   }
   return JSON.stringify({
@@ -210,6 +230,9 @@ export const EJEMPLO_PLAN = `{
           "series": [ {"reps": 8, "peso_kg": 80, "rpe": 8},
                       {"reps": 6, "peso_kg": 82.5, "rpe": 9} ] },
         { "ejercicio": "Dominadas PRONA", "series": 3, "reps": 7, "peso_kg": 20, "rir": 2 },
+        { "ejercicio": "Curl de bíceps con mancuernas",
+          "series": [ {"reps": 12, "peso_kg": 10},
+                      {"reps": 12, "peso_kg": 10, "tecnica": "drop", "bajadas": 2, "baja_pct": 25} ] },
         { "ejercicio": "Hollow", "series": [ {"seg": 45}, {"seg": 45} ] } ] }
     ] }
  ]
@@ -292,6 +315,7 @@ Reglas del formato:
 - Si todas las series de un ejercicio son iguales se puede abreviar con "series": 3 y los valores al lado. Si cambian (series ascendentes, por ejemplo), escribilas una por una.
 - En ejercicios con lastre (dominadas, fondos), "peso_kg" es el peso agregado.
 - En ejercicios con dos mancuernas o dos kettlebells, "peso_kg" es el peso de una sola, no la suma.
+- Técnicas (opcionales; solo si las pedí o tienen sentido para mi nivel), en la serie donde se aplican, casi siempre la última: myo-reps con "tecnica": "myo", "mini_series" (cuántas) y "reps_mini" (reps de cada una); rest-pause con "tecnica": "rest-pause" y "pausas"; drop set con "tecnica": "drop", "bajadas" y "baja_pct" (cuánto baja el peso cada vez, en %).
 - "peso_kg" es opcional: si no sabés qué carga uso, no lo pongas. No inventes pesos.${unidadPeso() === 'lb' ? '\n- Yo uso libras, pero "peso_kg" va siempre en kilos: convertí cada peso (1 lb = 0,4536 kg) y redondeá a un decimal.' : ''}
 - Si usás un ejercicio que no está en mi lista, agregale "grupo" con su músculo principal, uno de: ${GRUPOS.map(etiqueta).join(', ')}.
 - "notas" es opcional, para una indicación corta por ejercicio.

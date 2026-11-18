@@ -16,7 +16,7 @@ function borrador(session_id: number, exercise_id: number, bloque: number, orden
     session_id, exercise_id, bloque, orden, serie, tipo: 'efectiva',
     reps: p?.reps ?? null, seg: p?.seg ?? null, peso_g: p?.peso_g ?? null,
     rir: p?.rir ?? null, rpe: p?.rpe ?? null, fallo: !!p?.fallo,
-    hecha: false, ts: Date.now(), plan: p, confianza: 'alta',
+    hecha: false, ts: Date.now(), plan: p, confianza: 'alta', tec: p?.tec ?? null,
   }
 }
 
@@ -61,7 +61,7 @@ export async function agregarEjercicio(sesion: Session, ex: Exercise, bloque: nu
 
 export async function agregarSerie(sets: SetLog[], hecha = false): Promise<void> {
   const ult = sets[sets.length - 1]
-  await db.setLogs.add({ ...ult, id: undefined, serie: ult.serie + 1, hecha, fallo: false, ts: Date.now(), plan: null })
+  await db.setLogs.add({ ...ult, id: undefined, serie: ult.serie + 1, hecha, fallo: false, ts: Date.now(), plan: null, tec: null, tramos: undefined })
 }
 
 export async function terminarSesion(

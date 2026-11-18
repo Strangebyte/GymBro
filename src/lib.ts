@@ -1,4 +1,4 @@
-import { db, exportarTodo, marcarCopia, type Exercise, type PSet, type SetLog, type Session, type Activity } from './db'
+import { db, exportarTodo, marcarCopia, type Exercise, type PSet, type SetLog, type Session, type Activity, type Tecnica } from './db'
 
 export { kgToG } from './db'
 
@@ -35,7 +35,16 @@ export function fmtPeso(g: number | null | undefined, lastre = false, cu = false
   return `${lastre ? '+' : ''}${numES(enUnidad(g))} ${rotuloPeso(cu)}`
 }
 
-/** Resumen corto de una serie: "8r · 80 kg · RPE 8". */
+/** Técnica en pocas letras: "Myo 4×4", "RP ×2", "Drop ×2 −20%". */
+export function tecCorta(t?: Tecnica | null): string {
+  if (!t) return ''
+  if (t.tipo === 'myo') return `Myo ${t.n}${t.reps ? `×${t.reps}` : ''}`
+  if (t.tipo === 'rp') return `RP ×${t.n}`
+  return `Drop ×${t.n}${t.pct ? ` −${t.pct}%` : ''}`
+}
+export const NOMBRE_TEC: Record<Tecnica['tipo'], string> = { myo: 'Myo-reps', rp: 'Rest-pause', drop: 'Drop set' }
+
+/** Resumen corto de una serie: "8r · 80 kg · RPE 8". Con técnica: "12r · 20 kg + 4·4·3" o "10r · 60 kg · ↓ 50 kg × 8". */
 export function fmtSet(s: PSet | SetLog, lastre = false, cu = false): string {
   const p: string[] = []
   if (s.fallo && s.reps == null) p.push('al fallo')
@@ -44,6 +53,11 @@ export function fmtSet(s: PSet | SetLog, lastre = false, cu = false): string {
   if (s.peso_g) p.push(fmtPeso(s.peso_g, lastre, cu))
   if (s.rir != null) p.push(`RIR ${s.rir}`)
   if (s.rpe != null) p.push(`RPE ${s.rpe}`)
+  const hechos = 'tramos' in s ? (s.tramos ?? []).filter((t) => t.reps != null || t.peso_g) : []
+  if (hechos.length && s.tec) {
+    if (s.tec.tipo === 'drop') p.push('↓ ' + hechos.map((t) => `${t.peso_g ? `${numES(enUnidad(t.peso_g))} ${unidad}` : '?'} × ${t.reps ?? '?'}`).join(' · '))
+    else return (p.join(' · ') || 'sin datos') + ' + ' + hechos.map((t) => t.reps ?? '?').join('·')
+  } else if (s.tec && !('session_id' in s)) p.push(tecCorta(s.tec))   // en el plan: lo prescripto
   return p.join(' · ') || 'sin datos'
 }
 

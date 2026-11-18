@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
-import { db, type Exercise, type PBlock, type PlanDay, type PSet } from '../db'
-import { alinearArriba, Chevron, Desplegable, Picker, sinGuardia, TopBar, useDialogos, useGuardiaSalida, useNav } from '../ui'
-import { etiqueta, plural, GRUPOS, guardarArchivo, numES, pesoDesdeTexto, pesoTxt, resumenSets, rotuloPeso, setValido, slugify } from '../lib'
+import { db, type Exercise, type PBlock, type PlanDay, type PSet, type Tecnica } from '../db'
+import { alinearArriba, Chevron, Chips, Desplegable, Picker, Sheet, sinGuardia, Stepper, TopBar, useDialogos, useGuardiaSalida, useNav } from '../ui'
+import { etiqueta, plural, GRUPOS, guardarArchivo, NOMBRE_TEC, numES, pesoDesdeTexto, pesoTxt, resumenSets, rotuloPeso, setValido, slugify } from '../lib'
 import { activarPlan, borrarPlan, duplicarDia, reordenarDias } from '../actions'
 import { EJEMPLO_PLAN, exportarPlan, guardarPlan, leerPlan, pedidoParaIA, type ImpPlan, type Resolucion } from '../plan'
 
@@ -116,6 +116,50 @@ export function PlanScreen({ id }: { id: number }) {
   )
 }
 
+// ------------------------------------------------------------------ técnicas de una serie
+const TEC_CORTO: Record<Tecnica['tipo'], string> = { myo: 'Myo', rp: 'RP', drop: 'Drop' }
+const TEC_BASE: Record<Tecnica['tipo'], Tecnica> = { myo: { tipo: 'myo', n: 4, reps: 4 }, rp: { tipo: 'rp', n: 2 }, drop: { tipo: 'drop', n: 2, pct: 20 } }
+const TEC_AYUDA: Record<Tecnica['tipo'], string> = {
+  myo: 'Una serie de activación cerca del fallo y después mini-series cortas con el mismo peso, descansando 3 a 5 respiraciones entre cada una.',
+  rp: 'Llegás al fallo, descansás 10 a 20 segundos y seguís con el mismo peso. Se repite una vez por pausa.',
+  drop: 'Llegás al fallo, bajás el peso sin descansar y seguís. Se repite una vez por bajada.',
+}
+
+/** Panel para marcar una serie al fallo y elegirle una técnica. Los cambios se aplican al momento (al borrador del día). */
+function SerieTecnica({ s, titulo, onCambio, onCerrar }: { s: PSet; titulo: string; onCambio: (c: Partial<PSet>) => void; onCerrar: () => void }) {
+  const tec = s.tec ?? null
+  return (
+    <Sheet titulo={titulo} onCerrar={onCerrar} accion={<button className="btn primary sm" onClick={onCerrar}>Listo</button>}>
+      <button className="card row" onClick={() => onCambio({ fallo: !s.fallo })} aria-pressed={!!s.fallo}>
+        <span className={`chip sm${s.fallo ? ' on' : ''}`}>{s.fallo ? '✓' : ''}</span>
+        <span className="grow small"><b>Al fallo</b><br /><span className="xsmall muted">La serie se hace hasta no poder hacer otra repetición.</span></span>
+      </button>
+      <label className="f">Técnica</label>
+      <Chips wrap opciones={[{ v: null as Tecnica['tipo'] | null, t: 'Ninguna' }, ...(['myo', 'rp', 'drop'] as const).map((v) => ({ v: v as Tecnica['tipo'] | null, t: NOMBRE_TEC[v] }))]}
+        valor={tec?.tipo ?? null} onPick={(v) => onCambio({ tec: v ? { ...TEC_BASE[v] } : null })} />
+      {tec && (
+        <div className="card" style={{ marginTop: 10 }}>
+          <div className="xsmall muted">{TEC_AYUDA[tec.tipo]}</div>
+          <label className="f">{tec.tipo === 'myo' ? 'Mini-series' : tec.tipo === 'rp' ? 'Pausas' : 'Bajadas de peso'}</label>
+          <Stepper value={tec.n} step={1} min={1} max={10} unit={tec.tipo === 'myo' ? 'mini-series' : tec.tipo === 'rp' ? 'pausas' : 'bajadas'} onChange={(v) => onCambio({ tec: { ...tec, n: v ?? 1 } })} />
+          {tec.tipo === 'myo' && (
+            <>
+              <label className="f">Reps de cada mini-serie</label>
+              <Stepper value={tec.reps ?? null} step={1} min={1} max={30} unit="reps" onChange={(v) => onCambio({ tec: { ...tec, reps: v } })} />
+            </>
+          )}
+          {tec.tipo === 'drop' && (
+            <>
+              <label className="f">Cuánto bajás el peso cada vez</label>
+              <Stepper value={tec.pct ?? null} step={5} min={5} max={60} unit="%" onChange={(v) => onCambio({ tec: { ...tec, pct: v } })} />
+            </>
+          )}
+        </div>
+      )}
+    </Sheet>
+  )
+}
+
 // ------------------------------------------------------------------ editor de día
 const aNum = (v: string): number | null => { const n = Number(v.replace(',', '.')); return v.trim() === '' || !Number.isFinite(n) ? null : n }
 const aTxt = (n: number | null | undefined): string => (n == null ? '' : numES(n))
@@ -154,6 +198,7 @@ export function PlanDayScreen({ id }: { id: number }) {
     requestAnimationFrame(() => alinearArriba(document.querySelector(`[data-bloque="${b}"]`)))
   }, [abierto])
   const [notaDe, setNotaDe] = useState<string | null>(null)   // ejercicio al que se le está agregando una nota
+  const [tecDe, setTecDe] = useState<{ bi: number; ei: number; si: number } | null>(null)   // serie con el panel de técnica abierto
   const mapa = useMemo(() => new Map((ejercicios ?? []).map((e) => [e.id!, e])), [ejercicios])
   if (!dia || !ejercicios) return <><TopBar titulo="Día" atras /><div className="main sin-tabs"><div className="empty">Cargando…</div></div></>
 
@@ -223,7 +268,7 @@ export function PlanDayScreen({ id }: { id: number }) {
                           <button className="mini" disabled={ei === b.ejercicios.length - 1} aria-label="Bajar ejercicio" onClick={() => editar((bl) => { const x = bl[bi].ejercicios; [x[ei + 1], x[ei]] = [x[ei], x[ei + 1]] })}>↓</button>
                         </div>
                         <div className="ed-serie" style={{ marginTop: 6 }}>
-                          <span /><span className="h">{enSeg ? 'seg' : 'reps'}</span><span className="h">{ex?.lastre ? `lastre ${rotuloPeso()}` : rotuloPeso(ex?.dos_pesas)}</span><span className="h">RIR</span><span className="h">RPE</span><span className="h">fallo</span><span />
+                          <span /><span className="h">{enSeg ? 'seg' : 'reps'}</span><span className="h">{ex?.lastre ? `lastre ${rotuloPeso()}` : rotuloPeso(ex?.dos_pesas)}</span><span className="h">RIR</span><span className="h">RPE</span><span className="h">téc.</span><span />
                         </div>
                         {e.series.map((x, si) => {
                           const set = (c: Partial<PSet>) => editar((bl) => { Object.assign(bl[bi].ejercicios[ei].series[si], c) }, false)
@@ -238,13 +283,13 @@ export function PlanDayScreen({ id }: { id: number }) {
                                 onBlur={(ev) => { const n = aNum(ev.target.value); set(n == null ? { rir: null } : { rir: n, rpe: null }) }} />
                               <input inputMode="numeric" aria-label={`Serie ${si + 1}: RPE`} defaultValue={aTxt(x.rpe)} key={`e${si}${e.series.length}${x.rpe ?? 'x'}`}
                                 onBlur={(ev) => { const n = aNum(ev.target.value); set(n == null ? { rpe: null } : { rpe: Math.min(10, n), rir: null }) }} />
-                              <button className={`chip sm${x.fallo ? ' on' : ''}`} aria-pressed={!!x.fallo} aria-label={`Serie ${si + 1} al fallo`} onClick={() => set({ fallo: !x.fallo })}>F</button>
+                              <button className={`chip sm${x.fallo || x.tec ? ' on' : ''}`} aria-label={`Serie ${si + 1}: fallo y técnica`} onClick={() => setTecDe({ bi, ei, si })}>{x.tec ? TEC_CORTO[x.tec.tipo] : x.fallo ? 'F' : '·'}</button>
                               <button className="x" aria-label={`Borrar serie ${si + 1}`} onClick={() => editar((bl) => { bl[bi].ejercicios[ei].series.splice(si, 1) })}>✕</button>
                             </div>
                           )
                         })}
                         <div className="acc">
-                          <button onClick={() => editar((bl) => { const ss = bl[bi].ejercicios[ei].series; ss.push(ss.length ? { ...ss[ss.length - 1], fallo: false } : { reps: 10 }) })}>+ Serie</button>
+                          <button onClick={() => editar((bl) => { const ss = bl[bi].ejercicios[ei].series; ss.push(ss.length ? { ...ss[ss.length - 1], fallo: false, tec: null } : { reps: 10 }) })}>+ Serie</button>
                           <button onClick={() => setPicker({ b: bi, e: ei })}>Cambiar</button>
                           {(ex?.mide !== 'reps' || enSeg) && (
                             <button onClick={() => editar((bl) => {
@@ -274,6 +319,12 @@ export function PlanDayScreen({ id }: { id: number }) {
         <button className="btn block" style={{ marginTop: 12 }} onClick={() => { setAbierto(bloques.length); editar((bl) => { bl.push({ orden: bl.length ? Math.max(...bl.map((x) => x.orden)) + 1 : 1, ejercicios: [] }) }) }}>+ Bloque</button>
         <div className="xsmall muted center" style={{ marginTop: 10 }}>Tocá «Guardar», arriba, para conservar los cambios. RIR y RPE no van juntos: al cargar uno se borra el otro.</div>
       </div>
+      {tecDe && bloques[tecDe.bi]?.ejercicios[tecDe.ei]?.series[tecDe.si] && (
+        <SerieTecnica s={bloques[tecDe.bi].ejercicios[tecDe.ei].series[tecDe.si]}
+          titulo={`Serie ${tecDe.si + 1} · ${mapa.get(bloques[tecDe.bi].ejercicios[tecDe.ei].exercise_id)?.nombre ?? 'Ejercicio'}`}
+          onCambio={(c) => editar((bl) => { Object.assign(bl[tecDe.bi].ejercicios[tecDe.ei].series[tecDe.si], c) }, false)}
+          onCerrar={() => setTecDe(null)} />
+      )}
       {picker && (
         <Picker multi={picker.e == null} titulo={picker.e == null ? `Agregar al bloque ${bloques[picker.b]?.orden}` : 'Cambiar ejercicio'}
           onCerrar={() => setPicker(null)} onElegir={elegido} />

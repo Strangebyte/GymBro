@@ -6,6 +6,10 @@ Registro de qué se decidió y por qué. Lo más nuevo, arriba.
 
 | Decisión | Razón |
 |---|---|
+| Técnicas por serie: myo-reps, rest-pause y drop set, como una serie principal con "tramos" | Las tres son una serie seguida de tramos casi sin descanso; solo cambia si el tramo lleva peso (drop) o no. Una sola estructura sirve para las tres y para otras que aparezcan |
+| Progreso y series por grupo cuentan solo la serie principal | Así una serie con técnica se compara con una normal y el volumen no se infla |
+| Al abrir un bloque, la pantalla lo deja arriba; abrir y cerrar tiene transición | Pedido del dueño: al abrir otro bloque, el anterior se cerraba y la pantalla quedaba en otra parte |
+| Pesos de curl con mancuernas (40 kg) y caminata en puntas (52-56 kg) divididos por dos, también en el plan | El dueño confirmó que eran la suma de las dos mancuernas |
 | En ejercicios con dos mancuernas o kettlebells se anota el peso de una sola y la tabla dice "kg c/u" | Había dudas de si cargar 12 o 24 con dos mancuernas de 12. El dueño ya cargaba por mancuerna; es la convención más común y el número que se ve en la pesa. Cada ejercicio lo indica con la casilla "Se hace con dos mancuernas o pesas" |
 | Ajuste para ver y cargar los pesos en kg o en lb; por dentro se sigue guardando en gramos | Pedido del dueño. Guardar siempre igual hace que cambiar de unidad no toque ningún dato y que el historial se vea completo en cualquiera de las dos |
 | El archivo de plan y la copia de seguridad siguen en kilos aunque se elija libras | Así un plan o una copia sirven para cualquiera. Con libras, el pedido para la IA le indica que convierta |
