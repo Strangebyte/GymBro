@@ -129,6 +129,8 @@ def main():
             ej = pg.locator('.ej', has_text='Press de banca con barra')
             ok('Series precargadas con el plan y editables a mano', ej.locator('input').nth(0).input_value() == '8' and ej.locator('input').nth(1).input_value() == '80')
             ok('Sesión: botón para ver la imagen incluida', ej.locator('[aria-label^="Ver video o imagen"]').count() == 1)
+            gem = pg.locator('.ej', has_text='Caminata en puntas de pie')
+            ok('Dos pesas: la tabla dice «kg c/u» solo en los ejercicios con dos mancuernas', 'KG C/U' in gem.inner_text().upper() and 'kg c/u' in gem.inner_text() and 'C/U' not in ej.inner_text().upper())
             ok('Sin controles de RIR/RPE/fallo en la sesión', pg.locator('.bloque-c .chip').count() == 0)
             ok('Última vez: fecha corta y texto completo, sin cortar', 'Últ. vez (10/11):' in ej.inner_text() and ej.locator('.truncate').count() == 0)
             campo = ej.locator('input').nth(1); campo.fill('82,5'); campo.blur(); pg.wait_for_timeout(250)
@@ -447,7 +449,7 @@ def main():
             desp, _ = backup(pg)
             ids = {e['id'] for e in desp['exercises']}
             porSlug = {e['slug']: e for e in desp['exercises']}
-            ok('Catálogo viejo → nuevo: 155 ejercicios y la revisión anotada', len(desp['exercises']) == 155 and [m['value'] for m in desp['meta'] if m['key'] == 'catalogo'] == [4], str(len(desp['exercises'])))
+            ok('Catálogo viejo → nuevo: 155 ejercicios y la revisión anotada', len(desp['exercises']) == 155 and [m['value'] for m in desp['meta'] if m['key'] == 'catalogo'] == [5], str(len(desp['exercises'])))
             viejo = {e['slug']: e['id'] for e in antes['exercises']}
             n_borradas = sum(1 for l in antes['setLogs'] if l['exercise_id'] == viejo['rebote-y-freno'])
             ok('Solo se pierden las series del ejercicio que el dueño pidió borrar del todo', len(antes['setLogs']) == 1087 and n_borradas == 3 and len(desp['setLogs']) == 1087 - n_borradas and len(desp['sessions']) == 29, f"{len(desp['setLogs'])} {n_borradas}")
@@ -458,6 +460,7 @@ def main():
             ok('Ejercicios fusionados: el historial pasa al que queda', 'carpas-dinamico' not in porSlug and n_antes == n_desp > 0, f'{n_antes} {n_desp}')
             ok('Nombres nuevos, el viejo queda como alias, y los clásicos agregados', porSlug['press-plano']['nombre'] == 'Press de banca con barra'
                and 'Press plano' in porSlug['press-plano']['alias'] and 'camilla-de-cuadriceps' in porSlug and porSlug['press-plano']['id'] == viejo['press-plano'])
+            ok('Dos pesas marcado en los ejercicios ya guardados', porSlug['biceps-mc'].get('dos_pesas') is True and not porSlug['sentadilla-goblet'].get('dos_pesas') and porSlug['press-arnold'].get('dos_pesas') is True)
             ok('Sin archivados de fábrica; los dos ejercicios retirados ya no están', not [e for e in desp['exercises'] if e['archivo']] and 'remo-tandem-en-puntas' not in porSlug and 'rebote-y-freno' not in porSlug)
             viejos = {'dorsal', 'trapecio', 'hombro_anterior', 'hombro_lateral', 'hombro_posterior', 'isquios', 'aductores', 'gemelo', 'full_body', 'movilidad_cadera'}
             ok('Grupos y patrones unificados en los datos ya guardados', not any(e['grupo'] in viejos or e['patron'].startswith('core_') or e['patron'] == 'locomocion' or any(x['grupo'] in viejos for x in e['sec']) for e in desp['exercises'])

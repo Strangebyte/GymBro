@@ -4,7 +4,7 @@
 
 ## Dónde está
 
-- La app está completa y funcionando en las pruebas automáticas (126 de 126, sin errores de consola).
+- La app está completa y funcionando en las pruebas automáticas (128 de 128, sin errores de consola).
 - **Publicada en GitHub Pages:** https://<usuario>.github.io/GymBro/ (repositorio público
   `<usuario>/GymBro`). Cada push a `main` la vuelve a publicar sola. Verificado el 14-11-2026 en
   Chromium: abre sin errores, registra el service worker. Desde el 16-11-2026 arranca solo con el catálogo: sin planes ni sesiones.
@@ -25,6 +25,9 @@ video y scroll táctil con una hoja abierta.
 - **Probar en el teléfono** lo último publicado, que solo se verificó en el simulador: Progreso con reps
   (a igual peso muestra "+N reps"; ejercicios sin peso siguen reps o tiempo), series por grupo muscular siempre
   visible, que ya no se recargue al deslizar hacia abajo, adjuntar foto o video desde la ficha, acentos en categorías y etiquetas, las tres paletas de color (Ajustes → Color), y "Copiar pedido para Claude" en Importar plan con un Claude real.
+- **Dos pesas, a confirmar con el dueño:** thrusters con KB y press de hombro arrodillado con KB quedaron como dos pesas;
+  sentadilla con salto con KB y zancada con salto, como una. En el historial importado, "Curl de bíceps con mancuernas"
+  (40 kg) y "Caminata en puntas de pie" (52-56 kg) parecen la suma de las dos mancuernas aunque el dueño cargó por mancuerna.
 - **Probar en iPhone** que ya no se agrande la pantalla al tocar "Pegar el plan" ni otros campos. El arreglo no se
   pudo verificar acá: solo aplica en iOS.
 - **Antebrazos** quedó como grupo sin ejercicios de fábrica; sumar alguno si el dueño lo pide.
@@ -82,7 +85,6 @@ video y scroll táctil con una hoja abierta.
 
 ## Ideas en espera (no pedidas todavía)
 
-- Distinguir si el peso es por mancuerna/pesa o total (propuesta hecha el 18-11-2026, sin decisión)
 - Myo-reps: el dueño pidió la idea, no la implementación (18-11-2026)
 - Backup automático (Drive u otro): el dueño lo descartó por ahora; exigiría cuenta de Google
 - Inventario de discos y calculadora de carga por lado
@@ -95,6 +97,7 @@ video y scroll táctil con una hoja abierta.
 | Fecha | Qué se hizo |
 |---|---|
 | 10-11-2026 | Diseño (`docs/historico/`), catálogo de 96 ejercicios, primera versión solo de registro |
+| 18-11-2026 | Ejercicios con dos pesas: la tabla dice "kg c/u" y se anota el peso de una sola (revisión 5 del catálogo) |
 | 18-11-2026 | Ajuste de unidad de peso (kg o lb); el editor de días ya no marca cambios al pasar por un campo sin tocarlo |
 | 16-11-2026 | Datos personales fuera de los archivos y del historial de git; campo de otros nombres más grande |
 | 16-11-2026 | Auditoría de la app y de datos personales en el repositorio; arreglos menores; el bloque cerrado del editor muestra grupos y equipamiento |

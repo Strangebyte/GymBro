@@ -320,7 +320,7 @@ export function Picker(props: { titulo: string; onElegir: (e: Exercise) => void;
 }
 
 /** Historial de un ejercicio: lista informativa, sin enlaces. */
-export function HistorialLista({ exerciseId, lastre, excluir }: { exerciseId: number; lastre: boolean; excluir?: number }) {
+export function HistorialLista({ exerciseId, lastre, cu = false, excluir }: { exerciseId: number; lastre: boolean; cu?: boolean; excluir?: number }) {
   const [hist, setHist] = useState<SesionDeEjercicio[] | null>(null)
   useEffect(() => { let v = true; void historicoEjercicio(exerciseId, 40).then((h) => { if (v) setHist(h.filter((x) => x.session_id !== excluir)) }); return () => { v = false } }, [exerciseId, excluir])
   if (!hist) return <div className="empty">Cargando…</div>
@@ -330,7 +330,7 @@ export function HistorialLista({ exerciseId, lastre, excluir }: { exerciseId: nu
       {hist.map((s) => (
         <div key={s.session_id} className="item" style={{ alignItems: 'flex-start' }}>
           <b className="small mono" style={{ minWidth: 84 }}>{fmtFecha(s.fecha)}</b>
-          <span className="grow xsmall mono">{resumenSets(s.sets, lastre)}</span>
+          <span className="grow xsmall mono">{resumenSets(s.sets, lastre, cu)}</span>
         </div>
       ))}
     </div>

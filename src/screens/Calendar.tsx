@@ -244,7 +244,7 @@ export function SessionDetailScreen({ id }: { id: number }) {
                   <button key={k} className="item" style={{ alignItems: 'flex-start' }} onClick={() => ex && nav.ir({ v: 'ejercicio', id: ex.id! })}>
                     <div className="grow">
                       <div className="bold small">{ex?.nombre ?? 'Ejercicio borrado'}</div>
-                      <div className="xsmall muted mono" style={{ marginTop: 2 }}>{resumenSets(ordenadas, ex?.lastre)}</div>
+                      <div className="xsmall muted mono" style={{ marginTop: 2 }}>{resumenSets(ordenadas, ex?.lastre, ex?.dos_pesas)}</div>
                     </div>
                   </button>
                 )

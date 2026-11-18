@@ -20,6 +20,8 @@ export interface Exercise {
   patron: string
   unilateral: boolean
   lastre: boolean
+  /** Se hace con dos mancuernas o pesas: el peso que se anota es el de una sola ("kg c/u"). */
+  dos_pesas?: boolean
   mide: Mide
   vol: boolean
   inc: number | null
@@ -203,7 +205,7 @@ type SeedSet = { reps?: number; seg?: number; peso_kg?: number; rir?: number; rp
 type SeedEx = {
   slug: string; nombre: string; legible: string | null; grupo: string
   sec: { grupo: string; factor: number }[]; equipo: string; patron: string
-  unilateral: boolean; lastre: boolean; mide: string; vol: boolean; inc: number | null
+  unilateral: boolean; lastre: boolean; dos_pesas?: boolean; mide: string; vol: boolean; inc: number | null
   archivo: boolean; notas: string | null; alias?: string[]
 }
 type SeedData = {
@@ -262,7 +264,7 @@ function clavesNuevas(e: Exercise): Pick<Exercise, 'grupo' | 'sec' | 'patron'> |
 function deSemilla(e: SeedEx): Exercise {
   return {
     slug: e.slug, nombre: e.nombre, legible: e.legible, grupo: e.grupo, sec: e.sec, equipo: e.equipo,
-    patron: e.patron, unilateral: e.unilateral, lastre: e.lastre, mide: e.mide as Mide, vol: e.vol,
+    patron: e.patron, unilateral: e.unilateral, lastre: e.lastre, dos_pesas: !!e.dos_pesas, mide: e.mide as Mide, vol: e.vol,
     inc: e.inc, archivo: e.archivo, notas: e.notas, alias: e.alias ?? [], custom: false, descanso_s: descansoDefault(e),
   }
 }
@@ -339,7 +341,7 @@ export async function actualizarCatalogo(): Promise<void> {
       for (const a of s.alias ?? []) if (!alias.includes(a)) alias.push(a)
       if (e.custom || e.editado) await db.exercises.update(e.id!, { alias })   // creado o modificado por el usuario: no se pisa
       else await db.exercises.update(e.id!, {
-        nombre: s.nombre, legible: s.legible, grupo: s.grupo, sec: s.sec, equipo: s.equipo, patron: s.patron, alias,
+        nombre: s.nombre, legible: s.legible, grupo: s.grupo, sec: s.sec, equipo: s.equipo, patron: s.patron, alias, dos_pesas: !!s.dos_pesas,
         // Lo archivado solo se tocó en la revisión 2 (se sacaron los archivados de fábrica); después es decisión del usuario.
         ...(actual < 2 ? { archivo: s.archivo } : {}),
       })

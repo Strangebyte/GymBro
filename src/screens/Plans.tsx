@@ -2,7 +2,7 @@ import { useMemo, useRef, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, type Exercise, type PBlock, type PlanDay, type PSet } from '../db'
 import { Chevron, Picker, sinGuardia, TopBar, useDialogos, useGuardiaSalida, useNav } from '../ui'
-import { etiqueta, plural, GRUPOS, guardarArchivo, numES, pesoDesdeTexto, pesoTxt, resumenSets, setValido, slugify, unidadPeso } from '../lib'
+import { etiqueta, plural, GRUPOS, guardarArchivo, numES, pesoDesdeTexto, pesoTxt, resumenSets, rotuloPeso, setValido, slugify } from '../lib'
 import { activarPlan, borrarPlan, duplicarDia, reordenarDias } from '../actions'
 import { EJEMPLO_PLAN, exportarPlan, guardarPlan, leerPlan, pedidoParaIA, type ImpPlan, type Resolucion } from '../plan'
 
@@ -217,7 +217,7 @@ export function PlanDayScreen({ id }: { id: number }) {
                           <button className="mini" disabled={ei === b.ejercicios.length - 1} aria-label="Bajar ejercicio" onClick={() => editar((bl) => { const x = bl[bi].ejercicios; [x[ei + 1], x[ei]] = [x[ei], x[ei + 1]] })}>↓</button>
                         </div>
                         <div className="ed-serie" style={{ marginTop: 6 }}>
-                          <span /><span className="h">{enSeg ? 'seg' : 'reps'}</span><span className="h">{unidadPeso()}</span><span className="h">RIR</span><span className="h">RPE</span><span className="h">fallo</span><span />
+                          <span /><span className="h">{enSeg ? 'seg' : 'reps'}</span><span className="h">{ex?.lastre ? `lastre ${rotuloPeso()}` : rotuloPeso(ex?.dos_pesas)}</span><span className="h">RIR</span><span className="h">RPE</span><span className="h">fallo</span><span />
                         </div>
                         {e.series.map((x, si) => {
                           const set = (c: Partial<PSet>) => editar((bl) => { Object.assign(bl[bi].ejercicios[ei].series[si], c) }, false)
@@ -226,7 +226,7 @@ export function PlanDayScreen({ id }: { id: number }) {
                               <span className="xsmall muted center">{si + 1}</span>
                               <input inputMode="numeric" aria-label={`Serie ${si + 1}: ${enSeg ? 'segundos' : 'reps'}`} defaultValue={aTxt(enSeg ? x.seg : x.reps)} key={`m${enSeg}${si}${e.series.length}`}
                                 onBlur={(ev) => set(enSeg ? { seg: aNum(ev.target.value), reps: null } : { reps: aNum(ev.target.value), seg: null })} />
-                              <input inputMode="decimal" aria-label={`Serie ${si + 1}: peso en ${unidadPeso()}`} defaultValue={pesoTxt(x.peso_g)} key={`p${si}${e.series.length}`}
+                              <input inputMode="decimal" aria-label={`Serie ${si + 1}: peso en ${rotuloPeso(ex?.dos_pesas)}`} defaultValue={pesoTxt(x.peso_g)} key={`p${si}${e.series.length}`}
                                 onBlur={(ev) => { const g = pesoDesdeTexto(ev.target.value, x.peso_g); if (g !== (x.peso_g || null)) set({ peso_g: g }) }} />
                               <input inputMode="numeric" aria-label={`Serie ${si + 1}: RIR`} defaultValue={aTxt(x.rir)} key={`i${si}${e.series.length}${x.rir ?? 'x'}`}
                                 onBlur={(ev) => { const n = aNum(ev.target.value); set(n == null ? { rir: null } : { rir: n, rpe: null }) }} />

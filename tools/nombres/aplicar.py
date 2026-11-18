@@ -18,7 +18,7 @@ import json, os, re, unicodedata
 from openpyxl import load_workbook
 
 RAIZ = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
-REV = 4
+REV = 5
 
 def norm(s):
     s = unicodedata.normalize('NFKD', s).encode('ascii', 'ignore').decode().lower()
@@ -112,6 +112,21 @@ PATRONES = {
     'core_antiextension': 'core', 'core_antiflexion_lateral': 'core', 'core_antirotacion': 'core', 'core_rotacion': 'core',
     'locomocion': 'acarreo',
 }
+
+# ---------------------------------------------------------------- dos pesas (18-11-2026)
+# Ejercicios que se hacen con dos mancuernas o dos kettlebells: el peso que se anota es el de una sola ("kg c/u").
+# Los de una sola pesa (goblet, swing, remos y press a un brazo, pullover…) quedan afuera. Dudosos, a confirmar con el
+# dueño: thrusters-kb y press-hombro-rr-kb (marcados como dos), sentadilla-salto-kb y sentadilla-split-salto-cambio-kb (una).
+DOS_PESAS = [
+    'caminata-de-gemelo-mc', 'press-inclinado-con-mancuernas', 'biceps-mc', 'biceps-alterno-mc', 'biceps-hombro-mc',
+    'vuelo-combinado-alterno', 'vuelo-frontal-lateral', 'press-hombro-ba-kb', 'press-hombro-rr-kb', 'thrusters-kb',
+]
+DOS_PESAS_NUEVOS = [
+    'Press de banca con mancuernas', 'Press declinado con mancuernas', 'Aperturas con mancuernas',
+    'Encogimientos de hombros con mancuernas', 'Press de hombros con mancuernas', 'Press Arnold', 'Vuelos laterales con mancuernas',
+    'Vuelos frontales con mancuernas', 'Vuelos posteriores con mancuernas', 'Curl martillo con mancuernas', 'Estocadas con mancuernas',
+    'Caminata del granjero',
+]
 
 # ---------------------------------------------------------------- ejercicios clásicos que faltaban
 def N(nombre, grupo, equipo, patron, alias, imagen=None, **kw):
@@ -220,8 +235,9 @@ def main():
         alias.append(f['actual'])                      # el nombre viejo siempre se sigue reconociendo
         for de, a in FUSIONES.items():                 # y también los nombres de los que absorbió
             if a == slug: alias += [filas[de]['actual'], filas[de]['sugerido']]
-        ejercicios[slug] = {'nombre': nombre, 'alias': alias, **OTROS.get(slug, {})}
-    nuevos = [dict(n) for n in NUEVOS]
+        ejercicios[slug] = {'nombre': nombre, 'alias': alias, 'dos_pesas': slug in DOS_PESAS, **OTROS.get(slug, {})}
+    nuevos = [dict(n, dos_pesas=n['nombre'] in DOS_PESAS_NUEVOS) for n in NUEVOS]
+    assert set(DOS_PESAS_NUEVOS) <= {n['nombre'] for n in NUEVOS} and set(DOS_PESAS) <= set(filas), 'DOS_PESAS nombra un ejercicio que no existe'
 
     # Ningún nombre ni alias puede apuntar a dos ejercicios distintos; un alias igual al nombre propio sobra.
     visto = {}

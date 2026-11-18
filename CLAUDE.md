@@ -20,7 +20,7 @@ npm run seed         # regenera src/seed.json, src/seed-historial.json y data/*.
 npm run test:e2e     # requiere dist/ y: pip install playwright && playwright install chromium
 ```
 
-Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 126 verificaciones tienen que pasar
+Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 128 verificaciones tienen que pasar
 y no puede haber errores de consola. Si cambiás un flujo, actualizá `tests/e2e.py` en el mismo cambio.
 
 ## Cómo trabajar
@@ -83,6 +83,8 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
   lib.ts (`pesoTxt`, `pesoDesdeTexto`, `fmtPeso`, `enUnidad`, `unidadPeso`): respetan el ajuste `unidad` (kg o lb). Nunca
   escribir "kg" ni dividir por 1000 en una pantalla. El formato de plan (`peso_kg`) y la copia de seguridad van en kg/gramos
   siempre, sin importar la unidad elegida.
+- **Dos pesas** (`dos_pesas`): en los ejercicios con dos mancuernas o kettlebells se anota el peso de una sola y se
+  muestra "kg c/u" (`rotuloPeso`). No convierte nada: es solo el rótulo, para que todos carguen igual.
 - **El plan y el registro son tablas separadas.** Nada de lo que pasa en una sesión modifica el plan, con una
   sola excepción explícita: la casilla "Actualizar el plan con los pesos y reps de hoy" al cerrar (desmarcada
   por defecto), que solo toca peso/reps/segundos de series que coinciden por ejercicio, bloque, orden y serie.

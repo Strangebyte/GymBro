@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, type Exercise, type Session, type SetLog, type Settings } from '../db'
 import { Chevron, Chips, HistorialLista, Ico, MediaView, Picker, Sheet, Stepper, TopBar, useDialogos, useNav, useTieneMedia } from '../ui'
-import { etiqueta, fmtDur, fmtFecha, fmtFechaCorta, mmss, pesoDesdeTexto, pesoTxt, plural, prepararSonido, resumenSets, setValido, sonar, ultimaVez, unidadPeso, vibrar } from '../lib'
+import { etiqueta, fmtDur, fmtFecha, fmtFechaCorta, mmss, pesoDesdeTexto, pesoTxt, plural, prepararSonido, resumenSets, rotuloPeso, setValido, sonar, ultimaVez, unidadPeso, vibrar } from '../lib'
 import { agregarEjercicio, agregarSerie, descartarSesion, sesionEnCurso, terminarSesion } from '../actions'
 
 export type Item = { key: string; bloque: number; orden: number; ex: Exercise; sets: SetLog[] }
@@ -168,9 +168,9 @@ export function Tarjeta(props: { item: Item; sesion: Session; porEjercicio: bool
 
   useEffect(() => {
     let vivo = true
-    void ultimaVez(ex.id!, sesion.id!).then((u) => { if (vivo) setPrevio(u ? { fecha: u.fecha, txt: resumenSets(u.sets, ex.lastre) } : null) })
+    void ultimaVez(ex.id!, sesion.id!).then((u) => { if (vivo) setPrevio(u ? { fecha: u.fecha, txt: resumenSets(u.sets, ex.lastre, ex.dos_pesas) } : null) })
     return () => { vivo = false }
-  }, [ex.id, ex.lastre, sesion.id])
+  }, [ex.id, ex.lastre, ex.dos_pesas, sesion.id])
 
   const listo = sets.every((s) => s.hecha)
   const enSeg = sets.some((s) => s.seg != null) || (ex.mide === 'seg' && !sets.some((s) => s.reps != null))
@@ -196,7 +196,7 @@ export function Tarjeta(props: { item: Item; sesion: Session; porEjercicio: bool
       )}
 
       <div className="ss h">
-        <span /><span>{enSeg ? 'seg' : 'reps'}{ex.unilateral ? ' c/lado' : ''}</span><span>{ex.lastre ? `lastre ${unidadPeso()}` : unidadPeso()}</span><span>objetivo</span><span />
+        <span /><span>{enSeg ? 'seg' : 'reps'}{ex.unilateral ? ' c/lado' : ''}</span><span>{ex.lastre ? `lastre ${unidadPeso()}` : rotuloPeso(ex.dos_pesas)}</span><span>objetivo</span><span />
       </div>
       {sets.map((s) => (
         <div key={s.id} className="ss">
@@ -204,7 +204,7 @@ export function Tarjeta(props: { item: Item; sesion: Session; porEjercicio: bool
           <input inputMode="numeric" aria-label={`${ex.nombre}, serie ${s.serie}: ${enSeg ? 'segundos' : 'reps'}`}
             defaultValue={enSeg ? (s.seg ?? '') : (s.reps ?? '')} placeholder={s.fallo ? 'fallo' : '—'}
             onBlur={(e) => { const n = aNum(e.target.value); void db.setLogs.update(s.id!, enSeg ? { seg: n, reps: null } : { reps: n, seg: null }) }} />
-          <input inputMode="decimal" aria-label={`${ex.nombre}, serie ${s.serie}: peso en ${unidadPeso()}`}
+          <input inputMode="decimal" aria-label={`${ex.nombre}, serie ${s.serie}: peso en ${rotuloPeso(ex.dos_pesas)}`}
             defaultValue={pesoTxt(s.peso_g)} placeholder="—"
             onBlur={(e) => { const g = pesoDesdeTexto(e.target.value, s.peso_g); if (g !== (s.peso_g || null)) void db.setLogs.update(s.id!, { peso_g: g }) }} />
           <span className="obj">{objetivo(s) || '—'}</span>
@@ -217,7 +217,7 @@ export function Tarjeta(props: { item: Item; sesion: Session; porEjercicio: bool
         <button className="q" onClick={() => void quitar()}>Quitar</button>
       </div>
 
-      {hoja === 'historial' && <Sheet titulo={ex.nombre} onCerrar={() => setHoja(null)}><HistorialLista exerciseId={ex.id!} lastre={ex.lastre} excluir={sesion.id} /></Sheet>}
+      {hoja === 'historial' && <Sheet titulo={ex.nombre} onCerrar={() => setHoja(null)}><HistorialLista exerciseId={ex.id!} lastre={ex.lastre} cu={ex.dos_pesas} excluir={sesion.id} /></Sheet>}
       {hoja === 'media' && <Sheet titulo={ex.nombre} onCerrar={() => setHoja(null)}><MediaView exerciseId={ex.id!} url={ex.url} slug={ex.slug} /></Sheet>}
       {hoja === 'cambiar' && (
         <Picker titulo={`Reemplazar ${ex.nombre}`} onCerrar={() => setHoja(null)}

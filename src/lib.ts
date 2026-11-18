@@ -28,18 +28,20 @@ export function pesoDesdeTexto(v: string, actual: number | null | undefined): nu
   if (t === '' || !Number.isFinite(n) || n === 0) return null
   return Math.round(unidad === 'lb' ? n * G_POR_LB : n * 1000)
 }
-export function fmtPeso(g: number | null | undefined, lastre = false): string {
+/** Rótulo del peso de un ejercicio: "kg", "lb", y "kg c/u" si se hace con dos pesas (se anota el peso de una). */
+export const rotuloPeso = (cu = false): string => `${unidad}${cu ? ' c/u' : ''}`
+export function fmtPeso(g: number | null | undefined, lastre = false, cu = false): string {
   if (g == null || g === 0) return ''
-  return `${lastre ? '+' : ''}${numES(enUnidad(g))} ${unidad}`
+  return `${lastre ? '+' : ''}${numES(enUnidad(g))} ${rotuloPeso(cu)}`
 }
 
 /** Resumen corto de una serie: "8r · 80 kg · RPE 8". */
-export function fmtSet(s: PSet | SetLog, lastre = false): string {
+export function fmtSet(s: PSet | SetLog, lastre = false, cu = false): string {
   const p: string[] = []
   if (s.fallo && s.reps == null) p.push('al fallo')
   else if (s.reps != null) p.push(`${s.reps}r${s.fallo ? ' (fallo)' : ''}`)
   if (s.seg != null) p.push(`${s.seg}"`)
-  if (s.peso_g) p.push(fmtPeso(s.peso_g, lastre))
+  if (s.peso_g) p.push(fmtPeso(s.peso_g, lastre, cu))
   if (s.rir != null) p.push(`RIR ${s.rir}`)
   if (s.rpe != null) p.push(`RPE ${s.rpe}`)
   return p.join(' · ') || 'sin datos'
@@ -50,9 +52,9 @@ export function setValido(s: PSet | SetLog): boolean {
   return s.reps != null || s.seg != null || !!s.peso_g || s.rir != null || s.rpe != null || !!s.fallo
 }
 
-export function resumenSets(sets: (PSet | SetLog)[], lastre = false): string {
+export function resumenSets(sets: (PSet | SetLog)[], lastre = false, cu = false): string {
   if (!sets.length) return '—'
-  const txt = sets.map((s) => fmtSet(s, lastre))
+  const txt = sets.map((s) => fmtSet(s, lastre, cu))
   if (txt.every((t) => t === txt[0])) return `${sets.length} × ${txt[0]}`
   return txt.join('  |  ')
 }
@@ -167,7 +169,7 @@ export function progresoDe(filas: { fecha: string; set: SetLog }[]): { medida: M
   return { medida, puntos: [...m.values()].sort((a, b) => a.fecha.localeCompare(b.fecha)) }
 }
 /** Rótulo de una medida de progreso. `kg` es "peso": se muestra en la unidad elegida. */
-export const unidadDe = (m: Medida, lastre = false): string => (m === 'kg' ? (lastre ? `${unidad} de lastre` : unidad) : m === 'reps' ? 'reps' : 'segundos')
+export const unidadDe = (m: Medida, lastre = false, cu = false): string => (m === 'kg' ? (lastre ? `${unidad} de lastre` : rotuloPeso(cu)) : m === 'reps' ? 'reps' : 'segundos')
 
 // ------------------------------------------------------------------ dispositivo
 export function vibrar(patron: number | number[]): void {

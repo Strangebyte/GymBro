@@ -6,6 +6,7 @@ Registro de qué se decidió y por qué. Lo más nuevo, arriba.
 
 | Decisión | Razón |
 |---|---|
+| En ejercicios con dos mancuernas o kettlebells se anota el peso de una sola y la tabla dice "kg c/u" | Había dudas de si cargar 12 o 24 con dos mancuernas de 12. El dueño ya cargaba por mancuerna; es la convención más común y el número que se ve en la pesa. Cada ejercicio lo indica con la casilla "Se hace con dos mancuernas o pesas" |
 | Ajuste para ver y cargar los pesos en kg o en lb; por dentro se sigue guardando en gramos | Pedido del dueño. Guardar siempre igual hace que cambiar de unidad no toque ningún dato y que el historial se vea completo en cualquiera de las dos |
 | El archivo de plan y la copia de seguridad siguen en kilos aunque se elija libras | Así un plan o una copia sirven para cualquiera. Con libras, el pedido para la IA le indica que convierta |
 | Pasar por un campo de peso sin cambiarlo no reescribe el valor | En libras, el redondeo de la conversión movía el peso guardado en un gramo cada vez |

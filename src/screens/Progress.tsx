@@ -183,7 +183,7 @@ export function ProgressScreen({ settings }: { settings: Settings }) {
                   {f.pct && <span className="xsmall" style={{ display: 'block', fontWeight: 600 }}>{f.pct}</span>}
                 </span>
               </button>
-              {abierto === f.id && f.pts.length > 0 && <div className="pm-d"><GraficoPesos puntos={f.pts} unidad={unidadDe(f.medida, f.ex.lastre)} /></div>}
+              {abierto === f.id && f.pts.length > 0 && <div className="pm-d"><GraficoPesos puntos={f.pts} unidad={unidadDe(f.medida, f.ex.lastre, f.ex.dos_pesas)} /></div>}
             </div>
           ))}
         </div>

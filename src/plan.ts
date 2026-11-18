@@ -291,6 +291,7 @@ Reglas del formato:
 - "rir" y "rpe" nunca van juntos en la misma serie. RIR son las repeticiones en reserva (0 = al fallo). RPE es el esfuerzo de 1 a 10 (10 = al fallo).
 - Si todas las series de un ejercicio son iguales se puede abreviar con "series": 3 y los valores al lado. Si cambian (series ascendentes, por ejemplo), escribilas una por una.
 - En ejercicios con lastre (dominadas, fondos), "peso_kg" es el peso agregado.
+- En ejercicios con dos mancuernas o dos kettlebells, "peso_kg" es el peso de una sola, no la suma.
 - "peso_kg" es opcional: si no sabés qué carga uso, no lo pongas. No inventes pesos.${unidadPeso() === 'lb' ? '\n- Yo uso libras, pero "peso_kg" va siempre en kilos: convertí cada peso (1 lb = 0,4536 kg) y redondeá a un decimal.' : ''}
 - Si usás un ejercicio que no está en mi lista, agregale "grupo" con su músculo principal, uno de: ${GRUPOS.map(etiqueta).join(', ')}.
 - "notas" es opcional, para una indicación corta por ejercicio.

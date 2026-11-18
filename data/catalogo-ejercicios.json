@@ -21,7 +21,8 @@
     "Flexión y extensión de cadera con banda",
     "Banded hip flexion extension",
     "Flexo-Extensión Cadera - BD"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "psoas-dinamico",
@@ -43,7 +44,8 @@
     "Estiramiento dinámico de flexores de cadera",
     "Dynamic hip flexor stretch",
     "Estiramiento de psoas"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "aductores-dinamico",
@@ -65,7 +67,8 @@
     "Movilidad de aductores",
     "Dynamic adductor stretch",
     "Estiramiento de aductores"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "isquiotibiales-rd",
@@ -89,7 +92,8 @@
     "Hamstring foam roll",
     "Hamstring SMR",
     "Isquiotibiales - RD"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "isquiotibiales-en-columna",
@@ -112,7 +116,8 @@
     "Hamstring wall stretch",
     "Supine hamstring stretch",
     "Isquiotibiales en columna"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "spiderman-rotacion-dt",
@@ -136,7 +141,8 @@
     "Spiderman lunge with rotation",
     "Zancada con rotación de tronco",
     "Spiderman ROTACIÓN DT"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "spiderman-rotacion",
@@ -156,7 +162,8 @@
    "alias": [
     "Spiderman rotación",
     "Zancada con rotación"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "carpa-2p",
@@ -182,7 +189,8 @@
     "Carpa 2p",
     "Carpas DINÁMICO",
     "Carpa dinámica"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "buda-asistido-dc",
@@ -206,7 +214,8 @@
     "Goblet squat hold",
     "Movilidad en sentadilla profunda",
     "Buda ASISTIDO - DC"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "buda-rotacion-tronco-asistido",
@@ -228,7 +237,8 @@
     "Deep squat con rotación torácica",
     "Squat to thoracic rotation",
     "Buda ROTACIÓN TRONCO ASISTIDO"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "rotacion-tronco-pared-t",
@@ -251,7 +261,8 @@
     "Rotación de tronco pared T",
     "Rotación de tronco contra la pared",
     "Rotación tronco PARED T"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "bretzel",
@@ -274,7 +285,8 @@
     "Pretzel stretch",
     "Estiramiento pretzel",
     "Bretzel"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "caderas-y-piramidal",
@@ -298,7 +310,8 @@
     "Figure four stretch",
     "Estiramiento de glúteo",
     "Caderas y piramidal"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "cadera-con-glide-lateral-cuadrupedia",
@@ -321,7 +334,8 @@
     "Rock back lateral en cuadrupedia",
     "Movilidad de cadera en cuadrupedia con deslizamiento lateral",
     "Cadera con glide lateral cuadrupedia"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "elevaciones-de-cadera-caminata-i-v",
@@ -354,7 +368,8 @@
     "Marching glute bridge",
     "Puente de glúteo con marcha",
     "Elevaciones de cadera CAMINATA I/V"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "elevaciones-de-cadera-1p-mb",
@@ -382,7 +397,8 @@
     "Puente a una pierna en fitball",
     "Single leg glute bridge on ball",
     "Elevaciones de Cadera 1P - MB"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "puente-lateral-cambio",
@@ -403,7 +419,8 @@
     "Puente lateral con cambio",
     "Plancha lateral inclinada con técnica de carrera",
     "Puente lateral cambio"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "puente-lateral-inclinado-con-apertura",
@@ -424,7 +441,8 @@
     "Puente lateral inclinado con apertura",
     "Side plank inclinado con elevación de pierna",
     "Incline side plank with hip abduction"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "puente-isquio-con-cambio",
@@ -451,7 +469,8 @@
     "Puente de isquios alternado",
     "Alternating hamstring bridge",
     "Hamstring bridge"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "puente-de-cadera-cambio",
@@ -478,7 +497,8 @@
     "Puente de glúteo alternado",
     "Alternating single leg glute bridge",
     "Puente de cadera CAMBIO"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "giros-oh-en-tandem",
@@ -505,7 +525,8 @@
     "Giros OH",
     "Giros con disco sobre la cabeza",
     "Giros OH en tandem"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "cuadrupedia-con-patada",
@@ -533,7 +554,8 @@
     "Donkey kick",
     "Glute kickback",
     "Extensión de cadera en cuadrupedia"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "anti-flexion-lateral-cambio-de-pie-bd",
@@ -555,7 +577,8 @@
     "Banded lateral anti-flexion",
     "Anti flexión lateral cambio de pie",
     "Anti-Flexión Lateral CAMBIO DE PIE - BD"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "plancha-construyo",
@@ -580,7 +603,8 @@
     "Plank up down",
     "Up down plank",
     "Commando plank"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "plancha-copenhague-1-2-con",
@@ -608,7 +632,8 @@
     "Copenhagen plank",
     "Copenhagen adductor plank",
     "Plancha COPENHAGUE 1/2 CON"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "plancha-alta-carrera",
@@ -632,7 +657,8 @@
     "Mountain climber",
     "Plancha con rodillas al pecho",
     "Plancha alta CARRERA"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "plancha-lateral-giro",
@@ -655,7 +681,8 @@
     "Side plank rotation",
     "Thread the needle",
     "Plancha lateral GIRO"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "abdominal-con-aductores",
@@ -683,7 +710,8 @@
     "Crunch apretando pelota entre las rodillas",
     "Adductor squeeze crunch",
     "Abdominal apretando con los aductores"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "descenso-piernas-rectas-con-control-abdomen",
@@ -707,7 +735,8 @@
     "Lying leg raise",
     "Leg raises",
     "Descenso piernas rectas con control abdomen"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "caminata-de-camarera-1m-kb",
@@ -741,7 +770,8 @@
     "Caminata con kettlebell sobre la cabeza",
     "Overhead carry a un brazo",
     "Caminata de Camarera 1m - KB"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "hollow",
@@ -765,7 +795,8 @@
     "Posición hueca",
     "Banana",
     "Hollow (posición hueca sostenida)"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "bear-crawl-dinamico",
@@ -793,7 +824,8 @@
     "Shoulder taps en cuadrupedia",
     "Bear shoulder taps",
     "Bear Crawl DINÁMICO"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "desliz-barra-en-puntas",
@@ -815,7 +847,8 @@
     "Deslizamiento de barra",
     "Desliz barra en puntas",
     "Antiflexión lateral con barra"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "thrusters-kb",
@@ -848,7 +881,8 @@
     "Sentadilla con press de hombros",
     "Squat to press",
     "Thrusters - KB"
-   ]
+   ],
+   "dos_pesas": true
   },
   {
    "slug": "swing-cadera-ra-kb",
@@ -879,7 +913,8 @@
     "Swing de cadera con banda",
     "Banded kettlebell swing",
     "Swing cadera RA - KB"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "swing-thruster",
@@ -910,7 +945,8 @@
     "Complejo swing thruster",
     "Kettlebell swing to thruster",
     "Swing/Thruster"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "sentadilla-salto-kb",
@@ -941,7 +977,8 @@
     "Sentadilla con salto",
     "Sentadilla con salto con kettlebell",
     "Sentadilla SALTO - KB"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "sentadilla-split-salto-cambio-kb",
@@ -971,7 +1008,8 @@
     "Split squat jump",
     "Scissor jump",
     "Sentadilla SPLIT SALTO CAMBIO - KB"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "2do-tiempo-split-br",
@@ -1005,7 +1043,8 @@
     "Envión",
     "Envión en tijera con barra (split jerk)",
     "2do Tiempo SPLIT - BR"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "burpee",
@@ -1025,7 +1064,8 @@
    "alias": [
     "Burpees",
     "Burpi"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "1p-a-otro-cc-diagonal",
@@ -1054,7 +1094,8 @@
     "Saltos alternados en diagonal",
     "Salto en diagonal de una pierna a la otra",
     "1P A OTRO CC DIAGONAL"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "1p-ccm-vertical-al-cajon-cj",
@@ -1082,7 +1123,8 @@
     "Single leg box jump",
     "Salto al cajón unilateral",
     "1P CCM Vertical AL CAJÓN - CJ"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "2p-ba-ccm-vertical",
@@ -1108,7 +1150,8 @@
     "Salto vertical en media estocada",
     "Salto en estocada vertical",
     "2P BA CCM Vertical"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "triple-extension-lm",
@@ -1139,7 +1182,8 @@
     "Extensión explosiva en landmine",
     "Triple extensión con barra anclada",
     "Triple extensión LM"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "caida-lm",
@@ -1160,7 +1204,8 @@
     "Caída en landmine",
     "Landmine drop lunge",
     "Caída LM"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "reactivos-verticales-laterales",
@@ -1189,7 +1234,8 @@
     "Rebotes de tobillo",
     "Reactive hops",
     "Reactivos verticales+laterales"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "reactivos-laterales",
@@ -1216,7 +1262,8 @@
     "Pogo jumps laterales",
     "Lateral pogo hops",
     "Rebotes laterales"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "sentadilla-br",
@@ -1250,7 +1297,8 @@
     "Barbell squat",
     "Squat",
     "Sentadilla - BR"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "sentadilla-bulgara-ra-br",
@@ -1280,7 +1328,8 @@
     "Split squat con pie elevado",
     "Sentadilla búlgara con barra y banda elástica",
     "Sentadilla Búlgara RA - BR"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "sentadilla-al-cajon-ra-br",
@@ -1308,7 +1357,8 @@
     "Box squat",
     "Box squat con bandas",
     "Sentadilla AL CAJÓN RA - BR"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "estocada-atras-br",
@@ -1338,7 +1388,8 @@
     "Barbell reverse lunge",
     "Estocada inversa",
     "Estocada atrás - BR"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "empuje-de-cadera-br",
@@ -1367,7 +1418,8 @@
     "Barbell hip thrust",
     "Elevación de cadera con barra",
     "Empuje de cadera - BR"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "empuje-de-cadera-1p-br",
@@ -1395,7 +1447,8 @@
     "Single leg hip thrust",
     "Empuje de cadera unilateral",
     "Empuje de cadera 1p - BR"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "peso-muerto-1p-kb",
@@ -1428,7 +1481,8 @@
     "Single leg RDL",
     "Peso muerto rumano a una pierna",
     "Peso muerto 1p - KB"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "caminata-de-gemelo-mc",
@@ -1452,7 +1506,8 @@
     "Tiptoe walk",
     "Farmer walk en puntas",
     "Caminata de gemelo - MC"
-   ]
+   ],
+   "dos_pesas": true
   },
   {
    "slug": "curl-nordico",
@@ -1480,7 +1535,8 @@
     "Nordic curl",
     "Nordic hamstring curl",
     "Nordic hamstring"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "curl-isquio-1p-exc-mb",
@@ -1510,7 +1566,8 @@
     "Curl Isquios 1P EXC - FB",
     "Curl de isquiotibiales excéntrico a una pierna en fitball",
     "Curl Isquios - FB"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "patadas-de-talon-fb",
@@ -1532,7 +1589,8 @@
     "Patadas de talón en pelota",
     "Heel kicks en fitball",
     "Patadas de Talón - FB"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "isquiotibiales-en-polea",
@@ -1554,7 +1612,8 @@
     "Curl femoral en polea",
     "Cable hamstring curl",
     "Standing cable leg curl"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "excentrico-carrera-isquios-polea",
@@ -1576,7 +1635,8 @@
     "Isquios en gesto de sprint con polea",
     "Cable hamstring sprint eccentric",
     "Excéntrico carrera ISQUIOS polea"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "gesto-sprint-isquios-con-slider",
@@ -1600,7 +1660,8 @@
     "Slider leg curl",
     "Hamstring slides",
     "Gesto sprint isquios con slider"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "camilla-isquiosurales-1p-mq",
@@ -1624,7 +1685,8 @@
     "Curl femoral acostado a una pierna",
     "Single leg lying leg curl",
     "Camilla isquiosurales 1P - MQ"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "press-plano",
@@ -1659,7 +1721,8 @@
     "Bench press",
     "Barbell bench press",
     "Chest press"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "press-inclinado-con-mancuernas",
@@ -1690,7 +1753,8 @@
     "Press superior con mancuernas",
     "Incline dumbbell press",
     "Incline dumbbell bench press"
-   ]
+   ],
+   "dos_pesas": true
   },
   {
    "slug": "aperturas-mq",
@@ -1717,7 +1781,8 @@
     "Machine fly",
     "Chest fly",
     "Aperturas - MQ"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "push-up-dc",
@@ -1750,7 +1815,8 @@
     "Weighted push up",
     "Flexiones lastradas",
     "Push Up - DC"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "fondos",
@@ -1783,7 +1849,8 @@
     "Fondos de pecho",
     "Parallel bar dips",
     "Chest dips"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "fondos-asistidos-mq",
@@ -1815,7 +1882,8 @@
     "Assisted dips",
     "Machine assisted dip",
     "Fondos ASISTIDOS - MQ"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "press-militar-br",
@@ -1850,7 +1918,8 @@
     "Military press",
     "Standing barbell press",
     "Press Militar - BR"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "press-hombro-mq",
@@ -1878,7 +1947,8 @@
     "Machine shoulder press",
     "Shoulder press machine",
     "Press hombro - MQ"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "press-hombro-ba-kb",
@@ -1907,7 +1977,8 @@
     "Two arm kettlebell military press",
     "Press de hombros con dos kettlebells, de pie",
     "Press hombro BA - KB"
-   ]
+   ],
+   "dos_pesas": true
   },
   {
    "slug": "press-hombro-rr-kb",
@@ -1939,7 +2010,8 @@
     "Kneeling kettlebell press",
     "Tall kneeling kettlebell press",
     "Press hombro RR - KB"
-   ]
+   ],
+   "dos_pesas": true
   },
   {
    "slug": "press-hombro-1m-rr-kb",
@@ -1972,7 +2044,8 @@
     "One arm kettlebell press",
     "Press de hombro a un brazo con kettlebell, con rotación",
     "Press hombro 1m RR - KB"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "press-hombro-1m-pdb-kb",
@@ -2003,7 +2076,8 @@
     "Half kneeling kettlebell press",
     "Press unilateral de rodillas",
     "Press hombro 1m PDB - KB"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "press-en-landmine",
@@ -2035,7 +2109,8 @@
     "Press en mina",
     "Single arm landmine press",
     "Press en landmine"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "dominadas-prona",
@@ -2069,7 +2144,8 @@
     "Pull ups",
     "Pullups",
     "Barra fija"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "dominadas-palmar",
@@ -2097,7 +2173,8 @@
     "Dominadas con palmas hacia uno",
     "Chin up",
     "Chin ups"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "dorsalera-palmar-mq",
@@ -2127,7 +2204,8 @@
     "Reverse grip pulldown",
     "Jalón al pecho con agarre supino",
     "Dorsalera PALMAR - MQ"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "remo-neutro-mq",
@@ -2156,7 +2234,8 @@
     "Seated row machine",
     "Remo bajo con agarre neutro",
     "Remo NEUTRO - MQ"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "remo-1m-plancha-alta-kb",
@@ -2190,7 +2269,8 @@
     "Remo renegado con pesa rusa",
     "Remo a un brazo en plancha alta con kettlebell",
     "Remo 1m PLANCHA ALTA - KB"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "remo-1m-cd-kb",
@@ -2226,7 +2306,8 @@
     "Single arm dumbbell row",
     "Dumbbell row",
     "Remo 1m CD - KB"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "remo-al-menton-br",
@@ -2255,7 +2336,8 @@
     "Upright row",
     "Barbell upright row",
     "Remo al mentón - BR"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "remo-invertido-puente-br",
@@ -2289,7 +2371,8 @@
     "Australian pull up",
     "Body row",
     "Remo invertido PUENTE - BR"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "y-bd",
@@ -2317,7 +2400,8 @@
     "Y raise",
     "Band Y raise",
     "Y - BD"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "biceps-br",
@@ -2341,7 +2425,8 @@
     "Barbell biceps curl",
     "Curl de bíceps con barra",
     "Biceps - BR"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "biceps-mc",
@@ -2364,7 +2449,8 @@
     "Dumbbell curl",
     "Dumbbell bicep curl",
     "Biceps - MC"
-   ]
+   ],
+   "dos_pesas": true
   },
   {
    "slug": "biceps-alterno-mc",
@@ -2389,7 +2475,8 @@
     "Alternate bicep curl",
     "Curl de bíceps alternado con mancuernas",
     "Biceps alterno - MC"
-   ]
+   ],
+   "dos_pesas": true
   },
   {
    "slug": "biceps-hombro-mc",
@@ -2419,7 +2506,8 @@
     "Bicep curl to shoulder press",
     "Curl de bíceps + press de hombros con mancuernas",
     "Biceps/Hombro - MC"
-   ]
+   ],
+   "dos_pesas": true
   },
   {
    "slug": "triceps-pl",
@@ -2444,7 +2532,8 @@
     "Pushdown",
     "Cable pushdown",
     "Triceps - PL"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "vuelo-combinado-alterno",
@@ -2465,7 +2554,8 @@
     "Vuelo combinado alterno",
     "Vuelos combinados",
     "Elevaciones frontales y laterales alternadas"
-   ]
+   ],
+   "dos_pesas": true
   },
   {
    "slug": "vuelo-frontal-lateral",
@@ -2488,7 +2578,8 @@
     "Front raise to lateral raise",
     "Lateral to front raise",
     "Vuelo Frontal/Lateral"
-   ]
+   ],
+   "dos_pesas": true
   },
   {
    "slug": "laterales-con-banda",
@@ -2514,7 +2605,8 @@
     "Saltos laterales con banda",
     "Saltos laterales con banda elástica",
     "Laterales con banda"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "peso-muerto-br",
@@ -2548,7 +2640,8 @@
     "Conventional deadlift",
     "Despegue",
     "Peso muerto - BR"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "remo-pendley-prono",
@@ -2576,7 +2669,8 @@
     "Pendlay row",
     "Remo con barra desde el piso",
     "Remo PENDLEY PRONO"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "press-de-banca-inclinado-con-barra",
@@ -2599,7 +2693,8 @@
     "Press superior con barra",
     "Incline bench press",
     "Incline barbell press"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "press-de-banca-declinado-con-barra",
@@ -2622,7 +2717,8 @@
     "Press banca declinado",
     "Decline bench press",
     "Decline barbell press"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "press-de-banca-con-mancuernas",
@@ -2644,7 +2740,8 @@
     "Press de pecho con mancuernas",
     "Dumbbell bench press",
     "Dumbbell press"
-   ]
+   ],
+   "dos_pesas": true
   },
   {
    "slug": "press-declinado-con-mancuernas",
@@ -2666,7 +2763,8 @@
     "Press de banca declinado con mancuernas",
     "Decline dumbbell press",
     "Decline dumbbell bench press"
-   ]
+   ],
+   "dos_pesas": true
   },
   {
    "slug": "press-de-pecho-en-maquina",
@@ -2689,7 +2787,8 @@
     "Machine chest press",
     "Chest press machine",
     "Machine bench press"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "aperturas-con-mancuernas",
@@ -2712,7 +2811,8 @@
     "Dumbbell fly",
     "Dumbbell flyes",
     "Flyes"
-   ]
+   ],
+   "dos_pesas": true
   },
   {
    "slug": "cruce-de-poleas",
@@ -2735,7 +2835,8 @@
     "Crossover",
     "Cable crossover",
     "Cable fly"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "flexiones-de-brazos",
@@ -2758,7 +2859,8 @@
     "Push up",
     "Push ups",
     "Pushups"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "pullover-con-mancuerna",
@@ -2779,7 +2881,8 @@
     "Pullover",
     "Pull over",
     "Dumbbell pullover"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "jalon-al-pecho-con-agarre-prono",
@@ -2803,7 +2906,8 @@
     "Dorsalera",
     "Lat pulldown",
     "Wide grip lat pulldown"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "remo-con-barra-inclinado",
@@ -2826,7 +2930,8 @@
     "Bent over row",
     "Bent over barbell row",
     "Barbell row"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "remo-sentado-en-polea",
@@ -2850,7 +2955,8 @@
     "Seated cable row",
     "Seated row",
     "Low row"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "remo-en-barra-t",
@@ -2871,7 +2977,8 @@
     "Remo T",
     "Remo en punta",
     "T-bar row"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "face-pull",
@@ -2892,7 +2999,8 @@
     "Face pulls",
     "Jalón a la cara",
     "Tirón a la cara"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "encogimientos-de-hombros-con-mancuernas",
@@ -2915,7 +3023,8 @@
     "Trapecio con mancuernas",
     "Shrugs",
     "Dumbbell shrug"
-   ]
+   ],
+   "dos_pesas": true
   },
   {
    "slug": "hiperextensiones-lumbares",
@@ -2939,7 +3048,8 @@
     "Back extension",
     "Hyperextension",
     "Banco romano"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "dominadas-asistidas",
@@ -2961,7 +3071,8 @@
     "Dominadas con asistencia",
     "Assisted pull up",
     "Assisted pull ups"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "press-de-hombros-con-mancuernas",
@@ -2983,7 +3094,8 @@
     "Press de hombro sentado con mancuernas",
     "Dumbbell shoulder press",
     "Shoulder press"
-   ]
+   ],
+   "dos_pesas": true
   },
   {
    "slug": "press-arnold",
@@ -3003,7 +3115,8 @@
    "alias": [
     "Press Arnold con mancuernas",
     "Arnold press"
-   ]
+   ],
+   "dos_pesas": true
   },
   {
    "slug": "vuelos-laterales-con-mancuernas",
@@ -3026,7 +3139,8 @@
     "Laterales con mancuernas",
     "Lateral raise",
     "Side lateral raise"
-   ]
+   ],
+   "dos_pesas": true
   },
   {
    "slug": "vuelos-frontales-con-mancuernas",
@@ -3049,7 +3163,8 @@
     "Elevaciones frontales",
     "Front raise",
     "Front dumbbell raise"
-   ]
+   ],
+   "dos_pesas": true
   },
   {
    "slug": "vuelos-posteriores-con-mancuernas",
@@ -3073,7 +3188,8 @@
     "Reverse fly",
     "Rear delt fly",
     "Bent over lateral raise"
-   ]
+   ],
+   "dos_pesas": true
   },
   {
    "slug": "posteriores-en-maquina",
@@ -3095,7 +3211,8 @@
     "Contractora invertida",
     "Reverse pec deck",
     "Reverse machine fly"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "curl-martillo-con-mancuernas",
@@ -3117,7 +3234,8 @@
     "Martillo",
     "Hammer curl",
     "Hammer curls"
-   ]
+   ],
+   "dos_pesas": true
   },
   {
    "slug": "curl-de-biceps-en-banco-scott",
@@ -3139,7 +3257,8 @@
     "Banco Scott",
     "Curl predicador",
     "Preacher curl"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "curl-de-biceps-en-polea",
@@ -3161,7 +3280,8 @@
     "Curl en polea baja",
     "Cable curl",
     "Cable biceps curl"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "press-frances-con-barra",
@@ -3185,7 +3305,8 @@
     "Skull crusher",
     "Skullcrusher",
     "Lying triceps extension"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "extension-de-triceps-sobre-la-cabeza-con-mancuerna",
@@ -3208,7 +3329,8 @@
     "Copa de tríceps",
     "Overhead triceps extension",
     "Overhead dumbbell extension"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "patada-de-triceps-con-mancuerna",
@@ -3230,7 +3352,8 @@
     "Kickback de tríceps",
     "Triceps kickback",
     "Tricep kickback"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "press-de-banca-con-agarre-cerrado",
@@ -3251,7 +3374,8 @@
     "Press cerrado",
     "Press de banca agarre estrecho",
     "Close grip bench press"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "fondos-en-banco",
@@ -3273,7 +3397,8 @@
     "Fondos de tríceps en banco",
     "Bench dips",
     "Bench dip"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "camilla-de-cuadriceps",
@@ -3296,7 +3421,8 @@
     "Sillón de cuádriceps",
     "Leg extension",
     "Leg extensions"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "prensa-de-piernas",
@@ -3318,7 +3444,8 @@
     "Prensa 45",
     "Prensa inclinada",
     "Leg press"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "sentadilla-frontal-con-barra",
@@ -3339,7 +3466,8 @@
     "Sentadilla frontal",
     "Sentadilla delantera",
     "Front squat"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "sentadilla-goblet",
@@ -3361,7 +3489,8 @@
     "Sentadilla con mancuerna al pecho",
     "Sentadilla goblet con kettlebell",
     "Goblet squat"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "sentadilla-hack",
@@ -3381,7 +3510,8 @@
    "alias": [
     "Sentadilla hack en máquina",
     "Hack squat"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "sentadilla-con-peso-corporal",
@@ -3403,7 +3533,8 @@
     "Sentadilla al aire",
     "Air squat",
     "Bodyweight squat"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "estocadas-con-mancuernas",
@@ -3427,7 +3558,8 @@
     "Estocada adelante",
     "Lunges",
     "Dumbbell lunge"
-   ]
+   ],
+   "dos_pesas": true
   },
   {
    "slug": "estocadas-caminando",
@@ -3449,7 +3581,8 @@
     "Estocadas en caminata",
     "Walking lunge",
     "Walking lunges"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "subida-al-cajon-con-mancuernas",
@@ -3472,7 +3605,8 @@
     "Subida al banco",
     "Step up",
     "Step ups"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "peso-muerto-rumano-con-barra",
@@ -3495,7 +3629,8 @@
     "Peso muerto piernas semirrígidas",
     "Romanian deadlift",
     "RDL"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "peso-muerto-sumo-con-barra",
@@ -3515,7 +3650,8 @@
    "alias": [
     "Peso muerto sumo",
     "Sumo deadlift"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "buenos-dias-con-barra",
@@ -3536,7 +3672,8 @@
     "Buenos días",
     "Good morning",
     "Good mornings"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "camilla-de-isquiotibiales-acostado",
@@ -3560,7 +3697,8 @@
     "Curl femoral tumbado",
     "Lying leg curl",
     "Leg curl"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "camilla-de-isquiotibiales-sentado",
@@ -3582,7 +3720,8 @@
     "Sillón de isquiotibiales",
     "Isquios sentado en máquina",
     "Seated leg curl"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "puente-de-gluteo",
@@ -3604,7 +3743,8 @@
     "Elevación de cadera",
     "Glute bridge",
     "Hip bridge"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "swing-con-kettlebell",
@@ -3628,7 +3768,8 @@
     "Swing ruso",
     "Kettlebell swing",
     "Swing"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "patada-de-gluteo-en-polea",
@@ -3650,7 +3791,8 @@
     "Glute kickback en polea",
     "Cable kickback",
     "Cable glute kickback"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "abductores-en-maquina",
@@ -3673,7 +3815,8 @@
     "Abducción",
     "Hip abduction",
     "Abductor machine"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "aductores-en-maquina",
@@ -3696,7 +3839,8 @@
     "Aducción",
     "Hip adduction",
     "Adductor machine"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "gemelos-de-pie-en-maquina",
@@ -3720,7 +3864,8 @@
     "Pantorrillas de pie",
     "Standing calf raise",
     "Calf raise"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "gemelos-sentado-en-maquina",
@@ -3742,7 +3887,8 @@
     "Sóleo en máquina",
     "Elevación de talones sentado",
     "Seated calf raise"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "gemelos-en-prensa",
@@ -3763,7 +3909,8 @@
     "Gemelos en prensa de piernas",
     "Calf press",
     "Leg press calf raise"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "plancha-frontal",
@@ -3786,7 +3933,8 @@
     "Plancha de antebrazos",
     "Plank",
     "Front plank"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "plancha-lateral",
@@ -3808,7 +3956,8 @@
     "Plancha de costado",
     "Side plank",
     "Side bridge"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "abdominales-crunch",
@@ -3830,7 +3979,8 @@
     "Abdominales cortos",
     "Crunch",
     "Crunches"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "elevacion-de-piernas-colgado",
@@ -3853,7 +4003,8 @@
     "Rodillas al pecho colgado",
     "Hanging leg raise",
     "Hanging knee raise"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "rueda-abdominal",
@@ -3876,7 +4027,8 @@
     "Ab roller",
     "Ab wheel rollout",
     "Rollout"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "giros-rusos",
@@ -3898,7 +4050,8 @@
     "Twist ruso",
     "Russian twist",
     "Russian twists"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "salto-al-cajon",
@@ -3920,7 +4073,8 @@
     "Salto al cajón a dos piernas",
     "Box jump",
     "Box jumps"
-   ]
+   ],
+   "dos_pesas": false
   },
   {
    "slug": "caminata-del-granjero",
@@ -3943,7 +4097,8 @@
     "Farmer walk",
     "Farmer carry",
     "Farmer's walk"
-   ]
+   ],
+   "dos_pesas": true
   }
  ]
 }

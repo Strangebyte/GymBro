@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, type Exercise, type Mide } from '../db'
 import { Catalogo, Chevron, Chips, guardarMediaDe, HistorialLista, MAX_MEDIA_MB, MediaView, problemaMedia, Stepper, TopBar, useDialogos, useNav, useTieneMedia } from '../ui'
-import { numES, EQUIPOS, etiqueta, GRUPOS, historicoEjercicio, PATRONES, progresoDe, unidadDe, unidadPeso, type SesionDeEjercicio } from '../lib'
+import { numES, EQUIPOS, etiqueta, GRUPOS, historicoEjercicio, PATRONES, progresoDe, rotuloPeso, unidadDe, unidadPeso, type SesionDeEjercicio } from '../lib'
 import { crearEjercicio } from '../actions'
 import { GraficoPesos } from './Progress'
 
@@ -41,7 +41,7 @@ export function ExerciseScreen({ id }: { id: number }) {
   const { medida, puntos } = progresoDe((hist ?? []).flatMap((s) => s.sets.filter((x) => x.tipo !== 'calentamiento').map((set) => ({ fecha: s.fecha, set }))))
   const maximo = puntos.length ? Math.max(...puntos.map((p) => p.valor)) : null
   const ultimo = puntos.length ? puntos[puntos.length - 1].valor : null
-  const u = unidadPeso()
+  const u = rotuloPeso(ex.dos_pesas)
   const rotulo = medida === 'kg' ? { u: ex.lastre ? `último lastre (${u})` : `último ${u}`, m: ex.lastre ? `lastre máx (${u})` : `${u} máx`, t: 'Peso máximo por sesión' }
     : medida === 'reps' ? { u: 'últimas reps', m: 'reps máx', t: 'Reps máximas por sesión' }
     : { u: 'último tiempo (s)', m: 'tiempo máx (s)', t: 'Tiempo máximo por sesión' }
@@ -60,6 +60,7 @@ export function ExerciseScreen({ id }: { id: number }) {
             <span className="pill">{etiqueta(ex.patron)}</span>
             {ex.unilateral && <span className="pill">por lado</span>}
             {ex.lastre && <span className="pill">con lastre</span>}
+            {ex.dos_pesas && <span className="pill">dos pesas</span>}
             {!ex.vol && <span className="pill">no suma volumen</span>}
           </div>
           {ex.alias.length > 0 && <div className="xsmall muted" style={{ marginTop: 8 }}>También conocido como: {ex.alias.join(', ')}</div>}
@@ -82,12 +83,12 @@ export function ExerciseScreen({ id }: { id: number }) {
         {puntos.length > 1 && (
           <div className="card">
             <div className="bold small" style={{ marginBottom: 6 }}>{rotulo.t}</div>
-            <GraficoPesos puntos={puntos} unidad={unidadDe(medida, ex.lastre)} />
+            <GraficoPesos puntos={puntos} unidad={unidadDe(medida, ex.lastre, ex.dos_pesas)} />
           </div>
         )}
 
         <h2>Historial</h2>
-        <HistorialLista exerciseId={id} lastre={ex.lastre} />
+        <HistorialLista exerciseId={id} lastre={ex.lastre} cu={ex.dos_pesas} />
       </div>
     </>
   )
@@ -144,12 +145,17 @@ export function ExerciseFormScreen({ id }: { id: number | null }) {
   const sel = (k: 'grupo' | 'equipo' | 'patron', ops: string[], label: string) => (
     <>
       <label className="f" htmlFor={`s-${k}`}>{label}</label>
-      <select id={`s-${k}`} value={f[k] ?? ''} onChange={(e) => setF({ ...f, [k]: e.target.value })}>
+      <select id={`s-${k}`} value={f[k] ?? ''} onChange={(e) => {
+        const c: Partial<Exercise> = { [k]: e.target.value }
+        // En un ejercicio nuevo, elegir mancuernas o kettlebell propone "dos pesas"; se puede destildar.
+        if (k === 'equipo' && id == null) c.dos_pesas = e.target.value === 'mancuernas' || e.target.value === 'kettlebell'
+        setF({ ...f, ...c })
+      }}>
         {ops.map((o) => <option key={o} value={o}>{etiqueta(o)}</option>)}
       </select>
     </>
   )
-  const interruptor = (k: 'unilateral' | 'lastre' | 'vol' | 'archivo', t: string, d: string) => (
+  const interruptor = (k: 'unilateral' | 'lastre' | 'dos_pesas' | 'vol' | 'archivo', t: string, d: string) => (
     <button className="row" style={{ width: '100%', padding: '8px 0' }} aria-pressed={!!f[k]} onClick={() => setF({ ...f, [k]: !f[k] })}>
       <span className={`chip sm${f[k] ? ' on' : ''}`}>{f[k] ? '✓' : ''}</span>
       <span className="grow small"><b>{t}</b><br /><span className="xsmall muted">{d}</span></span>
@@ -203,6 +209,7 @@ export function ExerciseFormScreen({ id }: { id: number | null }) {
         <div className="card">
           {interruptor('unilateral', 'Unilateral', 'Se hace por lado')}
           {interruptor('lastre', 'Peso corporal con lastre', 'El peso cargado es el lastre agregado')}
+          {interruptor('dos_pesas', 'Se hace con dos mancuernas o pesas', `Anotás el peso de una sola: si usás dos de 12 ${unidadPeso()}, escribís 12. En la tabla aparece «${unidadPeso()} c/u».`)}
           {interruptor('vol', 'Suma volumen', 'Desmarcalo para movilidad y activación')}
           {id != null && interruptor('archivo', 'Archivado', 'No aparece en los buscadores salvo que lo pidas')}
         </div>
