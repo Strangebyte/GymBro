@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, type Exercise, type Mide } from '../db'
 import { Catalogo, Chevron, Chips, guardarMediaDe, HistorialLista, MAX_MEDIA_MB, MediaView, problemaMedia, Stepper, TopBar, useDialogos, useNav, useTieneMedia } from '../ui'
-import { numES, EQUIPOS, etiqueta, GRUPOS, historicoEjercicio, PATRONES, progresoDe, unidadDe, type SesionDeEjercicio } from '../lib'
+import { numES, EQUIPOS, etiqueta, GRUPOS, historicoEjercicio, PATRONES, progresoDe, unidadDe, unidadPeso, type SesionDeEjercicio } from '../lib'
 import { crearEjercicio } from '../actions'
 import { GraficoPesos } from './Progress'
 
@@ -41,7 +41,8 @@ export function ExerciseScreen({ id }: { id: number }) {
   const { medida, puntos } = progresoDe((hist ?? []).flatMap((s) => s.sets.filter((x) => x.tipo !== 'calentamiento').map((set) => ({ fecha: s.fecha, set }))))
   const maximo = puntos.length ? Math.max(...puntos.map((p) => p.valor)) : null
   const ultimo = puntos.length ? puntos[puntos.length - 1].valor : null
-  const rotulo = medida === 'kg' ? { u: ex.lastre ? 'último lastre' : 'último kg', m: ex.lastre ? 'lastre máx' : 'kg máx', t: 'Peso máximo por sesión' }
+  const u = unidadPeso()
+  const rotulo = medida === 'kg' ? { u: ex.lastre ? `último lastre (${u})` : `último ${u}`, m: ex.lastre ? `lastre máx (${u})` : `${u} máx`, t: 'Peso máximo por sesión' }
     : medida === 'reps' ? { u: 'últimas reps', m: 'reps máx', t: 'Reps máximas por sesión' }
     : { u: 'último tiempo (s)', m: 'tiempo máx (s)', t: 'Tiempo máximo por sesión' }
 

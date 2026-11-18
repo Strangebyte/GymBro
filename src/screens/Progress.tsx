@@ -2,11 +2,11 @@ import { useMemo, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, setSettings, type SetLog, type Settings } from '../db'
 import { Catalogo, Chevron, Chips, Sheet, TopBar } from '../ui'
-import { agruparPorDia, etiqueta, fmtFecha, hoyISO, lunesDe, numES, plural, progresoDe, sumarDias, unidadDe, type Medida, type Punto } from '../lib'
+import { agruparPorDia, etiqueta, fmtFecha, hoyISO, lunesDe, numES, plural, progresoDe, sumarDias, unidadDe, unidadPeso, type Medida, type Punto } from '../lib'
 import { PREGUNTAS } from './Today'
 
 /** Gráfico de línea con puntos que se pueden tocar. */
-export function GraficoPesos({ puntos, unidad = 'kg' }: { puntos: Punto[]; unidad?: string }) {
+export function GraficoPesos({ puntos, unidad = unidadPeso() }: { puntos: Punto[]; unidad?: string }) {
   const [sel, setSel] = useState(puntos.length - 1)
   if (!puntos.length) return null
   const W = 320, H = 150, px = 34, py = 16
@@ -125,7 +125,7 @@ export function ProgressScreen({ settings }: { settings: Settings }) {
     // A igual peso, el progreso está en las reps hechas con esa carga.
     const dReps = medida === 'kg' && d != null && !cambia && pri.reps != null && ult.reps != null ? ult.reps - pri.reps : 0
     const signo = (n: number) => (n > 0 ? '+' : '−')
-    const u = medida === 'kg' ? 'kg' : medida === 'reps' ? 'reps' : 's'
+    const u = medida === 'kg' ? unidadPeso() : medida === 'reps' ? 'reps' : 's'
     return {
       id, ex, medida, pts, pri, ult,
       sube: cambia ? d! : dReps,

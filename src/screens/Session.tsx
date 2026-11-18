@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
-import { db, kgToG, type Exercise, type Session, type SetLog, type Settings } from '../db'
+import { db, type Exercise, type Session, type SetLog, type Settings } from '../db'
 import { Chevron, Chips, HistorialLista, Ico, MediaView, Picker, Sheet, Stepper, TopBar, useDialogos, useNav, useTieneMedia } from '../ui'
-import { etiqueta, fmtDur, fmtFecha, fmtFechaCorta, mmss, numES, plural, prepararSonido, resumenSets, setValido, sonar, ultimaVez, vibrar } from '../lib'
+import { etiqueta, fmtDur, fmtFecha, fmtFechaCorta, mmss, pesoDesdeTexto, pesoTxt, plural, prepararSonido, resumenSets, setValido, sonar, ultimaVez, unidadPeso, vibrar } from '../lib'
 import { agregarEjercicio, agregarSerie, descartarSesion, sesionEnCurso, terminarSesion } from '../actions'
 
 export type Item = { key: string; bloque: number; orden: number; ex: Exercise; sets: SetLog[] }
@@ -196,7 +196,7 @@ export function Tarjeta(props: { item: Item; sesion: Session; porEjercicio: bool
       )}
 
       <div className="ss h">
-        <span /><span>{enSeg ? 'seg' : 'reps'}{ex.unilateral ? ' c/lado' : ''}</span><span>{ex.lastre ? 'lastre kg' : 'kg'}</span><span>objetivo</span><span />
+        <span /><span>{enSeg ? 'seg' : 'reps'}{ex.unilateral ? ' c/lado' : ''}</span><span>{ex.lastre ? `lastre ${unidadPeso()}` : unidadPeso()}</span><span>objetivo</span><span />
       </div>
       {sets.map((s) => (
         <div key={s.id} className="ss">
@@ -204,9 +204,9 @@ export function Tarjeta(props: { item: Item; sesion: Session; porEjercicio: bool
           <input inputMode="numeric" aria-label={`${ex.nombre}, serie ${s.serie}: ${enSeg ? 'segundos' : 'reps'}`}
             defaultValue={enSeg ? (s.seg ?? '') : (s.reps ?? '')} placeholder={s.fallo ? 'fallo' : '—'}
             onBlur={(e) => { const n = aNum(e.target.value); void db.setLogs.update(s.id!, enSeg ? { seg: n, reps: null } : { reps: n, seg: null }) }} />
-          <input inputMode="decimal" aria-label={`${ex.nombre}, serie ${s.serie}: peso en kg`}
-            defaultValue={s.peso_g ? numES(s.peso_g / 1000) : ''} placeholder="—"
-            onBlur={(e) => { const n = aNum(e.target.value); void db.setLogs.update(s.id!, { peso_g: n == null || n === 0 ? null : kgToG(n) }) }} />
+          <input inputMode="decimal" aria-label={`${ex.nombre}, serie ${s.serie}: peso en ${unidadPeso()}`}
+            defaultValue={pesoTxt(s.peso_g)} placeholder="—"
+            onBlur={(e) => { const g = pesoDesdeTexto(e.target.value, s.peso_g); if (g !== (s.peso_g || null)) void db.setLogs.update(s.id!, { peso_g: g }) }} />
           <span className="obj">{objetivo(s) || '—'}</span>
           <button className="x" aria-label={`Borrar serie ${s.serie} de ${ex.nombre}`} onClick={() => void db.setLogs.delete(s.id!)}>✕</button>
         </div>

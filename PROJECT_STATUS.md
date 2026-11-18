@@ -1,10 +1,10 @@
 # Estado del proyecto
 
-**Última actualización:** 16-11-2026 · **Versión:** 1.0.0
+**Última actualización:** 18-11-2026 · **Versión:** 1.0.0
 
 ## Dónde está
 
-- La app está completa y funcionando en las pruebas automáticas (122 de 122, sin errores de consola).
+- La app está completa y funcionando en las pruebas automáticas (126 de 126, sin errores de consola).
 - **Publicada en GitHub Pages:** https://<usuario>.github.io/GymBro/ (repositorio público
   `<usuario>/GymBro`). Cada push a `main` la vuelve a publicar sola. Verificado el 14-11-2026 en
   Chromium: abre sin errores, registra el service worker. Desde el 16-11-2026 arranca solo con el catálogo: sin planes ni sesiones.
@@ -81,6 +81,8 @@ video y scroll táctil con una hoja abierta.
 
 ## Ideas en espera (no pedidas todavía)
 
+- Distinguir si el peso es por mancuerna/pesa o total (propuesta hecha el 18-11-2026, sin decisión)
+- Myo-reps: el dueño pidió la idea, no la implementación (18-11-2026)
 - Backup automático (Drive u otro): el dueño lo descartó por ahora; exigiría cuenta de Google
 - Inventario de discos y calculadora de carga por lado
 - Peso corporal y medidas
@@ -92,6 +94,7 @@ video y scroll táctil con una hoja abierta.
 | Fecha | Qué se hizo |
 |---|---|
 | 10-11-2026 | Diseño (`docs/historico/`), catálogo de 96 ejercicios, primera versión solo de registro |
+| 18-11-2026 | Ajuste de unidad de peso (kg o lb); el editor de días ya no marca cambios al pasar por un campo sin tocarlo |
 | 16-11-2026 | Datos personales fuera de los archivos y del historial de git; campo de otros nombres más grande |
 | 16-11-2026 | Auditoría de la app y de datos personales en el repositorio; arreglos menores; el bloque cerrado del editor muestra grupos y equipamiento |
 | 16-11-2026 | Editor de días con botón Guardar y aviso al salir con cambios; "Rebote y frenado" borrado del todo; la versión pública ya no trae el plan Mesociclo B |

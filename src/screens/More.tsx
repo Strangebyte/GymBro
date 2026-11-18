@@ -65,6 +65,12 @@ export function SettingsScreen({ settings }: { settings: Settings }) {
             </div>
             <div className="xsmall muted" style={{ marginTop: 6 }}>Por ejercicio, al tildar arranca el cronómetro de descanso. Por bloque no hay cronómetro.</div>
           </div>
+          <div className="row spread"><span className="small bold">Unidad de peso</span>
+            <div className="row" style={{ gap: 6 }}>
+              <button className={`chip${settings.unidad === 'kg' ? ' on' : ''}`} aria-pressed={settings.unidad === 'kg'} onClick={() => void setSettings({ unidad: 'kg' })}>Kilos (kg)</button>
+              <button className={`chip${settings.unidad === 'lb' ? ' on' : ''}`} aria-pressed={settings.unidad === 'lb'} onClick={() => void setSettings({ unidad: 'lb' })}>Libras (lb)</button>
+            </div>
+          </div>
           <div className="row spread"><span className="small bold">Vibrar al terminar el descanso</span>
             <button className={`chip${settings.vibrar ? ' on' : ''}`} aria-pressed={settings.vibrar} onClick={() => void setSettings({ vibrar: !settings.vibrar })}>{settings.vibrar ? 'Sí' : 'No'}</button></div>
           <div className="row spread"><span className="small bold">Sonar al terminar el descanso</span>

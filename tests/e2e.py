@@ -366,7 +366,7 @@ def main():
             # ------------------------------------------------------------ G
             print('\nG. Progreso')
             ctx, pg = abrir()
-            tab(pg, 'Progreso')
+            tab(pg, 'Progreso'); pg.wait_for_selector('.pm', timeout=8000)   # calcula sobre todo el historial: puede tardar
             ok('Progreso: flecha que indica que la fila se abre y sin recarga al deslizar', pg.locator('.pm').first.locator('svg.chev').count() == 1 and pg.evaluate('getComputedStyle(document.documentElement).overscrollBehaviorY') == 'none')
             ok('6 ejercicios seguidos por defecto', pg.locator('.pm').count() == 6, str(pg.locator('.pm').count()))
             captura(pg, 'G1-progreso')
@@ -462,6 +462,30 @@ def main():
             viejos = {'dorsal', 'trapecio', 'hombro_anterior', 'hombro_lateral', 'hombro_posterior', 'isquios', 'aductores', 'gemelo', 'full_body', 'movilidad_cadera'}
             ok('Grupos y patrones unificados en los datos ya guardados', not any(e['grupo'] in viejos or e['patron'].startswith('core_') or e['patron'] == 'locomocion' or any(x['grupo'] in viejos for x in e['sec']) for e in desp['exercises'])
                and porSlug['press-militar-br']['grupo'] == 'hombros' and porSlug['dominadas-prona']['grupo'] == 'espalda' and porSlug['hiperextensiones-lumbares']['grupo'] == 'lumbares')
+            ctx.close()
+            # ------------------------------------------------------------ J
+            print('\nJ. Pesos en libras')
+            ctx, pg = abrir()
+            pg.click('[aria-label="Ajustes"]'); pg.wait_for_timeout(200)
+            pg.click('text=Libras (lb)'); pg.wait_for_timeout(300)
+            pg.click('[aria-label="Volver"]'); pg.wait_for_timeout(250)
+            empezar(pg); abrir_bloque(pg, 5)
+            ej = pg.locator('.ej', has_text='Press de banca con barra')
+            ok('Libras: la tabla de la sesión dice lb y convierte (80 kg = 176,37 lb)', 'LB' in ej.inner_text().upper() and ej.locator('input').nth(1).input_value() == '176,37'
+               and '(10/11): 8r · 176,37 lb' in ej.inner_text(), ej.locator('input').nth(1).input_value())
+            ej.locator('input').nth(1).focus(); ej.locator('input').nth(1).blur()          # pasar por el campo sin tocarlo
+            campo = ej.locator('input').nth(3); campo.fill('200'); campo.blur(); pg.wait_for_timeout(300)
+            pg.click('[aria-label="Volver"]'); pg.wait_for_timeout(300)
+            data, _ = backup(pg)
+            ses = [s for s in data['sessions'] if s['estado'] == 'en_curso'][0]
+            press = {l['serie']: l['peso_g'] for l in data['setLogs'] if l['session_id'] == ses['id'] and l['peso_g'] in (80000, 82500, 90718, 85000)}
+            ok('Libras: se guarda en gramos; pasar por un campo sin cambiarlo no altera el peso', press.get(1) == 80000 and press.get(2) == 90718, str(press))
+            tab(pg, 'Progreso'); pg.locator('.pm', has_text='Press de banca con barra').click(); pg.wait_for_timeout(300)
+            ok('Libras: Progreso muestra libras', 'lb' in pg.locator('.pm', has_text='Press de banca con barra').inner_text() and ' lb' in texto(pg, '.pm-d [role=status]'))
+            tab(pg, 'Planes'); pg.click('text=Importar plan'); pg.click('text=Quiero que una IA me arme un plan'); pg.wait_for_timeout(200)
+            ctx.grant_permissions(['clipboard-read', 'clipboard-write'])
+            pg.click('text=Copiar pedido para la IA'); pg.wait_for_timeout(300)
+            ok('Libras: el pedido para la IA pide los pesos convertidos a kilos', 'Yo uso libras' in pg.evaluate('navigator.clipboard.readText()'))
             ctx.close()
             navegador.close()
     finally:

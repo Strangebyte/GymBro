@@ -1,14 +1,36 @@
 import { db, exportarTodo, marcarCopia, type Exercise, type PSet, type SetLog, type Session, type Activity } from './db'
 
-export const gToKg = (g: number): number => g / 1000
 export { kgToG } from './db'
 
 export function numES(n: number): string {
   return String(Math.round(n * 100) / 100).replace('.', ',')
 }
-export function fmtKg(g: number | null | undefined, lastre = false): string {
+// ------------------------------------------------------------------ unidad de peso
+// Los pesos se guardan siempre en gramos enteros; la unidad solo cambia cómo se muestran y cómo se escriben.
+// App.tsx la fija en cada render, antes de dibujar las pantallas, así que todas leen la misma.
+const G_POR_LB = 453.59237
+let unidad: 'kg' | 'lb' = 'kg'
+export function fijarUnidad(u: 'kg' | 'lb'): void { unidad = u }
+/** "kg" o "lb". */
+export const unidadPeso = (): 'kg' | 'lb' => unidad
+/** Gramos a la unidad elegida. */
+export const enUnidad = (g: number): number => (unidad === 'lb' ? g / G_POR_LB : g / 1000)
+/** Peso para mostrar en un campo: "82,5" (o "181,88" en libras). Vacío si no hay. */
+export const pesoTxt = (g: number | null | undefined): string => (g ? numES(enUnidad(g)) : '')
+/**
+ * Lo que se escribió en un campo de peso, en gramos. Si el texto es el mismo que ya se mostraba, devuelve el
+ * peso guardado tal cual: así pasar por un campo sin tocarlo no cambia nada por redondeos (en libras, sobre todo).
+ */
+export function pesoDesdeTexto(v: string, actual: number | null | undefined): number | null {
+  const t = v.trim()
+  if (t === pesoTxt(actual)) return actual || null
+  const n = Number(t.replace(',', '.'))
+  if (t === '' || !Number.isFinite(n) || n === 0) return null
+  return Math.round(unidad === 'lb' ? n * G_POR_LB : n * 1000)
+}
+export function fmtPeso(g: number | null | undefined, lastre = false): string {
   if (g == null || g === 0) return ''
-  return `${lastre ? '+' : ''}${numES(gToKg(g))} kg`
+  return `${lastre ? '+' : ''}${numES(enUnidad(g))} ${unidad}`
 }
 
 /** Resumen corto de una serie: "8r · 80 kg · RPE 8". */
@@ -17,7 +39,7 @@ export function fmtSet(s: PSet | SetLog, lastre = false): string {
   if (s.fallo && s.reps == null) p.push('al fallo')
   else if (s.reps != null) p.push(`${s.reps}r${s.fallo ? ' (fallo)' : ''}`)
   if (s.seg != null) p.push(`${s.seg}"`)
-  if (s.peso_g) p.push(fmtKg(s.peso_g, lastre))
+  if (s.peso_g) p.push(fmtPeso(s.peso_g, lastre))
   if (s.rir != null) p.push(`RIR ${s.rir}`)
   if (s.rpe != null) p.push(`RPE ${s.rpe}`)
   return p.join(' · ') || 'sin datos'
@@ -136,7 +158,7 @@ export function progresoDe(filas: { fecha: string; set: SetLog }[]): { medida: M
   const medida: Medida = filas.some((f) => f.set.peso_g) ? 'kg' : filas.some((f) => f.set.reps != null) ? 'reps' : filas.some((f) => f.set.seg != null) ? 'seg' : 'kg'
   const m = new Map<string, Punto>()
   for (const { fecha, set } of filas) {
-    const valor = medida === 'kg' ? (set.peso_g ? set.peso_g / 1000 : null) : medida === 'reps' ? set.reps : set.seg
+    const valor = medida === 'kg' ? (set.peso_g ? enUnidad(set.peso_g) : null) : medida === 'reps' ? set.reps : set.seg
     if (valor == null) continue
     const reps = medida === 'kg' ? set.reps : null
     const prev = m.get(fecha)
@@ -144,7 +166,8 @@ export function progresoDe(filas: { fecha: string; set: SetLog }[]): { medida: M
   }
   return { medida, puntos: [...m.values()].sort((a, b) => a.fecha.localeCompare(b.fecha)) }
 }
-export const unidadDe = (m: Medida, lastre = false): string => (m === 'kg' ? (lastre ? 'kg de lastre' : 'kg') : m === 'reps' ? 'reps' : 'segundos')
+/** Rótulo de una medida de progreso. `kg` es "peso": se muestra en la unidad elegida. */
+export const unidadDe = (m: Medida, lastre = false): string => (m === 'kg' ? (lastre ? `${unidad} de lastre` : unidad) : m === 'reps' ? 'reps' : 'segundos')
 
 // ------------------------------------------------------------------ dispositivo
 export function vibrar(patron: number | number[]): void {

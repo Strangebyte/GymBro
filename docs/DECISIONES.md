@@ -2,6 +2,14 @@
 
 Registro de qué se decidió y por qué. Lo más nuevo, arriba.
 
+## 18-11-2026 — Unidad de peso
+
+| Decisión | Razón |
+|---|---|
+| Ajuste para ver y cargar los pesos en kg o en lb; por dentro se sigue guardando en gramos | Pedido del dueño. Guardar siempre igual hace que cambiar de unidad no toque ningún dato y que el historial se vea completo en cualquiera de las dos |
+| El archivo de plan y la copia de seguridad siguen en kilos aunque se elija libras | Así un plan o una copia sirven para cualquiera. Con libras, el pedido para la IA le indica que convierta |
+| Pasar por un campo de peso sin cambiarlo no reescribe el valor | En libras, el redondeo de la conversión movía el peso guardado en un gramo cada vez |
+
 ## 16-11-2026 — Grupos, editor de días y pedido para la IA
 
 | Decisión | Razón |

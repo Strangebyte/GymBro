@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, ensureSeed, getSettings, pedirPersistencia, SETTINGS_DEFAULT, type Settings } from './db'
 import { atras, Dialogos, Ico, NavCtx, type Nav, type Vista } from './ui'
-import { mantenerPantalla } from './lib'
+import { fijarUnidad, mantenerPantalla } from './lib'
 import { TodayScreen, WellnessScreen } from './screens/Today'
 import { CerrarScreen, SessionScreen } from './screens/Session'
 import { ActivityScreen, CalendarScreen, SessionDetailScreen } from './screens/Calendar'
@@ -78,6 +78,7 @@ export default function App() {
     return () => { void mantenerPantalla(false) }
   }, [vista.v])
 
+  fijarUnidad(settings.unidad)   // antes de dibujar: todas las pantallas muestran los pesos en esta unidad
   const pantalla = useCallback(() => {
     switch (vista.v) {
       case 'hoy': return <TodayScreen settings={settings} />
