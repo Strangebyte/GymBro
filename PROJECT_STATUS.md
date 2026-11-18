@@ -20,11 +20,13 @@ Probar en el teléfono lo último que se agregó y solo se verificó en el simul
 diálogos abiertos, editar una sesión, cargar una sesión pasada y el recordatorio de copia. Sigue sin probar:
 video y scroll táctil con una hoja abierta.
 
-## Pendiente (anotado el 14-11-2026, al cortar la sesión de trabajo)
+## Pendiente (revisado el 18-11-2026)
 
-- **Probar en el teléfono** lo último publicado, que solo se verificó en el simulador: Progreso con reps
-  (a igual peso muestra "+N reps"; ejercicios sin peso siguen reps o tiempo), series por grupo muscular siempre
-  visible, que ya no se recargue al deslizar hacia abajo, adjuntar foto o video desde la ficha, acentos en categorías y etiquetas, las tres paletas de color (Ajustes → Color), y "Copiar pedido para Claude" en Importar plan con un Claude real.
+- **Probar en el teléfono** lo publicado que solo se verificó en el simulador: técnicas por serie (panel en el plan y
+  tramos en la sesión), bloques que se abren con transición y quedan arriba, "kg c/u" en ejercicios con dos pesas,
+  unidad en libras, editor de días con Guardar y aviso al salir, y "Copiar pedido para la IA" con una IA real.
+- **Pesos sumados a corregir a mano (el dueño):** "Curl de bíceps con mancuernas" 40 kg y "Caminata en puntas de pie"
+  52-56 kg en el historial importado, y 56 kg en el Día 1 del plan, son la suma de las dos mancuernas.
 - **Técnicas, posible mejora:** un cronómetro corto (15 segundos) entre mini-series o pausas. No se hizo; esperar a ver si
   hace falta al usarlas. Tampoco se pueden elegir técnicas en la sesión: solo en el plan, igual que RIR, RPE y fallo.
 - **Probar en iPhone** que ya no se agrande la pantalla al tocar "Pegar el plan" ni otros campos. El arreglo no se
