@@ -40,8 +40,9 @@ video y scroll táctil con una hoja abierta.
 - **Probar en iPhone** (otra persona): instalación desde Safari, sonido de descanso, copia de seguridad.
   No vibra en iPhone: es una limitación de iOS.
 - **Datos personales (16-11-2026):** se quitaron de los archivos y de todo el historial de git: apodo, usuario,
-  ciudades, otras personas y otros proyectos. Los commits se firman como "GymBro". Queda a cargo del dueño cambiar
-  el nombre de usuario de GitHub, que es lo único que sigue visible (en la dirección del repositorio y de la app).
+  ciudades, otras personas y otros proyectos. Los commits se firman como "GymBro". El 18-11-2026 el dueño cambió su
+  usuario de GitHub: la app pasó a una dirección nueva y la vieja ya no responde. Cada persona que la tenía instalada
+  tiene que exportar una copia desde la app vieja, instalar la nueva y restaurarla.
 - **Herramientas de desarrollo con avisos de seguridad:** `npm audit` marca 7 en dependencias de compilación (Vite y
   el generador del service worker). No van dentro de la app publicada; arreglarlos exige subir Vite de versión mayor.
 - **Restaurar una copia no valida el contenido fila por fila:** un archivo armado a mano con datos incompletos puede
