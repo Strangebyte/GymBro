@@ -166,8 +166,10 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--pri); outline-o
 .ss .obj { font-size: 12px; color: var(--muted); text-align: center; font-weight: 600; }
 .ss .x { color: var(--muted); font-size: 13px; height: 38px; text-align: center; }
 /* Serie con técnica: "objetivo" es un botón que abre la ventana para cargar los tramos. */
-.ss .obj.tec { color: var(--pri-text); line-height: 1.2; padding: 2px 0; }
-.ss .obj.tec .res { display: block; font-weight: 800; }
+.ss .obj.tec { line-height: 1.2; padding: 2px 0; }
+/* Debajo del nombre de la técnica, un botón: "Cargar" (lleno) o, con datos, el resumen (suave). */
+.ss .obj.tec .res { display: inline-block; margin-top: 4px; padding: 4px 9px; border-radius: 999px; font-weight: 800; font-size: 12px; background: var(--pri-soft); color: var(--pri-text); }
+.ss .obj.tec .res.vacio { background: var(--pri); color: var(--pri-ink); }
 .tramo-fila { display: grid; grid-template-columns: 1fr auto 34px; gap: 8px; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--line); }
 .tramo-fila.principal { margin-top: 8px; color: var(--muted); }
 .tramo-fila .campos { display: inline-flex; align-items: center; gap: 6px; }

@@ -202,7 +202,7 @@ export function Tarjeta(props: { item: Item; sesion: Session; porEjercicio: bool
             onBlur={(e) => { const g = pesoDesdeTexto(e.target.value, s.peso_g); if (g !== (s.peso_g || null)) void db.setLogs.update(s.id!, { peso_g: g }) }} />
           {s.tec ? (
             <button className="obj tec" onClick={() => setTramosDe(s.id!)} aria-label={`${NOMBRE_TEC[s.tec.tipo]} de la serie ${s.serie}: cargar`}>
-              {objetivo(s)}<span className="res">{resumenTramos(s) || 'cargar'} ›</span>
+              {objetivo(s)}<span className={`res${resumenTramos(s) ? '' : ' vacio'}`}>{resumenTramos(s) || 'Cargar'} ›</span>
             </button>
           ) : <span className="obj">{objetivo(s) || '—'}</span>}
           <button className="x" aria-label={`Borrar serie ${s.serie} de ${ex.nombre}`} onClick={() => void db.setLogs.delete(s.id!)}>✕</button>
