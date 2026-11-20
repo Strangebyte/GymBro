@@ -18,7 +18,7 @@ import json, os, re, unicodedata
 from openpyxl import load_workbook
 
 RAIZ = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
-REV = 7
+REV = 8
 
 def norm(s):
     s = unicodedata.normalize('NFKD', s).encode('ascii', 'ignore').decode().lower()
@@ -131,6 +131,51 @@ DOS_PESAS_NUEVOS = [
     'Vuelos frontales con mancuernas', 'Vuelos posteriores con mancuernas', 'Curl martillo con mancuernas', 'Estocadas con mancuernas',
     'Caminata del granjero', 'Curl de muñeca con mancuernas',
 ]
+
+# ---------------------------------------------------------------- músculos secundarios de los ejercicios agregados (20-11-2026)
+# Cada uno suma esa fracción de serie en "Series por grupo muscular" (mismo criterio que los del entrenador: 0,3 a 0,5).
+SEC_NUEVOS = {
+    'Press de banca inclinado con barra': {'triceps': .5, 'hombros': .5},
+    'Press de banca declinado con barra': {'triceps': .5, 'hombros': .3},
+    'Press de banca con mancuernas': {'triceps': .5, 'hombros': .3},
+    'Press declinado con mancuernas': {'triceps': .5, 'hombros': .3},
+    'Press de pecho en máquina': {'triceps': .5, 'hombros': .3},
+    'Aperturas con mancuernas': {'hombros': .3},
+    'Cruce de poleas': {'hombros': .3},
+    'Flexiones de brazos': {'triceps': .5, 'hombros': .3, 'core': .3},
+    'Pullover con mancuerna': {'espalda': .5, 'triceps': .3},
+    'Jalón al pecho con agarre prono': {'biceps': .5, 'hombros': .3},
+    'Remo con barra inclinado': {'biceps': .5, 'hombros': .3, 'lumbares': .3},
+    'Remo sentado en polea': {'biceps': .5, 'hombros': .3},
+    'Remo en barra T': {'biceps': .5, 'hombros': .3, 'lumbares': .3},
+    'Face pull': {'espalda': .5},
+    'Encogimientos de hombros con mancuernas': {'antebrazos': .3},
+    'Hiperextensiones lumbares': {'gluteo': .5, 'isquiotibiales': .5},
+    'Dominadas asistidas': {'biceps': .5},
+    'Press de hombros con mancuernas': {'triceps': .5},
+    'Press Arnold': {'triceps': .5},
+    'Vuelos posteriores con mancuernas': {'espalda': .3},
+    'Posteriores en máquina': {'espalda': .3},
+    'Curl martillo con mancuernas': {'antebrazos': .5},
+    'Press de banca con agarre cerrado': {'pecho': .5, 'hombros': .3},
+    'Fondos en banco': {'pecho': .3, 'hombros': .3},
+    'Prensa de piernas': {'gluteo': .5, 'isquiotibiales': .3},
+    'Sentadilla frontal con barra': {'gluteo': .5, 'core': .3},
+    'Sentadilla goblet': {'gluteo': .5, 'core': .3},
+    'Sentadilla hack': {'gluteo': .5},
+    'Sentadilla con peso corporal': {'gluteo': .5},
+    'Estocadas con mancuernas': {'gluteo': .5, 'isquiotibiales': .3},
+    'Estocadas caminando': {'gluteo': .5, 'isquiotibiales': .3},
+    'Subida al cajón con mancuernas': {'gluteo': .5},
+    'Peso muerto rumano con barra': {'gluteo': .5, 'lumbares': .3},
+    'Peso muerto sumo con barra': {'cuadriceps': .5, 'isquiotibiales': .5, 'aductores_abductores': .3},
+    'Buenos días con barra': {'gluteo': .5, 'lumbares': .5},
+    'Puente de glúteo': {'isquiotibiales': .3},
+    'Swing con kettlebell': {'isquiotibiales': .5, 'core': .3},
+    'Patada de glúteo en polea': {'isquiotibiales': .3},
+    'Salto al cajón': {'gluteo': .5, 'gemelos': .3},
+    'Caminata del granjero': {'antebrazos': .5, 'espalda': .3, 'core': .3},
+}
 
 # ---------------------------------------------------------------- ejercicios clásicos que faltaban
 def N(nombre, grupo, equipo, patron, alias, imagen=None, **kw):
@@ -247,7 +292,9 @@ def main():
         for de, a in FUSIONES.items():                 # y también los nombres de los que absorbió
             if a == slug: alias += [filas[de]['actual'], filas[de]['sugerido']]
         ejercicios[slug] = {'nombre': nombre, 'alias': alias, 'dos_pesas': slug in DOS_PESAS, **OTROS.get(slug, {})}
-    nuevos = [dict(n, dos_pesas=n['nombre'] in DOS_PESAS_NUEVOS) for n in NUEVOS]
+    nuevos = [dict(n, dos_pesas=n['nombre'] in DOS_PESAS_NUEVOS,
+                   sec=[{'grupo': g, 'factor': f} for g, f in SEC_NUEVOS[n['nombre']].items()] if n['nombre'] in SEC_NUEVOS else n['sec']) for n in NUEVOS]
+    assert set(SEC_NUEVOS) <= {n['nombre'] for n in NUEVOS}, 'SEC_NUEVOS nombra un ejercicio que no existe'
     assert set(DOS_PESAS_NUEVOS) <= {n['nombre'] for n in NUEVOS} and set(DOS_PESAS) <= set(filas), 'DOS_PESAS nombra un ejercicio que no existe'
 
     # Ningún nombre ni alias puede apuntar a dos ejercicios distintos; un alias igual al nombre propio sobra.

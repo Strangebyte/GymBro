@@ -131,7 +131,7 @@ export function ExerciseFormScreen({ id }: { id: number | null }) {
     if (!nombre) { avisar('El ejercicio necesita un nombre.'); return }
     let url = (f.url ?? '').trim() || null
     if (url && !/^https?:\/\//i.test(url)) url = `https://${url}`
-    const datos = { ...f, nombre, url, alias: alias.split(',').map((a) => a.trim()).filter(Boolean) }
+    const datos = { ...f, nombre, url, alias: alias.split(',').map((a) => a.trim()).filter(Boolean), sec: (f.sec ?? []).filter((x) => x.grupo !== f.grupo) }
     try {
       if (id != null) { await db.exercises.update(id, { ...datos, editado: true }); await guardarMedia(id); nav.volver() }
       else {
@@ -179,6 +179,17 @@ export function ExerciseFormScreen({ id }: { id: number | null }) {
           </button>
           {mas && (
             <>
+              <label className="f">Músculos secundarios</label>
+              <div className="chips wrap">
+                {GRUPOS.filter((g) => g !== f.grupo && g !== 'movilidad' && g !== 'cuerpo_completo').map((g) => {
+                  const on = (f.sec ?? []).some((x) => x.grupo === g)
+                  return (
+                    <button key={g} type="button" className={`chip sm${on ? ' on' : ''}`} aria-pressed={on}
+                      onClick={() => setF({ ...f, sec: on ? (f.sec ?? []).filter((x) => x.grupo !== g) : [...(f.sec ?? []), { grupo: g, factor: 0.5 }] })}>{etiqueta(g)}</button>
+                  )
+                })}
+              </div>
+              <div className="xsmall muted" style={{ marginTop: 4 }}>Los que también trabajan, aunque menos. Cada uno suma media serie en «Series por grupo muscular», en Progreso.</div>
               {sel('patron', PATRONES, 'Patrón de movimiento')}
               <div className="xsmall muted" style={{ marginTop: 4 }}>Tipo de movimiento. Solo se usa para ordenar el catálogo y elegir qué ejercicios se muestran primero en Progreso.</div>
             </>

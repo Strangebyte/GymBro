@@ -2677,7 +2677,16 @@
    "nombre": "Press de banca inclinado con barra",
    "legible": null,
    "grupo": "pecho",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "triceps",
+     "factor": 0.5
+    },
+    {
+     "grupo": "hombros",
+     "factor": 0.5
+    }
+   ],
    "equipo": "barra",
    "patron": "empuje_horizontal",
    "unilateral": false,
@@ -2701,7 +2710,16 @@
    "nombre": "Press de banca declinado con barra",
    "legible": null,
    "grupo": "pecho",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "triceps",
+     "factor": 0.5
+    },
+    {
+     "grupo": "hombros",
+     "factor": 0.3
+    }
+   ],
    "equipo": "barra",
    "patron": "empuje_horizontal",
    "unilateral": false,
@@ -2725,7 +2743,16 @@
    "nombre": "Press de banca con mancuernas",
    "legible": null,
    "grupo": "pecho",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "triceps",
+     "factor": 0.5
+    },
+    {
+     "grupo": "hombros",
+     "factor": 0.3
+    }
+   ],
    "equipo": "mancuernas",
    "patron": "empuje_horizontal",
    "unilateral": false,
@@ -2748,7 +2775,16 @@
    "nombre": "Press declinado con mancuernas",
    "legible": null,
    "grupo": "pecho",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "triceps",
+     "factor": 0.5
+    },
+    {
+     "grupo": "hombros",
+     "factor": 0.3
+    }
+   ],
    "equipo": "mancuernas",
    "patron": "empuje_horizontal",
    "unilateral": false,
@@ -2771,7 +2807,16 @@
    "nombre": "Press de pecho en máquina",
    "legible": null,
    "grupo": "pecho",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "triceps",
+     "factor": 0.5
+    },
+    {
+     "grupo": "hombros",
+     "factor": 0.3
+    }
+   ],
    "equipo": "maquina",
    "patron": "empuje_horizontal",
    "unilateral": false,
@@ -2795,7 +2840,12 @@
    "nombre": "Aperturas con mancuernas",
    "legible": null,
    "grupo": "pecho",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "hombros",
+     "factor": 0.3
+    }
+   ],
    "equipo": "mancuernas",
    "patron": "aislamiento",
    "unilateral": false,
@@ -2819,7 +2869,12 @@
    "nombre": "Cruce de poleas",
    "legible": null,
    "grupo": "pecho",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "hombros",
+     "factor": 0.3
+    }
+   ],
    "equipo": "polea",
    "patron": "aislamiento",
    "unilateral": false,
@@ -2843,7 +2898,20 @@
    "nombre": "Flexiones de brazos",
    "legible": null,
    "grupo": "pecho",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "triceps",
+     "factor": 0.5
+    },
+    {
+     "grupo": "hombros",
+     "factor": 0.3
+    },
+    {
+     "grupo": "core",
+     "factor": 0.3
+    }
+   ],
    "equipo": "peso_corporal",
    "patron": "empuje_horizontal",
    "unilateral": false,
@@ -2867,7 +2935,16 @@
    "nombre": "Pullover con mancuerna",
    "legible": null,
    "grupo": "pecho",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "espalda",
+     "factor": 0.5
+    },
+    {
+     "grupo": "triceps",
+     "factor": 0.3
+    }
+   ],
    "equipo": "mancuernas",
    "patron": "aislamiento",
    "unilateral": false,
@@ -2889,7 +2966,16 @@
    "nombre": "Jalón al pecho con agarre prono",
    "legible": null,
    "grupo": "espalda",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "biceps",
+     "factor": 0.5
+    },
+    {
+     "grupo": "hombros",
+     "factor": 0.3
+    }
+   ],
    "equipo": "polea",
    "patron": "traccion_vertical",
    "unilateral": false,
@@ -2914,7 +3000,20 @@
    "nombre": "Remo con barra inclinado",
    "legible": null,
    "grupo": "espalda",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "biceps",
+     "factor": 0.5
+    },
+    {
+     "grupo": "hombros",
+     "factor": 0.3
+    },
+    {
+     "grupo": "lumbares",
+     "factor": 0.3
+    }
+   ],
    "equipo": "barra",
    "patron": "traccion_horizontal",
    "unilateral": false,
@@ -2938,7 +3037,16 @@
    "nombre": "Remo sentado en polea",
    "legible": null,
    "grupo": "espalda",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "biceps",
+     "factor": 0.5
+    },
+    {
+     "grupo": "hombros",
+     "factor": 0.3
+    }
+   ],
    "equipo": "polea",
    "patron": "traccion_horizontal",
    "unilateral": false,
@@ -2963,7 +3071,20 @@
    "nombre": "Remo en barra T",
    "legible": null,
    "grupo": "espalda",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "biceps",
+     "factor": 0.5
+    },
+    {
+     "grupo": "hombros",
+     "factor": 0.3
+    },
+    {
+     "grupo": "lumbares",
+     "factor": 0.3
+    }
+   ],
    "equipo": "barra",
    "patron": "traccion_horizontal",
    "unilateral": false,
@@ -2985,7 +3106,12 @@
    "nombre": "Face pull",
    "legible": null,
    "grupo": "hombros",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "espalda",
+     "factor": 0.5
+    }
+   ],
    "equipo": "polea",
    "patron": "traccion_horizontal",
    "unilateral": false,
@@ -3007,7 +3133,12 @@
    "nombre": "Encogimientos de hombros con mancuernas",
    "legible": null,
    "grupo": "espalda",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "antebrazos",
+     "factor": 0.3
+    }
+   ],
    "equipo": "mancuernas",
    "patron": "aislamiento",
    "unilateral": false,
@@ -3031,7 +3162,16 @@
    "nombre": "Hiperextensiones lumbares",
    "legible": null,
    "grupo": "lumbares",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "gluteo",
+     "factor": 0.5
+    },
+    {
+     "grupo": "isquiotibiales",
+     "factor": 0.5
+    }
+   ],
    "equipo": "banco",
    "patron": "bisagra",
    "unilateral": false,
@@ -3056,7 +3196,12 @@
    "nombre": "Dominadas asistidas",
    "legible": null,
    "grupo": "espalda",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "biceps",
+     "factor": 0.5
+    }
+   ],
    "equipo": "maquina",
    "patron": "traccion_vertical",
    "unilateral": false,
@@ -3079,7 +3224,12 @@
    "nombre": "Press de hombros con mancuernas",
    "legible": null,
    "grupo": "hombros",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "triceps",
+     "factor": 0.5
+    }
+   ],
    "equipo": "mancuernas",
    "patron": "empuje_vertical",
    "unilateral": false,
@@ -3102,7 +3252,12 @@
    "nombre": "Press Arnold",
    "legible": null,
    "grupo": "hombros",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "triceps",
+     "factor": 0.5
+    }
+   ],
    "equipo": "mancuernas",
    "patron": "empuje_vertical",
    "unilateral": false,
@@ -3171,7 +3326,12 @@
    "nombre": "Vuelos posteriores con mancuernas",
    "legible": null,
    "grupo": "hombros",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "espalda",
+     "factor": 0.3
+    }
+   ],
    "equipo": "mancuernas",
    "patron": "aislamiento",
    "unilateral": false,
@@ -3196,7 +3356,12 @@
    "nombre": "Posteriores en máquina",
    "legible": null,
    "grupo": "hombros",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "espalda",
+     "factor": 0.3
+    }
+   ],
    "equipo": "maquina",
    "patron": "aislamiento",
    "unilateral": false,
@@ -3219,7 +3384,12 @@
    "nombre": "Curl martillo con mancuernas",
    "legible": null,
    "grupo": "biceps",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "antebrazos",
+     "factor": 0.5
+    }
+   ],
    "equipo": "mancuernas",
    "patron": "aislamiento",
    "unilateral": false,
@@ -3360,7 +3530,16 @@
    "nombre": "Press de banca con agarre cerrado",
    "legible": null,
    "grupo": "triceps",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "pecho",
+     "factor": 0.5
+    },
+    {
+     "grupo": "hombros",
+     "factor": 0.3
+    }
+   ],
    "equipo": "barra",
    "patron": "empuje_horizontal",
    "unilateral": false,
@@ -3382,7 +3561,16 @@
    "nombre": "Fondos en banco",
    "legible": null,
    "grupo": "triceps",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "pecho",
+     "factor": 0.3
+    },
+    {
+     "grupo": "hombros",
+     "factor": 0.3
+    }
+   ],
    "equipo": "peso_corporal",
    "patron": "empuje_vertical",
    "unilateral": false,
@@ -3429,7 +3617,16 @@
    "nombre": "Prensa de piernas",
    "legible": null,
    "grupo": "cuadriceps",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "gluteo",
+     "factor": 0.5
+    },
+    {
+     "grupo": "isquiotibiales",
+     "factor": 0.3
+    }
+   ],
    "equipo": "maquina",
    "patron": "sentadilla",
    "unilateral": false,
@@ -3452,7 +3649,16 @@
    "nombre": "Sentadilla frontal con barra",
    "legible": null,
    "grupo": "cuadriceps",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "gluteo",
+     "factor": 0.5
+    },
+    {
+     "grupo": "core",
+     "factor": 0.3
+    }
+   ],
    "equipo": "barra",
    "patron": "sentadilla",
    "unilateral": false,
@@ -3474,7 +3680,16 @@
    "nombre": "Sentadilla goblet",
    "legible": null,
    "grupo": "cuadriceps",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "gluteo",
+     "factor": 0.5
+    },
+    {
+     "grupo": "core",
+     "factor": 0.3
+    }
+   ],
    "equipo": "kettlebell",
    "patron": "sentadilla",
    "unilateral": false,
@@ -3497,7 +3712,12 @@
    "nombre": "Sentadilla hack",
    "legible": null,
    "grupo": "cuadriceps",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "gluteo",
+     "factor": 0.5
+    }
+   ],
    "equipo": "maquina",
    "patron": "sentadilla",
    "unilateral": false,
@@ -3518,7 +3738,12 @@
    "nombre": "Sentadilla con peso corporal",
    "legible": null,
    "grupo": "cuadriceps",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "gluteo",
+     "factor": 0.5
+    }
+   ],
    "equipo": "peso_corporal",
    "patron": "sentadilla",
    "unilateral": false,
@@ -3541,7 +3766,16 @@
    "nombre": "Estocadas con mancuernas",
    "legible": null,
    "grupo": "cuadriceps",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "gluteo",
+     "factor": 0.5
+    },
+    {
+     "grupo": "isquiotibiales",
+     "factor": 0.3
+    }
+   ],
    "equipo": "mancuernas",
    "patron": "zancada",
    "unilateral": true,
@@ -3566,7 +3800,16 @@
    "nombre": "Estocadas caminando",
    "legible": null,
    "grupo": "cuadriceps",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "gluteo",
+     "factor": 0.5
+    },
+    {
+     "grupo": "isquiotibiales",
+     "factor": 0.3
+    }
+   ],
    "equipo": "peso_corporal",
    "patron": "zancada",
    "unilateral": true,
@@ -3589,7 +3832,12 @@
    "nombre": "Subida al cajón con mancuernas",
    "legible": null,
    "grupo": "cuadriceps",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "gluteo",
+     "factor": 0.5
+    }
+   ],
    "equipo": "cajon",
    "patron": "zancada",
    "unilateral": true,
@@ -3613,7 +3861,16 @@
    "nombre": "Peso muerto rumano con barra",
    "legible": null,
    "grupo": "isquiotibiales",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "gluteo",
+     "factor": 0.5
+    },
+    {
+     "grupo": "lumbares",
+     "factor": 0.3
+    }
+   ],
    "equipo": "barra",
    "patron": "bisagra",
    "unilateral": false,
@@ -3637,7 +3894,20 @@
    "nombre": "Peso muerto sumo con barra",
    "legible": null,
    "grupo": "gluteo",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "cuadriceps",
+     "factor": 0.5
+    },
+    {
+     "grupo": "isquiotibiales",
+     "factor": 0.5
+    },
+    {
+     "grupo": "aductores_abductores",
+     "factor": 0.3
+    }
+   ],
    "equipo": "barra",
    "patron": "bisagra",
    "unilateral": false,
@@ -3658,7 +3928,16 @@
    "nombre": "Buenos días con barra",
    "legible": null,
    "grupo": "isquiotibiales",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "gluteo",
+     "factor": 0.5
+    },
+    {
+     "grupo": "lumbares",
+     "factor": 0.5
+    }
+   ],
    "equipo": "barra",
    "patron": "bisagra",
    "unilateral": false,
@@ -3728,7 +4007,12 @@
    "nombre": "Puente de glúteo",
    "legible": null,
    "grupo": "gluteo",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "isquiotibiales",
+     "factor": 0.3
+    }
+   ],
    "equipo": "peso_corporal",
    "patron": "bisagra",
    "unilateral": false,
@@ -3751,7 +4035,16 @@
    "nombre": "Swing con kettlebell",
    "legible": null,
    "grupo": "gluteo",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "isquiotibiales",
+     "factor": 0.5
+    },
+    {
+     "grupo": "core",
+     "factor": 0.3
+    }
+   ],
    "equipo": "kettlebell",
    "patron": "bisagra",
    "unilateral": false,
@@ -3776,7 +4069,12 @@
    "nombre": "Patada de glúteo en polea",
    "legible": null,
    "grupo": "gluteo",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "isquiotibiales",
+     "factor": 0.3
+    }
+   ],
    "equipo": "polea",
    "patron": "aislamiento",
    "unilateral": true,
@@ -4058,7 +4356,16 @@
    "nombre": "Salto al cajón",
    "legible": null,
    "grupo": "cuadriceps",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "gluteo",
+     "factor": 0.5
+    },
+    {
+     "grupo": "gemelos",
+     "factor": 0.3
+    }
+   ],
    "equipo": "cajon",
    "patron": "pliometria",
    "unilateral": false,
@@ -4081,7 +4388,20 @@
    "nombre": "Caminata del granjero",
    "legible": null,
    "grupo": "cuerpo_completo",
-   "sec": [],
+   "sec": [
+    {
+     "grupo": "antebrazos",
+     "factor": 0.5
+    },
+    {
+     "grupo": "espalda",
+     "factor": 0.3
+    },
+    {
+     "grupo": "core",
+     "factor": 0.3
+    }
+   ],
    "equipo": "mancuernas",
    "patron": "acarreo",
    "unilateral": false,

@@ -340,10 +340,12 @@ def main():
             captura(pg, 'F1-ejercicios')
             pg.click('text=+ Nuevo'); pg.wait_for_timeout(300)
             pg.fill('#en', 'Sentadilla zercher'); pg.select_option('#s-grupo', 'cuadriceps'); pg.select_option('#s-equipo', 'kettlebell')
+            pg.click('text=Más opciones'); pg.wait_for_timeout(200); pg.click('.chip >> text=Glúteo'); pg.click('.chip >> text=Core')
             pg.set_input_files('#em', os.path.join(FIX, 'imagen.png')); pg.wait_for_timeout(400)
             ok('Vista previa de la imagen al crear', pg.locator('.media img').count() == 1)
             pg.fill('#eu', 'youtube.com/watch?v=abc')
             pg.click('text="Guardar"'); pg.wait_for_timeout(600)
+            ok('Ejercicio nuevo: los músculos secundarios elegidos quedan en la ficha', 'Glúteo ×0,5' in texto(pg) and 'Core ×0,5' in texto(pg))
             ok('Ficha con imagen y enlace', 'Sentadilla zercher' in texto(pg) and pg.locator('.media img').count() == 1
                and pg.locator('.media a').get_attribute('href') == 'https://youtube.com/watch?v=abc')
             ok('La imagen carga', pg.evaluate("document.querySelector('.media img').naturalWidth") == 640)
@@ -447,7 +449,7 @@ def main():
             desp, _ = backup(pg)
             ids = {e['id'] for e in desp['exercises']}
             porSlug = {e['slug']: e for e in desp['exercises']}
-            ok('Catálogo viejo → nuevo: 161 ejercicios y la revisión anotada', len(desp['exercises']) == 161 and [m['value'] for m in desp['meta'] if m['key'] == 'catalogo'] == [7], str(len(desp['exercises'])))
+            ok('Catálogo viejo → nuevo: 161 ejercicios y la revisión anotada', len(desp['exercises']) == 161 and [m['value'] for m in desp['meta'] if m['key'] == 'catalogo'] == [8], str(len(desp['exercises'])))
             viejo = {e['slug']: e['id'] for e in antes['exercises']}
             n_borradas = sum(1 for l in antes['setLogs'] if l['exercise_id'] == viejo['rebote-y-freno'])
             ok('Solo se pierden las series del ejercicio que el dueño pidió borrar del todo', len(antes['setLogs']) == 1087 and n_borradas == 3 and len(desp['setLogs']) == 1087 - n_borradas and len(desp['sessions']) == 29, f"{len(desp['setLogs'])} {n_borradas}")
@@ -461,6 +463,7 @@ def main():
             pesos = lambda d, slug: sorted({l['peso_g'] for l in d['setLogs'] if l['exercise_id'] == {e['slug']: e['id'] for e in d['exercises']}[slug] and l['peso_g']})
             ok('Los pesos del historial quedan como estaban (sin dividir)', pesos(antes, 'biceps-mc') == pesos(desp, 'biceps-mc') == [40000] and pesos(desp, 'caminata-de-gemelo-mc') == [52000, 56000], str(pesos(desp, 'caminata-de-gemelo-mc')))
             ok('Revisión 7: plancha construyo y ejercicios de antebrazo', porSlug['plancha-construyo']['nombre'] == 'Plancha construyo' and sum(1 for e in desp['exercises'] if e['grupo'] == 'antebrazos') == 6)
+            ok('Revisión 8: músculos secundarios en los ejercicios agregados', {x['grupo'] for x in porSlug['prensa-de-piernas']['sec']} == {'gluteo', 'isquiotibiales'})
             ok('Dos pesas marcado en los ejercicios ya guardados', porSlug['biceps-mc'].get('dos_pesas') is True and not porSlug['sentadilla-goblet'].get('dos_pesas') and porSlug['press-arnold'].get('dos_pesas') is True and porSlug['sentadilla-salto-kb'].get('dos_pesas') is True)
             ok('Sin archivados de fábrica; los dos ejercicios retirados ya no están', not [e for e in desp['exercises'] if e['archivo']] and 'remo-tandem-en-puntas' not in porSlug and 'rebote-y-freno' not in porSlug)
             viejos = {'dorsal', 'trapecio', 'hombro_anterior', 'hombro_lateral', 'hombro_posterior', 'isquios', 'aductores', 'gemelo', 'full_body', 'movilidad_cadera'}
