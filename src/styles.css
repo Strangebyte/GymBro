@@ -264,6 +264,11 @@ label.f { display: block; font-size: 12.5px; font-weight: 700; color: var(--mute
 .chev.abierto { transform: rotate(90deg); }
 .pm { display: grid; grid-template-columns: 18px 1fr 74px 66px; gap: 6px; align-items: center; width: 100%; padding: 11px 14px; border-bottom: 1px solid var(--line); text-align: left; }
 .pm:last-child { border-bottom: none; }
+.pm:disabled { cursor: default; opacity: 1; }
+/* Registrar medidas: nombre y cómo medir a la izquierda, el campo a la derecha. */
+.medida { display: grid; grid-template-columns: 1fr 86px; gap: 10px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.medida label { display: flex; flex-direction: column; gap: 1px; }
+.medida input { text-align: center; }
 .pm-d { padding: 4px 14px 14px; border-bottom: 1px solid var(--line); }
 .up { color: var(--ok); } .down { color: var(--bad); }
 table.t { width: 100%; border-collapse: collapse; font-size: 14px; }

@@ -39,6 +39,8 @@ export interface Exercise {
 
 /** Peso corporal: optativo, uno por día. En gramos, como todos los pesos. */
 export interface PesoCorporal { id?: number; fecha: string; peso_g: number }
+/** Perímetros del cuerpo de un día, en milímetros enteros (se muestran en cm). Cada medida es optativa. */
+export interface Medidas { id?: number; fecha: string; mm: Record<string, number> }
 
 /** Video o imagen de un ejercicio, guardado en el dispositivo. No entra en la copia de seguridad. */
 export interface Media {
@@ -173,6 +175,7 @@ class GymDB extends Dexie {
   meta!: Table<Meta, string>
   media!: Table<Media, number>
   pesoCorporal!: Table<PesoCorporal, number>
+  medidas!: Table<Medidas, number>
   constructor() {
     super('gym-log-v2')
     // Migraciones futuras: this.version(2).stores({...}).upgrade(tx => ...)
@@ -187,6 +190,7 @@ class GymDB extends Dexie {
     })
     this.version(2).stores({ media: 'exercise_id' })
     this.version(3).stores({ pesoCorporal: '++id, &fecha' })
+    this.version(4).stores({ medidas: '++id, &fecha' })
   }
 }
 export const db = new GymDB()
@@ -424,9 +428,9 @@ export async function estadoPersistencia(): Promise<{ persistido: boolean; usoMB
 }
 
 // ------------------------------------------------------------------ backup
-const TABLAS = ['exercises', 'plans', 'planDays', 'sessions', 'setLogs', 'activities', 'pesoCorporal', 'meta'] as const
+const TABLAS = ['exercises', 'plans', 'planDays', 'sessions', 'setLogs', 'activities', 'pesoCorporal', 'medidas', 'meta'] as const
 // Tablas que las copias viejas no traen (se agregaron después): si faltan, se restauran vacías.
-const OPCIONALES: readonly string[] = ['pesoCorporal']
+const OPCIONALES: readonly string[] = ['pesoCorporal', 'medidas']
 
 export async function exportarTodo(): Promise<string> {
   const out: Record<string, unknown> = { formato: BACKUP_FORMAT, exportado: new Date().toISOString() }

@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
-import { db, setSettings, type SetLog, type Settings } from '../db'
+import { db, setSettings, type Medidas, type SetLog, type Settings } from '../db'
 import { Catalogo, Chevron, Chips, Sheet, TopBar, useDialogos } from '../ui'
 import { agruparPorDia, enUnidad, etiqueta, fmtFecha, fmtPeso, hoyISO, lunesDe, numES, pesoDesdeTexto, pesoTxt, plural, progresoDe, sumarDias, unidadDe, unidadPeso, type Medida, type Punto } from '../lib'
 import { PREGUNTAS } from './Today'
@@ -100,6 +100,119 @@ function CargarPeso({ ultimo, onCerrar, onListo }: { ultimo: number | null; onCe
         onKeyDown={(e) => { if (e.key === 'Enter') void guardar() }} />
       <div className="xsmall muted" style={{ marginTop: 6 }}>Si ya hay un registro ese día, se reemplaza.</div>
       <button className="btn primary block" style={{ marginTop: 12 }} disabled={!g || !fecha} onClick={() => void guardar()}>Guardar</button>
+    </Sheet>
+  )
+}
+
+// ------------------------------------------------------------------ medidas del cuerpo
+/** Perímetros que se pueden registrar, con cómo medir cada uno. */
+const MEDIDAS: { k: string; t: string; como: string }[] = [
+  { k: 'cuello', t: 'Cuello', como: 'Justo debajo de la nuez.' },
+  { k: 'hombros', t: 'Hombros', como: 'La vuelta más ancha, por encima de los hombros, con los brazos relajados.' },
+  { k: 'pecho', t: 'Pecho', como: 'A la altura de los pezones, después de soltar el aire.' },
+  { k: 'cintura', t: 'Cintura', como: 'A la altura del ombligo, relajado, después de soltar el aire.' },
+  { k: 'cadera', t: 'Cadera', como: 'En la parte más ancha de los glúteos, con los pies juntos.' },
+  { k: 'brazo', t: 'Brazo', como: 'En la parte más gruesa, con el brazo relajado y colgando.' },
+  { k: 'muslo', t: 'Muslo', como: 'En la parte más gruesa, de pie, con el peso repartido en las dos piernas.' },
+  { k: 'pantorrilla', t: 'Pantorrilla', como: 'En la parte más gruesa, de pie.' },
+]
+const cm = (mm: number): string => `${numES(mm / 10)} cm`
+const aMm = (v: string): number | null => {
+  const n = Number(v.replace(',', '.').trim())
+  return v.trim() === '' || !Number.isFinite(n) || n <= 0 || n > 300 ? null : Math.round(n * 10)
+}
+
+/** Medidas del cuerpo: se cargan cuando uno quiere, cada una optativa, y se ve cómo cambian. */
+function MedidasCard() {
+  const { avisar } = useDialogos()
+  const filas = useLiveQuery(() => db.medidas.orderBy('fecha').toArray(), [])
+  const [hoja, setHoja] = useState<'cargar' | 'lista' | null>(null)
+  const [abierta, setAbierta] = useState<string | null>(null)
+  if (!filas) return null
+  const conDatos = MEDIDAS.map((m) => ({ ...m, pts: filas.filter((f) => f.mm[m.k] != null).map((f) => ({ fecha: f.fecha, valor: f.mm[m.k] / 10, reps: null })) }))
+    .filter((m) => m.pts.length)
+  return (
+    <>
+      <h2>Medidas del cuerpo</h2>
+      <div className="card" data-seccion="medidas" style={conDatos.length ? { padding: 0 } : undefined}>
+        {!filas.length && <div className="muted small">Registrá tus medidas (cintura, brazo, pecho…) cuando quieras y acá vas a ver cómo cambian. Ninguna es obligatoria.</div>}
+        {conDatos.map((m) => {
+          const pri = m.pts[0].valor, ult = m.pts[m.pts.length - 1].valor, d = Math.round((ult - pri) * 10) / 10
+          return (
+            <div key={m.k}>
+              <button className="pm" onClick={() => setAbierta(abierta === m.k ? null : m.k)} aria-expanded={abierta === m.k} disabled={m.pts.length < 2}>
+                {m.pts.length > 1 ? <Chevron abierto={abierta === m.k} /> : <span />}
+                <span><b className="small" style={{ display: 'block' }}>{m.t}</b><span className="xsmall muted">{plural(m.pts.length, 'registro', 'registros')}</span></span>
+                <span className="mono small" style={{ textAlign: 'right' }}><b>{numES(ult)}</b> cm</span>
+                <span className="mono small bold muted" style={{ textAlign: 'right' }}>{m.pts.length > 1 ? (d === 0 ? 'igual' : `${d > 0 ? '+' : '−'}${numES(Math.abs(d))}`) : ''}</span>
+              </button>
+              {abierta === m.k && <div className="pm-d"><GraficoPesos key={m.pts.length} puntos={m.pts} unidad="cm" ayuda="Tocá un punto para ver ese registro" /></div>}
+            </div>
+          )
+        })}
+        <div className="row" style={conDatos.length ? { padding: 12 } : { marginTop: 10 }}>
+          <button className="btn primary sm grow" onClick={() => setHoja('cargar')}>Registrar medidas</button>
+          {filas.length > 0 && <button className="btn sm grow" onClick={() => setHoja('lista')}>Ver registros</button>}
+        </div>
+      </div>
+      {filas.length > 0 && <div className="xsmall muted" style={{ marginTop: 6 }}>La variación compara el primer y el último registro de cada medida.</div>}
+      {hoja === 'cargar' && <CargarMedidas filas={filas} onCerrar={() => setHoja(null)} onListo={() => { setHoja(null); avisar('Medidas registradas.') }} />}
+      {hoja === 'lista' && (
+        <Sheet titulo="Registros de medidas" onCerrar={() => setHoja(null)}>
+          {!filas.length && <div className="empty">No hay registros.</div>}
+          <div className="list">
+            {[...filas].reverse().map((f) => (
+              <div key={f.id} className="item" style={{ alignItems: 'flex-start' }}>
+                <b className="small mono" style={{ minWidth: 92 }}>{fmtFecha(f.fecha)}</b>
+                <span className="grow xsmall">{MEDIDAS.filter((m) => f.mm[m.k] != null).map((m) => `${m.t} ${cm(f.mm[m.k])}`).join(' · ')}</span>
+                <button className="mini" aria-label={`Borrar las medidas del ${fmtFecha(f.fecha)}`} onClick={() => void db.medidas.delete(f.id!)}>✕</button>
+              </div>
+            ))}
+          </div>
+        </Sheet>
+      )}
+    </>
+  )
+}
+
+function CargarMedidas({ filas, onCerrar, onListo }: { filas: Medidas[]; onCerrar: () => void; onListo: () => void }) {
+  // Si ya hay un registro ese día, se muestra para corregirlo; si no, los campos arrancan vacíos con el último valor de guía.
+  const delDia = (f: string) => Object.fromEntries(Object.entries(filas.find((x) => x.fecha === f)?.mm ?? {}).map(([k, v]) => [k, numES(v / 10)]))
+  const [fecha, setFecha] = useState(hoyISO())
+  const [txt, setTxt] = useState<Record<string, string>>(() => delDia(hoyISO()))
+  const [ayuda, setAyuda] = useState(false)
+  const ultimo = (k: string) => [...filas].reverse().find((f) => f.mm[k] != null)?.mm[k]
+  const mm = Object.fromEntries(MEDIDAS.map((m) => [m.k, aMm(txt[m.k] ?? '')]).filter(([, v]) => v != null)) as Record<string, number>
+  const guardar = async () => {
+    if (!Object.keys(mm).length || !fecha) return
+    const previo = await db.medidas.where('fecha').equals(fecha).first()   // una por día: si ya hay, se reemplaza
+    if (previo) await db.medidas.update(previo.id!, { mm })
+    else await db.medidas.add({ fecha, mm })
+    onListo()
+  }
+  return (
+    <Sheet titulo="Registrar medidas" onCerrar={onCerrar}>
+      <label className="f" style={{ marginTop: 0 }} htmlFor="mdf">Fecha</label>
+      <input id="mdf" type="date" value={fecha} max={hoyISO()} onChange={(e) => { setFecha(e.target.value); setTxt(delDia(e.target.value)) }} />
+      <button className="card tight" style={{ marginTop: 10 }} onClick={() => setAyuda((a) => !a)} aria-expanded={ayuda}>
+        <div className="row"><Chevron abierto={ayuda} /><b className="small">¿Cómo medir?</b></div>
+        {ayuda && (
+          <div className="xsmall muted" style={{ marginTop: 6 }}>
+            Con una cinta métrica flexible, apoyada sin apretar la piel. Medí siempre en el mismo momento (mejor a la mañana,
+            antes de comer y de entrenar) y del mismo lado del cuerpo: así los números se pueden comparar. Debajo de cada
+            medida dice dónde va la cinta.
+          </div>
+        )}
+      </button>
+      {MEDIDAS.map((m) => (
+        <div key={m.k} className="medida">
+          <label htmlFor={`md-${m.k}`}><b className="small">{m.t}</b><span className="xsmall muted">{m.como}</span></label>
+          <input id={`md-${m.k}`} inputMode="decimal" value={txt[m.k] ?? ''} placeholder={ultimo(m.k) != null ? numES(ultimo(m.k)! / 10) : 'cm'}
+            onChange={(e) => setTxt({ ...txt, [m.k]: e.target.value })} aria-label={`${m.t} en cm`} />
+        </div>
+      ))}
+      <div className="xsmall muted" style={{ marginTop: 6 }}>En centímetros. Cargá solo las que quieras; si ya hay un registro ese día, se reemplaza.</div>
+      <button className="btn primary block" style={{ marginTop: 12 }} disabled={!Object.keys(mm).length || !fecha} onClick={() => void guardar()}>Guardar</button>
     </Sheet>
   )
 }
@@ -224,6 +337,7 @@ export function ProgressScreen({ settings }: { settings: Settings }) {
         </div>
 
         <PesoCorporalCard />
+        <MedidasCard />
 
         <div className="row spread" style={{ margin: '20px 2px 8px' }}>
           <h2 style={{ margin: 0 }}>Progreso por ejercicio</h2>
