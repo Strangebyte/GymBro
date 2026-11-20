@@ -201,14 +201,9 @@ def main():
             abrir_bloque(pg, 3)
             ok('Un tilde por ejercicio', pg.locator('.ej .tilde').count() == 2)
             pg.locator('.ej .tilde').first.click(); pg.wait_for_timeout(400)
-            ok('Tildar un ejercicio arranca el descanso', pg.locator('.timer').count() == 1 and '3 de 37' in texto(pg, '.topbar'))
+            ok('Tildar un ejercicio lo marca y no arranca ningún cronómetro', pg.locator('.timer').count() == 0 and '3 de 37' in texto(pg, '.topbar'))
             captura(pg, 'C1-por-ejercicio')
-            pg.evaluate("() => { window.__tonos = 0; const p = AudioContext.prototype.createOscillator; AudioContext.prototype.createOscillator = function () { window.__tonos++; return p.call(this) } }")
-            for _ in range(12):
-                if '¡A la siguiente!' in pg.inner_text('.timer'): break
-                pg.click('.timer >> text=−30'); pg.wait_for_timeout(350)
-            ok('Al terminar el descanso avisa y suena', '¡A la siguiente!' in pg.inner_text('.timer') and pg.evaluate('window.__tonos') == 3, pg.evaluate('window.__tonos'))
-            pg.click('[aria-label="Cerrar descanso"]'); pg.click('.topbar >> text=Terminar'); pg.wait_for_timeout(300)
+            pg.click('.topbar >> text=Terminar'); pg.wait_for_timeout(300)
             pg.click('text=Descartar sesión'); pg.wait_for_timeout(300)
             ok('Diálogo propio de confirmación', pg.locator('.dialog').count() == 1)
             pg.click('.dialog button.danger'); pg.wait_for_timeout(500)

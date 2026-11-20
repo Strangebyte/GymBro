@@ -2,7 +2,7 @@ import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, type Exercise, type Session, type SetLog, type Settings, type Tramo } from '../db'
 import { alinearArriba, Chevron, Chips, Desplegable, HistorialLista, Ico, MediaView, Picker, Sheet, Stepper, TopBar, useDialogos, useNav, useTieneMedia } from '../ui'
-import { etiqueta, fmtDur, fmtFecha, fmtFechaCorta, mmss, NOMBRE_TEC, pesoDesdeTexto, pesoTxt, plural, prepararSonido, resumenSets, rotuloPeso, setValido, sonar, tecCorta, ultimaVez, unidadPeso, vibrar } from '../lib'
+import { etiqueta, fmtDur, fmtFecha, fmtFechaCorta, NOMBRE_TEC, pesoDesdeTexto, pesoTxt, plural, resumenSets, rotuloPeso, setValido, tecCorta, ultimaVez, unidadPeso } from '../lib'
 import { agregarEjercicio, agregarSerie, descartarSesion, sesionEnCurso, terminarSesion } from '../actions'
 
 export type Item = { key: string; bloque: number; orden: number; ex: Exercise; sets: SetLog[] }
@@ -35,9 +35,7 @@ export function SessionScreen({ settings }: { settings: Settings }) {
   const ejercicios = useLiveQuery(() => db.exercises.toArray(), [])
   const [abierto, setAbiertoLocal] = useState<number | null>(memoria.abierto)
   const [picker, setPicker] = useState<number | null>(null)
-  const [finEn, setFinEn] = useState<number | null>(null)
-  const [ahora, setAhora] = useState(Date.now())
-  const [vibrado, setVibrado] = useState(false)
+  const [ahora, setAhora] = useState(Date.now())   // solo para mostrar cuánto lleva la sesión
   const porEjercicio = settings.tilde === 'ejercicio'
 
   const setAbierto = (b: number | null) => { memoria.abierto = b; setAbiertoLocal(b) }
@@ -54,13 +52,9 @@ export function SessionScreen({ settings }: { settings: Settings }) {
   }, [sesion?.id])
 
   useEffect(() => {
-    const id = setInterval(() => setAhora(Date.now()), finEn != null ? 250 : 15000)
+    const id = setInterval(() => setAhora(Date.now()), 15000)
     return () => clearInterval(id)
-  }, [finEn])
-  const restante = finEn == null ? 0 : (finEn - ahora) / 1000
-  useEffect(() => {
-    if (finEn != null && restante <= 0 && !vibrado) { if (settings.vibrar) vibrar([200, 100, 200]); if (settings.sonido) sonar(); setVibrado(true) }
-  }, [restante, finEn, vibrado, settings.vibrar, settings.sonido])
+  }, [])
 
   const items = useMemo<Item[]>(() => (sets && ejercicios ? armarItems(sets, ejercicios) : []), [sets, ejercicios])
   const bloques = useMemo(() => [...new Set(items.map((i) => i.bloque))].sort((a, b) => a - b), [items])
@@ -73,7 +67,6 @@ export function SessionScreen({ settings }: { settings: Settings }) {
   const conPlan = sesion.plan_day_id != null
   const bloquesPlan = [...new Set(sets.filter((s) => s.plan).map((s) => s.bloque))]
   const bloqueExtra = bloquesPlan.length ? Math.max(...bloquesPlan) + 1 : conPlan ? (bloques.length ? Math.max(...bloques) + 1 : 1) : 1
-  const descanso = (seg: number) => { setVibrado(false); setFinEn(Date.now() + seg * 1000); setAhora(Date.now()) }
 
   /** Marca o desmarca un grupo de series. Devuelve false si alguna no tiene datos. */
   const marcar = async (grupo: SetLog[], nombre: string): Promise<boolean> => {
@@ -91,7 +84,7 @@ export function SessionScreen({ settings }: { settings: Settings }) {
     <>
       <TopBar titulo={sesion.nombre} sub={`${sesion.retro ? fmtFecha(sesion.fecha) : fmtDur(ahora - sesion.inicio)} · ${hechas} de ${total} series`} atras
         der={<button className="btn primary sm" onClick={() => nav.ir({ v: 'cerrar' })}>Terminar</button>} />
-      <div className="main sin-tabs" style={{ paddingBottom: finEn != null ? 110 : undefined }}>
+      <div className="main sin-tabs">
         <div className="bar" style={{ marginBottom: 10 }}><i style={{ width: `${total ? (hechas / total) * 100 : 0}%` }} /></div>
         {!items.length && <div className="empty">Sesión vacía. Agregá el primer ejercicio.</div>}
 
@@ -124,7 +117,7 @@ export function SessionScreen({ settings }: { settings: Settings }) {
                 <div className="bloque-c">
                   {its.map((it) => (
                     <Tarjeta key={`${it.key}-${it.ex.id}`} item={it} sesion={sesion} porEjercicio={porEjercicio}
-                      onMarcar={async () => { if (settings.sonido) prepararSonido(); if (await marcar(it.sets, it.ex.nombre)) descanso(it.ex.descanso_s ?? settings.descanso_s) }} />
+                      onMarcar={() => void marcar(it.sets, it.ex.nombre)} />
                   ))}
                   {esExtra && <button className="btn xs block" onClick={() => setPicker(b)}>+ Otro ejercicio</button>}
                 </div>
@@ -137,16 +130,6 @@ export function SessionScreen({ settings }: { settings: Settings }) {
           {conPlan ? '+ Agregar ejercicios adicionales' : '+ Agregar ejercicio'}
         </button>
       </div>
-
-      {finEn != null && (
-        <div className={`timer${restante <= 0 ? ' listo' : ''}`} role="timer">
-          <div className="t">{restante <= 0 ? '0:00' : mmss(restante)}</div>
-          <div className="grow small">{restante <= 0 ? '¡A la siguiente!' : 'Descanso'}</div>
-          <button className="chip sm" onClick={() => setFinEn((f) => (f ?? Date.now()) - 30000)}>−30</button>
-          <button className="chip sm" onClick={() => { setVibrado(false); setFinEn((f) => Math.max(f ?? 0, Date.now()) + 30000) }}>+30</button>
-          <button className="chip sm" onClick={() => setFinEn(null)} aria-label="Cerrar descanso">✕</button>
-        </div>
-      )}
 
       {picker != null && (
         <Picker multi titulo={conPlan ? 'Ejercicios adicionales' : 'Agregar ejercicio'} onCerrar={() => setPicker(null)}

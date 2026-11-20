@@ -56,14 +56,13 @@ export function SettingsScreen({ settings }: { settings: Settings }) {
         <h2>Entrenamiento</h2>
         <div className="card col">
           <div className="row spread"><span className="small bold">Objetivo semanal de gym</span><div style={{ width: 170 }}><Stepper value={settings.objetivo_semanal} step={1} min={1} max={14} unit="sesiones" onChange={(v) => void setSettings({ objetivo_semanal: v ?? 4 })} /></div></div>
-          <div className="row spread"><span className="small bold">Descanso por defecto</span><div style={{ width: 170 }}><Stepper value={settings.descanso_s} step={15} unit="segundos" onChange={(v) => void setSettings({ descanso_s: v ?? 120 })} /></div></div>
           <div>
             <div className="small bold">Tilde de «hecho» durante la sesión</div>
             <div className="row" style={{ marginTop: 6 }}>
               <button className={`chip grow${settings.tilde === 'bloque' ? ' on' : ''}`} aria-pressed={settings.tilde === 'bloque'} onClick={() => void setSettings({ tilde: 'bloque' })}>Por bloque</button>
               <button className={`chip grow${settings.tilde === 'ejercicio' ? ' on' : ''}`} aria-pressed={settings.tilde === 'ejercicio'} onClick={() => void setSettings({ tilde: 'ejercicio' })}>Por ejercicio</button>
             </div>
-            <div className="xsmall muted" style={{ marginTop: 6 }}>Por ejercicio, al tildar arranca el cronómetro de descanso. Por bloque no hay cronómetro.</div>
+            <div className="xsmall muted" style={{ marginTop: 6 }}>Por bloque, un tilde marca todo el bloque. Por ejercicio, cada ejercicio tiene el suyo.</div>
           </div>
           <div className="row spread"><span className="small bold">Unidad de peso</span>
             <div className="row" style={{ gap: 6 }}>
@@ -71,11 +70,6 @@ export function SettingsScreen({ settings }: { settings: Settings }) {
               <button className={`chip${settings.unidad === 'lb' ? ' on' : ''}`} aria-pressed={settings.unidad === 'lb'} onClick={() => void setSettings({ unidad: 'lb' })}>Libras (lb)</button>
             </div>
           </div>
-          <div className="row spread"><span className="small bold">Vibrar al terminar el descanso</span>
-            <button className={`chip${settings.vibrar ? ' on' : ''}`} aria-pressed={settings.vibrar} onClick={() => void setSettings({ vibrar: !settings.vibrar })}>{settings.vibrar ? 'Sí' : 'No'}</button></div>
-          <div className="row spread"><span className="small bold">Sonar al terminar el descanso</span>
-            <button className={`chip${settings.sonido ? ' on' : ''}`} aria-pressed={settings.sonido} onClick={() => void setSettings({ sonido: !settings.sonido })}>{settings.sonido ? 'Sí' : 'No'}</button></div>
-          <div className="xsmall muted">El sonido usa el volumen de multimedia. Con el teléfono en silencio no vibra, pero puede sonar.</div>
         </div>
 
         <h2>Tipos de actividad</h2>

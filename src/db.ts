@@ -29,6 +29,7 @@ export interface Exercise {
   notas: string | null
   alias: string[]
   custom: boolean
+  /** Ya no se usa (había un cronómetro de descanso, se sacó el 20-11-2026). Queda por los datos guardados. */
   descanso_s: number | null
   /** El usuario lo modificó desde la app: las revisiones del catálogo ya no le pisan el nombre ni los demás datos. */
   editado?: boolean
@@ -142,10 +143,6 @@ export interface Settings {
   /** Color principal de la app. Cada paleta tiene su versión clara y oscura (styles.css). */
   paleta: 'verde' | 'azul' | 'violeta'
   objetivo_semanal: number
-  descanso_s: number
-  vibrar: boolean
-  /** Sonido al terminar el descanso. */
-  sonido: boolean
   tipos_actividad: string[]
   /** Dónde va el tilde de "hecho" durante la sesión. */
   tilde: 'bloque' | 'ejercicio'
@@ -161,9 +158,6 @@ export const SETTINGS_DEFAULT: Settings = {
   tema: 'claro',
   paleta: 'verde',
   objetivo_semanal: 4,
-  descanso_s: 120,
-  vibrar: true,
-  sonido: true,
   tilde: 'bloque',
   unidad: 'kg',
   tipos_actividad: ['Correr', 'Pádel', 'Fútbol', 'Squash', 'Tenis', 'Bici', 'Natación', 'Caminata', 'Senderismo', 'Yoga'],

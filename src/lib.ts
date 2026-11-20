@@ -121,10 +121,6 @@ export function fmtDur(ms: number): string {
   const m = Math.max(0, Math.round(ms / 60000))
   return m >= 60 ? `${Math.floor(m / 60)} h ${m % 60} min` : `${m} min`
 }
-export function mmss(seg: number): string {
-  const s = Math.max(0, Math.floor(seg))
-  return `${Math.floor(s / 60)}:${p2(s % 60)}`
-}
 export function duracionSesion(s: Session): number | null {
   if (s.dur_min != null) return s.dur_min
   if (s.fin) return Math.round((s.fin - s.inicio) / 60000)
@@ -186,37 +182,6 @@ export function progresoDe(filas: { fecha: string; set: SetLog }[]): { medida: M
 export const unidadDe = (m: Medida, lastre = false, cu = false): string => (m === 'kg' ? (lastre ? `${unidad} de lastre` : rotuloPeso(cu)) : m === 'reps' ? 'reps' : 'segundos')
 
 // ------------------------------------------------------------------ dispositivo
-export function vibrar(patron: number | number[]): void {
-  try { navigator.vibrate?.(patron) } catch { /* no soportado */ }
-}
-
-let audio: AudioContext | null = null
-/** Habilita el audio. Hay que llamarlo desde un toque: el navegador no deja sonar nada que no venga de un gesto. */
-export function prepararSonido(): void {
-  try {
-    const C = window.AudioContext ?? (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext
-    if (!C) return
-    audio ??= new C()
-    if (audio.state === 'suspended') void audio.resume()
-  } catch { /* sin audio */ }
-}
-/** Tres tonos cortos, generados en el momento (sin archivos). Suena con el volumen de multimedia. */
-export function sonar(): void {
-  try {
-    if (!audio) return
-    const t0 = audio.currentTime + 0.02
-    ;[880, 880, 1175].forEach((hz, i) => {
-      const o = audio!.createOscillator(), g = audio!.createGain(), t = t0 + i * 0.24
-      o.type = 'sine'; o.frequency.value = hz
-      g.gain.setValueAtTime(0.0001, t)
-      g.gain.exponentialRampToValueAtTime(0.5, t + 0.02)
-      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.18)
-      o.connect(g).connect(audio!.destination)
-      o.start(t); o.stop(t + 0.2)
-    })
-  } catch { /* sin audio */ }
-}
-
 type Sentinel = { release: () => Promise<void> }
 let wl: Sentinel | null = null
 export async function mantenerPantalla(on: boolean): Promise<void> {
