@@ -174,7 +174,8 @@ def main():
             ok('Cierre avisa las series sin marcar', 'sin marcar' in texto(pg))
             ok('"Actualizar el plan" viene desmarcado', pg.locator('.card.row').get_attribute('aria-pressed') == 'false')
             pg.click('.card.row'); pg.wait_for_timeout(150)          # caso exigente: actualizar el plan
-            pg.locator('.chips .chip', has_text='7').first.click()
+            ok('Esfuerzo: los 10 números a la vista, en dos filas, sin deslizar', pg.evaluate("(() => { const e = document.querySelector('.escala'); return e.scrollWidth <= e.clientWidth && new Set([...e.children].map(b => b.offsetTop)).size === 2 })()"))
+            pg.locator('.escala .chip', has_text='7').first.click()
             captura(pg, 'B5-cierre')
             pg.click('text=Guardar sesión'); pg.wait_for_timeout(700)
             t = texto(pg)
@@ -220,7 +221,7 @@ def main():
             print('\nD. Otras actividades')
             ctx, pg = abrir()
             pg.click('text=+ Registrar otra actividad'); pg.wait_for_timeout(300)
-            pg.click('.chip >> text=Pádel'); pg.locator('.chips .chip', has_text='6').first.click()
+            pg.click('.chip >> text=Pádel'); pg.locator('.escala .chip', has_text='6').first.click()
             captura(pg, 'D1-actividad')
             pg.click('text="Guardar"'); pg.wait_for_timeout(400)
             ok('Hoy lista la actividad', 'Pádel' in texto(pg))

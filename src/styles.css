@@ -120,6 +120,10 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--pri); outline-o
 .chips { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding: 1px; }
 .chips::-webkit-scrollbar { display: none; }
 .chips.wrap { flex-wrap: wrap; overflow: visible; }
+/* Escala del 1 al 10: dos filas de 5 que ocupan todo el ancho. */
+.escala { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.escala .chip { min-width: 0; }
+.escala-ref { display: flex; justify-content: space-between; margin-top: 6px; }
 .pill { font-size: 11px; padding: 2px 8px; border-radius: 999px; background: var(--surface-2); color: var(--muted); white-space: nowrap; font-weight: 600; }
 .pill.pri { background: var(--pri-soft); color: var(--pri-text); }
 .pill.act { background: var(--act-soft); color: var(--act-text); }

@@ -6,6 +6,7 @@ Registro de qué se decidió y por qué. Lo más nuevo, arriba.
 
 | Decisión | Razón |
 |---|---|
+| La escala de esfuerzo del 1 al 10 va en dos filas de 5 | En una fila había que deslizar para ver todos los números. El dueño eligió esta opción entre tres (una fila apretada, barra deslizable) |
 | Se sacó el cronómetro de descanso, con sus ajustes de vibrar, sonar y descanso por defecto | Solo arrancaba al tildar un ejercicio entero, no al terminar cada serie: servía poco. El dueño eligió sacarlo |
 | La calculadora de discos por lado no se incluye nunca | Decisión del dueño (20-11-2026). No volver a proponerla |
 | Músculos secundarios de fábrica para los ejercicios agregados, y elegibles en el formulario (media serie cada uno) | Los agregados sumaban solo a su músculo principal en "Series por grupo muscular" |

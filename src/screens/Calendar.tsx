@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, setSettings, type Activity, type Settings } from '../db'
-import { Chips, Picker, Stepper, TopBar, useDialogos, useNav } from '../ui'
+import { Chips, Escala10, Picker, Stepper, TopBar, useDialogos, useNav } from '../ui'
 import { agruparPorDia, duracionSesion, plural, fechaDe, fmtFechaLarga, hoyISO, isoDe, MESES, resumenSets, setValido } from '../lib'
 import { agregarEjercicio, descartarSesion, iniciarSesion, sesionEnCurso } from '../actions'
 import { ElegirDia, PREGUNTAS } from './Today'
@@ -141,8 +141,7 @@ export function ActivityScreen({ id, fecha, settings }: { id: number | null; fec
           <label className="f">Duración</label>
           <Stepper value={a.dur_min} step={5} unit="minutos" onChange={(v) => setA({ ...a, dur_min: v })} />
           <label className="f">Esfuerzo (opcional)</label>
-          <Chips opciones={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => ({ v: n as number | null, t: String(n) }))} valor={a.esfuerzo}
-            onPick={(v) => setA({ ...a, esfuerzo: a.esfuerzo === v ? null : v })} />
+          <Escala10 valor={a.esfuerzo} onPick={(v) => setA({ ...a, esfuerzo: v })} etiqueta="Esfuerzo de la actividad" />
           <label className="f" htmlFor="an">Notas (opcional)</label>
           <textarea id="an" rows={2} value={a.notas ?? ''} onChange={(e) => setA({ ...a, notas: e.target.value || null })} />
         </div>
@@ -187,8 +186,7 @@ export function SessionDetailScreen({ id }: { id: number }) {
             <label className="f">Duración</label>
             <Stepper value={duracionSesion(sesion)} step={5} min={0} max={600} unit="minutos" onChange={(v) => void db.sessions.update(id, { dur_min: v })} />
             <label className="f">Esfuerzo (opcional)</label>
-            <Chips opciones={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => ({ v: n as number | null, t: String(n) }))} valor={sesion.srpe}
-              onPick={(v) => void db.sessions.update(id, { srpe: sesion.srpe === v ? null : v })} />
+            <Escala10 valor={sesion.srpe} onPick={(v) => void db.sessions.update(id, { srpe: v })} etiqueta="Esfuerzo de la sesión" />
             <label className="f" htmlFor="sn">Notas</label>
             <textarea id="sn" rows={2} defaultValue={sesion.notas ?? ''} onBlur={(e) => void db.sessions.update(id, { notas: e.target.value.trim() || null })} />
           </div>

@@ -4,7 +4,7 @@
 
 ## Dónde está
 
-- La app está completa y funcionando en las pruebas automáticas (156 de 156, sin errores de consola).
+- La app está completa y funcionando en las pruebas automáticas (157 de 157, sin errores de consola).
 - **Publicada en GitHub Pages:** https://<usuario>.github.io/GymBro/ (repositorio público
   `<usuario>/GymBro`). Cada push a `main` la vuelve a publicar sola. Verificado el 14-11-2026 en
   Chromium: abre sin errores, registra el service worker. Desde el 16-11-2026 arranca solo con el catálogo: sin planes ni sesiones.
@@ -90,6 +90,7 @@ video y scroll táctil con una hoja abierta.
 | Fecha | Qué se hizo |
 |---|---|
 | 10-11-2026 | Diseño (`docs/historico/`), catálogo de 96 ejercicios, primera versión solo de registro |
+| 20-11-2026 | Escala de esfuerzo en dos filas de 5, sin deslizar; botón "Cargar" de las técnicas siempre debajo |
 | 20-11-2026 | Sin cronómetro de descanso; músculos secundarios (revisión 8 y formulario); medidas del cuerpo; las técnicas se cargan en una ventana aparte |
 | 18-11-2026 | Peso corporal con gráfico en Progreso; 6 ejercicios de antebrazo; "Plancha construyo"; tramos de las técnicas con límite y para quitar (revisión 7) |
 | 18-11-2026 | Se revirtió la división por dos de los pesos sumados: el dueño los ajusta a mano |

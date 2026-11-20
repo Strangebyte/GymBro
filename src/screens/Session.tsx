@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, type Exercise, type Session, type SetLog, type Settings, type Tramo } from '../db'
-import { alinearArriba, Chevron, Chips, Desplegable, HistorialLista, Ico, MediaView, Picker, Sheet, Stepper, TopBar, useDialogos, useNav, useTieneMedia } from '../ui'
+import { alinearArriba, Chevron, Desplegable, Escala10, HistorialLista, Ico, MediaView, Picker, Sheet, Stepper, TopBar, useDialogos, useNav, useTieneMedia } from '../ui'
 import { AYUDA_TEC, etiqueta, fmtDur, fmtFecha, fmtFechaCorta, NOMBRE_TEC, resumenTramos, pesoDesdeTexto, pesoTxt, plural, resumenSets, rotuloPeso, setValido, tecCorta, ultimaVez, unidadPeso } from '../lib'
 import { agregarEjercicio, agregarSerie, descartarSesion, sesionEnCurso, terminarSesion } from '../actions'
 
@@ -318,8 +318,8 @@ export function CerrarScreen() {
         {pend > 0 && <div className="banner">Quedan {plural(pend, 'serie sin marcar', 'series sin marcar')}. Al terminar se descartan: solo se guarda lo que tildaste.</div>}
         <div className="card">
           <div className="bold small">¿Qué tan dura fue la sesión?</div>
-          <div className="xsmall muted" style={{ margin: '2px 0 9px' }}>Esfuerzo global de 1 (muy suave) a 10 (máximo)</div>
-          <Chips opciones={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => ({ v: n as number | null, t: String(n) }))} valor={srpe} onPick={setSrpe} />
+          <div className="xsmall muted" style={{ margin: '2px 0 9px' }}>Esfuerzo global de la sesión</div>
+          <Escala10 valor={srpe} onPick={setSrpe} etiqueta="Esfuerzo de la sesión" />
         </div>
         <div className="card">
           <textarea rows={3} placeholder="Notas (opcional)" value={notas} onChange={(e) => setNotas(e.target.value)} aria-label="Notas de la sesión" />

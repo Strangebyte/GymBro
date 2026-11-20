@@ -20,7 +20,7 @@ npm run seed         # regenera src/seed.json, src/seed-historial.json y data/*.
 npm run test:e2e     # requiere dist/ y: pip install playwright && playwright install chromium
 ```
 
-Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 156 verificaciones tienen que pasar
+Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 157 verificaciones tienen que pasar
 y no puede haber errores de consola. Si cambiás un flujo, actualizá `tests/e2e.py` en el mismo cambio.
 
 ## Cómo trabajar
@@ -160,6 +160,8 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
   la pantalla lo deja arriba, debajo de la barra (`alinearArriba`); el que estaba abierto se cierra sin animar.
 - Todo lo que se despliega lleva `<Chevron>` (ui.tsx) **a la izquierda**: bloques de la sesión, filas de Progreso,
   ayudas. No usar triángulos ▸ ▾.
+- Escalas de esfuerzo del 1 al 10 (cierre de sesión, editar sesión, otras actividades): `<Escala10>` (ui.tsx), dos filas
+  de 5 que entran en la pantalla. No usar una fila que haya que deslizar.
 - Fechas `dd/mm/yyyy`. Decimales con coma. Excepción pedida por el dueño: "Últ. vez (dd/mm)" en la tarjeta de la
   sesión, que además no se corta: ocupa las líneas que necesite.
 

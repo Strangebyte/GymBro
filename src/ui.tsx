@@ -278,6 +278,20 @@ export function Chips<T extends string | number | null>(props: {
   )
 }
 
+/** Escala de esfuerzo del 1 al 10 en dos filas de 5: todo a la vista, sin deslizar. Tocar el elegido lo quita. */
+export function Escala10({ valor, onPick, etiqueta }: { valor: number | null; onPick: (v: number | null) => void; etiqueta: string }) {
+  return (
+    <div>
+      <div className="escala" role="group" aria-label={etiqueta}>
+        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
+          <button key={n} type="button" className={`chip${valor === n ? ' on' : ''}`} aria-pressed={valor === n} onClick={() => onPick(valor === n ? null : n)}>{n}</button>
+        ))}
+      </div>
+      <div className="escala-ref xsmall muted"><span>1 = muy suave</span><span>10 = máximo</span></div>
+    </div>
+  )
+}
+
 /** Buscador + filtro + lista del catálogo agrupada por categoría. Lo usan la pestaña Ejercicios y el selector. */
 export function Catalogo(props: { onElegir: (e: Exercise) => void; marca?: (e: Exercise) => ReactNode; onCrear?: (nombre: string) => void; pegajoso?: boolean }) {
   const ejercicios = useLiveQuery(() => db.exercises.toArray(), [])
