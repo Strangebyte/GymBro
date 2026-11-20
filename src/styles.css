@@ -167,6 +167,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--pri); outline-o
 .ss .x { color: var(--muted); font-size: 13px; height: 38px; text-align: center; }
 /* Serie con técnica: "objetivo" es un botón que abre la ventana para cargar los tramos. */
 .ss .obj.tec { line-height: 1.2; padding: 2px 0; }
+.ss .obj.tec .tip { display: block; }   /* el nombre de la técnica siempre en su renglón, el botón abajo */
 /* Debajo del nombre de la técnica, un botón: "Cargar" (lleno) o, con datos, el resumen (suave). */
 .ss .obj.tec .res { display: inline-block; margin-top: 4px; padding: 4px 9px; border-radius: 999px; font-weight: 800; font-size: 12px; background: var(--pri-soft); color: var(--pri-text); }
 .ss .obj.tec .res.vacio { background: var(--pri); color: var(--pri-ink); }
