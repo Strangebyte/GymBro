@@ -2,7 +2,7 @@ import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, type Exercise, type Session, type SetLog, type Settings, type Tramo } from '../db'
 import { alinearArriba, Chevron, Chips, Desplegable, HistorialLista, Ico, MediaView, Picker, Sheet, Stepper, TopBar, useDialogos, useNav, useTieneMedia } from '../ui'
-import { etiqueta, fmtDur, fmtFecha, fmtFechaCorta, NOMBRE_TEC, pesoDesdeTexto, pesoTxt, plural, resumenSets, rotuloPeso, setValido, tecCorta, ultimaVez, unidadPeso } from '../lib'
+import { AYUDA_TEC, etiqueta, fmtDur, fmtFecha, fmtFechaCorta, NOMBRE_TEC, resumenTramos, pesoDesdeTexto, pesoTxt, plural, resumenSets, rotuloPeso, setValido, tecCorta, ultimaVez, unidadPeso } from '../lib'
 import { agregarEjercicio, agregarSerie, descartarSesion, sesionEnCurso, terminarSesion } from '../actions'
 
 export type Item = { key: string; bloque: number; orden: number; ex: Exercise; sets: SetLog[] }
@@ -149,6 +149,7 @@ export function Tarjeta(props: { item: Item; sesion: Session; porEjercicio: bool
   const { confirmar } = useDialogos()
   const [previo, setPrevio] = useState<{ fecha: string; txt: string } | null>(null)
   const [hoja, setHoja] = useState<'historial' | 'media' | 'cambiar' | null>(null)
+  const [tramosDe, setTramosDe] = useState<number | null>(null)   // serie con la ventana de técnica abierta
   const tieneMedia = useTieneMedia(ex.id!, ex.url, ex.slug)
   const nota = useLiveQuery(async () => {
     if (sesion.plan_day_id == null) return null
@@ -199,10 +200,13 @@ export function Tarjeta(props: { item: Item; sesion: Session; porEjercicio: bool
           <input inputMode="decimal" aria-label={`${ex.nombre}, serie ${s.serie}: peso en ${rotuloPeso(ex.dos_pesas)}`}
             defaultValue={pesoTxt(s.peso_g)} placeholder="—"
             onBlur={(e) => { const g = pesoDesdeTexto(e.target.value, s.peso_g); if (g !== (s.peso_g || null)) void db.setLogs.update(s.id!, { peso_g: g }) }} />
-          <span className="obj">{objetivo(s) || '—'}</span>
+          {s.tec ? (
+            <button className="obj tec" onClick={() => setTramosDe(s.id!)} aria-label={`${NOMBRE_TEC[s.tec.tipo]} de la serie ${s.serie}: cargar`}>
+              {objetivo(s)}<span className="res">{resumenTramos(s) || 'cargar'} ›</span>
+            </button>
+          ) : <span className="obj">{objetivo(s) || '—'}</span>}
           <button className="x" aria-label={`Borrar serie ${s.serie} de ${ex.nombre}`} onClick={() => void db.setLogs.delete(s.id!)}>✕</button>
         </div>
-        {s.tec && <Tramos s={s} ex={ex} />}
         </Fragment>
       ))}
       <div className="acc">
@@ -213,6 +217,9 @@ export function Tarjeta(props: { item: Item; sesion: Session; porEjercicio: bool
 
       {hoja === 'historial' && <Sheet titulo={ex.nombre} onCerrar={() => setHoja(null)}><HistorialLista exerciseId={ex.id!} lastre={ex.lastre} cu={ex.dos_pesas} excluir={sesion.id} /></Sheet>}
       {hoja === 'media' && <Sheet titulo={ex.nombre} onCerrar={() => setHoja(null)}><MediaView exerciseId={ex.id!} url={ex.url} slug={ex.slug} /></Sheet>}
+      {tramosDe != null && sets.find((x) => x.id === tramosDe)?.tec && (
+        <TramosHoja s={sets.find((x) => x.id === tramosDe)!} ex={ex} onCerrar={() => setTramosDe(null)} />
+      )}
       {hoja === 'cambiar' && (
         <Picker titulo={`Reemplazar ${ex.nombre}`} onCerrar={() => setHoja(null)}
           onElegir={(nuevo) => { void db.setLogs.bulkUpdate(sets.map((s) => ({ key: s.id!, changes: { exercise_id: nuevo.id! } }))) }} />
@@ -222,12 +229,16 @@ export function Tarjeta(props: { item: Item; sesion: Session; porEjercicio: bool
 }
 
 // ------------------------------------------------------------------ técnicas
-/** Debajo de una serie con técnica: reps de cada mini-serie (myo), de cada tanda tras una pausa (rest-pause) o peso y reps de cada bajada (drop). */
-function Tramos({ s, ex }: { s: SetLog; ex: Exercise }) {
+/**
+ * Ventana para cargar lo hecho en una serie con técnica: reps de cada mini-serie (myo), de cada tanda tras una pausa
+ * (rest-pause), o peso y reps de cada bajada (drop). Un renglón por tramo; se puede agregar hasta 3 más de lo
+ * prescripto y quitar cualquiera.
+ */
+function TramosHoja({ s, ex, onCerrar }: { s: SetLog; ex: Exercise; onCerrar: () => void }) {
   const tec = s.tec!
-  // Sin cargar todavía: tantos casilleros como lo prescripto. Si el usuario los quitó todos queda [] (y no se vuelven a llenar).
+  // Sin cargar todavía: tantos renglones como lo prescripto. Si el usuario los quitó todos queda [] (y no se vuelven a llenar).
   const tramos: Tramo[] = s.tramos ?? Array.from({ length: tec.n }, () => ({ reps: null }))
-  const max = Math.min(10, tec.n + 3)   // hasta 3 más de lo prescripto
+  const max = Math.min(10, tec.n + 3)
   // Cada cambio lee lo último guardado dentro de una transacción: si se cargan peso y reps seguidos, uno no pisa al otro.
   const cambiar = (fn: (actuales: Tramo[]) => Tramo[]) => void db.transaction('rw', db.setLogs, async () => {
     const guardados = (await db.setLogs.get(s.id!))?.tramos
@@ -236,26 +247,40 @@ function Tramos({ s, ex }: { s: SetLog; ex: Exercise }) {
   const guardar = (i: number, c: Partial<Tramo>) => cambiar((ts) => ts.map((t, j) => (j === i ? { ...t, ...c } : t)))
   const sugerido = (i: number) => (s.peso_g && tec.pct ? Math.round(s.peso_g * Math.pow(1 - tec.pct / 100, i + 1)) : null)
   const cual = tec.tipo === 'myo' ? 'mini-serie' : tec.tipo === 'rp' ? 'pausa' : 'bajada'
+  const titulo = tec.tipo === 'myo' ? 'Mini-serie' : tec.tipo === 'rp' ? 'Tras la pausa' : 'Bajada'
+  const u = rotuloPeso(ex.dos_pesas)
   return (
-    <div className="tramos" aria-label={`${NOMBRE_TEC[tec.tipo]} de la serie ${s.serie}`}>
-      <span className="t">{tec.tipo === 'drop' ? '↓' : '+'}</span>
-      {tramos.map((t, i) => (tec.tipo === 'drop' ? (
-        <span key={`${i}-${tramos.length}`} className="par">
-          <input inputMode="decimal" aria-label={`${ex.nombre}, serie ${s.serie}, ${cual} ${i + 1}: peso`} defaultValue={pesoTxt(t.peso_g)}
-            placeholder={pesoTxt(sugerido(i)) || unidadPeso()}
-            onBlur={(e) => { const g = pesoDesdeTexto(e.target.value, t.peso_g); if (g !== (t.peso_g || null)) guardar(i, { peso_g: g }) }} />
-          ×
-          <input inputMode="numeric" aria-label={`${ex.nombre}, serie ${s.serie}, ${cual} ${i + 1}: reps`} defaultValue={t.reps ?? ''} placeholder="reps"
-            onBlur={(e) => { const n = aNum(e.target.value); if (n !== t.reps) guardar(i, { reps: n }) }} />
-        </span>
-      ) : (
-        <input key={`${i}-${tramos.length}`} inputMode="numeric" aria-label={`${ex.nombre}, serie ${s.serie}, ${cual} ${i + 1}: reps`}
-          defaultValue={t.reps ?? ''} placeholder={tec.reps ? String(tec.reps) : '—'}
-          onBlur={(e) => { const n = aNum(e.target.value); if (n !== t.reps) guardar(i, { reps: n }) }} />
-      )))}
-      {tramos.length > 0 && <button className="mas" aria-label={`Quitar la última ${cual} de la serie ${s.serie}`} onClick={() => cambiar((ts) => ts.slice(0, -1))}>−</button>}
-      {tramos.length < max && <button className="mas" aria-label={`Agregar otra ${cual} a la serie ${s.serie}`} onClick={() => cambiar((ts) => (ts.length < max ? [...ts, { reps: null }] : ts))}>+</button>}
-    </div>
+    <Sheet titulo={`Serie ${s.serie} · ${NOMBRE_TEC[tec.tipo]}`} onCerrar={onCerrar} accion={<button className="btn primary sm" onClick={onCerrar}>Listo</button>}>
+      <div className="xsmall muted">{AYUDA_TEC[tec.tipo]}</div>
+      <div className="tramo-fila principal">
+        <b className="small">Serie</b>
+        <span className="small">{s.reps != null ? `${s.reps} reps` : s.seg != null ? `${s.seg} seg` : '— reps'}{s.peso_g ? ` × ${pesoTxt(s.peso_g)} ${u}` : ''}</span>
+        <span />
+      </div>
+      {tramos.map((t, i) => (
+        <div key={`${i}-${tramos.length}`} className="tramo-fila">
+          <span className="small">{titulo} {i + 1}</span>
+          <span className="campos">
+            {tec.tipo === 'drop' && (
+              <>
+                <input inputMode="decimal" aria-label={`${ex.nombre}, serie ${s.serie}, ${cual} ${i + 1}: peso`} defaultValue={pesoTxt(t.peso_g)}
+                  placeholder={pesoTxt(sugerido(i)) || unidadPeso()}
+                  onBlur={(e) => { const g = pesoDesdeTexto(e.target.value, t.peso_g); if (g !== (t.peso_g || null)) guardar(i, { peso_g: g }) }} />
+                <span className="xsmall muted">{u} ×</span>
+              </>
+            )}
+            <input inputMode="numeric" aria-label={`${ex.nombre}, serie ${s.serie}, ${cual} ${i + 1}: reps`} defaultValue={t.reps ?? ''}
+              placeholder={tec.tipo === 'myo' && tec.reps ? String(tec.reps) : '—'}
+              onBlur={(e) => { const n = aNum(e.target.value); if (n !== t.reps) guardar(i, { reps: n }) }} />
+            <span className="xsmall muted">reps</span>
+          </span>
+          <button className="mini" aria-label={`Quitar la ${cual} ${i + 1} de la serie ${s.serie}`} onClick={() => cambiar((ts) => ts.filter((_, j) => j !== i))}>✕</button>
+        </div>
+      ))}
+      {tramos.length < max
+        ? <button className="btn ghost block sm" style={{ marginTop: 6 }} aria-label={`Agregar otra ${cual} a la serie ${s.serie}`} onClick={() => cambiar((ts) => (ts.length < max ? [...ts, { reps: null }] : ts))}>+ Otra {cual}</button>
+        : <div className="xsmall muted center" style={{ marginTop: 8 }}>Hasta {max} por serie.</div>}
+    </Sheet>
   )
 }
 

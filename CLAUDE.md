@@ -20,7 +20,7 @@ npm run seed         # regenera src/seed.json, src/seed-historial.json y data/*.
 npm run test:e2e     # requiere dist/ y: pip install playwright && playwright install chromium
 ```
 
-Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 147 verificaciones tienen que pasar
+Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 156 verificaciones tienen que pasar
 y no puede haber errores de consola. Si cambiás un flujo, actualizá `tests/e2e.py` en el mismo cambio.
 
 ## Cómo trabajar
@@ -76,6 +76,7 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
 | `activities` | Otras actividades físicas (pádel, correr…) |
 | `media` | Video o imagen por ejercicio (Blob). No entra en la copia de seguridad |
 | `pesoCorporal` | Peso corporal, optativo, uno por día (`&fecha`). Va en la copia; las copias viejas sin esta tabla se restauran igual |
+| `medidas` | Perímetros del cuerpo de un día (`mm`: medida → milímetros), cada uno optativo, uno por día. Misma regla de copia |
 | `meta` | `settings`, `seeded` |
 
 ## Reglas del dominio — no romper
@@ -87,8 +88,9 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
 - **Dos pesas** (`dos_pesas`): en los ejercicios con dos mancuernas o kettlebells se anota el peso de una sola y se
   muestra "kg c/u" (`rotuloPeso`). No convierte nada: es solo el rótulo, para que todos carguen igual.
 - **Técnicas por serie** (`tec`: myo-reps, rest-pause o drop set) se configuran en el plan, no en la sesión. En la sesión
-  se cargan los "tramos" (`tramos`: reps de cada mini-serie o pausa; peso y reps de cada bajada) debajo de la serie.
-  Se pueden agregar hasta 3 más de lo prescripto (máximo 10) y quitar de a uno; `tramos` sin definir = sin cargar todavía.
+  se cargan los "tramos" (`tramos`: reps de cada mini-serie o pausa; peso y reps de cada bajada) en una ventana aparte
+  que se abre desde "objetivo" (pedido del dueño: en la tabla quedaba desprolijo). Hasta 3 más de lo prescripto
+  (máximo 10) y se puede quitar cualquiera; `tramos` sin definir = sin cargar todavía.
   Progreso y "series por grupo" cuentan solo la serie principal (reps/peso_g): así una serie con técnica se compara con
   una normal y no infla el volumen.
 - **El plan y el registro son tablas separadas.** Nada de lo que pasa en una sesión modifica el plan, con una
@@ -115,9 +117,9 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
 
 - Sesión: bloques colapsados al entrar; abrir uno cierra el anterior. El bloque abierto y el scroll se
   conservan al ir y volver de otra pantalla.
-- Tilde de "hecho" por bloque (por defecto) o por ejercicio (ajuste `tilde`). Solo en modo por ejercicio
-  arranca el cronómetro de descanso. Al terminar vibra y suena (ajustes `vibrar` y `sonido`). El dueño no quiere
-  notificaciones para el descanso. El encabezado del bloque no lleva contador de series (lo pidió sacar).
+- Tilde de "hecho" por bloque (por defecto) o por ejercicio (ajuste `tilde`). **No hay cronómetro de descanso**: se
+  sacó el 20-11-2026 porque solo arrancaba al terminar un ejercicio entero. El encabezado del bloque no lleva
+  contador de series (lo pidió sacar).
 - En la sesión, reps y peso se escriben a mano en una tabla compacta. RIR, RPE, fallo y calentamiento
   **no** se editan ahí: se configuran en el plan y se ven como "objetivo".
 - Las etiquetas de grupo y equipo van en el encabezado del bloque, no en cada ejercicio.
@@ -149,7 +151,10 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
 - Apariencia: tema claro/oscuro y paleta (`verde`, `azul`, `violeta`). Una paleta nueva son dos bloques en
   styles.css (`[data-paleta]` claro y oscuro) y una opción en Ajustes; el naranja queda reservado para "otras
   actividades" y el rojo para errores.
-- Progreso: "Series por grupo muscular" va siempre visible. El progreso por ejercicio usa `progresoDe` (lib.ts):
+- Músculos secundarios: los de fábrica están en el catálogo (revisión 8); en el formulario se eligen en "Más
+  opciones" y cada uno suma media serie.
+- Progreso: peso corporal y medidas del cuerpo (optativos, uno por día, con gráfico; las medidas en cm con una
+  explicación de cómo tomar cada una). "Series por grupo muscular" va siempre visible. El progreso por ejercicio usa `progresoDe` (lib.ts):
   peso más alto y sus reps; a igual peso compara reps; sin peso, reps o tiempo.
 - Bloques de la sesión y del editor de días: se abren y cierran con transición (`<Desplegable>`). Al abrir uno tocándolo,
   la pantalla lo deja arriba, debajo de la barra (`alinearArriba`); el que estaba abierto se cierra sin animar.

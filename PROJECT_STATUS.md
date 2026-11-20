@@ -4,7 +4,7 @@
 
 ## Dónde está
 
-- La app está completa y funcionando en las pruebas automáticas (147 de 147, sin errores de consola).
+- La app está completa y funcionando en las pruebas automáticas (156 de 156, sin errores de consola).
 - **Publicada en GitHub Pages:** https://<usuario>.github.io/GymBro/ (repositorio público
   `<usuario>/GymBro`). Cada push a `main` la vuelve a publicar sola. Verificado el 14-11-2026 en
   Chromium: abre sin errores, registra el service worker. Desde el 16-11-2026 arranca solo con el catálogo: sin planes ni sesiones.
@@ -23,15 +23,10 @@ video y scroll táctil con una hoja abierta.
 ## Pendiente (revisado el 18-11-2026)
 
 - **Probar en el teléfono** lo publicado que solo se verificó en el simulador: técnicas por serie (panel en el plan y
-  tramos en la sesión), bloques que se abren con transición y quedan arriba, "kg c/u" en ejercicios con dos pesas,
+  ventana de tramos en la sesión), peso corporal, medidas, músculos secundarios en el formulario, bloques que se abren con transición y quedan arriba, "kg c/u" en ejercicios con dos pesas,
   unidad en libras, editor de días con Guardar y aviso al salir, y "Copiar pedido para la IA" con una IA real.
 - **Pesos sumados a corregir a mano (el dueño):** "Curl de bíceps con mancuernas" 40 kg y "Caminata en puntas de pie"
   52-56 kg en el historial importado, y 56 kg en el Día 1 del plan, son la suma de las dos mancuernas.
-- **Cronómetro de descanso, a decidir con el dueño:** hoy solo arranca al tildar un ejercicio entero (modo por ejercicio),
-  no al terminar cada serie, y el dueño duda de que sirva así. Opciones planteadas el 18-11-2026: sacarlo, o que arranque
-  al tildar cada serie. El cronómetro corto entre mini-series de las técnicas depende de esa decisión.
-- **Músculos secundarios:** los ejercicios nuevos no los tienen y el formulario no permite cargarlos. Propuesta del
-  18-11-2026, sin decisión: cargarlos de fábrica y sumar una opción en el formulario.
 - **Probar en iPhone** que ya no se agrande la pantalla al tocar "Pegar el plan" ni otros campos. El arreglo no se
   pudo verificar acá: solo aplica en iOS.
 - **Plan Mesociclo B en teléfonos que ya tenían la app:** las instalaciones nuevas ya no lo traen, pero a quien la
@@ -87,8 +82,6 @@ video y scroll táctil con una hoja abierta.
 ## Ideas en espera (no pedidas todavía)
 
 - Backup automático (Drive u otro): el dueño lo descartó por ahora; exigiría cuenta de Google
-- Inventario de discos y calculadora de carga por lado
-- Medidas del cuerpo (perímetros: cintura, brazo, pierna…), con gráfico como el del peso corporal. Al dueño le gusta la idea; queda para más adelante
 - Incluir video/imagen en la copia de seguridad (zip)
 - Skill de Claude para generar planes en `plan-gym/v1` (el dueño dijo que más adelante)
 
@@ -97,6 +90,7 @@ video y scroll táctil con una hoja abierta.
 | Fecha | Qué se hizo |
 |---|---|
 | 10-11-2026 | Diseño (`docs/historico/`), catálogo de 96 ejercicios, primera versión solo de registro |
+| 20-11-2026 | Sin cronómetro de descanso; músculos secundarios (revisión 8 y formulario); medidas del cuerpo; las técnicas se cargan en una ventana aparte |
 | 18-11-2026 | Peso corporal con gráfico en Progreso; 6 ejercicios de antebrazo; "Plancha construyo"; tramos de las técnicas con límite y para quitar (revisión 7) |
 | 18-11-2026 | Se revirtió la división por dos de los pesos sumados: el dueño los ajusta a mano |
 | 18-11-2026 | Técnicas por serie (myo-reps, rest-pause, drop set); bloques con transición que quedan arriba al abrirse; dos ejercicios más con dos pesas (revisión 6) |

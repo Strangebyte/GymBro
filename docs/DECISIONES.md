@@ -6,6 +6,11 @@ Registro de qué se decidió y por qué. Lo más nuevo, arriba.
 
 | Decisión | Razón |
 |---|---|
+| Se sacó el cronómetro de descanso, con sus ajustes de vibrar, sonar y descanso por defecto | Solo arrancaba al tildar un ejercicio entero, no al terminar cada serie: servía poco. El dueño eligió sacarlo |
+| La calculadora de discos por lado no se incluye nunca | Decisión del dueño (20-11-2026). No volver a proponerla |
+| Músculos secundarios de fábrica para los ejercicios agregados, y elegibles en el formulario (media serie cada uno) | Los agregados sumaban solo a su músculo principal en "Series por grupo muscular" |
+| Medidas del cuerpo (8 perímetros, en cm), optativas, con un texto de cómo medir cada una y sin fotos | Pedido del dueño. Un texto corto alcanza y no hay un juego de imágenes de dominio público confiable para esto |
+| Los tramos de una serie con técnica se cargan en una ventana aparte, que se abre desde "objetivo" | En la tabla quedaban desprolijos; el dueño eligió esta opción entre dos |
 | Peso corporal optativo, uno por día, con gráfico en Progreso | Pedido del dueño: cargarlo cuando quiera, sin obligación. Uno por día para que el gráfico no tenga saltos raros; cargar otro el mismo día lo reemplaza |
 | En las técnicas se pueden agregar hasta 3 tramos más de lo prescripto y quitar de a uno | Pedido del dueño: se podían agregar sin límite y no se podían borrar |
 | Seis ejercicios de antebrazo (curl y extensión de muñeca, curl invertido, rodillo, pinza de discos) | El grupo existía sin ejercicios; pedido del dueño |

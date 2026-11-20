@@ -43,6 +43,18 @@ export function tecCorta(t?: Tecnica | null): string {
   return `Drop ×${t.n}${t.pct ? ` −${t.pct}%` : ''}`
 }
 export const NOMBRE_TEC: Record<Tecnica['tipo'], string> = { myo: 'Myo-reps', rp: 'Rest-pause', drop: 'Drop set' }
+export const AYUDA_TEC: Record<Tecnica['tipo'], string> = {
+  myo: 'Una serie de activación cerca del fallo y después mini-series cortas con el mismo peso, descansando 3 a 5 respiraciones entre cada una.',
+  rp: 'Llegás al fallo, descansás 10 a 20 segundos y seguís con el mismo peso. Se repite una vez por pausa.',
+  drop: 'Llegás al fallo, bajás el peso sin descansar y seguís. Se repite una vez por bajada.',
+}
+/** Lo hecho en los tramos, corto: "5·5·4" (mini-series o pausas) o "55×8 · 45×6" (bajadas). Vacío si no hay nada cargado. */
+export function resumenTramos(s: { tec?: Tecnica | null; tramos?: { reps: number | null; peso_g?: number | null }[] }): string {
+  const hechos = (s.tramos ?? []).filter((t) => t.reps != null || t.peso_g)
+  if (!s.tec || !hechos.length) return ''
+  if (s.tec.tipo === 'drop') return hechos.map((t) => `${t.peso_g ? numES(enUnidad(t.peso_g)) : '?'}×${t.reps ?? '?'}`).join(' · ')
+  return hechos.map((t) => t.reps ?? '?').join('·')
+}
 
 /** Resumen corto de una serie: "8r · 80 kg · RPE 8". Con técnica: "12r · 20 kg + 4·4·3" o "10r · 60 kg · ↓ 50 kg × 8". */
 export function fmtSet(s: PSet | SetLog, lastre = false, cu = false): string {

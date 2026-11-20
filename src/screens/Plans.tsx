@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, type Exercise, type PBlock, type PlanDay, type PSet, type Tecnica } from '../db'
 import { alinearArriba, Chevron, Chips, Desplegable, Picker, Sheet, sinGuardia, Stepper, TopBar, useDialogos, useGuardiaSalida, useNav } from '../ui'
-import { etiqueta, plural, GRUPOS, guardarArchivo, NOMBRE_TEC, numES, pesoDesdeTexto, pesoTxt, resumenSets, rotuloPeso, setValido, slugify } from '../lib'
+import { AYUDA_TEC, etiqueta, plural, GRUPOS, guardarArchivo, NOMBRE_TEC, numES, pesoDesdeTexto, pesoTxt, resumenSets, rotuloPeso, setValido, slugify } from '../lib'
 import { activarPlan, borrarPlan, duplicarDia, reordenarDias } from '../actions'
 import { EJEMPLO_PLAN, exportarPlan, guardarPlan, leerPlan, pedidoParaIA, type ImpPlan, type Resolucion } from '../plan'
 
@@ -119,11 +119,6 @@ export function PlanScreen({ id }: { id: number }) {
 // ------------------------------------------------------------------ técnicas de una serie
 const TEC_CORTO: Record<Tecnica['tipo'], string> = { myo: 'Myo', rp: 'RP', drop: 'Drop' }
 const TEC_BASE: Record<Tecnica['tipo'], Tecnica> = { myo: { tipo: 'myo', n: 4, reps: 4 }, rp: { tipo: 'rp', n: 2 }, drop: { tipo: 'drop', n: 2, pct: 20 } }
-const TEC_AYUDA: Record<Tecnica['tipo'], string> = {
-  myo: 'Una serie de activación cerca del fallo y después mini-series cortas con el mismo peso, descansando 3 a 5 respiraciones entre cada una.',
-  rp: 'Llegás al fallo, descansás 10 a 20 segundos y seguís con el mismo peso. Se repite una vez por pausa.',
-  drop: 'Llegás al fallo, bajás el peso sin descansar y seguís. Se repite una vez por bajada.',
-}
 
 /** Panel para marcar una serie al fallo y elegirle una técnica. Los cambios se aplican al momento (al borrador del día). */
 function SerieTecnica({ s, titulo, onCambio, onCerrar }: { s: PSet; titulo: string; onCambio: (c: Partial<PSet>) => void; onCerrar: () => void }) {
@@ -139,7 +134,7 @@ function SerieTecnica({ s, titulo, onCambio, onCerrar }: { s: PSet; titulo: stri
         valor={tec?.tipo ?? null} onPick={(v) => onCambio({ tec: v ? { ...TEC_BASE[v] } : null })} />
       {tec && (
         <div className="card" style={{ marginTop: 10 }}>
-          <div className="xsmall muted">{TEC_AYUDA[tec.tipo]}</div>
+          <div className="xsmall muted">{AYUDA_TEC[tec.tipo]}</div>
           <label className="f">{tec.tipo === 'myo' ? 'Mini-series' : tec.tipo === 'rp' ? 'Pausas' : 'Bajadas de peso'}</label>
           <Stepper value={tec.n} step={1} min={1} max={10} unit={tec.tipo === 'myo' ? 'mini-series' : tec.tipo === 'rp' ? 'pausas' : 'bajadas'} onChange={(v) => onCambio({ tec: { ...tec, n: v ?? 1 } })} />
           {tec.tipo === 'myo' && (

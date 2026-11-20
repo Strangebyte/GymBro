@@ -165,13 +165,13 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--pri); outline-o
 .ss input { padding: 7px 4px; text-align: center; border-radius: 13px; font-size: 15.5px; font-weight: 700; min-height: 38px; }
 .ss .obj { font-size: 12px; color: var(--muted); text-align: center; font-weight: 600; }
 .ss .x { color: var(--muted); font-size: 13px; height: 38px; text-align: center; }
-/* Tramos de una serie con técnica (mini-series, pausas o bajadas), debajo de la serie. */
-.tramos { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin: 3px 30px 6px 26px; }
-.tramos .t { font-size: 13px; color: var(--muted); font-weight: 800; width: 12px; text-align: center; }
-.tramos input { width: 44px; min-height: 32px; padding: 4px 2px; text-align: center; border-radius: 11px; font-size: 14.5px; font-weight: 650; }
-.tramos .par { display: inline-flex; align-items: center; gap: 3px; font-size: 12px; color: var(--muted); margin-right: 4px; }
-.tramos .par input:first-child { width: 52px; }
-.tramos .mas { width: 32px; height: 32px; border-radius: 999px; border: 1px dashed var(--line); color: var(--muted); font-weight: 700; }
+/* Serie con técnica: "objetivo" es un botón que abre la ventana para cargar los tramos. */
+.ss .obj.tec { color: var(--pri-text); line-height: 1.2; padding: 2px 0; }
+.ss .obj.tec .res { display: block; font-weight: 800; }
+.tramo-fila { display: grid; grid-template-columns: 1fr auto 34px; gap: 8px; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--line); }
+.tramo-fila.principal { margin-top: 8px; color: var(--muted); }
+.tramo-fila .campos { display: inline-flex; align-items: center; gap: 6px; }
+.tramo-fila input { width: 64px; min-height: 40px; text-align: center; font-weight: 700; }
 .acc { display: flex; gap: 14px; margin-top: 6px; }
 .acc button { font-size: 12.5px; font-weight: 650; color: var(--pri-text); min-height: 32px; padding: 0 2px; }
 .acc button.q { color: var(--bad); margin-left: auto; }
