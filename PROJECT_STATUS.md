@@ -27,6 +27,9 @@ video y scroll táctil con una hoja abierta.
   unidad en libras, editor de días con Guardar y aviso al salir, y "Copiar pedido para la IA" con una IA real.
 - **Pesos sumados a corregir a mano (el dueño):** "Curl de bíceps con mancuernas" 40 kg y "Caminata en puntas de pie"
   52-56 kg en el historial importado, y 56 kg en el Día 1 del plan, son la suma de las dos mancuernas.
+- **Ejercicios nuevos del entrenador sin foto** (9, revisión 9). "Rotación externa de hombro en bisagra" tiene nombre
+  supuesto: la sigla "RE … - PS" no está confirmada. "Camilla isquiosurales - MQ" del plan del 25-11 no traía series:
+  quedó 3×8 provisorio.
 - **Probar en iPhone** que ya no se agrande la pantalla al tocar "Pegar el plan" ni otros campos. El arreglo no se
   pudo verificar acá: solo aplica en iOS.
 - **Plan Mesociclo B en teléfonos que ya tenían la app:** las instalaciones nuevas ya no lo traen, pero a quien la
@@ -90,6 +93,7 @@ video y scroll táctil con una hoja abierta.
 | Fecha | Qué se hizo |
 |---|---|
 | 10-11-2026 | Diseño (`docs/historico/`), catálogo de 96 ejercicios, primera versión solo de registro |
+| 25-11-2026 | Historial del dueño al 20-11 (33 sesiones) y plan de la semana del 24-11, en una copia armada en la PC sin publicar nada; 9 ejercicios nuevos del entrenador y vuelve Rebote y freno (revisión 9) |
 | 20-11-2026 | Escala de esfuerzo en dos filas de 5, sin deslizar; botón "Cargar" de las técnicas siempre debajo |
 | 20-11-2026 | Sin cronómetro de descanso; músculos secundarios (revisión 8 y formulario); medidas del cuerpo; las técnicas se cargan en una ventana aparte |
 | 18-11-2026 | Peso corporal con gráfico en Progreso; 6 ejercicios de antebrazo; "Plancha construyo"; tramos de las técnicas con límite y para quitar (revisión 7) |

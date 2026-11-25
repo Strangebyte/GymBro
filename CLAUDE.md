@@ -54,7 +54,7 @@ src/
     Exercises.tsx  Catálogo, ficha, formulario (incluye video/imagen)
     Progress.tsx   Progreso + GraficoPesos
     More.tsx       Ajustes
-tools/seed/    Generador de datos iniciales (Python) y catálogo base
+tools/seed/    Generador de datos iniciales (Python, privado), catálogo base y armar_copia.py (copia completa del dueño)
 tools/imagenes/  gen.py baja y arma las imágenes incluidas de ejercicios (requiere Pillow y conexión)
 tools/nombres/  gen.py arma privado/nombres-ejercicios.xlsx (propuesta de nombres y alias); aplicar.py convierte la revisión
                del dueño en tools/seed/catalogo-cambios.json (requieren openpyxl)
@@ -202,6 +202,12 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
   arranca sin planes ni sesiones (el dueño lo pidió: no quiere que a otros les aparezca su plan); lo de él se carga
   restaurando una copia. Las pruebas e2e necesitan los dos archivos: solo pasan en esta PC. Nunca sacarlos del
   `.gitignore`.
+- **Cargar historial nuevo del dueño** (extracciones de la app del entrenador): las fuentes van a `docs/fuentes/`
+  (privado), las sesiones a `HIST_NUEVAS` y los planes a `PLAN_SEMANA` en `tools/seed/gen.py` (privado), los ejercicios
+  nuevos al catálogo (`tools/nombres/aplicar.py`, nueva revisión). `npm run seed` y después
+  `python tools/seed/armar_copia.py privado/plan-….json`: arma `privado/gymbro-copia-AAAA-MM-DD.json` sin publicar nada,
+  y el dueño la restaura en el teléfono (reemplaza todo). `src/seed-historial.json` es solo el de las pruebas (hasta el
+  11-11); el completo está en `privado/seed-historial-completo.json`. Solo se carga lo que figura en la fuente.
 - `tests/e2e.py` fija la fecha en 14-11-2026 porque el historial sembrado es relativo a esa fecha.
 - `tsconfig` tiene `noUnusedLocals` y `noUnusedParameters`: el build falla con imports sin usar.
 
