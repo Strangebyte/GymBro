@@ -1007,6 +1007,8 @@
     "Jumping lunge",
     "Split squat jump",
     "Scissor jump",
+    "Sentadilla SPLIT SALTO CC - KB",
+    "Zancada con salto CC",
     "Sentadilla SPLIT SALTO CAMBIO - KB"
    ],
    "dos_pesas": true
@@ -2582,6 +2584,35 @@
    "dos_pesas": true
   },
   {
+   "slug": "rebote-y-freno",
+   "nombre": "Rebote y frenado (salto con aterrizaje controlado)",
+   "legible": null,
+   "grupo": "cuadriceps",
+   "sec": [
+    {
+     "grupo": "gemelos",
+     "factor": 0.4
+    }
+   ],
+   "equipo": "peso_corporal",
+   "patron": "pliometria",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Rebote y freno",
+    "Salto con recepción",
+    "Aterrizaje y freno",
+    "Drop and stick",
+    "Snap down"
+   ],
+   "dos_pesas": false
+  },
+  {
    "slug": "laterales-con-banda",
    "nombre": "Saltos laterales con una mano agarrando banda elástica",
    "legible": null,
@@ -3970,6 +4001,7 @@
    "archivo": false,
    "notas": null,
    "alias": [
+    "Camilla isquiosurales - MQ",
     "Camilla de isquiotibiales",
     "Camilla femoral",
     "Curl femoral acostado",
@@ -4376,6 +4408,8 @@
    "archivo": false,
    "notas": null,
    "alias": [
+    "2P CCM Vertical AL CAJÓN - CJ",
+    "Salto al cajón a dos piernas con contramovimiento",
     "Saltos al cajón",
     "Salto al cajón a dos piernas",
     "Box jump",
@@ -4560,6 +4594,241 @@
     "Sostener discos con pinza",
     "Plate pinch",
     "Pinch grip"
+   ],
+   "dos_pesas": false
+  },
+  {
+   "slug": "sentadilla-bulgara-frontal-con-barra",
+   "nombre": "Sentadilla búlgara frontal con barra",
+   "legible": null,
+   "grupo": "cuadriceps",
+   "sec": [
+    {
+     "grupo": "gluteo",
+     "factor": 0.5
+    }
+   ],
+   "equipo": "barra",
+   "patron": "zancada",
+   "unilateral": true,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Sentadilla búlgara FRONTAL - BR",
+    "Búlgara frontal",
+    "Front rack bulgarian split squat"
+   ],
+   "dos_pesas": false
+  },
+  {
+   "slug": "sentadilla-frontal-al-cajon",
+   "nombre": "Sentadilla frontal al cajón",
+   "legible": null,
+   "grupo": "cuadriceps",
+   "sec": [
+    {
+     "grupo": "gluteo",
+     "factor": 0.5
+    },
+    {
+     "grupo": "core",
+     "factor": 0.3
+    }
+   ],
+   "equipo": "barra",
+   "patron": "sentadilla",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Front box squat"
+   ],
+   "dos_pesas": false
+  },
+  {
+   "slug": "camilla-de-cuadriceps-a-una-pierna",
+   "nombre": "Camilla de cuádriceps a una pierna",
+   "legible": null,
+   "grupo": "cuadriceps",
+   "sec": [],
+   "equipo": "maquina",
+   "patron": "aislamiento",
+   "unilateral": true,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Sillón Cuádriceps 1P",
+    "Sillón de cuádriceps a una pierna",
+    "Single leg extension"
+   ],
+   "dos_pesas": false
+  },
+  {
+   "slug": "estocada-lateral-con-kettlebell",
+   "nombre": "Estocada lateral con kettlebell",
+   "legible": null,
+   "grupo": "cuadriceps",
+   "sec": [
+    {
+     "grupo": "gluteo",
+     "factor": 0.5
+    },
+    {
+     "grupo": "aductores_abductores",
+     "factor": 0.5
+    }
+   ],
+   "equipo": "kettlebell",
+   "patron": "zancada",
+   "unilateral": true,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Estocada lateral - KB",
+    "Estocada lateral",
+    "Zancada lateral",
+    "Lateral lunge"
+   ],
+   "dos_pesas": false
+  },
+  {
+   "slug": "drop-jump-a-dos-piernas",
+   "nombre": "Drop jump a dos piernas",
+   "legible": null,
+   "grupo": "cuadriceps",
+   "sec": [
+    {
+     "grupo": "gluteo",
+     "factor": 0.3
+    },
+    {
+     "grupo": "gemelos",
+     "factor": 0.3
+    }
+   ],
+   "equipo": "cajon",
+   "patron": "pliometria",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "DJ 2P Vertical",
+    "Salto en profundidad",
+    "Drop jump",
+    "Depth jump"
+   ],
+   "dos_pesas": false
+  },
+  {
+   "slug": "subida-al-cajon-con-salto",
+   "nombre": "Subida al cajón con salto",
+   "legible": null,
+   "grupo": "cuadriceps",
+   "sec": [
+    {
+     "grupo": "gluteo",
+     "factor": 0.5
+    }
+   ],
+   "equipo": "cajon",
+   "patron": "pliometria",
+   "unilateral": true,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Subidas al Podio SALTO",
+    "Subida al podio con salto",
+    "Step up jump",
+    "Jumping step up"
+   ],
+   "dos_pesas": false
+  },
+  {
+   "slug": "antirrotacion-en-landmine",
+   "nombre": "Antirrotación en landmine",
+   "legible": null,
+   "grupo": "core",
+   "sec": [],
+   "equipo": "landmine",
+   "patron": "core",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Antirotacion LM",
+    "Antirrotación LM",
+    "Landmine antirotation",
+    "Landmine rainbow"
+   ],
+   "dos_pesas": false
+  },
+  {
+   "slug": "plancha-alta-dinamica-cruzada",
+   "nombre": "Plancha alta dinámica cruzada",
+   "legible": null,
+   "grupo": "core",
+   "sec": [],
+   "equipo": "peso_corporal",
+   "patron": "core",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Plancha alta cruzada"
+   ],
+   "dos_pesas": false
+  },
+  {
+   "slug": "rotacion-externa-de-hombro-en-bisagra",
+   "nombre": "Rotación externa de hombro en bisagra",
+   "legible": null,
+   "grupo": "hombros",
+   "sec": [],
+   "equipo": "otro",
+   "patron": "aislamiento",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "RE Hombro BISAGRA - PS",
+    "RE Hombro bisagra",
+    "Rotación externa de hombro"
    ],
    "dos_pesas": false
   }

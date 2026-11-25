@@ -328,7 +328,7 @@ def main():
             pg.click('[aria-label="Volver"]'); pg.wait_for_timeout(300)
             ok('Dos planes; el importado quedó activo', pg.locator('.main .card').count() == 2 and 'activo' in pg.locator('.main .card').first.inner_text())
             tab(pg, 'Ejercicios')
-            ok('El ejercicio creado al importar está en el catálogo', '162 en el catálogo' in texto(pg, '.topbar'))
+            ok('El ejercicio creado al importar está en el catálogo', '172 en el catálogo' in texto(pg, '.topbar'))
             ctx.close()
 
             # ------------------------------------------------------------ F
@@ -405,7 +405,7 @@ def main():
             captura(pg, 'H0-violeta-oscuro')
             pg.click('[aria-label="Volver"]'); pg.wait_for_timeout(200)
             data, ruta = backup(pg)
-            ok('Copia: formato y contenido', data['formato'] == 'gym-log-backup/v2' and len(data['sessions']) == 29 and len(data['exercises']) == 161 and len(data['plans']) == 1)
+            ok('Copia: formato y contenido', data['formato'] == 'gym-log-backup/v2' and len(data['sessions']) == 29 and len(data['exercises']) == 171 and len(data['plans']) == 1)
             pg.click('[aria-label="Ajustes"]'); pg.click('text=Empezar de cero'); pg.wait_for_timeout(250)
             pg.click('.dialog button.danger'); pg.wait_for_timeout(500)
             ok('Empezar de cero borra sesiones y planes', '0' in pg.locator('.kv', has_text='Sesiones').inner_text())
@@ -450,10 +450,9 @@ def main():
             desp, _ = backup(pg)
             ids = {e['id'] for e in desp['exercises']}
             porSlug = {e['slug']: e for e in desp['exercises']}
-            ok('Catálogo viejo → nuevo: 161 ejercicios y la revisión anotada', len(desp['exercises']) == 161 and [m['value'] for m in desp['meta'] if m['key'] == 'catalogo'] == [8], str(len(desp['exercises'])))
+            ok('Catálogo viejo → nuevo: 171 ejercicios y la revisión anotada', len(desp['exercises']) == 171 and [m['value'] for m in desp['meta'] if m['key'] == 'catalogo'] == [9], str(len(desp['exercises'])))
             viejo = {e['slug']: e['id'] for e in antes['exercises']}
-            n_borradas = sum(1 for l in antes['setLogs'] if l['exercise_id'] == viejo['rebote-y-freno'])
-            ok('Solo se pierden las series del ejercicio que el dueño pidió borrar del todo', len(antes['setLogs']) == 1087 and n_borradas == 3 and len(desp['setLogs']) == 1087 - n_borradas and len(desp['sessions']) == 29, f"{len(desp['setLogs'])} {n_borradas}")
+            ok('No se pierde ninguna serie ni sesión', len(antes['setLogs']) == len(desp['setLogs']) == 1087 and len(desp['sessions']) == 29, str(len(desp['setLogs'])))
             ok('Ninguna serie ni plan apunta a un ejercicio inexistente', all(l['exercise_id'] in ids for l in desp['setLogs'])
                and all(x['exercise_id'] in ids for d in desp['planDays'] for b in d['bloques'] for x in b['ejercicios']))
             n_antes = sum(1 for l in antes['setLogs'] if l['exercise_id'] in (viejo['carpas-dinamico'], viejo['carpa-2p']))
@@ -466,7 +465,7 @@ def main():
             ok('Revisión 7: plancha construyo y ejercicios de antebrazo', porSlug['plancha-construyo']['nombre'] == 'Plancha construyo' and sum(1 for e in desp['exercises'] if e['grupo'] == 'antebrazos') == 6)
             ok('Revisión 8: músculos secundarios en los ejercicios agregados', {x['grupo'] for x in porSlug['prensa-de-piernas']['sec']} == {'gluteo', 'isquiotibiales'})
             ok('Dos pesas marcado en los ejercicios ya guardados', porSlug['biceps-mc'].get('dos_pesas') is True and not porSlug['sentadilla-goblet'].get('dos_pesas') and porSlug['press-arnold'].get('dos_pesas') is True and porSlug['sentadilla-salto-kb'].get('dos_pesas') is True)
-            ok('Sin archivados de fábrica; los dos ejercicios retirados ya no están', not [e for e in desp['exercises'] if e['archivo']] and 'remo-tandem-en-puntas' not in porSlug and 'rebote-y-freno' not in porSlug)
+            ok('Sin archivados de fábrica; el retirado sin uso no está y Rebote y freno volvió', not [e for e in desp['exercises'] if e['archivo']] and 'remo-tandem-en-puntas' not in porSlug and 'rebote-y-freno' in porSlug)
             viejos = {'dorsal', 'trapecio', 'hombro_anterior', 'hombro_lateral', 'hombro_posterior', 'isquios', 'aductores', 'gemelo', 'full_body', 'movilidad_cadera'}
             ok('Grupos y patrones unificados en los datos ya guardados', not any(e['grupo'] in viejos or e['patron'].startswith('core_') or e['patron'] == 'locomocion' or any(x['grupo'] in viejos for x in e['sec']) for e in desp['exercises'])
                and porSlug['press-militar-br']['grupo'] == 'hombros' and porSlug['dominadas-prona']['grupo'] == 'espalda' and porSlug['hiperextensiones-lumbares']['grupo'] == 'lumbares')

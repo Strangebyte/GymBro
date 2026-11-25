@@ -18,7 +18,7 @@ import json, os, re, unicodedata
 from openpyxl import load_workbook
 
 RAIZ = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
-REV = 8
+REV = 9
 
 def norm(s):
     s = unicodedata.normalize('NFKD', s).encode('ascii', 'ignore').decode().lower()
@@ -69,7 +69,11 @@ FUSIONES = {
     'curl-isquios-fb': 'curl-isquio-1p-exc-mb',
 }
 ARCHIVAR = []
-ELIMINAR = ['rebote-y-freno']            # "Borrá del todo rebote y frenado" (16-11-2026): se va con su historial
+# (25-11-2026) Rebote y freno se había borrado del todo (16-11); el entrenador lo sigue usando y el dueño pidió volver a
+# agregarlo. Las apps que ya lo borraron lo vuelven a recibir como ejercicio nuevo.
+ELIMINAR = []
+# Otros nombres que se suman a los de un ejercicio del entrenador (variantes de nombre que aparecieron después).
+ALIAS_EXTRA = {'sentadilla-split-salto-cambio-kb': ['Sentadilla SPLIT SALTO CC - KB', 'Zancada con salto CC']}
 BORRAR = ['remo-tandem-en-puntas']       # "Eliminalo", sin registros
 # Cambios de equipamiento o patrón que se desprenden de sus correcciones.
 OTROS = {
@@ -234,7 +238,7 @@ NUEVOS = [
     N('Peso muerto rumano con barra', 'isquios', 'barra', 'bisagra', ['Peso muerto rumano', 'Rumano', 'Peso muerto piernas semirrígidas', 'Romanian deadlift', 'RDL'], 'Romanian_Deadlift'),
     N('Peso muerto sumo con barra', 'gluteo', 'barra', 'bisagra', ['Peso muerto sumo', 'Sumo deadlift'], 'Sumo_Deadlift'),
     N('Buenos días con barra', 'isquios', 'barra', 'bisagra', ['Buenos días', 'Good morning', 'Good mornings'], 'Good_Morning'),
-    N('Camilla de isquiotibiales acostado', 'isquios', 'maquina', 'aislamiento', ['Camilla de isquiotibiales', 'Camilla femoral', 'Curl femoral acostado', 'Curl femoral tumbado', 'Lying leg curl', 'Leg curl'], 'Lying_Leg_Curls'),
+    N('Camilla de isquiotibiales acostado', 'isquios', 'maquina', 'aislamiento', ['Camilla isquiosurales - MQ', 'Camilla de isquiotibiales', 'Camilla femoral', 'Curl femoral acostado', 'Curl femoral tumbado', 'Lying leg curl', 'Leg curl'], 'Lying_Leg_Curls'),
     N('Camilla de isquiotibiales sentado', 'isquios', 'maquina', 'aislamiento', ['Curl femoral sentado', 'Sillón de isquiotibiales', 'Isquios sentado en máquina', 'Seated leg curl'], 'Seated_Leg_Curl'),
     N('Puente de glúteo', 'gluteo', 'peso_corporal', 'bisagra', ['Puente de glúteos', 'Elevación de cadera', 'Glute bridge', 'Hip bridge'], 'Butt_Lift_Bridge'),
     N('Swing con kettlebell', 'gluteo', 'kettlebell', 'bisagra', ['Swing con pesa rusa', 'Swing de cadera con kettlebell', 'Balanceo con kettlebell', 'Swing ruso', 'Kettlebell swing', 'Swing']),
@@ -252,7 +256,7 @@ NUEVOS = [
     N('Rueda abdominal', 'core', 'otro', 'core_antiextension', ['Rueda', 'Ab wheel', 'Ab roller', 'Ab wheel rollout', 'Rollout'], 'Ab_Roller'),
     N('Giros rusos', 'core', 'peso_corporal', 'core_rotacion', ['Giro ruso', 'Twist ruso', 'Russian twist', 'Russian twists'], 'Russian_Twist'),
     # potencia y acarreos
-    N('Salto al cajón', 'cuadriceps', 'cajon', 'pliometria', ['Saltos al cajón', 'Salto al cajón a dos piernas', 'Box jump', 'Box jumps'], 'Front_Box_Jump'),
+    N('Salto al cajón', 'cuadriceps', 'cajon', 'pliometria', ['2P CCM Vertical AL CAJÓN - CJ', 'Salto al cajón a dos piernas con contramovimiento', 'Saltos al cajón', 'Salto al cajón a dos piernas', 'Box jump', 'Box jumps'], 'Front_Box_Jump'),
     N('Caminata del granjero', 'full_body', 'mancuernas', 'locomocion', ['Paseo del granjero', 'Caminata de granjero', 'Farmer walk', 'Farmer carry', "Farmer's walk"], 'Farmers_Walk'),
     # antebrazos (18-11-2026: el grupo no tenía ejercicios)
     N('Curl de muñeca con barra', 'antebrazos', 'barra', 'aislamiento', ['Curl de muñeca', 'Flexión de muñeca con barra', 'Flexiones de muñeca', 'Wrist curl', 'Barbell wrist curl'], 'Palms-Up_Barbell_Wrist_Curl_Over_A_Bench'),
@@ -261,6 +265,16 @@ NUEVOS = [
     N('Curl invertido con barra', 'antebrazos', 'barra', 'aislamiento', ['Curl invertido', 'Curl prono con barra', 'Curl de bíceps invertido', 'Reverse curl', 'Reverse barbell curl'], 'Reverse_Barbell_Curl', sec=[{'grupo': 'biceps', 'factor': 0.5}]),
     N('Rodillo de muñeca', 'antebrazos', 'otro', 'aislamiento', ['Enrollador de muñeca', 'Rodillo de antebrazos', 'Wrist roller'], 'Wrist_Roller'),
     N('Pinza de discos', 'antebrazos', 'disco', 'aislamiento', ['Agarre de discos', 'Sostener discos con pinza', 'Plate pinch', 'Pinch grip'], 'Plate_Pinch', mide='seg'),
+    # ejercicios nuevos del entrenador (planes del 13-11 al 28-11; 25-11-2026). El nombre del entrenador queda como alias.
+    N('Sentadilla búlgara frontal con barra', 'cuadriceps', 'barra', 'zancada', ['Sentadilla búlgara FRONTAL - BR', 'Búlgara frontal', 'Front rack bulgarian split squat'], unilateral=True, sec=[{'grupo': 'gluteo', 'factor': 0.5}]),
+    N('Sentadilla frontal al cajón', 'cuadriceps', 'barra', 'sentadilla', ['Sentadilla frontal AL CAJÓN', 'Front box squat'], sec=[{'grupo': 'gluteo', 'factor': 0.5}, {'grupo': 'core', 'factor': 0.3}]),
+    N('Camilla de cuádriceps a una pierna', 'cuadriceps', 'maquina', 'aislamiento', ['Sillón Cuádriceps 1P', 'Sillón de cuádriceps a una pierna', 'Single leg extension'], unilateral=True),
+    N('Estocada lateral con kettlebell', 'cuadriceps', 'kettlebell', 'zancada', ['Estocada lateral - KB', 'Estocada lateral', 'Zancada lateral', 'Lateral lunge'], unilateral=True, sec=[{'grupo': 'gluteo', 'factor': 0.5}, {'grupo': 'aductores_abductores', 'factor': 0.5}]),
+    N('Drop jump a dos piernas', 'cuadriceps', 'cajon', 'pliometria', ['DJ 2P Vertical', 'Salto en profundidad', 'Drop jump', 'Depth jump'], sec=[{'grupo': 'gluteo', 'factor': 0.3}, {'grupo': 'gemelos', 'factor': 0.3}]),
+    N('Subida al cajón con salto', 'cuadriceps', 'cajon', 'pliometria', ['Subidas al Podio SALTO', 'Subida al podio con salto', 'Step up jump', 'Jumping step up'], unilateral=True, sec=[{'grupo': 'gluteo', 'factor': 0.5}]),
+    N('Antirrotación en landmine', 'core', 'landmine', 'core', ['Antirotacion LM', 'Antirrotación LM', 'Landmine antirotation', 'Landmine rainbow']),
+    N('Plancha alta dinámica cruzada', 'core', 'peso_corporal', 'core', ['Plancha alta DINÁMICA CRUZADA', 'Plancha alta cruzada']),
+    N('Rotación externa de hombro en bisagra', 'hombros', 'otro', 'aislamiento', ['RE Hombro BISAGRA - PS', 'RE Hombro bisagra', 'Rotación externa de hombro']),
 ]
 
 def main():
@@ -286,7 +300,7 @@ def main():
     for slug, f in filas.items():
         if slug in fuera: continue
         nombre = FINAL.get(slug, f['sugerido'])
-        alias = list(ALIAS.get(slug, f['otros']))
+        alias = list(ALIAS.get(slug, f['otros'])) + ALIAS_EXTRA.get(slug, [])
         if f['sugerido'] != nombre and slug not in ALIAS: alias.append(f['sugerido'])
         alias.append(f['actual'])                      # el nombre viejo siempre se sigue reconociendo
         for de, a in FUSIONES.items():                 # y también los nombres de los que absorbió
