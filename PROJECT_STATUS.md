@@ -27,9 +27,9 @@ video y scroll táctil con una hoja abierta.
   unidad en libras, editor de días con Guardar y aviso al salir, y "Copiar pedido para la IA" con una IA real.
 - **Pesos sumados a corregir a mano (el dueño):** "Curl de bíceps con mancuernas" 40 kg y "Caminata en puntas de pie"
   52-56 kg en el historial importado, y 56 kg en el Día 1 del plan, son la suma de las dos mancuernas.
-- **Ejercicios nuevos del entrenador sin foto** (9, revisión 9). "Rotación externa de hombro en bisagra" tiene nombre
-  supuesto: la sigla "RE … - PS" no está confirmada. "Camilla isquiosurales - MQ" del plan del 25-11 no traía series:
-  quedó 3×8 provisorio.
+- **Ejercicios nuevos del entrenador sin foto** (9, revisión 9). "Camilla isquiosurales - MQ" del plan del 25-11 no
+  traía series: quedó 3×8 provisorio. En "RE Hombro BISAGRA - PS", RE es rotación externa (confirmado por el dueño el
+  25-11); el equipamiento quedó como "otro" porque no se sabe qué es "PS".
 - **Probar en iPhone** que ya no se agrande la pantalla al tocar "Pegar el plan" ni otros campos. El arreglo no se
   pudo verificar acá: solo aplica en iOS.
 - **Plan Mesociclo B en teléfonos que ya tenían la app:** las instalaciones nuevas ya no lo traen, pero a quien la
