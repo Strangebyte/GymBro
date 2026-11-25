@@ -328,7 +328,7 @@ def main():
             pg.click('[aria-label="Volver"]'); pg.wait_for_timeout(300)
             ok('Dos planes; el importado quedó activo', pg.locator('.main .card').count() == 2 and 'activo' in pg.locator('.main .card').first.inner_text())
             tab(pg, 'Ejercicios')
-            ok('El ejercicio creado al importar está en el catálogo', '172 en el catálogo' in texto(pg, '.topbar'))
+            ok('El ejercicio creado al importar está en el catálogo', '214 en el catálogo' in texto(pg, '.topbar'))
             ctx.close()
 
             # ------------------------------------------------------------ F
@@ -405,7 +405,7 @@ def main():
             captura(pg, 'H0-violeta-oscuro')
             pg.click('[aria-label="Volver"]'); pg.wait_for_timeout(200)
             data, ruta = backup(pg)
-            ok('Copia: formato y contenido', data['formato'] == 'gym-log-backup/v2' and len(data['sessions']) == 29 and len(data['exercises']) == 171 and len(data['plans']) == 1)
+            ok('Copia: formato y contenido', data['formato'] == 'gym-log-backup/v2' and len(data['sessions']) == 29 and len(data['exercises']) == 213 and len(data['plans']) == 1)
             pg.click('[aria-label="Ajustes"]'); pg.click('text=Empezar de cero'); pg.wait_for_timeout(250)
             pg.click('.dialog button.danger'); pg.wait_for_timeout(500)
             ok('Empezar de cero borra sesiones y planes', '0' in pg.locator('.kv', has_text='Sesiones').inner_text())
@@ -450,7 +450,7 @@ def main():
             desp, _ = backup(pg)
             ids = {e['id'] for e in desp['exercises']}
             porSlug = {e['slug']: e for e in desp['exercises']}
-            ok('Catálogo viejo → nuevo: 171 ejercicios y la revisión anotada', len(desp['exercises']) == 171 and [m['value'] for m in desp['meta'] if m['key'] == 'catalogo'] == [9], str(len(desp['exercises'])))
+            ok('Catálogo viejo → nuevo: 213 ejercicios y la revisión anotada', len(desp['exercises']) == 213 and [m['value'] for m in desp['meta'] if m['key'] == 'catalogo'] == [10], str(len(desp['exercises'])))
             viejo = {e['slug']: e['id'] for e in antes['exercises']}
             ok('No se pierde ninguna serie ni sesión', len(antes['setLogs']) == len(desp['setLogs']) == 1087 and len(desp['sessions']) == 29, str(len(desp['setLogs'])))
             ok('Ninguna serie ni plan apunta a un ejercicio inexistente', all(l['exercise_id'] in ids for l in desp['setLogs'])

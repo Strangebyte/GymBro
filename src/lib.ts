@@ -237,7 +237,7 @@ export async function hacerCopia(): Promise<'ok' | 'cancelado' | 'error'> {
 
 export const GRUPOS = ['pecho', 'espalda', 'hombros', 'biceps', 'triceps', 'antebrazos', 'core', 'lumbares',
   'gluteo', 'cuadriceps', 'isquiotibiales', 'aductores_abductores', 'gemelos', 'cuerpo_completo', 'movilidad']
-export const EQUIPOS = ['barra', 'mancuernas', 'kettlebell', 'maquina', 'polea', 'peso_corporal', 'banco', 'banda', 'disco', 'landmine',
+export const EQUIPOS = ['barra', 'mancuernas', 'kettlebell', 'maquina', 'polea', 'peso_corporal', 'banco', 'banda', 'disco', 'landmine', 'balon_medicinal', 'soga',
   'fitball', 'trx', 'cajon', 'slider', 'rodillo', 'otro']
 export const PATRONES = ['empuje_horizontal', 'empuje_vertical', 'traccion_horizontal', 'traccion_vertical', 'sentadilla', 'bisagra', 'zancada',
   'aislamiento', 'pliometria', 'acarreo', 'core', 'movilidad']
@@ -259,7 +259,7 @@ export function agruparPorCategoria(lista: Exercise[]): { cat: string; items: Ex
 // Los grupos, equipos y patrones se guardan sin acentos (son claves); acá va cómo se muestran.
 const CON_ACENTO: Record<string, string> = {
   biceps: 'bíceps', triceps: 'tríceps', gluteo: 'glúteo', cuadriceps: 'cuádriceps', aductores_abductores: 'aductores y abductores',
-  maquina: 'máquina', cajon: 'cajón', disco: 'disco / lastre', slider: 'deslizadores', fitball: 'pelota (fitball)', trx: 'TRX / anillas',
+  maquina: 'máquina', cajon: 'cajón', disco: 'disco / lastre', balon_medicinal: 'balón medicinal', slider: 'deslizadores', fitball: 'pelota (fitball)', trx: 'TRX / anillas',
   traccion_horizontal: 'tracción horizontal', traccion_vertical: 'tracción vertical', pliometria: 'pliometría',
   bisagra: 'bisagra de cadera (peso muerto)', acarreo: 'acarreos y desplazamientos',
 }

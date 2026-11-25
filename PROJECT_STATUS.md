@@ -35,11 +35,11 @@ video y scroll táctil con una hoja abierta.
 - **Plan Mesociclo B en teléfonos que ya tenían la app:** las instalaciones nuevas ya no lo traen, pero a quien la
   instaló antes le sigue apareciendo hasta que lo borre a mano (Planes → Borrar plan). No se borra solo porque no
   hay forma de distinguir el teléfono del dueño del de los demás.
-- **Imágenes de ejercicios:** 92 de 161 tienen imagen incluida. Quedan 12 candidatos dudosos anotados en
-  `tools/imagenes/gen.py` y unos 55 sin equivalente en el banco (movilidad, core, pliometría y variantes del
-  entrenador): para esos haría falta que el dueño cargue su propia foto o video. Los ejercicios nuevos no tienen
-  músculos secundarios cargados, así que en "Series por grupo muscular" solo suman a su grupo principal.
-- **Probar en iPhone** (otra persona): instalación desde Safari, sonido de descanso, copia de seguridad.
+- **Imágenes de ejercicios:** 107 de 213 tienen imagen incluida. Quedan 12 candidatos dudosos anotados en
+  `tools/imagenes/gen.py` y el resto no tiene equivalente en el banco (movilidad, core, pliometría, variantes del
+  entrenador y 27 de los movimientos de CrossFit): para esos haría falta que el dueño cargue su propia foto o video.
+  En el banco, la cargada de potencia y el muscle-up tienen el logo de CrossFit de fondo: no se usaron.
+- **Probar en iPhone** (otra persona): instalación desde Safari, copia de seguridad.
   No vibra en iPhone: es una limitación de iOS.
 - **Datos personales (16-11-2026):** se quitaron de los archivos y de todo el historial de git: apodo, usuario,
   ciudades, otras personas y otros proyectos. Los commits se firman como "GymBro". El 18-11-2026 el dueño cambió su
@@ -93,6 +93,7 @@ video y scroll táctil con una hoja abierta.
 | Fecha | Qué se hizo |
 |---|---|
 | 10-11-2026 | Diseño (`docs/historico/`), catálogo de 96 ejercicios, primera versión solo de registro |
+| 25-11-2026 | 42 movimientos de CrossFit en el catálogo (revisión 10), con 15 fotos; equipamientos nuevos: balón medicinal y soga |
 | 25-11-2026 | Historial del dueño al 20-11 (33 sesiones) y plan de la semana del 24-11, en una copia armada en la PC sin publicar nada; 9 ejercicios nuevos del entrenador y vuelve Rebote y freno (revisión 9) |
 | 20-11-2026 | Escala de esfuerzo en dos filas de 5, sin deslizar; botón "Cargar" de las técnicas siempre debajo |
 | 20-11-2026 | Sin cronómetro de descanso; músculos secundarios (revisión 8 y formulario); medidas del cuerpo; las técnicas se cargan en una ventana aparte |

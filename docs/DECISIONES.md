@@ -2,6 +2,16 @@
 
 Registro de qué se decidió y por qué. Lo más nuevo, arriba.
 
+## 25-11-2026 — Movimientos de CrossFit
+
+| Decisión | Razón |
+|---|---|
+| 42 movimientos de CrossFit en el catálogo: halterofilia, gimnasia, kettlebell y mancuerna, balón, soga, máquinas de cardio y trineo | Pedido del dueño. Solo los que faltaban: burpee, salto al cajón, swing y thruster con kettlebell, peso muerto, sentadilla frontal, split jerk, dominadas, fondos y hollow ya estaban |
+| Nombre en castellano y el nombre en inglés como otro nombre ("Pies a la barra" / Toes to bar) | Se encuentran buscando de las dos formas y el importador reconoce los planes escritos en inglés, que es como suelen venir. Wall ball, muscle-up, push press, push jerk, thruster y devil press quedan en inglés porque así se dicen en los boxes |
+| Remo, bicicleta de aire y esquí se registran por tiempo; metros y calorías van en las notas | La app no registra distancia ni calorías. Agregarlo cambia cómo se guarda una serie: solo si el dueño lo pide |
+| Equipamientos nuevos: balón medicinal y soga | Wall ball, slam y saltar la soga no tenían dónde ir |
+| Sin foto en la cargada de potencia y el muscle-up | En el banco de imágenes tienen el logo de CrossFit de fondo |
+
 ## 18-11-2026 — Unidad de peso
 
 | Decisión | Razón |

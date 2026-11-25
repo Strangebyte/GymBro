@@ -126,8 +126,8 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
 - Historial de un ejercicio: lista informativa, sin enlaces.
 - Catálogo agrupado por categoría (`categoria()` en lib.ts), con filtro detrás de un ícono junto al buscador.
 - Imágenes incluidas: `src/ejercicios-img/<slug>.webp` (las arma `tools/imagenes/gen.py` desde Free Exercise DB,
-  dominio público). Se muestran si el usuario no cargó una propia; la propia siempre tiene prioridad. Hay 92 de
-  161; los candidatos dudosos están anotados en ese mismo archivo, sin incluir. No bajar imágenes de otras fuentes
+  dominio público). Se muestran si el usuario no cargó una propia; la propia siempre tiene prioridad. Hay 107 de
+  213; los candidatos dudosos están anotados en ese mismo archivo, sin incluir. No bajar imágenes de otras fuentes
   sin revisar la licencia.
 - Estilo de formas redondas (pedido por el dueño): botones, chips y controles tipo píldora; tarjetas con
   `--radius: 22px`. Mantenerlo en lo nuevo.

@@ -1,5 +1,5 @@
 {
- "rev": 9,
+ "rev": 10,
  "ejercicios": {
   "cadera-con-glide-lateral-cuadrupedia": {
    "nombre": "Movilidad de cadera en cuadrupedia con glide lateral",
@@ -3311,6 +3311,1092 @@
     "RE Hombro BISAGRA - PS",
     "RE Hombro bisagra",
     "Rotación externa de hombro"
+   ],
+   "imagen": null,
+   "dos_pesas": false
+  },
+  {
+   "slug": "cargada-de-potencia",
+   "nombre": "Cargada de potencia",
+   "legible": null,
+   "grupo": "cuerpo_completo",
+   "sec": [],
+   "equipo": "barra",
+   "patron": "pliometria",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Power clean",
+    "Cargada",
+    "Clean de potencia"
+   ],
+   "imagen": null,
+   "dos_pesas": false
+  },
+  {
+   "slug": "cargada-con-sentadilla",
+   "nombre": "Cargada con sentadilla",
+   "legible": null,
+   "grupo": "cuerpo_completo",
+   "sec": [],
+   "equipo": "barra",
+   "patron": "pliometria",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Squat clean",
+    "Cargada completa",
+    "Full clean",
+    "Clean"
+   ],
+   "imagen": null,
+   "dos_pesas": false
+  },
+  {
+   "slug": "cargada-colgada",
+   "nombre": "Cargada colgada",
+   "legible": null,
+   "grupo": "cuerpo_completo",
+   "sec": [],
+   "equipo": "barra",
+   "patron": "pliometria",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Hang clean",
+    "Hang power clean",
+    "Cargada desde colgado"
+   ],
+   "imagen": "Hang_Clean",
+   "dos_pesas": false
+  },
+  {
+   "slug": "arranque-de-potencia",
+   "nombre": "Arranque de potencia",
+   "legible": null,
+   "grupo": "cuerpo_completo",
+   "sec": [],
+   "equipo": "barra",
+   "patron": "pliometria",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Power snatch",
+    "Arranque"
+   ],
+   "imagen": "Power_Snatch",
+   "dos_pesas": false
+  },
+  {
+   "slug": "arranque-con-sentadilla",
+   "nombre": "Arranque con sentadilla",
+   "legible": null,
+   "grupo": "cuerpo_completo",
+   "sec": [],
+   "equipo": "barra",
+   "patron": "pliometria",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Squat snatch",
+    "Snatch",
+    "Arranque completo"
+   ],
+   "imagen": null,
+   "dos_pesas": false
+  },
+  {
+   "slug": "arranque-colgado",
+   "nombre": "Arranque colgado",
+   "legible": null,
+   "grupo": "cuerpo_completo",
+   "sec": [],
+   "equipo": "barra",
+   "patron": "pliometria",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Hang snatch",
+    "Hang power snatch",
+    "Arranque desde colgado"
+   ],
+   "imagen": "Hang_Snatch",
+   "dos_pesas": false
+  },
+  {
+   "slug": "cargada-y-envion",
+   "nombre": "Cargada y envión",
+   "legible": null,
+   "grupo": "cuerpo_completo",
+   "sec": [],
+   "equipo": "barra",
+   "patron": "pliometria",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Clean and jerk",
+    "Clean & jerk",
+    "Dos tiempos"
+   ],
+   "imagen": "Clean_and_Jerk",
+   "dos_pesas": false
+  },
+  {
+   "slug": "push-press-con-barra",
+   "nombre": "Push press con barra",
+   "legible": null,
+   "grupo": "hombros",
+   "sec": [
+    {
+     "grupo": "triceps",
+     "factor": 0.5
+    },
+    {
+     "grupo": "cuadriceps",
+     "factor": 0.3
+    }
+   ],
+   "equipo": "barra",
+   "patron": "empuje_vertical",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Push press",
+    "Press con impulso",
+    "Press de empuje"
+   ],
+   "imagen": "Push_Press",
+   "dos_pesas": false
+  },
+  {
+   "slug": "push-jerk-con-barra",
+   "nombre": "Push jerk con barra",
+   "legible": null,
+   "grupo": "hombros",
+   "sec": [
+    {
+     "grupo": "triceps",
+     "factor": 0.5
+    },
+    {
+     "grupo": "cuadriceps",
+     "factor": 0.3
+    }
+   ],
+   "equipo": "barra",
+   "patron": "empuje_vertical",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Push jerk",
+    "Power jerk",
+    "Envión de empuje"
+   ],
+   "imagen": null,
+   "dos_pesas": false
+  },
+  {
+   "slug": "sentadilla-overhead-con-barra",
+   "nombre": "Sentadilla overhead con barra",
+   "legible": null,
+   "grupo": "cuadriceps",
+   "sec": [
+    {
+     "grupo": "hombros",
+     "factor": 0.3
+    },
+    {
+     "grupo": "core",
+     "factor": 0.3
+    }
+   ],
+   "equipo": "barra",
+   "patron": "sentadilla",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Overhead squat",
+    "OHS",
+    "Sentadilla con barra sobre la cabeza"
+   ],
+   "imagen": "Overhead_Squat",
+   "dos_pesas": false
+  },
+  {
+   "slug": "thruster-con-barra",
+   "nombre": "Thruster con barra",
+   "legible": null,
+   "grupo": "cuadriceps",
+   "sec": [
+    {
+     "grupo": "hombros",
+     "factor": 0.5
+    },
+    {
+     "grupo": "gluteo",
+     "factor": 0.5
+    }
+   ],
+   "equipo": "barra",
+   "patron": "sentadilla",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Barbell thruster",
+    "Thrusters con barra"
+   ],
+   "imagen": null,
+   "dos_pesas": false
+  },
+  {
+   "slug": "tiron-alto-de-sumo-con-barra",
+   "nombre": "Tirón alto de sumo con barra",
+   "legible": null,
+   "grupo": "cuerpo_completo",
+   "sec": [],
+   "equipo": "barra",
+   "patron": "bisagra",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Sumo deadlift high pull",
+    "SDHP",
+    "Peso muerto sumo con tirón alto"
+   ],
+   "imagen": null,
+   "dos_pesas": false
+  },
+  {
+   "slug": "dominadas-kipping",
+   "nombre": "Dominadas kipping",
+   "legible": null,
+   "grupo": "espalda",
+   "sec": [
+    {
+     "grupo": "biceps",
+     "factor": 0.5
+    }
+   ],
+   "equipo": "peso_corporal",
+   "patron": "traccion_vertical",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Kipping pull-up",
+    "Kipping pull ups",
+    "Dominadas con kipping"
+   ],
+   "imagen": null,
+   "dos_pesas": false
+  },
+  {
+   "slug": "dominadas-pecho-a-la-barra",
+   "nombre": "Dominadas pecho a la barra",
+   "legible": null,
+   "grupo": "espalda",
+   "sec": [
+    {
+     "grupo": "biceps",
+     "factor": 0.5
+    }
+   ],
+   "equipo": "peso_corporal",
+   "patron": "traccion_vertical",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Chest to bar",
+    "C2B",
+    "Chest-to-bar pull-up"
+   ],
+   "imagen": null,
+   "dos_pesas": false
+  },
+  {
+   "slug": "pies-a-la-barra",
+   "nombre": "Pies a la barra",
+   "legible": null,
+   "grupo": "core",
+   "sec": [],
+   "equipo": "peso_corporal",
+   "patron": "core",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Toes to bar",
+    "T2B"
+   ],
+   "imagen": null,
+   "dos_pesas": false
+  },
+  {
+   "slug": "rodillas-a-los-codos",
+   "nombre": "Rodillas a los codos",
+   "legible": null,
+   "grupo": "core",
+   "sec": [],
+   "equipo": "peso_corporal",
+   "patron": "core",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Knees to elbows",
+    "K2E"
+   ],
+   "imagen": null,
+   "dos_pesas": false
+  },
+  {
+   "slug": "muscle-up-en-anillas",
+   "nombre": "Muscle-up en anillas",
+   "legible": null,
+   "grupo": "espalda",
+   "sec": [
+    {
+     "grupo": "triceps",
+     "factor": 0.5
+    },
+    {
+     "grupo": "pecho",
+     "factor": 0.3
+    }
+   ],
+   "equipo": "trx",
+   "patron": "traccion_vertical",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Muscle up",
+    "Ring muscle up"
+   ],
+   "imagen": null,
+   "dos_pesas": false
+  },
+  {
+   "slug": "muscle-up-en-barra",
+   "nombre": "Muscle-up en barra",
+   "legible": null,
+   "grupo": "espalda",
+   "sec": [
+    {
+     "grupo": "triceps",
+     "factor": 0.5
+    },
+    {
+     "grupo": "pecho",
+     "factor": 0.3
+    }
+   ],
+   "equipo": "peso_corporal",
+   "patron": "traccion_vertical",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Bar muscle up"
+   ],
+   "imagen": null,
+   "dos_pesas": false
+  },
+  {
+   "slug": "flexiones-de-brazos-en-vertical",
+   "nombre": "Flexiones de brazos en vertical",
+   "legible": null,
+   "grupo": "hombros",
+   "sec": [
+    {
+     "grupo": "triceps",
+     "factor": 0.5
+    }
+   ],
+   "equipo": "peso_corporal",
+   "patron": "empuje_vertical",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Handstand push-up",
+    "HSPU",
+    "Flexiones en vertical",
+    "Flexiones de pino"
+   ],
+   "imagen": "Handstand_Push-Ups",
+   "dos_pesas": false
+  },
+  {
+   "slug": "caminata-en-vertical",
+   "nombre": "Caminata en vertical",
+   "legible": null,
+   "grupo": "hombros",
+   "sec": [],
+   "equipo": "peso_corporal",
+   "patron": "acarreo",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "ambos",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Handstand walk",
+    "Caminar en pino",
+    "Caminata de manos"
+   ],
+   "imagen": null,
+   "dos_pesas": false
+  },
+  {
+   "slug": "caminata-en-la-pared",
+   "nombre": "Caminata en la pared",
+   "legible": null,
+   "grupo": "hombros",
+   "sec": [
+    {
+     "grupo": "core",
+     "factor": 0.5
+    }
+   ],
+   "equipo": "peso_corporal",
+   "patron": "acarreo",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Wall walk",
+    "Wall walks"
+   ],
+   "imagen": null,
+   "dos_pesas": false
+  },
+  {
+   "slug": "fondos-en-anillas",
+   "nombre": "Fondos en anillas",
+   "legible": null,
+   "grupo": "triceps",
+   "sec": [
+    {
+     "grupo": "pecho",
+     "factor": 0.5
+    },
+    {
+     "grupo": "hombros",
+     "factor": 0.3
+    }
+   ],
+   "equipo": "trx",
+   "patron": "empuje_vertical",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Ring dips",
+    "Ring dip"
+   ],
+   "imagen": "Ring_Dips",
+   "dos_pesas": false
+  },
+  {
+   "slug": "subida-de-soga",
+   "nombre": "Subida de soga",
+   "legible": null,
+   "grupo": "espalda",
+   "sec": [
+    {
+     "grupo": "biceps",
+     "factor": 0.5
+    },
+    {
+     "grupo": "antebrazos",
+     "factor": 0.5
+    }
+   ],
+   "equipo": "soga",
+   "patron": "traccion_vertical",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Rope climb",
+    "Trepa de soga",
+    "Trepar la soga"
+   ],
+   "imagen": "Rope_Climb",
+   "dos_pesas": false
+  },
+  {
+   "slug": "sentadilla-pistol",
+   "nombre": "Sentadilla pistol",
+   "legible": null,
+   "grupo": "cuadriceps",
+   "sec": [
+    {
+     "grupo": "gluteo",
+     "factor": 0.5
+    }
+   ],
+   "equipo": "peso_corporal",
+   "patron": "sentadilla",
+   "unilateral": true,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Pistol squat",
+    "Pistol",
+    "Sentadilla a una pierna"
+   ],
+   "imagen": null,
+   "dos_pesas": false
+  },
+  {
+   "slug": "burpee-con-salto-al-cajon",
+   "nombre": "Burpee con salto al cajón",
+   "legible": null,
+   "grupo": "cuerpo_completo",
+   "sec": [],
+   "equipo": "cajon",
+   "patron": "pliometria",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Burpee box jump over",
+    "Burpee box jump",
+    "BBJO"
+   ],
+   "imagen": null,
+   "dos_pesas": false
+  },
+  {
+   "slug": "abdominales-en-ghd",
+   "nombre": "Abdominales en GHD",
+   "legible": null,
+   "grupo": "core",
+   "sec": [],
+   "equipo": "maquina",
+   "patron": "core",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "GHD sit-up",
+    "Abdominales en banco GHD"
+   ],
+   "imagen": null,
+   "dos_pesas": false
+  },
+  {
+   "slug": "abdominales-completos-sit-up",
+   "nombre": "Abdominales completos (sit-up)",
+   "legible": null,
+   "grupo": "core",
+   "sec": [],
+   "equipo": "peso_corporal",
+   "patron": "core",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Sit up",
+    "Sit-ups",
+    "Abdominales sit-up",
+    "AbMat sit-up"
+   ],
+   "imagen": "Sit-Up",
+   "dos_pesas": false
+  },
+  {
+   "slug": "sosten-en-l",
+   "nombre": "Sostén en L",
+   "legible": null,
+   "grupo": "core",
+   "sec": [],
+   "equipo": "peso_corporal",
+   "patron": "core",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "seg",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "L-sit",
+    "Escuadra"
+   ],
+   "imagen": null,
+   "dos_pesas": false
+  },
+  {
+   "slug": "remo-en-anillas",
+   "nombre": "Remo en anillas",
+   "legible": null,
+   "grupo": "espalda",
+   "sec": [
+    {
+     "grupo": "biceps",
+     "factor": 0.5
+    }
+   ],
+   "equipo": "trx",
+   "patron": "traccion_horizontal",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Ring row",
+    "Ring rows",
+    "Remo en TRX",
+    "TRX row"
+   ],
+   "imagen": "Inverted_Row_with_Straps",
+   "dos_pesas": false
+  },
+  {
+   "slug": "swing-americano-con-kettlebell",
+   "nombre": "Swing americano con kettlebell",
+   "legible": null,
+   "grupo": "gluteo",
+   "sec": [
+    {
+     "grupo": "isquiotibiales",
+     "factor": 0.5
+    },
+    {
+     "grupo": "hombros",
+     "factor": 0.3
+    }
+   ],
+   "equipo": "kettlebell",
+   "patron": "bisagra",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "American swing",
+    "American kettlebell swing",
+    "Swing americano"
+   ],
+   "imagen": null,
+   "dos_pesas": false
+  },
+  {
+   "slug": "arranque-con-mancuerna",
+   "nombre": "Arranque con mancuerna",
+   "legible": null,
+   "grupo": "cuerpo_completo",
+   "sec": [],
+   "equipo": "mancuernas",
+   "patron": "pliometria",
+   "unilateral": true,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Dumbbell snatch",
+    "DB snatch",
+    "Snatch con mancuerna"
+   ],
+   "imagen": null,
+   "dos_pesas": false
+  },
+  {
+   "slug": "devil-press-con-mancuernas",
+   "nombre": "Devil press con mancuernas",
+   "legible": null,
+   "grupo": "cuerpo_completo",
+   "sec": [],
+   "equipo": "mancuernas",
+   "patron": "pliometria",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Devil press",
+    "Devil's press"
+   ],
+   "imagen": null,
+   "dos_pesas": true
+  },
+  {
+   "slug": "levantada-turca-con-kettlebell",
+   "nombre": "Levantada turca con kettlebell",
+   "legible": null,
+   "grupo": "cuerpo_completo",
+   "sec": [],
+   "equipo": "kettlebell",
+   "patron": "core",
+   "unilateral": true,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Turkish get-up",
+    "TGU",
+    "Levantada turca"
+   ],
+   "imagen": "Kettlebell_Turkish_Get-Up_Squat_style",
+   "dos_pesas": false
+  },
+  {
+   "slug": "wall-ball",
+   "nombre": "Wall ball",
+   "legible": null,
+   "grupo": "cuadriceps",
+   "sec": [
+    {
+     "grupo": "gluteo",
+     "factor": 0.5
+    },
+    {
+     "grupo": "hombros",
+     "factor": 0.3
+    }
+   ],
+   "equipo": "balon_medicinal",
+   "patron": "sentadilla",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Wall balls",
+    "Lanzamiento de balón a la pared",
+    "Wall ball shot"
+   ],
+   "imagen": null,
+   "dos_pesas": false
+  },
+  {
+   "slug": "lanzamiento-de-balon-al-piso",
+   "nombre": "Lanzamiento de balón al piso",
+   "legible": null,
+   "grupo": "cuerpo_completo",
+   "sec": [],
+   "equipo": "balon_medicinal",
+   "patron": "pliometria",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Slam ball",
+    "Ball slam",
+    "Med ball slam"
+   ],
+   "imagen": null,
+   "dos_pesas": false
+  },
+  {
+   "slug": "saltar-la-soga",
+   "nombre": "Saltar la soga",
+   "legible": null,
+   "grupo": "gemelos",
+   "sec": [],
+   "equipo": "soga",
+   "patron": "pliometria",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "ambos",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Single unders",
+    "Salto a la soga",
+    "Jump rope",
+    "Soga"
+   ],
+   "imagen": "Rope_Jumping",
+   "dos_pesas": false
+  },
+  {
+   "slug": "dobles-con-soga",
+   "nombre": "Dobles con soga",
+   "legible": null,
+   "grupo": "gemelos",
+   "sec": [],
+   "equipo": "soga",
+   "patron": "pliometria",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "ambos",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Double unders",
+    "DU",
+    "Doble salto con soga"
+   ],
+   "imagen": null,
+   "dos_pesas": false
+  },
+  {
+   "slug": "remo-ergometro",
+   "nombre": "Remo ergómetro",
+   "legible": null,
+   "grupo": "cuerpo_completo",
+   "sec": [],
+   "equipo": "maquina",
+   "patron": "acarreo",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "seg",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": "Se registra por tiempo. Si hacés metros o calorías, anotalos en las notas.",
+   "alias": [
+    "Rowing",
+    "Máquina de remo",
+    "Remoergómetro",
+    "Concept2 row"
+   ],
+   "imagen": "Rowing_Stationary",
+   "dos_pesas": false
+  },
+  {
+   "slug": "bicicleta-de-aire",
+   "nombre": "Bicicleta de aire",
+   "legible": null,
+   "grupo": "cuerpo_completo",
+   "sec": [],
+   "equipo": "maquina",
+   "patron": "acarreo",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "seg",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": "Se registra por tiempo. Si hacés metros o calorías, anotalos en las notas.",
+   "alias": [
+    "Assault bike",
+    "Air bike",
+    "Echo bike",
+    "Bike erg"
+   ],
+   "imagen": null,
+   "dos_pesas": false
+  },
+  {
+   "slug": "esqui-ergometro",
+   "nombre": "Esquí ergómetro",
+   "legible": null,
+   "grupo": "cuerpo_completo",
+   "sec": [],
+   "equipo": "maquina",
+   "patron": "acarreo",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "seg",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": "Se registra por tiempo. Si hacés metros o calorías, anotalos en las notas.",
+   "alias": [
+    "SkiErg",
+    "Ski erg",
+    "Esquí"
+   ],
+   "imagen": null,
+   "dos_pesas": false
+  },
+  {
+   "slug": "empuje-de-trineo",
+   "nombre": "Empuje de trineo",
+   "legible": null,
+   "grupo": "cuadriceps",
+   "sec": [
+    {
+     "grupo": "gluteo",
+     "factor": 0.5
+    }
+   ],
+   "equipo": "otro",
+   "patron": "acarreo",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "ambos",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Sled push",
+    "Prowler",
+    "Empuje de prowler"
+   ],
+   "imagen": "Sled_Push",
+   "dos_pesas": false
+  },
+  {
+   "slug": "arrastre-de-trineo",
+   "nombre": "Arrastre de trineo",
+   "legible": null,
+   "grupo": "cuerpo_completo",
+   "sec": [],
+   "equipo": "otro",
+   "patron": "acarreo",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "ambos",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Sled drag",
+    "Sled pull",
+    "Arrastre de prowler"
    ],
    "imagen": null,
    "dos_pesas": false

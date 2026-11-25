@@ -18,7 +18,7 @@ import json, os, re, unicodedata
 from openpyxl import load_workbook
 
 RAIZ = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
-REV = 9
+REV = 10
 
 def norm(s):
     s = unicodedata.normalize('NFKD', s).encode('ascii', 'ignore').decode().lower()
@@ -133,7 +133,7 @@ DOS_PESAS_NUEVOS = [
     'Press de banca con mancuernas', 'Press declinado con mancuernas', 'Aperturas con mancuernas',
     'Encogimientos de hombros con mancuernas', 'Press de hombros con mancuernas', 'Press Arnold', 'Vuelos laterales con mancuernas',
     'Vuelos frontales con mancuernas', 'Vuelos posteriores con mancuernas', 'Curl martillo con mancuernas', 'Estocadas con mancuernas',
-    'Caminata del granjero', 'Curl de muñeca con mancuernas',
+    'Caminata del granjero', 'Curl de muñeca con mancuernas', 'Devil press con mancuernas',
 ]
 
 # ---------------------------------------------------------------- músculos secundarios de los ejercicios agregados (20-11-2026)
@@ -275,7 +275,51 @@ NUEVOS = [
     N('Antirrotación en landmine', 'core', 'landmine', 'core', ['Antirotacion LM', 'Antirrotación LM', 'Landmine antirotation', 'Landmine rainbow']),
     N('Plancha alta dinámica cruzada', 'core', 'peso_corporal', 'core', ['Plancha alta DINÁMICA CRUZADA', 'Plancha alta cruzada']),
     N('Rotación externa de hombro en bisagra', 'hombros', 'otro', 'aislamiento', ['RE Hombro BISAGRA - PS', 'RE Hombro bisagra', 'Rotación externa de hombro']),
+    # movimientos de CrossFit (25-11-2026). Sin fotos donde el banco las tiene con el logo de la marca de fondo.
+    N('Cargada de potencia', 'cuerpo_completo', 'barra', 'pliometria', ['Power clean', 'Cargada', 'Clean de potencia']),
+    N('Cargada con sentadilla', 'cuerpo_completo', 'barra', 'pliometria', ['Squat clean', 'Cargada completa', 'Full clean', 'Clean']),
+    N('Cargada colgada', 'cuerpo_completo', 'barra', 'pliometria', ['Hang clean', 'Hang power clean', 'Cargada desde colgado'], 'Hang_Clean'),
+    N('Arranque de potencia', 'cuerpo_completo', 'barra', 'pliometria', ['Power snatch', 'Arranque'], 'Power_Snatch'),
+    N('Arranque con sentadilla', 'cuerpo_completo', 'barra', 'pliometria', ['Squat snatch', 'Snatch', 'Arranque completo']),
+    N('Arranque colgado', 'cuerpo_completo', 'barra', 'pliometria', ['Hang snatch', 'Hang power snatch', 'Arranque desde colgado'], 'Hang_Snatch'),
+    N('Cargada y envión', 'cuerpo_completo', 'barra', 'pliometria', ['Clean and jerk', 'Clean & jerk', 'Dos tiempos'], 'Clean_and_Jerk'),
+    N('Push press con barra', 'hombros', 'barra', 'empuje_vertical', ['Push press', 'Press con impulso', 'Press de empuje'], 'Push_Press', sec=[{'grupo': 'triceps', 'factor': 0.5}, {'grupo': 'cuadriceps', 'factor': 0.3}]),
+    N('Push jerk con barra', 'hombros', 'barra', 'empuje_vertical', ['Push jerk', 'Power jerk', 'Envión de empuje'], sec=[{'grupo': 'triceps', 'factor': 0.5}, {'grupo': 'cuadriceps', 'factor': 0.3}]),
+    N('Sentadilla overhead con barra', 'cuadriceps', 'barra', 'sentadilla', ['Overhead squat', 'OHS', 'Sentadilla con barra sobre la cabeza'], 'Overhead_Squat', sec=[{'grupo': 'hombros', 'factor': 0.3}, {'grupo': 'core', 'factor': 0.3}]),
+    N('Thruster con barra', 'cuadriceps', 'barra', 'sentadilla', ['Barbell thruster', 'Thrusters con barra'], sec=[{'grupo': 'hombros', 'factor': 0.5}, {'grupo': 'gluteo', 'factor': 0.5}]),
+    N('Tirón alto de sumo con barra', 'cuerpo_completo', 'barra', 'bisagra', ['Sumo deadlift high pull', 'SDHP', 'Peso muerto sumo con tirón alto']),
+    N('Dominadas kipping', 'espalda', 'peso_corporal', 'traccion_vertical', ['Kipping pull-up', 'Kipping pull ups', 'Dominadas con kipping'], sec=[{'grupo': 'biceps', 'factor': 0.5}]),
+    N('Dominadas pecho a la barra', 'espalda', 'peso_corporal', 'traccion_vertical', ['Chest to bar', 'C2B', 'Chest-to-bar pull-up'], sec=[{'grupo': 'biceps', 'factor': 0.5}]),
+    N('Pies a la barra', 'core', 'peso_corporal', 'core', ['Toes to bar', 'T2B', 'Toes-to-bar']),
+    N('Rodillas a los codos', 'core', 'peso_corporal', 'core', ['Knees to elbows', 'K2E', 'Knees-to-elbows']),
+    N('Muscle-up en anillas', 'espalda', 'trx', 'traccion_vertical', ['Muscle up', 'Ring muscle up', 'Muscle-up'], sec=[{'grupo': 'triceps', 'factor': 0.5}, {'grupo': 'pecho', 'factor': 0.3}]),
+    N('Muscle-up en barra', 'espalda', 'peso_corporal', 'traccion_vertical', ['Bar muscle up', 'Bar muscle-up'], sec=[{'grupo': 'triceps', 'factor': 0.5}, {'grupo': 'pecho', 'factor': 0.3}]),
+    N('Flexiones de brazos en vertical', 'hombros', 'peso_corporal', 'empuje_vertical', ['Handstand push-up', 'HSPU', 'Flexiones en vertical', 'Flexiones de pino'], 'Handstand_Push-Ups', sec=[{'grupo': 'triceps', 'factor': 0.5}]),
+    N('Caminata en vertical', 'hombros', 'peso_corporal', 'acarreo', ['Handstand walk', 'Caminar en pino', 'Caminata de manos'], mide='ambos'),
+    N('Caminata en la pared', 'hombros', 'peso_corporal', 'acarreo', ['Wall walk', 'Wall walks'], sec=[{'grupo': 'core', 'factor': 0.5}]),
+    N('Fondos en anillas', 'triceps', 'trx', 'empuje_vertical', ['Ring dips', 'Ring dip'], 'Ring_Dips', sec=[{'grupo': 'pecho', 'factor': 0.5}, {'grupo': 'hombros', 'factor': 0.3}]),
+    N('Subida de soga', 'espalda', 'soga', 'traccion_vertical', ['Rope climb', 'Trepa de soga', 'Trepar la soga'], 'Rope_Climb', sec=[{'grupo': 'biceps', 'factor': 0.5}, {'grupo': 'antebrazos', 'factor': 0.5}]),
+    N('Sentadilla pistol', 'cuadriceps', 'peso_corporal', 'sentadilla', ['Pistol squat', 'Pistol', 'Sentadilla a una pierna'], unilateral=True, sec=[{'grupo': 'gluteo', 'factor': 0.5}]),
+    N('Burpee con salto al cajón', 'cuerpo_completo', 'cajon', 'pliometria', ['Burpee box jump over', 'Burpee box jump', 'BBJO']),
+    N('Abdominales en GHD', 'core', 'maquina', 'core', ['GHD sit-up', 'GHD sit up', 'Abdominales en banco GHD']),
+    N('Abdominales completos (sit-up)', 'core', 'peso_corporal', 'core', ['Sit up', 'Sit-up', 'Sit-ups', 'Abdominales sit-up', 'AbMat sit-up'], 'Sit-Up'),
+    N('Sostén en L', 'core', 'peso_corporal', 'core', ['L-sit', 'L sit', 'Escuadra'], mide='seg'),
+    N('Remo en anillas', 'espalda', 'trx', 'traccion_horizontal', ['Ring row', 'Ring rows', 'Remo en TRX', 'TRX row'], 'Inverted_Row_with_Straps', sec=[{'grupo': 'biceps', 'factor': 0.5}]),
+    N('Swing americano con kettlebell', 'gluteo', 'kettlebell', 'bisagra', ['American swing', 'American kettlebell swing', 'Swing americano'], sec=[{'grupo': 'isquiotibiales', 'factor': 0.5}, {'grupo': 'hombros', 'factor': 0.3}]),
+    N('Arranque con mancuerna', 'cuerpo_completo', 'mancuernas', 'pliometria', ['Dumbbell snatch', 'DB snatch', 'Snatch con mancuerna'], unilateral=True),
+    N('Devil press con mancuernas', 'cuerpo_completo', 'mancuernas', 'pliometria', ['Devil press', "Devil's press"]),
+    N('Levantada turca con kettlebell', 'cuerpo_completo', 'kettlebell', 'core', ['Turkish get-up', 'TGU', 'Levantada turca'], 'Kettlebell_Turkish_Get-Up_Squat_style', unilateral=True),
+    N('Wall ball', 'cuadriceps', 'balon_medicinal', 'sentadilla', ['Wall balls', 'Lanzamiento de balón a la pared', 'Wall ball shot'], sec=[{'grupo': 'gluteo', 'factor': 0.5}, {'grupo': 'hombros', 'factor': 0.3}]),
+    N('Lanzamiento de balón al piso', 'cuerpo_completo', 'balon_medicinal', 'pliometria', ['Slam ball', 'Ball slam', 'Med ball slam']),
+    N('Saltar la soga', 'gemelos', 'soga', 'pliometria', ['Single unders', 'Salto a la soga', 'Jump rope', 'Soga'], 'Rope_Jumping', mide='ambos'),
+    N('Dobles con soga', 'gemelos', 'soga', 'pliometria', ['Double unders', 'DU', 'Doble salto con soga'], mide='ambos'),
+    N('Remo ergómetro', 'cuerpo_completo', 'maquina', 'acarreo', ['Rowing', 'Máquina de remo', 'Remoergómetro', 'Concept2 row'], 'Rowing_Stationary', mide='seg', notas='Se registra por tiempo. Si hacés metros o calorías, anotalos en las notas.'),
+    N('Bicicleta de aire', 'cuerpo_completo', 'maquina', 'acarreo', ['Assault bike', 'Air bike', 'Echo bike', 'Bike erg'], mide='seg', notas='Se registra por tiempo. Si hacés metros o calorías, anotalos en las notas.'),
+    N('Esquí ergómetro', 'cuerpo_completo', 'maquina', 'acarreo', ['SkiErg', 'Ski erg', 'Esquí'], mide='seg', notas='Se registra por tiempo. Si hacés metros o calorías, anotalos en las notas.'),
+    N('Empuje de trineo', 'cuadriceps', 'otro', 'acarreo', ['Sled push', 'Prowler', 'Empuje de prowler'], 'Sled_Push', mide='ambos', sec=[{'grupo': 'gluteo', 'factor': 0.5}]),
+    N('Arrastre de trineo', 'cuerpo_completo', 'otro', 'acarreo', ['Sled drag', 'Sled pull', 'Arrastre de prowler'], mide='ambos'),
 ]
+
 
 def main():
     ws = load_workbook(os.path.join(RAIZ, 'privado', 'nombres-ejercicios.xlsx'))['Ejercicios']
