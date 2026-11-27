@@ -23,6 +23,22 @@ HOY = datetime(2026, 11, 14, 12, 0, 0)
 sys.stdout.reconfigure(encoding='utf-8')  # la consola de Windows no puede imprimir '→' en cp1252
 resultados, errores = [], []
 
+# Simula la API de pantalla encendida (Wake Lock) y el bloqueo del teléfono, que la suelta solo.
+PANTALLA_SIMULADA = '''
+window.__wl = { pedidos: 0, activos: 0 };
+let ultimo = null, vis = 'visible';
+Object.defineProperty(navigator, 'wakeLock', { configurable: true, value: { request: async () => {
+  window.__wl.pedidos++; window.__wl.activos++;
+  const avisos = [];
+  const s = { suelto: false, addEventListener: (t, f) => avisos.push(f),
+    release: async () => { if (!s.suelto) { s.suelto = true; window.__wl.activos--; avisos.forEach((f) => f()) } } };
+  ultimo = s; return s;
+} } });
+Object.defineProperty(document, 'visibilityState', { configurable: true, get: () => vis });
+window.__ocultar = () => { vis = 'hidden'; if (ultimo) ultimo.release(); document.dispatchEvent(new Event('visibilitychange')) };
+window.__mostrar = () => { vis = 'visible'; document.dispatchEvent(new Event('visibilitychange')) };
+'''
+
 def ok(nombre, cond, extra=''):
     resultados.append((nombre, bool(cond)))
     print(('  ok   ' if cond else '  FALLA') + ' ' + nombre + (f'   [{extra}]' if extra and not cond else ''))
@@ -41,8 +57,9 @@ def main():
         with sync_playwright() as pw:
             navegador = pw.chromium.launch()
 
-            def abrir():
+            def abrir(previo=None):
                 ctx = navegador.new_context(viewport={'width': 390, 'height': 844}, device_scale_factor=2, accept_downloads=True)
+                if previo: ctx.add_init_script(previo)
                 pg = ctx.new_page()
                 pg.clock.set_fixed_time(HOY)
                 pg.on('console', lambda m: errores.append(m.text) if m.type == 'error' else None)
@@ -136,7 +153,13 @@ def main():
             ok('Dos pesas: la tabla dice «kg c/u» solo en los ejercicios con dos mancuernas', 'KG C/U' in gem.inner_text().upper() and 'kg c/u' in gem.inner_text() and 'C/U' not in ej.inner_text().upper())
             ok('Sin controles de RIR/RPE/fallo en la sesión', pg.locator('.bloque-c .chip').count() == 0)
             ok('Última vez: fecha corta y texto completo, sin cortar', 'Últ. vez (10/11):' in ej.inner_text() and ej.locator('.truncate').count() == 0)
-            campo = ej.locator('input').nth(1); campo.fill('82,5'); campo.blur(); pg.wait_for_timeout(250)
+            alto = ej.locator('input').first.evaluate('e => e.offsetHeight')
+            ok('Tabla de series más baja (recuadros de 32 px)', alto <= 33, str(alto))
+            campo = ej.locator('input').nth(1); campo.fill('82,5'); campo.press('Enter'); pg.wait_for_timeout(250)
+            foco = lambda: pg.evaluate("document.activeElement.getAttribute('aria-label')")
+            ok('Enter pasa al mismo campo de la serie de abajo', foco() == 'Press de banca con barra, serie 2: peso en kg' and campo.get_attribute('enterkeyhint') == 'enter', str(foco()))
+            ej.locator('input').last.press('Enter'); pg.wait_for_timeout(150)
+            ok('Enter en la última serie cierra el teclado', foco() is None, str(foco()))
             ej.locator('[aria-label="Historial de Press de banca con barra"]').click(); pg.wait_for_timeout(450)
             ok('Historial en una hoja, sin enlaces', pg.locator('.sheet .item').count() >= 5 and pg.locator('.sheet button.item').count() == 0)
             ok('Con la hoja abierta el fondo no se desplaza', pg.evaluate('getComputedStyle(document.body).overflow') == 'hidden')
@@ -149,7 +172,7 @@ def main():
             pg.locator('.sheet .item').first.click(); pg.wait_for_timeout(400)
             ok('Cambiar ejercicio en la sesión', 'Curl de isquiotibiales con deslizadores, en gesto de sprint' in pg.locator('.bloque-c').inner_text())
             pg.locator('.tilde').nth(4).click(); pg.wait_for_timeout(350)
-            ok('El tilde marca todo el bloque', pg.locator('.bloque.listo').count() == 1 and '6 de 37 series' in texto(pg, '.topbar'))
+            ok('El tilde marca todo el bloque y lo cierra', pg.locator('.bloque.listo').count() == 1 and '6 de 37 series' in texto(pg, '.topbar') and pg.locator('.bloque-c').count() == 0)
             ok('Sin cronómetro en modo por bloque', pg.locator('.timer').count() == 0)
             pg.click('text=+ Agregar ejercicios adicionales'); pg.wait_for_timeout(400)
             ok('Selector: "Listo" en la cabecera', pg.locator('.sheet-h >> text=Listo').count() == 1)
@@ -166,10 +189,11 @@ def main():
             pg.locator('.tilde').nth(6).click(); pg.wait_for_timeout(300)
             ok('No se puede tildar con una serie sin datos', pg.locator('.toast').count() == 1 and pg.locator('.bloque.listo').count() == 1)
             campo.fill('6'); campo.blur(); pg.wait_for_timeout(200)
-            pg.locator('.tilde').nth(6).click(); pg.wait_for_timeout(300)
             pg.click('.topbar >> text=Terminar'); pg.wait_for_timeout(300)
             pg.click('[aria-label="Volver"]'); pg.wait_for_timeout(400)
             ok('Volver de otra pantalla conserva el bloque abierto', pg.locator('.bloque-c').count() == 1 and 'Curl nórdico de isquiotibiales' in pg.locator('.bloque-c').inner_text())
+            pg.locator('.tilde').nth(6).click(); pg.wait_for_timeout(400)
+            ok('Al completar un bloque, se cierra solo', pg.locator('.bloque-c').count() == 0 and pg.locator('.bloque.listo').count() == 2)
             pg.click('.topbar >> text=Terminar'); pg.wait_for_timeout(300)
             ok('Cierre avisa las series sin marcar', 'sin marcar' in texto(pg))
             ok('"Actualizar el plan" viene desmarcado', pg.locator('.card.row').get_attribute('aria-pressed') == 'false')
@@ -203,6 +227,9 @@ def main():
             ok('Un tilde por ejercicio', pg.locator('.ej .tilde').count() == 2)
             pg.locator('.ej .tilde').first.click(); pg.wait_for_timeout(400)
             ok('Tildar un ejercicio lo marca y no arranca ningún cronómetro', pg.locator('.timer').count() == 0 and '3 de 37' in texto(pg, '.topbar'))
+            ok('Por ejercicio: el bloque sigue abierto mientras falte alguno', pg.locator('.bloque-c').count() == 1)
+            pg.locator('.ej .tilde').nth(1).click(); pg.wait_for_timeout(400)
+            ok('Por ejercicio: al tildar el último del bloque, el bloque se cierra', pg.locator('.bloque-c').count() == 0 and pg.locator('.bloque.listo').count() == 1)
             captura(pg, 'C1-por-ejercicio')
             pg.click('.topbar >> text=Terminar'); pg.wait_for_timeout(300)
             pg.click('text=Descartar sesión'); pg.wait_for_timeout(300)
@@ -301,6 +328,8 @@ def main():
             card = pg.locator('.ej', has_text='Press inclinado en Smith')
             card.locator('[aria-label="Serie 1: RIR"]').fill('2'); card.locator('[aria-label="Serie 1: RIR"]').blur(); pg.wait_for_timeout(300)
             ok('Editor: cargar RIR borra el RPE de esa serie', card.locator('[aria-label="Serie 1: RPE"]').input_value() == '' and card.locator('[aria-label="Serie 2: RPE"]').input_value() == '8')
+            card.locator('[aria-label="Serie 2: RPE"]').press('Enter'); pg.wait_for_timeout(150)
+            ok('Editor: Enter baja a la misma columna de la serie siguiente', pg.evaluate("document.activeElement.getAttribute('aria-label')") == 'Serie 3: RPE')
             card.locator('text=+ Serie').click(); pg.wait_for_timeout(300)
             ok('Editor: agregar serie', card.locator('[aria-label="Serie 4: reps"]').count() == 1)
             captura(pg, 'E2-editor')
@@ -328,7 +357,7 @@ def main():
             pg.click('[aria-label="Volver"]'); pg.wait_for_timeout(300)
             ok('Dos planes; el importado quedó activo', pg.locator('.main .card').count() == 2 and 'activo' in pg.locator('.main .card').first.inner_text())
             tab(pg, 'Ejercicios')
-            ok('El ejercicio creado al importar está en el catálogo', '214 en el catálogo' in texto(pg, '.topbar'))
+            ok('El ejercicio creado al importar está en el catálogo', '216 en el catálogo' in texto(pg, '.topbar'))
             ctx.close()
 
             # ------------------------------------------------------------ F
@@ -405,7 +434,7 @@ def main():
             captura(pg, 'H0-violeta-oscuro')
             pg.click('[aria-label="Volver"]'); pg.wait_for_timeout(200)
             data, ruta = backup(pg)
-            ok('Copia: formato y contenido', data['formato'] == 'gym-log-backup/v2' and len(data['sessions']) == 29 and len(data['exercises']) == 213 and len(data['plans']) == 1)
+            ok('Copia: formato y contenido', data['formato'] == 'gym-log-backup/v2' and len(data['sessions']) == 29 and len(data['exercises']) == 215 and len(data['plans']) == 1)
             pg.click('[aria-label="Ajustes"]'); pg.click('text=Empezar de cero'); pg.wait_for_timeout(250)
             pg.click('.dialog button.danger'); pg.wait_for_timeout(500)
             ok('Empezar de cero borra sesiones y planes', '0' in pg.locator('.kv', has_text='Sesiones').inner_text())
@@ -450,7 +479,7 @@ def main():
             desp, _ = backup(pg)
             ids = {e['id'] for e in desp['exercises']}
             porSlug = {e['slug']: e for e in desp['exercises']}
-            ok('Catálogo viejo → nuevo: 213 ejercicios y la revisión anotada', len(desp['exercises']) == 213 and [m['value'] for m in desp['meta'] if m['key'] == 'catalogo'] == [10], str(len(desp['exercises'])))
+            ok('Catálogo viejo → nuevo: 215 ejercicios y la revisión anotada', len(desp['exercises']) == 215 and [m['value'] for m in desp['meta'] if m['key'] == 'catalogo'] == [11], str(len(desp['exercises'])))
             viejo = {e['slug']: e['id'] for e in antes['exercises']}
             ok('No se pierde ninguna serie ni sesión', len(antes['setLogs']) == len(desp['setLogs']) == 1087 and len(desp['sessions']) == 29, str(len(desp['setLogs'])))
             ok('Ninguna serie ni plan apunta a un ejercicio inexistente', all(l['exercise_id'] in ids for l in desp['setLogs'])
@@ -594,6 +623,29 @@ def main():
             pg.click('.sheet [aria-label="Cerrar"]'); pg.wait_for_timeout(200)
             data, _ = backup(pg)
             ok('Medidas: van en la copia, en milímetros', sorted((m['fecha'], m['mm'].get('cintura'), m['mm'].get('brazo')) for m in data['medidas']) == [('2026-11-01', 850, 385), ('2026-11-14', 840, None)], str(data.get('medidas')))
+            ctx.close()
+
+            # ------------------------------------------------------------ N
+            print('\nN. Pantalla encendida durante la sesión')
+            ctx, pg = abrir(PANTALLA_SIMULADA)
+            wl = lambda: pg.evaluate('window.__wl')
+            ok('Pantalla: fuera de la sesión no se pide', wl()['activos'] == 0)
+            empezar(pg)
+            ok('Pantalla: en la sesión queda encendida', wl() == {'pedidos': 1, 'activos': 1}, str(wl()))
+            pg.evaluate('window.__ocultar()'); pg.wait_for_timeout(100)
+            ok('Pantalla: el teléfono la suelta al bloquearse', wl()['activos'] == 0)
+            pg.evaluate('window.__mostrar()'); pg.wait_for_timeout(200)
+            ok('Pantalla: al volver a la app se vuelve a pedir', wl() == {'pedidos': 2, 'activos': 1}, str(wl()))
+            pg.click('[aria-label="Volver"]'); pg.wait_for_timeout(300)
+            ok('Pantalla: al salir de la sesión se suelta', wl()['activos'] == 0)
+            pg.click('[aria-label="Ajustes"]'); pg.wait_for_timeout(200)
+            op = pg.locator('button[aria-pressed]', has_text='Pantalla siempre encendida en la sesión')
+            ok('Ajustes: «Pantalla siempre encendida» viene activada', op.get_attribute('aria-pressed') == 'true')
+            op.click(); pg.wait_for_timeout(250)
+            ok('Ajustes: se puede desactivar', op.get_attribute('aria-pressed') == 'false')
+            pg.click('[aria-label="Volver"]'); pg.wait_for_timeout(250)
+            pg.click('text=Continuar'); pg.wait_for_selector('.bloque'); pg.wait_for_timeout(300)
+            ok('Pantalla: desactivada, la sesión no la pide', wl() == {'pedidos': 2, 'activos': 0}, str(wl()))
             ctx.close()
             navegador.close()
     finally:

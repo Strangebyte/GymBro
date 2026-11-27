@@ -20,7 +20,7 @@ npm run seed         # regenera src/seed.json, src/seed-historial.json y data/*.
 npm run test:e2e     # requiere dist/ y: pip install playwright && playwright install chromium
 ```
 
-Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 157 verificaciones tienen que pasar
+Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 172 verificaciones tienen que pasar
 y no puede haber errores de consola. Si cambiás un flujo, actualizá `tests/e2e.py` en el mismo cambio.
 
 ## Cómo trabajar
@@ -116,18 +116,24 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
 ## Reglas de interfaz acordadas con el dueño
 
 - Sesión: bloques colapsados al entrar; abrir uno cierra el anterior. El bloque abierto y el scroll se
-  conservan al ir y volver de otra pantalla.
+  conservan al ir y volver de otra pantalla. Al completar un bloque con el tilde (el del bloque o el del último
+  ejercicio que le faltaba) se cierra solo.
 - Tilde de "hecho" por bloque (por defecto) o por ejercicio (ajuste `tilde`). **No hay cronómetro de descanso**: se
   sacó el 20-11-2026 porque solo arrancaba al terminar un ejercicio entero. El encabezado del bloque no lleva
   contador de series (lo pidió sacar).
-- En la sesión, reps y peso se escriben a mano en una tabla compacta. RIR, RPE, fallo y calentamiento
-  **no** se editan ahí: se configuran en el plan y se ven como "objetivo".
+- En la sesión, reps y peso se escriben a mano en una tabla compacta (recuadros de 32 px de alto, pedido del dueño).
+  RIR, RPE, fallo y calentamiento **no** se editan ahí: se configuran en el plan y se ven como "objetivo".
+- Enter en una tabla de series (sesión y editor de días) pasa al mismo campo de la serie de abajo; en la última, cierra
+  el teclado (`bajarConEnter` en ui.tsx). Los campos llevan `enterKeyHint="enter"`: con "siguiente", Android salta
+  solo al campo de al lado y la página no se entera.
+- Pantalla siempre encendida durante la sesión (`mantenerPantalla` en lib.ts, ajuste `pantalla`, activado por
+  defecto). El teléfono la suelta al bloquearse o al salir de la app: se vuelve a pedir al volver.
 - Las etiquetas de grupo y equipo van en el encabezado del bloque, no en cada ejercicio.
 - Historial de un ejercicio: lista informativa, sin enlaces.
 - Catálogo agrupado por categoría (`categoria()` en lib.ts), con filtro detrás de un ícono junto al buscador.
 - Imágenes incluidas: `src/ejercicios-img/<slug>.webp` (las arma `tools/imagenes/gen.py` desde Free Exercise DB,
-  dominio público). Se muestran si el usuario no cargó una propia; la propia siempre tiene prioridad. Hay 107 de
-  213; los candidatos dudosos están anotados en ese mismo archivo, sin incluir. No bajar imágenes de otras fuentes
+  dominio público). Se muestran si el usuario no cargó una propia; la propia siempre tiene prioridad. Hay 109 de
+  215; los candidatos dudosos están anotados en ese mismo archivo, sin incluir. No bajar imágenes de otras fuentes
   sin revisar la licencia.
 - Estilo de formas redondas (pedido por el dueño): botones, chips y controles tipo píldora; tarjetas con
   `--radius: 22px`. Mantenerlo en lo nuevo.

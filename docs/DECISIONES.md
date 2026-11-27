@@ -2,6 +2,17 @@
 
 Registro de qué se decidió y por qué. Lo más nuevo, arriba.
 
+## 27-11-2026 — Tabla de series, tilde y pantalla encendida
+
+| Decisión | Razón |
+|---|---|
+| Recuadros de la tabla de series de 38 a 32 px de alto (también en el editor de días, que tenía 34) | Pedido del dueño: menos altos. El editor va igual para que las dos tablas se vean parejas |
+| Enter pasa al mismo campo de la serie de abajo; en la última serie cierra el teclado | Pedido del dueño, para cargar los pesos de todas las series seguidos. Al final no salta al ejercicio siguiente: ahí suele cambiar qué se carga |
+| La tecla del teclado es ↵ (`enterKeyHint="enter"`), no "siguiente" | Con "siguiente", Android pasa solo al campo de al lado (de reps a kg) sin avisarle a la página, y no se puede llevar el foco hacia abajo |
+| Al completar un bloque se cierra solo; si su encabezado quedó fuera de la vista, la pantalla vuelve a él | Pedido del dueño. Con tilde por ejercicio, se cierra al tildar el último que faltaba |
+| Pantalla encendida: opción en Ajustes, activada por defecto, y se vuelve a pedir al volver a la app | Pedido del dueño. No funcionaba en su teléfono; lo más probable es que se perdiera al bloquearlo entre series y la app no la volviera a pedir |
+| Vuelos laterales y frontales en polea, como ejercicios aparte de los de mancuernas | El dueño no los encontraba. El lateral se marca a un brazo (c/lado), que es como se hace en polea |
+
 ## 25-11-2026 — Movimientos de CrossFit
 
 | Decisión | Razón |

@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, type Exercise, type Session, type SetLog, type Settings, type Tramo } from '../db'
-import { alinearArriba, Chevron, Desplegable, Escala10, HistorialLista, Ico, MediaView, Picker, Sheet, Stepper, TopBar, useDialogos, useNav, useTieneMedia } from '../ui'
+import { alinearArriba, bajarConEnter, Chevron, Desplegable, Escala10, HistorialLista, Ico, MediaView, Picker, Sheet, Stepper, TopBar, useDialogos, useNav, useTieneMedia } from '../ui'
 import { AYUDA_TEC, etiqueta, fmtDur, fmtFecha, fmtFechaCorta, NOMBRE_TEC, resumenTramos, pesoDesdeTexto, pesoTxt, plural, resumenSets, rotuloPeso, setValido, tecCorta, ultimaVez, unidadPeso } from '../lib'
 import { agregarEjercicio, agregarSerie, descartarSesion, sesionEnCurso, terminarSesion } from '../actions'
 
@@ -42,6 +42,14 @@ export function SessionScreen({ settings }: { settings: Settings }) {
   // Al abrir un bloque tocándolo, la pantalla lo lleva arriba (el que estaba abierto se cierra y todo se corre).
   const irA = useRef<number | null>(null)
   const tocarBloque = (b: number) => { if (abierto !== b) irA.current = b; setAbierto(abierto === b ? null : b) }
+  /** Al completar un bloque, se cierra. Si su encabezado había quedado fuera de la vista, la pantalla vuelve a él. */
+  const cerrarCompleto = (b: number) => {
+    if (memoria.abierto !== b) return
+    setAbierto(null)
+    const el = document.querySelector<HTMLElement>(`[data-bloque="${b}"]`)
+    const barra = document.querySelector<HTMLElement>('.topbar')?.offsetHeight ?? 0
+    if (el && el.getBoundingClientRect().top < barra) alinearArriba(el)
+  }
   useEffect(() => {
     if (irA.current == null) return
     const b = irA.current; irA.current = null
@@ -109,7 +117,7 @@ export function SessionScreen({ settings }: { settings: Settings }) {
                 </button>
                 {!porEjercicio && (
                   <button className={`tilde${listo ? ' on' : ''}`} aria-pressed={listo} aria-label={`${listo ? 'Desmarcar' : 'Marcar hecho'} ${nombre}`}
-                    onClick={() => void marcar(delBloque, nombre)}>✓</button>
+                    onClick={async () => { if (await marcar(delBloque, nombre)) cerrarCompleto(b) }}>✓</button>
                 )}
                 {porEjercicio && listo && <span className="hecho" aria-label="Bloque hecho">✓</span>}
               </div>
@@ -117,7 +125,7 @@ export function SessionScreen({ settings }: { settings: Settings }) {
                 <div className="bloque-c">
                   {its.map((it) => (
                     <Tarjeta key={`${it.key}-${it.ex.id}`} item={it} sesion={sesion} porEjercicio={porEjercicio}
-                      onMarcar={() => void marcar(it.sets, it.ex.nombre)} />
+                      onMarcar={async () => { if (await marcar(it.sets, it.ex.nombre) && delBloque.every((s) => s.hecha || it.sets.includes(s))) cerrarCompleto(b) }} />
                   ))}
                   {esExtra && <button className="btn xs block" onClick={() => setPicker(b)}>+ Otro ejercicio</button>}
                 </div>
@@ -194,10 +202,10 @@ export function Tarjeta(props: { item: Item; sesion: Session; porEjercicio: bool
         <Fragment key={s.id}>
         <div className="ss">
           <span className="n">{s.serie}</span>
-          <input inputMode="numeric" aria-label={`${ex.nombre}, serie ${s.serie}: ${enSeg ? 'segundos' : 'reps'}`}
+          <input inputMode="numeric" enterKeyHint="enter" onKeyDown={bajarConEnter} aria-label={`${ex.nombre}, serie ${s.serie}: ${enSeg ? 'segundos' : 'reps'}`}
             defaultValue={enSeg ? (s.seg ?? '') : (s.reps ?? '')} placeholder={s.fallo ? 'fallo' : '—'}
             onBlur={(e) => { const n = aNum(e.target.value); void db.setLogs.update(s.id!, enSeg ? { seg: n, reps: null } : { reps: n, seg: null }) }} />
-          <input inputMode="decimal" aria-label={`${ex.nombre}, serie ${s.serie}: peso en ${rotuloPeso(ex.dos_pesas)}`}
+          <input inputMode="decimal" enterKeyHint="enter" onKeyDown={bajarConEnter} aria-label={`${ex.nombre}, serie ${s.serie}: peso en ${rotuloPeso(ex.dos_pesas)}`}
             defaultValue={pesoTxt(s.peso_g)} placeholder="—"
             onBlur={(e) => { const g = pesoDesdeTexto(e.target.value, s.peso_g); if (g !== (s.peso_g || null)) void db.setLogs.update(s.id!, { peso_g: g }) }} />
           {s.tec ? (

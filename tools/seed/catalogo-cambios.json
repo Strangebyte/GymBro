@@ -1,5 +1,5 @@
 {
- "rev": 10,
+ "rev": 11,
  "ejercicios": {
   "cadera-con-glide-lateral-cuadrupedia": {
    "nombre": "Movilidad de cadera en cuadrupedia con glide lateral",
@@ -4399,6 +4399,58 @@
     "Arrastre de prowler"
    ],
    "imagen": null,
+   "dos_pesas": false
+  },
+  {
+   "slug": "vuelos-laterales-en-polea",
+   "nombre": "Vuelos laterales en polea",
+   "legible": null,
+   "grupo": "hombros",
+   "sec": [],
+   "equipo": "polea",
+   "patron": "aislamiento",
+   "unilateral": true,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Vuelo lateral en polea",
+    "Vuelo lateral con polea",
+    "Vuelos laterales con polea",
+    "Elevación lateral en polea",
+    "Elevaciones laterales en polea",
+    "Cable lateral raise"
+   ],
+   "imagen": "Standing_Low-Pulley_Deltoid_Raise",
+   "dos_pesas": false
+  },
+  {
+   "slug": "vuelos-frontales-en-polea",
+   "nombre": "Vuelos frontales en polea",
+   "legible": null,
+   "grupo": "hombros",
+   "sec": [],
+   "equipo": "polea",
+   "patron": "aislamiento",
+   "unilateral": false,
+   "lastre": false,
+   "mide": "reps",
+   "vol": true,
+   "inc": null,
+   "archivo": false,
+   "notas": null,
+   "alias": [
+    "Vuelo frontal en polea",
+    "Vuelo frontal con polea",
+    "Vuelos frontales con polea",
+    "Elevación frontal en polea",
+    "Elevaciones frontales en polea",
+    "Cable front raise"
+   ],
+   "imagen": "Front_Cable_Raise",
    "dos_pesas": false
   }
  ],

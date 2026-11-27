@@ -1,17 +1,18 @@
 # Estado del proyecto
 
-**Última actualización:** 18-11-2026 · **Versión:** 1.0.0
+**Última actualización:** 27-11-2026 · **Versión:** 1.0.0
 
 ## Dónde está
 
-- La app está completa y funcionando en las pruebas automáticas (157 de 157, sin errores de consola).
+- La app está completa y funcionando en las pruebas automáticas (172 de 172, sin errores de consola).
 - **Publicada en GitHub Pages:** https://<usuario>.github.io/GymBro/ (repositorio público
   `<usuario>/GymBro`). Cada push a `main` la vuelve a publicar sola. Verificado el 14-11-2026 en
   Chromium: abre sin errores, registra el service worker. Desde el 16-11-2026 arranca solo con el catálogo: sin planes ni sesiones.
 - **El historial personal no está en el repositorio.** Se carga en el teléfono restaurando
   `privado/gym-log-historial.json` (Ajustes → Restaurar desde una copia). Ver `docs/DEPLOY.md`.
 - **Instalada en el Android del dueño (14-11-2026).** Probado ahí: vibración y sonido al terminar el descanso.
-  La pantalla se apaga durante la sesión (el bloqueo de pantalla encendida no funciona); al dueño no le molesta.
+  La pantalla se apagaba durante la sesión (el bloqueo de pantalla encendida no funcionaba). Corregido el 27-11-2026,
+  sin probar todavía en el teléfono (ver Pendiente).
   Con el teléfono en silencio no vibra: lo bloquea Android.
 
 ## Próximo paso
@@ -49,7 +50,12 @@ video y scroll táctil con una hoja abierta.
   el generador del service worker). No van dentro de la app publicada; arreglarlos exige subir Vite de versión mayor.
 - **Restaurar una copia no valida el contenido fila por fila:** un archivo armado a mano con datos incompletos puede
   dejar la app sin abrir. No es un riesgo con copias hechas por la propia app.
-- **Pantalla encendida durante la sesión:** no funciona en el teléfono del dueño; dijo que no le molesta. Sin investigar.
+- **Probar la pantalla encendida en el teléfono.** No funcionaba en el del dueño. Causa probable, no confirmada: al
+  bloquear el teléfono o cambiar de app, Android la suelta y la app no la volvía a pedir. Desde el 27-11-2026 la pide
+  de nuevo al volver (verificado con una simulación en las pruebas, no con un teléfono) y tiene opción en Ajustes.
+  Si se sigue apagando, la causa es otra y hay que investigarla en el teléfono.
+- **Probar en el teléfono que Enter baje a la serie siguiente.** Depende del teclado: se pidió la tecla ↵ para que
+  Android avise a la página; en el simulador funciona.
 
 ## Hecho
 
@@ -93,6 +99,7 @@ video y scroll táctil con una hoja abierta.
 | Fecha | Qué se hizo |
 |---|---|
 | 10-11-2026 | Diseño (`docs/historico/`), catálogo de 96 ejercicios, primera versión solo de registro |
+| 27-11-2026 | Tabla de series más baja; Enter baja a la serie siguiente; el bloque se cierra al completarlo; pantalla encendida que se vuelve a pedir al volver a la app, con opción en Ajustes; vuelos laterales y frontales en polea (revisión 11) |
 | 25-11-2026 | 42 movimientos de CrossFit en el catálogo (revisión 10), con 15 fotos; equipamientos nuevos: balón medicinal y soga |
 | 25-11-2026 | Historial del dueño al 20-11 (33 sesiones) y plan de la semana del 24-11, en una copia armada en la PC sin publicar nada; 9 ejercicios nuevos del entrenador y vuelve Rebote y freno (revisión 9) |
 | 20-11-2026 | Escala de esfuerzo en dos filas de 5, sin deslizar; botón "Cargar" de las técnicas siempre debajo |

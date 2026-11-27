@@ -166,9 +166,9 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--pri); outline-o
 .ss { display: grid; grid-template-columns: 20px 1fr 1fr 1.25fr 28px; gap: 6px; align-items: center; margin-top: 4px; }
 .ss.h { font-size: 10.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; text-align: center; margin-top: 8px; }
 .ss .n { font-size: 12px; color: var(--muted); text-align: center; font-weight: 700; }
-.ss input { padding: 7px 4px; text-align: center; border-radius: 13px; font-size: 15.5px; font-weight: 700; min-height: 38px; }
+.ss input { padding: 4px; text-align: center; border-radius: 12px; font-size: 15.5px; font-weight: 700; min-height: 32px; }
 .ss .obj { font-size: 12px; color: var(--muted); text-align: center; font-weight: 600; }
-.ss .x { color: var(--muted); font-size: 13px; height: 38px; text-align: center; }
+.ss .x { color: var(--muted); font-size: 13px; height: 32px; text-align: center; }
 /* Serie con técnica: "objetivo" es un botón que abre la ventana para cargar los tramos. */
 .ss .obj.tec { line-height: 1.2; padding: 2px 0; }
 .ss .obj.tec .tip { display: block; }   /* el nombre de la técnica siempre en su renglón, el botón abajo */
@@ -245,9 +245,9 @@ body.fijo { overflow: hidden; }
 .toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(84px + env(safe-area-inset-bottom)); z-index: 60; background: var(--text); color: var(--bg); padding: 11px 16px; border-radius: 20px; font-size: 14px; font-weight: 600; max-width: 88%; text-align: center; }
 
 .ed-serie { display: grid; grid-template-columns: 18px repeat(4, 1fr) 42px 26px; gap: 4px; align-items: center; margin-bottom: 4px; }
-.ed-serie input { padding: 5px 2px; min-height: 34px; text-align: center; border-radius: 11px; font-size: 14.5px; font-weight: 650; }
+.ed-serie input { padding: 4px 2px; min-height: 32px; text-align: center; border-radius: 11px; font-size: 14.5px; font-weight: 650; }
 .ed-serie .chip { min-height: 32px; min-width: 0; padding: 0; }
-.ed-serie .x { color: var(--muted); font-size: 13px; height: 34px; text-align: center; }
+.ed-serie .x { color: var(--muted); font-size: 13px; height: 32px; text-align: center; }
 .mini:disabled { opacity: .35; }
 .acc { flex-wrap: wrap; row-gap: 0; }
 .ed-serie .h { font-size: 10.5px; font-weight: 700; color: var(--muted); text-align: center; text-transform: uppercase; }

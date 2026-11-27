@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, type Exercise, type PBlock, type PlanDay, type PSet, type Tecnica } from '../db'
-import { alinearArriba, Chevron, Chips, Desplegable, Picker, Sheet, sinGuardia, Stepper, TopBar, useDialogos, useGuardiaSalida, useNav } from '../ui'
+import { alinearArriba, bajarConEnter, Chevron, Chips, Desplegable, Picker, Sheet, sinGuardia, Stepper, TopBar, useDialogos, useGuardiaSalida, useNav } from '../ui'
 import { AYUDA_TEC, etiqueta, plural, GRUPOS, guardarArchivo, NOMBRE_TEC, numES, pesoDesdeTexto, pesoTxt, resumenSets, rotuloPeso, setValido, slugify } from '../lib'
 import { activarPlan, borrarPlan, duplicarDia, reordenarDias } from '../actions'
 import { EJEMPLO_PLAN, exportarPlan, guardarPlan, leerPlan, pedidoParaIA, type ImpPlan, type Resolucion } from '../plan'
@@ -270,13 +270,13 @@ export function PlanDayScreen({ id }: { id: number }) {
                           return (
                             <div key={si} className={`ed-serie${setValido(x) ? '' : ' mal'}`}>
                               <span className="xsmall muted center">{si + 1}</span>
-                              <input inputMode="numeric" aria-label={`Serie ${si + 1}: ${enSeg ? 'segundos' : 'reps'}`} defaultValue={aTxt(enSeg ? x.seg : x.reps)} key={`m${enSeg}${si}${e.series.length}`}
+                              <input inputMode="numeric" enterKeyHint="enter" onKeyDown={bajarConEnter} aria-label={`Serie ${si + 1}: ${enSeg ? 'segundos' : 'reps'}`} defaultValue={aTxt(enSeg ? x.seg : x.reps)} key={`m${enSeg}${si}${e.series.length}`}
                                 onBlur={(ev) => set(enSeg ? { seg: aNum(ev.target.value), reps: null } : { reps: aNum(ev.target.value), seg: null })} />
-                              <input inputMode="decimal" aria-label={`Serie ${si + 1}: peso en ${rotuloPeso(ex?.dos_pesas)}`} defaultValue={pesoTxt(x.peso_g)} key={`p${si}${e.series.length}`}
+                              <input inputMode="decimal" enterKeyHint="enter" onKeyDown={bajarConEnter} aria-label={`Serie ${si + 1}: peso en ${rotuloPeso(ex?.dos_pesas)}`} defaultValue={pesoTxt(x.peso_g)} key={`p${si}${e.series.length}`}
                                 onBlur={(ev) => { const g = pesoDesdeTexto(ev.target.value, x.peso_g); if (g !== (x.peso_g || null)) set({ peso_g: g }) }} />
-                              <input inputMode="numeric" aria-label={`Serie ${si + 1}: RIR`} defaultValue={aTxt(x.rir)} key={`i${si}${e.series.length}${x.rir ?? 'x'}`}
+                              <input inputMode="numeric" enterKeyHint="enter" onKeyDown={bajarConEnter} aria-label={`Serie ${si + 1}: RIR`} defaultValue={aTxt(x.rir)} key={`i${si}${e.series.length}${x.rir ?? 'x'}`}
                                 onBlur={(ev) => { const n = aNum(ev.target.value); set(n == null ? { rir: null } : { rir: n, rpe: null }) }} />
-                              <input inputMode="numeric" aria-label={`Serie ${si + 1}: RPE`} defaultValue={aTxt(x.rpe)} key={`e${si}${e.series.length}${x.rpe ?? 'x'}`}
+                              <input inputMode="numeric" enterKeyHint="enter" onKeyDown={bajarConEnter} aria-label={`Serie ${si + 1}: RPE`} defaultValue={aTxt(x.rpe)} key={`e${si}${e.series.length}${x.rpe ?? 'x'}`}
                                 onBlur={(ev) => { const n = aNum(ev.target.value); set(n == null ? { rpe: null } : { rpe: Math.min(10, n), rir: null }) }} />
                               <button className={`chip sm${x.fallo || x.tec ? ' on' : ''}`} aria-label={`Serie ${si + 1}: fallo y técnica`} onClick={() => setTecDe({ bi, ei, si })}>{x.tec ? TEC_CORTO[x.tec.tipo] : x.fallo ? 'F' : '·'}</button>
                               <button className="x" aria-label={`Borrar serie ${si + 1}`} onClick={() => editar((bl) => { bl[bi].ejercicios[ei].series.splice(si, 1) })}>✕</button>

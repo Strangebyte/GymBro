@@ -18,7 +18,7 @@ import json, os, re, unicodedata
 from openpyxl import load_workbook
 
 RAIZ = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
-REV = 10
+REV = 11
 
 def norm(s):
     s = unicodedata.normalize('NFKD', s).encode('ascii', 'ignore').decode().lower()
@@ -318,6 +318,9 @@ NUEVOS = [
     N('Esquí ergómetro', 'cuerpo_completo', 'maquina', 'acarreo', ['SkiErg', 'Ski erg', 'Esquí'], mide='seg', notas='Se registra por tiempo. Si hacés metros o calorías, anotalos en las notas.'),
     N('Empuje de trineo', 'cuadriceps', 'otro', 'acarreo', ['Sled push', 'Prowler', 'Empuje de prowler'], 'Sled_Push', mide='ambos', sec=[{'grupo': 'gluteo', 'factor': 0.5}]),
     N('Arrastre de trineo', 'cuerpo_completo', 'otro', 'acarreo', ['Sled drag', 'Sled pull', 'Arrastre de prowler'], mide='ambos'),
+    # vuelos en polea (27-11-2026): el dueño los buscó y solo estaban con mancuernas
+    N('Vuelos laterales en polea', 'hombros', 'polea', 'aislamiento', ['Vuelo lateral en polea', 'Vuelo lateral con polea', 'Vuelos laterales con polea', 'Elevación lateral en polea', 'Elevaciones laterales en polea', 'Cable lateral raise'], 'Standing_Low-Pulley_Deltoid_Raise', unilateral=True),
+    N('Vuelos frontales en polea', 'hombros', 'polea', 'aislamiento', ['Vuelo frontal en polea', 'Vuelo frontal con polea', 'Vuelos frontales con polea', 'Elevación frontal en polea', 'Elevaciones frontales en polea', 'Cable front raise'], 'Front_Cable_Raise'),
 ]
 
 

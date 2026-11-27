@@ -64,6 +64,11 @@ export function SettingsScreen({ settings }: { settings: Settings }) {
             </div>
             <div className="xsmall muted" style={{ marginTop: 6 }}>Por bloque, un tilde marca todo el bloque. Por ejercicio, cada ejercicio tiene el suyo.</div>
           </div>
+          <button className="row" style={{ textAlign: 'left', width: '100%' }} aria-pressed={settings.pantalla} onClick={() => void setSettings({ pantalla: !settings.pantalla })}>
+            <span className={`chip sm${settings.pantalla ? ' on' : ''}`} aria-hidden="true">{settings.pantalla ? '✓' : ''}</span>
+            <span className="grow"><span className="small bold">Pantalla siempre encendida en la sesión</span><br />
+              <span className="xsmall muted">Mientras estás en la sesión, el teléfono no apaga la pantalla. Gasta un poco más de batería.</span></span>
+          </button>
           <div className="row spread"><span className="small bold">Unidad de peso</span>
             <div className="row" style={{ gap: 6 }}>
               <button className={`chip${settings.unidad === 'kg' ? ' on' : ''}`} aria-pressed={settings.unidad === 'kg'} onClick={() => void setSettings({ unidad: 'kg' })}>Kilos (kg)</button>

@@ -150,6 +150,8 @@ export interface Settings {
   tilde: 'bloque' | 'ejercicio'
   /** Unidad en la que se muestran y se cargan los pesos. Por dentro siempre se guardan gramos. */
   unidad: 'kg' | 'lb'
+  /** Durante la sesión, el teléfono no apaga la pantalla. */
+  pantalla: boolean
   /** Ejercicios elegidos para seguir en Progreso. Sin definir: los más frecuentes. */
   seguimiento?: number[]
   /** Momento de la última copia de seguridad y hasta qué sesión (id) llegó. */
@@ -162,6 +164,7 @@ export const SETTINGS_DEFAULT: Settings = {
   objetivo_semanal: 4,
   tilde: 'bloque',
   unidad: 'kg',
+  pantalla: true,
   tipos_actividad: ['Correr', 'Pádel', 'Fútbol', 'Squash', 'Tenis', 'Bici', 'Natación', 'Caminata', 'Senderismo', 'Yoga'],
 }
 

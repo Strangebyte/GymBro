@@ -74,9 +74,9 @@ export default function App() {
 
   const vista = pila[pila.length - 1]
   useEffect(() => {
-    void mantenerPantalla(vista.v === 'sesion')
+    void mantenerPantalla(vista.v === 'sesion' && settings.pantalla)
     return () => { void mantenerPantalla(false) }
-  }, [vista.v])
+  }, [vista.v, settings.pantalla])
 
   fijarUnidad(settings.unidad)   // antes de dibujar: todas las pantallas muestran los pesos en esta unidad
   const pantalla = useCallback(() => {

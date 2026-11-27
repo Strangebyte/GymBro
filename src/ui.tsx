@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, type Exercise } from './db'
 import { agruparPorCategoria, buscar, categoria, etiqueta, fmtFecha, historicoEjercicio, numES, plural, resumenSets, type SesionDeEjercicio } from './lib'
@@ -195,6 +195,22 @@ export function Desplegable({ abierto, cerrarYa = false, children }: { abierto: 
   }, [abierto, cerrarYa])
   if (!montado || (!abierto && cerrarYa)) return null
   return <div className={`despl${visible && abierto ? ' abierto' : ''}`}><div>{children}</div></div>
+}
+
+/**
+ * Enter en un campo de una tabla de series: pasa al mismo campo de la serie de abajo (el peso de la serie 1 lleva al
+ * peso de la serie 2). En la última serie cierra el teclado. Va con `enterKeyHint="enter"`: con "siguiente", Android
+ * salta solo al campo de al lado sin avisarle a la página.
+ */
+export function bajarConEnter(e: KeyboardEvent<HTMLInputElement>): void {
+  if (e.key !== 'Enter' || e.nativeEvent.isComposing) return
+  e.preventDefault()
+  const campo = e.currentTarget
+  const fila = campo.closest('.ss, .ed-serie')
+  const col = fila ? [...fila.querySelectorAll('input')].indexOf(campo) : -1
+  const abajo = fila?.nextElementSibling
+  const destino = abajo?.matches('.ss, .ed-serie') ? abajo.querySelectorAll('input')[col] : undefined
+  if (destino) { destino.focus(); destino.select() } else campo.blur()
 }
 
 /** Lleva la pantalla hasta que el elemento quede arriba, justo debajo de la barra superior. */

@@ -194,14 +194,30 @@ export function progresoDe(filas: { fecha: string; set: SetLog }[]): { medida: M
 export const unidadDe = (m: Medida, lastre = false, cu = false): string => (m === 'kg' ? (lastre ? `${unidad} de lastre` : rotuloPeso(cu)) : m === 'reps' ? 'reps' : 'segundos')
 
 // ------------------------------------------------------------------ dispositivo
-type Sentinel = { release: () => Promise<void> }
+type Sentinel = { release: () => Promise<void>; addEventListener?: (tipo: 'release', f: () => void) => void }
 let wl: Sentinel | null = null
+let pedido: Promise<void> | null = null
+let quererPantalla = false
+/** Pide que la pantalla no se apague. El teléfono la suelta solo al bloquearse o al salir de la app: se vuelve a pedir al volver. */
+function pedirPantalla(): Promise<void> {
+  const api = (navigator as Navigator & { wakeLock?: { request: (t: string) => Promise<Sentinel> } }).wakeLock
+  if (!api || wl || pedido || document.visibilityState !== 'visible') return pedido ?? Promise.resolve()
+  pedido = api.request('screen').then((s) => {
+    if (!quererPantalla) { void s.release(); return }
+    wl = s
+    s.addEventListener?.('release', () => { if (wl === s) wl = null })
+  }).catch(() => { /* sin soporte o sin permiso: la pantalla se apaga como siempre */ }).finally(() => { pedido = null })
+  return pedido
+}
+if (typeof document !== 'undefined') {
+  document.addEventListener('visibilitychange', () => { if (quererPantalla && document.visibilityState === 'visible') void pedirPantalla() })
+}
 export async function mantenerPantalla(on: boolean): Promise<void> {
-  try {
-    const api = (navigator as Navigator & { wakeLock?: { request: (t: string) => Promise<Sentinel> } }).wakeLock
-    if (on) { if (api && !wl) wl = await api.request('screen') }
-    else { await wl?.release(); wl = null }
-  } catch { wl = null }
+  quererPantalla = on
+  if (on) return pedirPantalla()
+  const s = wl
+  wl = null
+  try { await s?.release() } catch { /* ya estaba suelta */ }
 }
 
 type ClaudeHost = { use: (n: string) => Promise<unknown> }
