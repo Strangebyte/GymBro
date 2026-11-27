@@ -6,6 +6,7 @@ Registro de qué se decidió y por qué. Lo más nuevo, arriba.
 
 | Decisión | Razón |
 |---|---|
+| Al editar una sesión guardada, los bloques aparecen colapsados y se abren de a uno, como al entrenar | Pedido del dueño: se veían todos abiertos, uno abajo del otro, sin forma de cerrarlos |
 | Al terminar, "Cambiar" en la duración deja ponerla a mano en minutos, y se muestra a qué hora terminó con ese valor | Pedido del dueño: se olvida de terminar la sesión y el reloj sigue. Antes solo se podía con más de 4 horas abiertas. Se pide la duración, como en las sesiones cargadas después y al editar; la hora de fin se ve como ayuda |
 | Recuadros de la tabla de series de 38 a 32 px de alto (también en el editor de días, que tenía 34) | Pedido del dueño: menos altos. El editor va igual para que las dos tablas se vean parejas |
 | Enter pasa al mismo campo de la serie de abajo; en la última serie cierra el teclado | Pedido del dueño, para cargar los pesos de todas las series seguidos. Al final no salta al ejercicio siguiente: ahí suele cambiar qué se carga |

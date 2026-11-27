@@ -113,6 +113,13 @@ def main():
             t = texto(pg)
             ok('Detalle de sesión importada', 'Peso muerto con barra' in t and 'importada' in t and 'RPE 8' in t)
             pg.click('.topbar >> text=Editar'); pg.wait_for_timeout(400)
+            n = pg.locator('.bloque').count()
+            ok('Editar sesión: bloques colapsados, con el mismo encabezado que al entrenar', n >= 2 and pg.locator('.ej').count() == 0 and pg.locator('.bloque-h .chev').count() == n, str(n))
+            abrir_bloque(pg, 1); abrir_bloque(pg, 2)
+            ok('Editar sesión: abrir un bloque cierra el anterior', pg.locator('.bloque-c').count() == 1 and pg.locator('.bloque').nth(1).locator('.bloque-c').count() == 1)
+            for i in range(n):
+                if pg.locator('.ej', has_text='Peso muerto con barra').count(): break
+                abrir_bloque(pg, i + 1)
             campo = pg.locator('.ej', has_text='Peso muerto con barra').first.locator('input').nth(1)
             campo.fill('123,5'); campo.blur(); pg.wait_for_timeout(250)
             pg.click('.topbar >> text=Listo'); pg.wait_for_timeout(400)

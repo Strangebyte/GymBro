@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
+import { Fragment, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, type Exercise, type Session, type SetLog, type Settings, type Tramo } from '../db'
 import { alinearArriba, bajarConEnter, Chevron, Desplegable, Escala10, HistorialLista, Ico, MediaView, Picker, Sheet, Stepper, TopBar, useDialogos, useNav, useTieneMedia } from '../ui'
@@ -101,26 +101,16 @@ export function SessionScreen({ settings }: { settings: Settings }) {
           const delBloque = its.flatMap((i) => i.sets)
           const listo = delBloque.length > 0 && delBloque.every((s) => s.hecha)
           const esExtra = !bloquesPlan.includes(b)
-          const desc = [...new Set([...its.map((i) => etiqueta(i.ex.grupo)), ...its.map((i) => i.ex.equipo).filter((e) => e !== 'peso_corporal').map(etiqueta)])]
           const nombre = esExtra ? (conPlan ? 'Ejercicios adicionales' : 'Ejercicios') : `Bloque ${b}`
           return (
             <div key={b} className={`bloque${listo ? ' listo' : ''}`} data-bloque={b}>
-              <div className="bloque-h">
-                <button className="row grow" onClick={() => tocarBloque(b)} aria-expanded={abierto === b}>
-                  <Chevron abierto={abierto === b} />
-                  <span className="num">{esExtra ? '+' : b}</span>
-                  <span className="grow">
-                    <span className="bold">{nombre}</span>
-                    <span className="xsmall muted" style={{ display: 'block' }}>{plural(its.length, 'ejercicio', 'ejercicios')}</span>
-                    <span className="xsmall muted truncate" style={{ display: 'block' }}>{desc.slice(0, 5).join(' · ')}</span>
-                  </span>
-                </button>
+              <EncabezadoBloque num={esExtra ? '+' : b} nombre={nombre} its={its} abierto={abierto === b} onTocar={() => tocarBloque(b)}>
                 {!porEjercicio && (
                   <button className={`tilde${listo ? ' on' : ''}`} aria-pressed={listo} aria-label={`${listo ? 'Desmarcar' : 'Marcar hecho'} ${nombre}`}
                     onClick={async () => { if (await marcar(delBloque, nombre)) cerrarCompleto(b) }}>✓</button>
                 )}
                 {porEjercicio && listo && <span className="hecho" aria-label="Bloque hecho">✓</span>}
-              </div>
+              </EncabezadoBloque>
               <Desplegable abierto={abierto === b} cerrarYa={abierto != null}>
                 <div className="bloque-c">
                   {its.map((it) => (
@@ -144,6 +134,26 @@ export function SessionScreen({ settings }: { settings: Settings }) {
           onElegir={(e) => { void agregarEjercicio(sesion, e, picker); setAbierto(picker) }} />
       )}
     </>
+  )
+}
+
+/** Encabezado de un bloque que se abre y se cierra: número, nombre, cuántos ejercicios y sus grupos y equipamiento. */
+export function EncabezadoBloque(props: { num: number | string; nombre: string; its: Item[]; abierto: boolean; onTocar: () => void; children?: ReactNode }) {
+  const { num, nombre, its, abierto, onTocar, children } = props
+  const desc = [...new Set([...its.map((i) => etiqueta(i.ex.grupo)), ...its.map((i) => i.ex.equipo).filter((e) => e !== 'peso_corporal').map(etiqueta)])]
+  return (
+    <div className="bloque-h">
+      <button className="row grow" onClick={onTocar} aria-expanded={abierto}>
+        <Chevron abierto={abierto} />
+        <span className="num">{num}</span>
+        <span className="grow">
+          <span className="bold">{nombre}</span>
+          <span className="xsmall muted" style={{ display: 'block' }}>{plural(its.length, 'ejercicio', 'ejercicios')}</span>
+          <span className="xsmall muted truncate" style={{ display: 'block' }}>{desc.slice(0, 5).join(' · ')}</span>
+        </span>
+      </button>
+      {children}
+    </div>
   )
 }
 

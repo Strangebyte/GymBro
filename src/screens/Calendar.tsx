@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, setSettings, type Activity, type Settings } from '../db'
-import { Chips, Escala10, Picker, Stepper, TopBar, useDialogos, useNav } from '../ui'
+import { alinearArriba, Chips, Desplegable, Escala10, Picker, Stepper, TopBar, useDialogos, useNav } from '../ui'
 import { agruparPorDia, duracionSesion, plural, fechaDe, fmtFechaLarga, hoyISO, isoDe, MESES, resumenSets, setValido } from '../lib'
 import { agregarEjercicio, descartarSesion, iniciarSesion, sesionEnCurso } from '../actions'
 import { ElegirDia, PREGUNTAS } from './Today'
-import { armarItems, Tarjeta } from './Session'
+import { armarItems, EncabezadoBloque, Tarjeta } from './Session'
 
 export function CalendarScreen() {
   const nav = useNav()
@@ -165,6 +165,7 @@ export function SessionDetailScreen({ id }: { id: number }) {
   const ejercicios = useLiveQuery(() => db.exercises.toArray(), [])
   const [editando, setEditando] = useState(false)
   const [picker, setPicker] = useState<number | null>(null)
+  const [abierto, setAbierto] = useState<number | null>(null)   // al editar, como en la sesión: un bloque abierto por vez
   if (!sesion || !sets || !ejercicios) return <><TopBar titulo="Sesión" atras /><div className="main sin-tabs"><div className="empty">Cargando…</div></div></>
 
   if (editando) {
@@ -175,6 +176,12 @@ export function SessionDetailScreen({ id }: { id: number }) {
       const vacias = (await db.setLogs.where('session_id').equals(id).toArray()).filter((s) => !setValido(s))
       if (vacias.length) await db.setLogs.bulkDelete(vacias.map((s) => s.id!))
       setEditando(false)
+    }
+    // Al abrir un bloque, la pantalla lo lleva arriba (el que estaba abierto se cierra y todo se corre).
+    const tocarBloque = (b: number) => {
+      const abre = abierto !== b
+      setAbierto(abre ? b : null)
+      if (abre) requestAnimationFrame(() => alinearArriba(document.querySelector(`[data-bloque="${b}"]`)))
     }
     return (
       <>
@@ -190,19 +197,26 @@ export function SessionDetailScreen({ id }: { id: number }) {
             <label className="f" htmlFor="sn">Notas</label>
             <textarea id="sn" rows={2} defaultValue={sesion.notas ?? ''} onBlur={(e) => void db.sessions.update(id, { notas: e.target.value.trim() || null })} />
           </div>
-          {bloquesEd.map((b) => (
-            <div key={b}>
-              <h2>Bloque {b}</h2>
-              {items.filter((i) => i.bloque === b).map((it) => (
-                <Tarjeta key={`${it.key}-${it.ex.id}`} item={it} sesion={sesion} porEjercicio={false} onMarcar={() => {}} editando />
-              ))}
-            </div>
-          ))}
+          {bloquesEd.map((b) => {
+            const its = items.filter((i) => i.bloque === b)
+            return (
+              <div key={b} className="bloque" data-bloque={b}>
+                <EncabezadoBloque num={b} nombre={`Bloque ${b}`} its={its} abierto={abierto === b} onTocar={() => tocarBloque(b)} />
+                <Desplegable abierto={abierto === b} cerrarYa={abierto != null}>
+                  <div className="bloque-c">
+                    {its.map((it) => (
+                      <Tarjeta key={`${it.key}-${it.ex.id}`} item={it} sesion={sesion} porEjercicio={false} onMarcar={() => {}} editando />
+                    ))}
+                  </div>
+                </Desplegable>
+              </div>
+            )
+          })}
           <button className="btn block" style={{ marginTop: 14 }} onClick={() => setPicker(bloquesEd.length ? Math.max(...bloquesEd) + 1 : 1)}>+ Agregar ejercicio</button>
           <div className="xsmall muted center" style={{ marginTop: 8 }}>Los cambios se guardan solos. El plan no se modifica.</div>
         </div>
         {picker != null && (
-          <Picker multi titulo="Agregar ejercicio" onCerrar={() => setPicker(null)} onElegir={(e) => void agregarEjercicio(sesion, e, picker, true)} />
+          <Picker multi titulo="Agregar ejercicio" onCerrar={() => setPicker(null)} onElegir={(e) => { void agregarEjercicio(sesion, e, picker, true); setAbierto(picker) }} />
         )}
       </>
     )
@@ -216,7 +230,7 @@ export function SessionDetailScreen({ id }: { id: number }) {
   const bloques = [...new Set(hechas.map((s) => s.bloque))].sort((a, b) => a - b)
   return (
     <>
-      <TopBar titulo={sesion.nombre} sub={fmtFechaLarga(sesion.fecha)} atras der={<button className="btn sm" onClick={() => setEditando(true)}>Editar</button>} />
+      <TopBar titulo={sesion.nombre} sub={fmtFechaLarga(sesion.fecha)} atras der={<button className="btn sm" onClick={() => { setAbierto(null); setEditando(true) }}>Editar</button>} />
       <div className="main sin-tabs">
         {sesion.origen === 'importado' && <div className="banner">Sesión importada del historial anterior. Los pesos tienen confianza media: se leyeron de capturas de pantalla.</div>}
         <div className="row" style={{ marginBottom: 10 }}>

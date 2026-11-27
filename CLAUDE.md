@@ -20,7 +20,7 @@ npm run seed         # regenera src/seed.json, src/seed-historial.json y data/*.
 npm run test:e2e     # requiere dist/ y: pip install playwright && playwright install chromium
 ```
 
-Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 175 verificaciones tienen que pasar
+Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 177 verificaciones tienen que pasar
 y no puede haber errores de consola. Si cambiás un flujo, actualizá `tests/e2e.py` en el mismo cambio.
 
 ## Cómo trabajar
@@ -108,7 +108,8 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
 - **Duración a mano al cerrar:** si el reloj siguió corriendo (se olvidó de terminarla), "Cambiar" en la duración deja
   ponerla en minutos; con más de 4 horas abierta se pide sola. El fin se guarda como inicio + duración. La rotación solo avanza si no hay sesiones completadas con fecha posterior.
 - **Editar una sesión guardada** (detalle → Editar) cambia fecha, duración, esfuerzo, notas y series. Nunca toca
-  el plan ni la rotación. Al salir se descartan las series sin datos.
+  el plan ni la rotación. Al salir se descartan las series sin datos. Los bloques se ven como en la sesión:
+  colapsados, con el mismo encabezado (`EncabezadoBloque` en Session.tsx) y uno abierto por vez.
 - **Datos importados** (`origen: 'importado'`, `confianza: 'media'`): pesos leídos de capturas. Avisarlo donde
   se muestren.
 - **Al entrenar solo se ven nombres del catálogo.** El importador obliga a crear o vincular lo desconocido.
