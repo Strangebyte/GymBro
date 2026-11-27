@@ -73,7 +73,8 @@ export async function terminarSesion(
     if (pendientes.length) await db.setLogs.bulkDelete(pendientes.map((s) => s.id!))
     const hechas = todos.filter((s) => s.hecha)
     if (!hechas.length) { await db.sessions.delete(sesion.id!); return }
-    const fin = sesion.retro ? (durMin ? sesion.inicio + durMin * 60000 : null) : Date.now()
+    // Con la duración puesta a mano (sesión cargada después, o el reloj siguió corriendo), el fin sale de esa duración.
+    const fin = durMin != null ? sesion.inicio + durMin * 60000 : sesion.retro ? null : Date.now()
     await db.sessions.update(sesion.id!, { estado: 'completada', fin, srpe, notas, dur_min: durMin })
     // Una sesión cargada después no es "lo último que hiciste": sus series llevan la hora de aquel día.
     if (sesion.retro) {

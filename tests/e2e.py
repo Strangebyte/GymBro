@@ -197,6 +197,10 @@ def main():
             pg.click('.topbar >> text=Terminar'); pg.wait_for_timeout(300)
             ok('Cierre avisa las series sin marcar', 'sin marcar' in texto(pg))
             ok('"Actualizar el plan" viene desmarcado', pg.locator('.card.row').get_attribute('aria-pressed') == 'false')
+            pg.click('.stat >> text=Cambiar'); pg.wait_for_timeout(200)
+            ok('Cierre: «Cambiar» deja poner la duración a mano', pg.locator('[aria-label="minutos"]').count() == 1 and 'Usar el reloj' in texto(pg))
+            pg.fill('[aria-label="minutos"]', '50'); pg.locator('[aria-label="minutos"]').blur(); pg.wait_for_timeout(150)
+            ok('Cierre: dice a qué hora terminó con esa duración', 'con esta duración, terminó a las' in texto(pg))
             pg.click('.card.row'); pg.wait_for_timeout(150)          # caso exigente: actualizar el plan
             ok('Esfuerzo: los 10 números a la vista, en dos filas, sin deslizar', pg.evaluate("(() => { const e = document.querySelector('.escala'); return e.scrollWidth <= e.clientWidth && new Set([...e.children].map(b => b.offsetTop)).size === 2 })()"))
             pg.locator('.escala .chip', has_text='7').first.click()
@@ -209,6 +213,7 @@ def main():
             ses = [s for s in desp['sessions'] if s['origen'] == 'app'][0]
             logs = [l for l in desp['setLogs'] if l['session_id'] == ses['id']]
             ok('Se guardan solo las series tildadas (7)', len(logs) == 7 and all(l['hecha'] for l in logs), str(len(logs)))
+            ok('La duración puesta a mano se guarda (50 min)', ses['dur_min'] == 50 and ses['fin'] - ses['inicio'] == 50 * 60000, str(ses['dur_min']))
             ok('Wellness y esfuerzo guardados', ses['wellness'] == {'sueno': 4, 'dolor': 4, 'cansancio': 3, 'estres': 4, 'energia': 4} and ses['srpe'] == 7)
             ok('La sesión guardó el ejercicio cambiado', {nombres[l['exercise_id']] for l in logs} == {'Press de banca con barra', 'Curl de isquiotibiales con deslizadores, en gesto de sprint', 'Curl nórdico de isquiotibiales'})
             b5a, b5d = dia1(antes)['bloques'][4]['ejercicios'], dia1(desp)['bloques'][4]['ejercicios']

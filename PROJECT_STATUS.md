@@ -4,7 +4,7 @@
 
 ## Dónde está
 
-- La app está completa y funcionando en las pruebas automáticas (172 de 172, sin errores de consola).
+- La app está completa y funcionando en las pruebas automáticas (175 de 175, sin errores de consola).
 - **Publicada en GitHub Pages:** https://<usuario>.github.io/GymBro/ (repositorio público
   `<usuario>/GymBro`). Cada push a `main` la vuelve a publicar sola. Verificado el 14-11-2026 en
   Chromium: abre sin errores, registra el service worker. Desde el 16-11-2026 arranca solo con el catálogo: sin planes ni sesiones.
@@ -99,6 +99,7 @@ video y scroll táctil con una hoja abierta.
 | Fecha | Qué se hizo |
 |---|---|
 | 10-11-2026 | Diseño (`docs/historico/`), catálogo de 96 ejercicios, primera versión solo de registro |
+| 27-11-2026 | Al terminar una sesión, la duración se puede poner a mano aunque no hayan pasado 4 horas |
 | 27-11-2026 | Tabla de series más baja; Enter baja a la serie siguiente; el bloque se cierra al completarlo; pantalla encendida que se vuelve a pedir al volver a la app, con opción en Ajustes; vuelos laterales y frontales en polea (revisión 11) |
 | 25-11-2026 | 42 movimientos de CrossFit en el catálogo (revisión 10), con 15 fotos; equipamientos nuevos: balón medicinal y soga |
 | 25-11-2026 | Historial del dueño al 20-11 (33 sesiones) y plan de la semana del 24-11, en una copia armada en la PC sin publicar nada; 9 ejercicios nuevos del entrenador y vuelve Rebote y freno (revisión 9) |

@@ -20,7 +20,7 @@ npm run seed         # regenera src/seed.json, src/seed-historial.json y data/*.
 npm run test:e2e     # requiere dist/ y: pip install playwright && playwright install chromium
 ```
 
-Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 172 verificaciones tienen que pasar
+Antes de dar algo por terminado: `npm run build && npm run test:e2e`. Las 175 verificaciones tienen que pasar
 y no puede haber errores de consola. Si cambiás un flujo, actualizá `tests/e2e.py` en el mismo cambio.
 
 ## Cómo trabajar
@@ -104,7 +104,9 @@ docs/          Decisiones, formato de plan, deploy, fuentes, histórico
 - **Rotación sin fechas.** La app sugiere `plan.cursor`; el usuario puede elegir otro día. El cursor avanza al
   guardar una sesión. No hay calendario de sesiones futuras.
 - **Sesiones cargadas después** (`retro: true`, desde el calendario): usan la misma pantalla de sesión, sin reloj;
-  la duración se carga a mano al cerrar. La rotación solo avanza si no hay sesiones completadas con fecha posterior.
+  la duración se carga a mano al cerrar.
+- **Duración a mano al cerrar:** si el reloj siguió corriendo (se olvidó de terminarla), "Cambiar" en la duración deja
+  ponerla en minutos; con más de 4 horas abierta se pide sola. El fin se guarda como inicio + duración. La rotación solo avanza si no hay sesiones completadas con fecha posterior.
 - **Editar una sesión guardada** (detalle → Editar) cambia fecha, duración, esfuerzo, notas y series. Nunca toca
   el plan ni la rotación. Al salir se descartan las series sin datos.
 - **Datos importados** (`origen: 'importado'`, `confianza: 'media'`): pesos leídos de capturas. Avisarlo donde

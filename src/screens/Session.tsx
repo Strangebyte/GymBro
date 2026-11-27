@@ -302,25 +302,40 @@ export function CerrarScreen() {
   const [notas, setNotas] = useState('')
   const [actualizar, setActualizar] = useState(false)
   const [dur, setDur] = useState<number | null>(60)
+  const [aMano, setAMano] = useState(false)   // el reloj siguió corriendo (se olvidó de terminarla): la duración la pone él
   if (!sesion || !sets) return <><TopBar titulo="Terminar sesión" atras /><div className="main sin-tabs"><div className="empty">No hay sesión en curso.</div></div></>
   const hechas = sets.filter((s) => s.hecha).length
   const pend = sets.length - hechas
   const minutos = Math.round((Date.now() - sesion.inicio) / 60000)
   // Sin reloj confiable (sesión de otro día, o quedó abierta por horas): la duración se carga a mano.
-  const durManual = !!sesion.retro || minutos > 240
+  const sinReloj = !!sesion.retro || minutos > 240
+  const durManual = sinReloj || aMano
+  const hora = (ms: number) => new Date(ms).toTimeString().slice(0, 5)
   return (
     <>
       <TopBar titulo="Terminar sesión" sub={sesion.nombre} atras />
       <div className="main sin-tabs">
-        <div className="row" style={{ marginBottom: 10 }}>
+        <div className="row" style={{ marginBottom: 10, alignItems: 'stretch' }}>
           <div className="stat"><b>{hechas}</b><span>series hechas</span></div>
-          {!durManual && <div className="stat"><b>{fmtDur(Date.now() - sesion.inicio)}</b><span>duración</span></div>}
+          {!durManual && (
+            <div className="stat"><b>{fmtDur(Date.now() - sesion.inicio)}</b><span>duración</span>
+              <button className="btn xs dur" onClick={() => { setDur(Math.min(600, Math.max(5, Math.round(minutos / 5) * 5))); setAMano(true) }}>Cambiar</button>
+            </div>
+          )}
         </div>
         {durManual && (
           <div className="card">
-            <div className="bold small">¿Cuánto duró?</div>
-            <div className="xsmall muted" style={{ margin: '2px 0 9px' }}>{sesion.retro ? `Sesión del ${fmtFecha(sesion.fecha)}, cargada después.` : 'La sesión quedó abierta muchas horas. Poné la duración real.'}</div>
+            <div className="row spread">
+              <span className="bold small">¿Cuánto duró?</span>
+              {!sinReloj && <button className="btn xs" onClick={() => setAMano(false)}>Usar el reloj</button>}
+            </div>
+            <div className="xsmall muted" style={{ margin: '2px 0 9px' }}>
+              {sesion.retro ? `Sesión del ${fmtFecha(sesion.fecha)}, cargada después.` : sinReloj ? 'La sesión quedó abierta muchas horas. Poné la duración real.' : 'Si te olvidaste de terminarla, poné cuánto duró de verdad.'}
+            </div>
             <Stepper value={dur} step={5} min={0} max={600} unit="minutos" onChange={setDur} />
+            {!sesion.retro && dur != null && (
+              <div className="xsmall muted" style={{ marginTop: 8 }}>Empezó a las {hora(sesion.inicio)}: con esta duración, terminó a las {hora(sesion.inicio + dur * 60000)}.</div>
+            )}
           </div>
         )}
         {pend > 0 && <div className="banner">Quedan {plural(pend, 'serie sin marcar', 'series sin marcar')}. Al terminar se descartan: solo se guarda lo que tildaste.</div>}
